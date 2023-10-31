@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- namespace="매퍼 인터페이스 경로" -->
+<mapper namespace="com.camp.campon.mapper.UserMapper">
+     <!-- Users 매핑-->
+    <resultMap type="Users" id="userMap">
+        <id property="userNo" column="user_no" />
+        
+        <result property="userNo" column="user_no" />
+        <result property="userId" column="user_id" />
+        <result property="userPw" column="user_pw" />
+        <result property="name" column="name" />
+        <result property="email" column="email" />
+        <result property="enabled" column="enabled" />
+        <result property="regDate" column="reg_date" />
+        <result property="updDate" column="upd_date" />
+        
+        <collection property="authList" resultMap="authMap"></collection>
+    </resultMap>
+        
+    <!-- UserAuth 매핑 -->
+    <resultMap type="UserAuth" id="authMap">
+        <result property="userId" column="user_id" />
+        <result property="auth" column="auth" />
+    </resultMap>
+
+    <!-- 회원 등록 -->
+    <insert id="insert">
+        INSERT INTO user ( user_id, user_pw, name, email )
+        VALUES ( #{userId}, #{userPw}, #{name}, #{email} )
+    </insert>
+
+    <!-- 회원 조회 -->
+    <select id="select" resultType="Users">
+        SELECT * FROM user
+        WHERE user_no = ${userNo}
+    </select>
+
+    <!-- 회원 조회 - id -->
+    <select id="login" resultMap="userMap">
+        SELECT u.user_no
+             , u.user_id
+             , user_pw
+             , name
+             , email
+             , enabled
+             , reg_date
+             , upd_date
+             , auth
+        FROM user u LEFT OUTER JOIN user_auth auth
+                    ON u.user_id = auth.user_id
+        WHERE u.user_id = #{userId}
+    </select>
+
+    <!-- 회원 권한 등록 -->
+    <insert id="insertAuth">
+        INSERT INTO user_auth( user_id, auth )
+        VALUES ( #{userId}, #{auth} )
+    </insert>
+</mapper>
