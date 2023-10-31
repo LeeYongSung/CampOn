@@ -26,3 +26,7 @@ replay_pid*
 # vscode 설정 파일 무시
 .vscode/
 ./vscode/
+
+
+# gradle 확장 설정 파일 무시
+.gradle/
