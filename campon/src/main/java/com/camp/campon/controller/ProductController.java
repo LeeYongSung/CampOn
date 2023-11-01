@@ -16,5 +16,11 @@ public class ProductController {
     public String productMain(Model model) {
         return "product/index";
     }
+
+    // 상품등록
+     @GetMapping("/product_add")
+    public String productAdd(Model model) {
+        return "product/product_add";
+    }
     
 }
