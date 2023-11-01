@@ -8,7 +8,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
     <!-- 캠프 목록 -->
     <select id="list" resultType="Camp">
-        SELECT * FROM campproduct
+        SELECT * 
+        FROM campproduct c
+        LEFT JOIN campdetatil cd ON c.camp_no = cd.camp_no
+        ORDER BY camp_no DESC 
     </select>
     <!-- 캠프 최신목록 -->
     <select id="newList" resultType="Camp">
