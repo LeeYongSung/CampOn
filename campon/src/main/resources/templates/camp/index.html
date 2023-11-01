@@ -36,7 +36,7 @@
         </button>
     </div>
     <div>
-        신규상품
+        <h1>신규 상품</h1>
         <div th:each="camp : ${campnewList}">
             <a th:href="|/camp/page?campNo=${camp.campNo}|" th:text="${camp.campName}"></a>
         </div>
