@@ -28,4 +28,11 @@ public class CampServiceImpl implements CampService{
         List<Camp> favoritesList = campMapper.favoritesList();
         return favoritesList;
     }
+
+    @Override
+    public List<Camp> campSelect(int campTypeNo) throws Exception {
+        List<Camp> campselect = campMapper.campSelect(campTypeNo);
+        log.info("campTypeNo : " + campselect);
+        return campselect;
+    }
 }

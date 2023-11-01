@@ -52,8 +52,10 @@ public class CampController {
     
     
     @GetMapping(value="/campproduct")
-    public String campProduct(Model model) {
-        List<Camp> campList = campService.
+    public String campProduct(Model model, int campTypeNo) throws Exception {
+        List<Camp> campselect = campService.campSelect(campTypeNo);
+        log.info("campselect" + campselect);
+        model.addAttribute("campselect", campselect);
         return "camp/campproduct";
     }
     
