@@ -7,7 +7,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="com.camp.campon.mapper.BoardMapper">
 
     <!-- 리뷰 최신목록 -->
-    <select id="newList" resultType="Camp">
-        SELECT * FROM campproduct ORDER BY reg_date DESC LIMIT 3
+    <select id="newReviewList" resultType="Board">
+        SELECT * FROM review r join campproduct c on r.camp_no = c.camp_no ORDER BY r.reg_date DESC LIMIT 3
     </select>
 </mapper>

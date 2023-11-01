@@ -47,21 +47,28 @@
     </div>
     <div>
         <h1>신규 상품</h1>
-        <div th:each="camp : ${campnewList}">
+        <ul th:each="camp : ${campnewList}">
+            <a th:href="|/camp/page?campNo=${camp.campNo}|"><img th:src="${camp.cpiUrl}"></a>
             <a th:href="|/camp/page?campNo=${camp.campNo}|" th:text="${camp.campName}"></a>
-        </div>
+            <li th:text="${camp.campName}"></li>
+        </ul>
     </div>
     <div>
-        추천상품
-        <!-- <div th:each="camp : ${campList}">
+        <h1>추천 상품</h1>
+        <ul th:each="camp : ${campHotList}">
+            <a th:href="|/camp/page?campNo=${camp.campNo}|"><img th:src="${camp.cpiUrl}"></a>
             <a th:href="|/camp/page?campNo=${camp.campNo}|" th:text="${camp.campName}"></a>
-        </div> -->
+            <li th:text="${camp.campName}"></li>
+        </ul>
     </div>
     <div>
-        실시간리뷰
-        <!-- <div th:each="camp : ${reviewnewList}">
-            <a th:href="|/board/page?campNo=${board.reviewNo}|" th:text="${camp.campName}"></a>
-        </div> -->
+        <h1>실시간리뷰</h1>
+        <ul th:each="board : ${newReviewList}">
+            <a th:href="|/board/page?campNo=${board.reviewNo}|"><img th:src="${board.reviewImg}"></a>
+            <a th:href="|/board/page?campNo=${board.reviewNo}|" th:text="${board.reviewCon}"></a>
+            <span th:text="${ #dates.format( board.regDate, 'yyyy-MM-dd') }"></span>
+            <span th:text="${board.campName}"></span>
+        </ul>
     </div>
 </body>
 </html>

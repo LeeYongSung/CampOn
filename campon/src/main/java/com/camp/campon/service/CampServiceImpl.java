@@ -35,4 +35,10 @@ public class CampServiceImpl implements CampService{
         log.info("campTypeNo : " + campselect);
         return campselect;
     }
+    
+    @Override
+    public List<Camp> hotList() throws Exception {
+        List<Camp> campHotList = campMapper.hotList();
+        return campHotList;    
+    }
 }

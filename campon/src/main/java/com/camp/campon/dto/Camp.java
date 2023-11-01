@@ -45,4 +45,7 @@ public class Camp {
     private int environmentTypeNo;
     private String environmentTypeName;
 
+    // 캠핑장 이미지
+    private int cpiNo;
+    private String cpiUrl;
 }

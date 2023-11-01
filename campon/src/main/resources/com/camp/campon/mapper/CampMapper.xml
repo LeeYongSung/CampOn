@@ -25,7 +25,20 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     
     <!-- 캠프 최신목록 -->
     <select id="newList" resultType="Camp">
-        SELECT * FROM campproduct ORDER BY reg_date DESC LIMIT 6
+        SELECT * 
+        FROM campproduct c 
+        join campimg img on c.camp_no = img.camp_no 
+        join (select min(cpi_no) no from campimg group by camp_no) imgno on img.cpi_no = imgno.no
+        order by c.reg_date desc limit 6
+    </select>
+    <!-- 캠프 추천목록 -->
+    <select id="hotList" resultType="Camp">
+        SELECT * 
+        FROM campproduct c 
+        join campimg img on c.camp_no = img.camp_no 
+        join (select min(cpi_no) no from campimg group by camp_no) imgno on img.cpi_no = imgno.no
+        join (select camp_no, count(*) c from reservation group by camp_no) r on c.camp_no = r.camp_no
+        order by r.c desc limit 6
     </select>
     <!-- 캠핑장 등록 -->
     <insert id="insertCamp">
