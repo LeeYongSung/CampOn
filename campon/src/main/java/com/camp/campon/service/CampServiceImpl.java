@@ -22,4 +22,10 @@ public class CampServiceImpl implements CampService{
         List<Camp> campnewList = campMapper.newList();
         return campnewList;
     }
+
+    @Override
+    public List<Camp> favoritesList() throws Exception {
+        List<Camp> favoritesList = campMapper.favoritesList();
+        return favoritesList;
+    }
 }

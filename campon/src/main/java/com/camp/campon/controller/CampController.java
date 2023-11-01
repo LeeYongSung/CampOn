@@ -40,6 +40,14 @@ public class CampController {
     public String insertProduct() {
         return "camp/insertProduct";
     }
+
+    @GetMapping(value="/favorites")
+    public String favoritesList(Model model) throws Exception {
+        List<Camp> favoritesList = campService.favoritesList();
+        model.addAttribute("favoritesList", favoritesList);
+        return "camp/favorites";
+    }
+    
     
     
     

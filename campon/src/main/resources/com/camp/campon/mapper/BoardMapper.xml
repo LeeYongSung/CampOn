@@ -5,4 +5,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <!-- namespace="매퍼 인터페이스 경로" -->
 <mapper namespace="com.camp.campon.mapper.BoardMapper">
+
+    <!-- 리뷰 최신목록 -->
+    <select id="newList" resultType="Camp">
+        SELECT * FROM campproduct ORDER BY reg_date DESC LIMIT 3
+    </select>
 </mapper>

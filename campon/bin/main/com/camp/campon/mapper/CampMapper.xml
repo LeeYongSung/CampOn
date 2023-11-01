@@ -28,4 +28,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
     <!-- 캠프상품 삭제-->
 
+
+    <!-- 찜 상품 목록 -->
+    <select id="favoritesList" resultType="Camp">
+        SELECT * FROM favorites f join campproduct c on f.camp_no = c.camp_no
+    </select>
+
 </mapper>
