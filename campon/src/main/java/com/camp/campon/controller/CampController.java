@@ -5,14 +5,17 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.camp.campon.dto.Camp;
+
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import com.camp.campon.dto.Camp;
 import com.camp.campon.service.CampService;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 
 @Slf4j
@@ -25,7 +28,6 @@ public class CampController {
 
     @GetMapping(value="/index")
     public String campMain(Model model) throws Exception {
-        System.out.println("test");
         List<Camp> campnewList = campService.newList();
         model.addAttribute("campnewList", campnewList);
         return "camp/index";
@@ -35,7 +37,7 @@ public class CampController {
     public String information() {
         return "camp/information";
     }
-    
+     
     @GetMapping(value="/insertProduct")
     public String insertProduct() {
         return "camp/insertProduct";
@@ -49,6 +51,11 @@ public class CampController {
     }
     
     
+    @GetMapping(value="/campproduct")
+    public String campProduct(Model model) {
+        List<Camp> campList = campService.
+        return "camp/campproduct";
+    }
     
     
 }
