@@ -2,11 +2,12 @@ package com.camp.campon.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.camp.campon.dto.Camp;
+
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 
 @Slf4j
@@ -20,5 +21,11 @@ public class CampController {
         return "camp/index";
     }
     
+
+    @GetMapping(value="/campproduct")
+    public String campProduct(Model model, Camp camp ) {
+        return ;
+    }
+
     
 }

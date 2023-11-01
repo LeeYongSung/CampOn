@@ -33,12 +33,6 @@ public class UserController {
     @GetMapping(value="/seller")
     public String userSeller(Model model) {
         return "user/seller";
-    }
-
-    @GetMapping(value="/admin")
-    public String userAdmin(Model model) {
-        return "user/admin";
-    }
-    
+    }    
 
 }

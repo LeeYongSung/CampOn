@@ -5,4 +5,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <!-- namespace="매퍼 인터페이스 경로" -->
 <mapper namespace="com.camp.campon.mapper.CampMapper">
+    <select type="campSelect" resultType="camp">
+        SELECT *
+        FROM campproduct c
+        LEFT JOIN campdetail cd ON c.camp_no = cd.camp_no
+        ORDER BY cd.cp_dt_no DESC
+    </select>
+
 </mapper>
