@@ -1,29 +1,25 @@
-package com.camp.campon.mapper;
+package com.camp.campon.service;
 
+import javax.servlet.http.HttpServletRequest;
 
-import org.apache.ibatis.annotations.Mapper;
 
 import com.camp.campon.dto.Users;
 import com.camp.campon.dto.UserAuth;
 
-@Mapper
-public interface UserMapper {
+public interface UserService {
 
     // 회원 등록
     public int insert(Users user) throws Exception;
-    
+
     // 회원 조회
     public Users select(int userNo) throws Exception;
 
-    // 회원 조회
+    // 회원 조회 - id
     public Users selectById(String userId) throws Exception;
-    
-    // 사용자 인증(로그인) - id
-    public Users login(String username);
- 
-    // 회원 권한 등록
-    public int insertAuth(UserAuth userAuth) throws Exception;
-    
+
+    // 로그인
+    public void login(Users user, HttpServletRequest requset) throws Exception;
+
     // 회원 수정
     public int update(Users user) throws Exception;
 
