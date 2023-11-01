@@ -17,6 +17,26 @@ public class UserController {
     public String userMyPage(Model model) {
         return "user/index";
     }
+
+    @GetMapping(value="/login")
+    public String userLogin(Model model) {
+        return "user/login";
+    }
+
+    @GetMapping(value="/join")
+    public String userJoin(Model model) {
+        return "user/join";
+    }
+
+    @GetMapping(value="/seller")
+    public String userSeller(Model model) {
+        return "user/seller";
+    }
+
+    @GetMapping(value="/admin")
+    public String userAdmin(Model model) {
+        return "user/admin";
+    }
     
 
 }
