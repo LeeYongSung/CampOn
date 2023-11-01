@@ -73,12 +73,12 @@ public class SecuriryConfig extends WebSecurityConfigurerAdapter {
                                 // hasRole()                                - 단일 권한에 대한 허용
                                 .antMatchers("/**").permitAll()                        
                                 .antMatchers("/css/**","/js/**","/img/**").permitAll()          // static/~ 정적자원 인가 처리                      
-                                .antMatchers("/user/**").hasAnyRole("USER", "ADMIN")
+                               // .antMatchers("/user/**").hasAnyRole("USER", "ADMIN")
                                 // .antMatchers("/user/order").permitAll()
                                 // .antMatchers("/admin/**").hasRole("ADMIN")
                                 // anyRequest()         : 모든 요청을 지정
                                 // authenticated()      : 인증된 사용자만 허용
-                                .anyRequest().authenticated()
+                               // .anyRequest().authenticated()
                                 );
 
         // 빌더 패턴
@@ -96,10 +96,12 @@ public class SecuriryConfig extends WebSecurityConfigurerAdapter {
         // http.formLogin().loginPage("/user/login");       // 지정된 경로의 로그인 페이지로 이동
         http.formLogin(login -> login                   
             .defaultSuccessUrl("/")             // 로그인 성공 시, URL : "/"(기본값)
-            .loginPage("/login")                        // 커스텀 로그인 페이지 지정 (default:/login)
+            //(수정) 로그인페이지 경로 수정했슴
+            .loginPage("/user/login")                        // 커스텀 로그인 페이지 지정 (default:/login)
             .loginProcessingUrl("/loginPro")   // 커스텀 로그인 요청 처리 경로 지정 (default:/login)
-            .usernameParameter("id")            // 아이디 요청 파라미터 이름 설정 (default:username)
-            .passwordParameter("pw")            // 비밀번호 요청 파라미터 이름 설정 (default:password)
+            //(수정) 파라미터이름을 수정했슴다.
+            .usernameParameter("userId")            // 아이디 요청 파라미터 이름 설정 (default:username)
+            .passwordParameter("userPw")            // 비밀번호 요청 파라미터 이름 설정 (default:password)
             .successHandler( authenticationSuccessHandler() )     // 로그인 성공 처리 빈을 지정
             .permitAll()                                          // 로그인 폼은 모든 사용자에게 허용
         );
@@ -143,32 +145,6 @@ public class SecuriryConfig extends WebSecurityConfigurerAdapter {
      */
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-
-        // AuthenticationManagerBuilder : 인증 관리 객체
-        // 🔰인증 방식 : 인메모리 방식 - 메모리에 임시로 저장
-        // auth.inMemoryAuthentication()                           
-        //     // .withUser("아이디").password("비밀번호").roles("권한")
-        //     // passwordEncoder.encode("비밀번호")               : 비밀번호 암호화
-        //     .withUser("user").password(passwordEncoder.encode("123456")).roles("USER")
-        //     .and()
-        //     .withUser("admin").password(passwordEncoder.encode("123456")).roles("ADMIN");
-
-        // 🔰인증 방식 : jdbc 인증
-        // String sql1 = " SELECT user_id as username, user_pw as password, enabled " 
-        //             + " FROM user WHERE user_id = ? ";
-        // String sql2 = " SELECT user_id as username, auth "
-        //             + " FROM user_auth WHERE user_id = ? ";
-        // auth.jdbcAuthentication()
-        //     // 데이터 소스 등록
-        //     .dataSource( dataSource )
-        //     // 인증 쿼리    (로그인/비밀번호/활성여부)
-        //     .usersByUsernameQuery(sql1)
-        //     // 인가 쿼리    (아이디/권한)
-        //     .authoritiesByUsernameQuery(sql2)
-        //     // 비밀번호 암호화 방식
-        //     .passwordEncoder( passwordEncoder );
-
-
         // 🔰인증 방식 : 사용자 정의 인증 (UserDetails)
         auth.userDetailsService( customUserDetailsService() )
         // 비밀번호 암호화 방식 지정 - BCryptPasswordEncoder 또는 NoOpPasswordEncoder

@@ -50,11 +50,9 @@ public class LoginSuccessHandler extends SavedRequestAwareAuthenticationSuccessH
 
         // 인증된 사용자 정보 - (아이디/패스워드/권한)
         User user = (User) authentication.getPrincipal();
-
         log.info("아이디 : " + user.getUsername());
         log.info("패스워드 : " + user.getPassword());           // 노출❌ (보안)
         log.info("권한 : " + user.getAuthorities());
-
         super.onAuthenticationSuccess(request, response, authentication);
     }
 
