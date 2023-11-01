@@ -24,7 +24,7 @@ public class CampController {
 
     @GetMapping(value="/campproduct")
     public String campProduct(Model model, Camp camp ) {
-        return ;
+        return "camp/campproduct";
     }
 
     
