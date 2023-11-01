@@ -8,8 +8,6 @@ import com.camp.campon.dto.Camp;
 
 @Mapper
 public interface CampMapper {
-    
-    // 캠핑장 목록    
-    public List<Camp> campList(Camp camp) throws Exception; 
-
+    //상품 최신목록
+    public List<Camp> newList() throws Exception;
 }

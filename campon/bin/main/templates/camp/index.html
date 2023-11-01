@@ -11,6 +11,47 @@
     <title>CampOn(캠프온)</title>
 </head>
 <body layout:fragment="content">
-    
+    <div>
+        광고배너
+    </div>
+    <div>
+        캠핑종류
+        <ul>
+            <li>오토캠핑</li>
+            <li>글램핑</li>
+            <li>카라반</li>
+            <li>펜션</li>
+            <li>캠프닉</li>
+        </ul>
+    </div>
+    <div>
+        검색란
+    </div>
+    <div>
+        중간배너(광고, 이벤트)
+    </div>
+    <div>
+        <button>
+            <a href="/camp/information">캠프온 이용안내</a>
+        </button>
+    </div>
+    <div>
+        신규상품
+        <div th:each="camp : ${campnewList}">
+            <a th:href="|/camp/page?campNo=${camp.campNo}|" th:text="${camp.campName}"></a>
+        </div>
+    </div>
+    <div>
+        추천상품
+        <!-- <div th:each="camp : ${campList}">
+            <a th:href="|/camp/page?campNo=${camp.campNo}|" th:text="${camp.campName}"></a>
+        </div> -->
+    </div>
+    <div>
+        실시간리뷰
+        <!-- <div th:each="camp : ${reviewnewList}">
+            <a th:href="|/board/page?campNo=${board.reviewNo}|" th:text="${camp.campName}"></a>
+        </div> -->
+    </div>
 </body>
 </html>
