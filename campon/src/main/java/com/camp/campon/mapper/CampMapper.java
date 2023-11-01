@@ -1,5 +1,13 @@
 package com.camp.campon.mapper;
 
-public class CampMapper {
-    
+import java.util.List;
+
+import org.apache.ibatis.annotations.Mapper;
+
+import com.camp.campon.dto.Camp;
+
+@Mapper
+public interface CampMapper {
+    //상품 최신목록
+    public List<Camp> newList() throws Exception;
 }
