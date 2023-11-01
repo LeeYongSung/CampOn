@@ -8,11 +8,13 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.camp.campon.dto.Board;
 import com.camp.campon.dto.Camp;
 
 import lombok.extern.slf4j.Slf4j;
 
 import com.camp.campon.dto.Camp;
+import com.camp.campon.service.BoardService;
 import com.camp.campon.service.CampService;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -25,11 +27,17 @@ public class CampController {
 
     @Autowired
     private CampService campService;
+    @Autowired
+    private BoardService boardService;
 
     @GetMapping(value="/index")
     public String campMain(Model model) throws Exception {
         List<Camp> campnewList = campService.newList();
+        List<Camp> campHotList = campService.hotList();
+        List<Board> newReviewList = boardService.newReviewList();
         model.addAttribute("campnewList", campnewList);
+        model.addAttribute("campHotList", campHotList);
+        model.addAttribute("newReviewList", newReviewList);
         return "camp/index";
     }
 
