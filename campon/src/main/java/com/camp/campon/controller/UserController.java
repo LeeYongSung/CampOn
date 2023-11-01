@@ -25,6 +25,9 @@ public class UserController {
         return "user/login";
     }
     
-    
+     @GetMapping(value="/join")
+    public String join(Model model) {
+        return "user/join";
+    }
 
 }
