@@ -18,4 +18,7 @@ public interface CampMapper {
 
     // 메뉴 선택시 해당 목록 출력
     public List<Camp> campSelect(int campTypeNo) throws Exception;
+
+    // 캠핑 종류
+    public List<Camp> camptype() throws Exception;
 }

@@ -13,4 +13,6 @@ public interface CampService {
     public List<Camp> favoritesList() throws Exception;
 
     public List<Camp> campSelect(int campTypeNo) throws Exception;
+
+    public List<Camp> camptype() throws Exception;
 }

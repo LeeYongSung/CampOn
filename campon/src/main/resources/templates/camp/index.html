@@ -16,22 +16,10 @@
     </div>
     <div>
         캠핑종류
-        <ul>
-            <li>
-                <a href="/camp/campproduct?campTypeNo=1">오토캠핑</a>
-            </li>
-            <li>
-                <a href="/camp/campproduct?campTypeNo=2">글램핑</a>
-            </li>
-            <li>
-                <a href="/camp/campproduct?campTypeNo=3">카라반</a>
-            </li>
-            <li>
-                <a href="/camp/campproduct?campTypeNo=4">펜션</a>
-            </li>
-            <li>
-                <a href="/camp/campproduct?campTypeNo=5">캠프닉</a>
-            </li>
+        <ul th:each="camp : ${camptypeList}">
+            <a th:href="|/camp/campproducts?campTypeNo=${camp.campTypeNo}|">
+                <li th:text="${camp.campTypeName}"></li>
+            </a>
         </ul>
     </div>
     <div>
