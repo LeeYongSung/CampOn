@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/UI/user/layout/main_layout}"
+      >
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CampOn(캠프온)</title>
+</head>
+<body layout:fragment="content">
+    <div th:each="img : ${productsimg}">
+        <img th:src="${img.cpiUrl}">
+    </div>
+    캠핑장전체사진
+    <div>
+        캠핑장 환경 :
+        <div th:each="productsenvironment : ${productsenvironment}">
+            <span th:text="${productsenvironment.environmentTypeName}"></span>
+        </div>
+    </div>
+    <div>
+        캠핑장 이름 : <span th:text="${productsproducts.campName}"></span>
+    </div>
+    <hr>
+    <div>기본정보</div>
+    <div>주소 : <span th:text="${productsproducts.campAddress}"></span></div>
+    <div>캠핑장 연락처 : <span th:text="${productsproducts.campTel}"></span></div>
+    <div>캠핑장 오픈날짜 : <span th:text="${productsproducts.campOpen}"></span></div>
+    <div>캠핑장 클로즈날짜 : <span th:text="${productsproducts.campClose}"></span></div>
+    <div>캠핑장 매너타임 : <span th:text="${productsproducts.campCaution}"></span></div>
+    <div> 그동안 <span th:text="${productsreserve}"></span>명이 다녀갔습니다.</div>
+    <hr>
+    <div>캠핑장소개 : <span th:text="${productsproducts.campIntroduction}"></span></div>
+    <hr>
+    <div>
+        캠핑장시설
+        <div th:each="productsfacility : ${productsfacility}">
+            <span th:text="${productsfacility.facilitytypeName}"></span>
+        </div>
+    </div>
+    <hr>
+    <div>카카오API</div>
+    <hr>
+    <div>캠핑장배치도 : <img th:src="${productsproducts.campLayout}"></span></div>
+    <hr>
+    <div>캠핑상품</div>
+    <hr>
+    <div>캠핑장리뷰
+        <span th:text="${productsreview.userName}"></span>
+        <span th:text="${productsreview.campName}"></span>
+        <span th:text="${productsreview.reviewCon}"></span>
+        <img th:src="${productsreview.reviewImg}"></span>
+    </div>
+    <div>캠핑장 리뷰 더보기</div>
+    <hr>
+    <div>캠핑장 운영정책</div>
+    <hr>
+    <div>취소 환불 규정</div>
+    <hr>
+    <div>사업자정보
+        <li>업체명 : <span th:text="${productsseller.companyName}"></span></li>
+        <li>사업자번호 : <span th:text="${productsseller.companyNumber}"></span></li>
+        <li>사업주 : <span th:text="${productsseller.userName}"></span></li>
+    </div>
+</body>
+</html>

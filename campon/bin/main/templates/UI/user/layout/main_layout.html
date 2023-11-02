@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <!-- META -->
+    <th:block th:replace="~{UI/user/fragment/meta::meta}"></th:block>
+    <!-- CSS -->
+    <th:block th:replace="~{UI/user/fragment/link::link}"></th:block>
+</head>
+<body>
+    <div class="section">
+        <!-- header -->
+        <th:block th:replace="~{UI/user/fragment/header::header}"></th:block>
+
+        <!-- content -->
+   
+        <th:block layout:fragment="content"></th:block>
+        
+        <!-- footer -->
+        <th:block th:replace="~{UI/user/fragment/footer::footer}"></th:block>
+    </div>
+
+    <!-- JS -->
+    <th:block th:replace="~{UI/user/fragment/script::script}"></th:block>
+</body>
+</html>

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/UI/user/layout/main_layout}"
+      >
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CampOn(캠프온)</title>
+</head>
+<body layout:fragment="content">
+    <div>
+        광고배너
+    </div>
+    <div>
+        캠핑종류
+        <ul th:each="camp : ${camptypeList}">
+            <a th:href="|/camp/campproducts?campTypeNo=${camp.campTypeNo}|">
+                <li th:text="${camp.campTypeName}"></li>
+            </a>
+        </ul>
+    </div>
+    <div>
+        검색란
+    </div>
+    <div>
+        중간배너(광고, 이벤트)
+    </div>
+    <div>
+        <button>
+            <a href="/camp/information">캠프온 이용안내</a>
+        </button>
+    </div>
+    <div>
+        <h1>신규 상품</h1>
+        <ul th:each="camp : ${campnewList}">
+            <a th:href="|/camp/campproduct?campNo=${camp.campNo}|"><img th:src="${camp.cpiUrl}"></a>
+            <li th:text="${camp.campName}"></li>
+        </ul>
+    </div>
+    <div>
+        <h1>추천 상품</h1>
+        <ul th:each="camp : ${campHotList}">
+            <a th:href="|/camp/campproduct?campNo=${camp.campNo}|"><img th:src="${camp.cpiUrl}"></a>
+            <li th:text="${camp.campName}"></li>
+        </ul>
+    </div>
+    <div>
+        <h1>실시간리뷰</h1>
+        <ul th:each="board : ${newReviewList}">
+            <a th:href="|/board/page?campNo=${board.reviewNo}|"><img th:src="${board.reviewImg}"></a>
+            <a th:href="|/board/page?campNo=${board.reviewNo}|" th:text="${board.reviewCon}"></a>
+            <span th:text="${ #dates.format( board.regDate, 'yyyy-MM-dd') }"></span>
+            <span th:text="${board.campName}"></span>
+        </ul>
+    </div>
+</body>
+</html>

@@ -1,0 +1,26 @@
+header {width: 100%; background-color: white;}
+.main_header {display: flex; justify-content: space-between; padding: 0 1rem;}
+.main_header i {padding-top: 35px;}
+.main_header img {padding-top: 20px;}
+header>nav {border-bottom: 1px solid black;}
+.serch_btn {border: none; background-color: none;}
+.menu {width: 500px; position: fixed; bottom: 0; background-color: white; border-top: 1px solid black;}
+.main_menu {display: flex; justify-content: space-around; padding-left: 0!important; padding-top: 10px;}
+.main_menu>li {width: 100px;}
+.sub_menu {text-align: center; padding-left: 0!important;}
+.sns_box {width: 100%; height: 60px;}
+.sns {display: flex; justify-content: space-around; width: 60%; margin: 0 auto; height: 60px; line-height: 60px; padding-left: 0!important;}
+.info_box {width: 100%; height: 130px;}
+.info {width: 80%; display: flex; justify-content: space-around; margin: 0 auto; padding-left: 0!important; padding-top: 30px;}
+.info li>p {margin-bottom: 0!important; font-size: 0.8em;}
+.info .info_button {width: 125px;}
+.customer_box {width: 100%; height: 60px; background-color: white; border-radius: 10px; box-shadow: 1px 1px 1px 1px black; cursor: pointer;}
+.customer {display: flex; justify-content: space-around; padding-left: 0!important;}
+.customer>li {padding-top: 10px;}
+footer{ width: 100%; height: 500px; background-color: rgb(223, 223, 223);}
+.footer_logo {width: 100%; height: 100px; line-height: 130px; text-align: center;}
+.footer_company_box {width: 100%; height: 50px;}
+.footer_company {width: 70%; height: 50px; line-height: 50px; display: flex; justify-content: space-around; text-align: center; margin: 0 auto; padding-left: 0!important; font-size: 0.8em; font-weight: bold;}
+.footer_con {font-size: 0.7em; width: 100%; text-align: center; height: 60px;}
+.footer_con>p {padding-top: 20px;}
+.footer_copy {width: 100%; height: 60px; text-align: center; line-height: 60px; font-weight: bold;}

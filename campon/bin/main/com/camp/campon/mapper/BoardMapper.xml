@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- namespace="매퍼 인터페이스 경로" -->
+<mapper namespace="com.camp.campon.mapper.BoardMapper">
+
+    <!-- 리뷰 최신목록 -->
+    <select id="newReviewList" resultType="Board">
+        SELECT * FROM review r join campproduct c on r.camp_no = c.camp_no ORDER BY r.reg_date DESC LIMIT 3
+    </select>
+    <select id="productsreview" resultType="Board">
+        SELECT * FROM review r join campproduct c on r.camp_no = c.camp_no join user u on r.user_no = u.user_no where r.camp_no = #{campNo} ORDER BY r.reg_date DESC LIMIT 1
+    </select>
+</mapper>

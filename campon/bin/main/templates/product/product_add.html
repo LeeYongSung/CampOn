@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+    xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{/UI/user/layout/main_layout}">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CampOn(캠프온)</title>
+</head>
+
+<body layout:fragment="content">
+
+    <div class="d-flex justify-content-left mt-4 mb-3">
+        <h3>렌탈샵 상품 등록</h3>
+    </div>
+
+
+    <!-- 상품 등록 화면 -->
+    <div class="container">
+        <form name="" action="/productAddPro" method="post" enctype="multipart/form-data">
+
+
+            <!-- 상품이름 -->
+            <div class="input-group mb-3 r ow border-bottom">
+                <label class="col-md-4 col-form-label" for="">상품 이름</label>
+                <input type="text" class="form-control" name="productName" id="productName">
+            </div>
+
+
+            <!-- 상품이미지 업로드 -->
+            <div class="input-group mb-3 row border-bottom" style="margin-top: 40px;">
+                <label class="col-md-4 col-form-label" for="">상품 이미지</label>
+                <input type="file" class="form-control" name="productThumnail" id="productThumnail">
+            </div>
+
+
+            <!-- 카테고리 -->
+            <div class="input-group mb-3 row border-bottom" style="margin-top: 40px;">
+                <label class="col-md-4 col-form-label" for="">카테고리</label>
+                <div class="col-md-8">
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="productCategory" id="tent" value="텐트">
+                        <label class="form-check-label" for="tent">텐트</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="productCategory" id="table" value="테이블">
+                        <label class="form-check-label" for="table">테이블</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="productCategory" id="chair" value="체어">
+                        <label class="form-check-label" for="chair">체어</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="productCategory" id="mat" value="매트">
+                        <label class="form-check-label" for="mat">매트</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="productCategory" id="lighting" value="조명">
+                        <label class="form-check-label" for="lighting">조명</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="productCategory" id="brazier" value="화로대">
+                        <label class="form-check-label" for="brazier">화로대</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="productCategory" id="tarp" value="타프">
+                        <label class="form-check-label" for="tarp">타프</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="productCategory" id="storage" value="수납">
+                        <label class="form-check-label" for="storage">수납</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="productCategory" id="appliances" value="캠핑가전">
+                        <label class="form-check-label" for="appliances">캠핑가전</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="productCategory" id="Kitchenware" value="주방용품">
+                        <label class="form-check-label" for="Kitchenware">주방용품</label>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- 1일 대여금액 -->
+            <div class="input-group mb-3 row border-bottom" style="margin-top: 40px;">
+                <label class="col-md-4 col-form-label" for="">1일 대여금액</label>
+                <input type="price" class="form-control" style="background-color:#F9F9F9; border-width: 0;"
+                    name="productPrice" id="productPrice">
+            </div>
+
+
+            <!-- 상품 기본내용 -->
+            <div class="input-group mb-3 row border-bottom" style="margin-top: 40px;">
+                <label class="col-md-4 col-form-label" for="">상품 기본내용</label>
+                <input type="number" class="form-control" style="background-color:#F9F9F9; border-width: 0;"
+                    name="basicContent" id="basicContent">
+            </div>
+
+
+            <!-- 상품 상세내용 -->
+            <div class="input-group mb-3 row" style="margin-top: 40px;">
+                <label class="col-md-4 col-form-label" for="">상품 상세내용</label>
+                <textarea class="form-control" name="detailContent" id="detailContent"
+                    style="height: 300px !important; background-color:#F9F9F9;"></textarea>
+            </div>
+
+
+            <!-- 상품등록 -->
+            <div class="d-flex justify-content-center mt-5 mb-5">
+                <input type="submit" class="btn btn-lg btn btn-dark" onclick="return checkProduct()" value="상품등록"
+                    style="width:80%; height:70px;" />
+            </div>
+        </form>
+    </div>
+</body>
+
+</html>
