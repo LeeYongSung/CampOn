@@ -93,4 +93,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         WHERE user_id = #{userId}
     </delete>
 
+    <!-- 캠핑업체판매자 정보-->
+    <select id="productsseller" resultType="Users">
+        select * from user where user_no = (select user_no from campproduct where camp_no = #{campNo})
+    </select>
 </mapper>

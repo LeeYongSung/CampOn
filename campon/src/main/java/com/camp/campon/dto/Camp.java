@@ -18,6 +18,8 @@ public class Camp {
     private String campClose;
     private String campPeriod;
     private String campCaution;
+    private String campIntroduction;
+    private String campLayout;
 
     // 공통 날짜
     private Date regDate;
@@ -49,7 +51,12 @@ public class Camp {
     private int cpiNo;
     private String cpiUrl;
 
+    // 즐겨찾기번호
+    private int favoritesNo;
     // 오픈 시작일 / 종료일 체크
     private String startDate;
     private String endDate;
+
+    // 시설물
+    private String facilitytypeName;
 }

@@ -29,5 +29,8 @@ public interface UserMapper {
 
     // 회원 삭제
     public int delete(String userId) throws Exception;
+
+    // 캠핑업체셀러정보조회
+    public Users productsseller(int campNo) throws Exception;
     
 }
