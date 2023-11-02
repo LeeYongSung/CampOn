@@ -90,5 +90,10 @@ public class CampController {
         return "camp/campproduct";
     }
     
+    @GetMapping(value="/reservation")
+    public String campReservation(Model model) {
+        log.info("오픈일정 안내 페이지 진입...");
+        return "camp/reservation";
+    }
     
 }

@@ -7,7 +7,7 @@ import com.camp.campon.dto.UserAuth;
 
 public interface UserSerivce {
 
-        // 회원 등록
+    // 회원 등록
     public int insert (Users user) throws Exception;
 
     // 회원 조회
