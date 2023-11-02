@@ -22,4 +22,23 @@ public class CampServiceImpl implements CampService{
         List<Camp> campnewList = campMapper.newList();
         return campnewList;
     }
+
+    @Override
+    public List<Camp> favoritesList() throws Exception {
+        List<Camp> favoritesList = campMapper.favoritesList();
+        return favoritesList;
+    }
+
+    @Override
+    public List<Camp> campSelect(int campTypeNo) throws Exception {
+        List<Camp> campselect = campMapper.campSelect(campTypeNo);
+        log.info("campTypeNo : " + campselect);
+        return campselect;
+    }
+    
+    @Override
+    public List<Camp> hotList() throws Exception {
+        List<Camp> campHotList = campMapper.hotList();
+        return campHotList;    
+    }
 }

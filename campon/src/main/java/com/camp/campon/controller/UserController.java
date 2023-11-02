@@ -115,4 +115,9 @@ public class UserController {
     }
     
     
+    @GetMapping(value="/seller")
+    public String userSeller(Model model) {
+        return "user/seller";
+    }    
+
 }

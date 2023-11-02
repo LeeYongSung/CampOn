@@ -5,14 +5,19 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.camp.campon.dto.Board;
+import com.camp.campon.dto.Camp;
+
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import com.camp.campon.dto.Camp;
+import com.camp.campon.service.BoardService;
 import com.camp.campon.service.CampService;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 
 @Slf4j
@@ -22,12 +27,17 @@ public class CampController {
 
     @Autowired
     private CampService campService;
+    @Autowired
+    private BoardService boardService;
 
     @GetMapping(value="/index")
     public String campMain(Model model) throws Exception {
-        System.out.println("test");
         List<Camp> campnewList = campService.newList();
+        List<Camp> campHotList = campService.hotList();
+        List<Board> newReviewList = boardService.newReviewList();
         model.addAttribute("campnewList", campnewList);
+        model.addAttribute("campHotList", campHotList);
+        model.addAttribute("newReviewList", newReviewList);
         return "camp/index";
     }
 
@@ -35,12 +45,27 @@ public class CampController {
     public String information() {
         return "camp/information";
     }
-    
+     
     @GetMapping(value="/insertProduct")
     public String insertProduct() {
         return "camp/insertProduct";
     }
+
+    @GetMapping(value="/favorites")
+    public String favoritesList(Model model) throws Exception {
+        List<Camp> favoritesList = campService.favoritesList();
+        model.addAttribute("favoritesList", favoritesList);
+        return "camp/favorites";
+    }
     
+    
+    @GetMapping(value="/campproduct")
+    public String campProduct(Model model, int campTypeNo) throws Exception {
+        List<Camp> campselect = campService.campSelect(campTypeNo);
+        log.info("campselect" + campselect);
+        model.addAttribute("campselect", campselect);
+        return "camp/campproduct";
+    }
     
     
 }

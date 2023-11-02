@@ -17,11 +17,21 @@
     <div>
         캠핑종류
         <ul>
-            <li>오토캠핑</li>
-            <li>글램핑</li>
-            <li>카라반</li>
-            <li>펜션</li>
-            <li>캠프닉</li>
+            <li>
+                <a href="/camp/campproduct?campTypeNo=1">오토캠핑</a>
+            </li>
+            <li>
+                <a href="/camp/campproduct?campTypeNo=2">글램핑</a>
+            </li>
+            <li>
+                <a href="/camp/campproduct?campTypeNo=3">카라반</a>
+            </li>
+            <li>
+                <a href="/camp/campproduct?campTypeNo=4">펜션</a>
+            </li>
+            <li>
+                <a href="/camp/campproduct?campTypeNo=5">캠프닉</a>
+            </li>
         </ul>
     </div>
     <div>
@@ -36,22 +46,29 @@
         </button>
     </div>
     <div>
-        신규상품
-        <div th:each="camp : ${campnewList}">
+        <h1>신규 상품</h1>
+        <ul th:each="camp : ${campnewList}">
+            <a th:href="|/camp/page?campNo=${camp.campNo}|"><img th:src="${camp.cpiUrl}"></a>
             <a th:href="|/camp/page?campNo=${camp.campNo}|" th:text="${camp.campName}"></a>
-        </div>
+            <li th:text="${camp.campName}"></li>
+        </ul>
     </div>
     <div>
-        추천상품
-        <!-- <div th:each="camp : ${campList}">
+        <h1>추천 상품</h1>
+        <ul th:each="camp : ${campHotList}">
+            <a th:href="|/camp/page?campNo=${camp.campNo}|"><img th:src="${camp.cpiUrl}"></a>
             <a th:href="|/camp/page?campNo=${camp.campNo}|" th:text="${camp.campName}"></a>
-        </div> -->
+            <li th:text="${camp.campName}"></li>
+        </ul>
     </div>
     <div>
-        실시간리뷰
-        <!-- <div th:each="camp : ${reviewnewList}">
-            <a th:href="|/board/page?campNo=${board.reviewNo}|" th:text="${camp.campName}"></a>
-        </div> -->
+        <h1>실시간리뷰</h1>
+        <ul th:each="board : ${newReviewList}">
+            <a th:href="|/board/page?campNo=${board.reviewNo}|"><img th:src="${board.reviewImg}"></a>
+            <a th:href="|/board/page?campNo=${board.reviewNo}|" th:text="${board.reviewCon}"></a>
+            <span th:text="${ #dates.format( board.regDate, 'yyyy-MM-dd') }"></span>
+            <span th:text="${board.campName}"></span>
+        </ul>
     </div>
 </body>
 </html>

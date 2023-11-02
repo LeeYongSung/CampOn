@@ -8,11 +8,37 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
     <!-- 캠프 목록 -->
     <select id="list" resultType="Camp">
-        SELECT * FROM campproduct
+        SELECT * 
+        FROM campproduct
     </select>
+
+    <select id="campSelect" resultType="Camp">
+        SELECT *
+        FROM campproduct c
+        JOIN campdetail cd ON c.camp_no = cd.camp_no
+        JOIN camptype ct ON cd.camptype_no = ct.camptype_no
+        JOIN campimg img ON c.camp_no = img.camp_no 
+        JOIN (SELECT max(cpi_no) no FROM campimg GROUP BY camp_no) imgno ON img.cpi_no = imgno.no
+        WHERE ct.camptype_no = #{campTypeNo}
+        ORDER BY c.camp_no DESC;
+    </select>
+    
     <!-- 캠프 최신목록 -->
     <select id="newList" resultType="Camp">
-        SELECT * FROM campproduct ORDER BY reg_date DESC LIMIT 6
+        SELECT * 
+        FROM campproduct c 
+        join campimg img on c.camp_no = img.camp_no 
+        join (select min(cpi_no) no from campimg group by camp_no) imgno on img.cpi_no = imgno.no
+        order by c.reg_date desc limit 6
+    </select>
+    <!-- 캠프 추천목록 -->
+    <select id="hotList" resultType="Camp">
+        SELECT * 
+        FROM campproduct c 
+        join campimg img on c.camp_no = img.camp_no 
+        join (select min(cpi_no) no from campimg group by camp_no) imgno on img.cpi_no = imgno.no
+        join (select camp_no, count(*) c from reservation group by camp_no) r on c.camp_no = r.camp_no
+        order by r.c desc limit 6
     </select>
     <!-- 캠핑장 등록 -->
     <insert id="insertCamp">
@@ -27,5 +53,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <!-- 캠핑장 삭제 -->
 
     <!-- 캠프상품 삭제-->
+
+
+    <!-- 찜 상품 목록 -->
+    <select id="favoritesList" resultType="Camp">
+        SELECT * FROM favorites f join campproduct c on f.camp_no = c.camp_no
+    </select>
 
 </mapper>
