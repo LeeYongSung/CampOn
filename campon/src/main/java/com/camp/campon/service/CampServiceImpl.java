@@ -56,7 +56,7 @@ public class CampServiceImpl implements CampService{
         for(int i = 0; i < reservationList.size(); i++) {
             Camp camp = new Camp();
 
-            camp.
+            
         }
 
         return reservationList;
