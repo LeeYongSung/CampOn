@@ -14,6 +14,7 @@ public interface CampService {
 
     // 즐겨찾기 목록
     public List<Camp> favoritesList() throws Exception;
+    public int favoriteDelete(int favoritesNo) throws Exception;
 
     // 캠핑장 목록
     public List<Camp> campSelect(int campTypeNo) throws Exception;
@@ -21,6 +22,12 @@ public interface CampService {
     // 캠핑 종류
     public List<Camp> camptype() throws Exception;
 
+    // 캠핑장 페이지
+    public List<Camp> productsimg(int campNo) throws Exception;
+    public Camp productsproducts(int campNo) throws Exception;
+    public int productsreserve(int campNo) throws Exception; 
+    public List<Camp> productsenvironment(int campNo) throws Exception;
+    public List<Camp> productsfacility(int campNo) throws Exception;  
     // 예약 일정
     public List<Camp> reservation(Camp camp) throws Exception;
     
