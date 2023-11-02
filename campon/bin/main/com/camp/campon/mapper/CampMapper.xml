@@ -87,7 +87,28 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     
     <!-- 찜 상품 목록 -->
     <select id="favoritesList" resultType="Camp">
-        SELECT * FROM favorites f join campproduct c on f.camp_no = c.camp_no
+        SELECT * FROM favorites f join campproduct c on f.camp_no = c.camp_no ORDER BY favorites_no DESC
+    </select>
+    <!-- 찜 상품 삭제 -->
+    <delete id="favoriteDelete">
+        DELETE FROM favorites WHERE favorites_no = #{favoritesNo}
+    </delete>
+
+    <!--캠핑장페이지-->
+    <select id="productsimg" resultType="Camp">
+        select * from campimg where camp_no = #{campNo}
+    </select>
+    <select id="productsproducts" resultType="Camp">
+        select * from campproduct where camp_no = #{campNo}
+    </select>
+    <select id="productsreserve">
+        select count(*) from reservation where camp_no = #{campNo}
+    </select>
+    <select id="productsenvironment" resultType="Camp">
+        select * from environmenttype t join environment e on t.environmenttype_no = e.environmenttype_no where camp_no = (select camp_no from campproduct where camp_no = #{campNo})
+    </select>
+    <select id="productsfacility" resultType="Camp">
+        select * from facility f join facilitytype ft on f.facilitytype_no = ft.facilitytype_no where f.camp_no =#{campNo}
     </select>
 
 </mapper>
