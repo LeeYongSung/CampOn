@@ -42,11 +42,29 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </select>
 
     <!-- 회원 조회 - id -->
-    <select id="selectById" resultType="Users">
+    <select id="login" resultType="Users">
         SELECT *
         FROM user
         WHERE user_id = #{userId}
     </select>
+
+        <!-- 회원 조회 - id -->
+    <!-- <select id="login" resultMap="userMap">
+        SELECT u.user_no
+              ,u.user_id
+              ,user_pw
+              ,name
+              ,email
+              ,enabled
+              ,reg_date
+              ,upd_date
+              ,auth
+        FROM user u LEFT OUTER JOIN user_auth auth 
+                    ON u.user_id = auth.user_id
+        WHERE u.user_id = #{userId}
+    </select> -->
+
+
 
     <!-- 회원 권한 등록 -->
     <!-- <insert id="insertAuth">

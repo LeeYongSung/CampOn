@@ -68,7 +68,8 @@ public class UserController {
     @PostMapping(value="/join")
     public String joinPro(Users user, HttpServletRequest request) throws Exception {
         int result = userService.insert(user);
-        // 회원 가입 성공 시, 바로 로그인
+        log.info(result + "");
+        //회원 가입 성공 시, 바로 로그인
         if( result > 0 ) {  
             userService.login(user, request);
         }
@@ -119,5 +120,11 @@ public class UserController {
     public String userSeller(Model model) {
         return "user/seller";
     }    
+
+    //마이페이지
+    @GetMapping("/mypage")
+    public String mypage(Principal principal){
+        return "user/mypage";
+    }
 
 }
