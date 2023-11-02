@@ -79,7 +79,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         ORDER BY c.camp_no DESC;
     </select>
     <!-- 예약일정 가져오기 -->
-    <select id="reservation" resultType="Camp"></select>
+    <select id="reservation" resultType="Camp">
         SELECT * 
         FROM reservation re
         JOIN campproduct c ON re.camp_no = c.camp_no
