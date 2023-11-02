@@ -48,16 +48,14 @@
     <div>
         <h1>신규 상품</h1>
         <ul th:each="camp : ${campnewList}">
-            <a th:href="|/camp/page?campNo=${camp.campNo}|"><img th:src="${camp.cpiUrl}"></a>
-            <a th:href="|/camp/page?campNo=${camp.campNo}|" th:text="${camp.campName}"></a>
+            <a th:href="|/camp/campproduct?campNo=${camp.campNo}|"><img th:src="${camp.cpiUrl}"></a>
             <li th:text="${camp.campName}"></li>
         </ul>
     </div>
     <div>
         <h1>추천 상품</h1>
         <ul th:each="camp : ${campHotList}">
-            <a th:href="|/camp/page?campNo=${camp.campNo}|"><img th:src="${camp.cpiUrl}"></a>
-            <a th:href="|/camp/page?campNo=${camp.campNo}|" th:text="${camp.campName}"></a>
+            <a th:href="|/camp/campproduct?campNo=${camp.campNo}|"><img th:src="${camp.cpiUrl}"></a>
             <li th:text="${camp.campName}"></li>
         </ul>
     </div>
