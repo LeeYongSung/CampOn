@@ -56,4 +56,7 @@ public class Camp {
     // 오픈 시작일 / 종료일 체크
     private String startDate;
     private String endDate;
+
+    // 시설물
+    private String facilitytypeName;
 }

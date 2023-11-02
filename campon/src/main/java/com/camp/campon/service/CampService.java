@@ -25,7 +25,9 @@ public interface CampService {
     // 캠핑장 페이지
     public List<Camp> productsimg(int campNo) throws Exception;
     public Camp productsproducts(int campNo) throws Exception;
-    public int productsreserve(int campNo) throws Exception;   
+    public int productsreserve(int campNo) throws Exception; 
+    public List<Camp> productsenvironment(int campNo) throws Exception;
+    public List<Camp> productsfacility(int campNo) throws Exception;  
     // 예약 일정
     public List<Camp> reservation(Camp camp) throws Exception;
     

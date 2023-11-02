@@ -45,21 +45,21 @@ public class CampServiceImpl implements CampService{
         List<Camp> campHotList = campMapper.hotList();
         return campHotList;    
     }
-
+    
     @Override
     public List<Camp> camptype() throws Exception {
         List<Camp> camptypeList = campMapper.camptype();
-
+        
         return camptypeList;
     }
-
+    
     @Override
     public int favoriteDelete(int favoritesNo) throws Exception {
         int result = campMapper.favoriteDelete(favoritesNo);
         return result;
     }
-
-
+    
+    
     // 캠핑장 페이지
     @Override
     public List<Camp> productsimg(int campNo) throws Exception {
@@ -77,12 +77,26 @@ public class CampServiceImpl implements CampService{
     public int productsreserve(int campNo) throws Exception {
         int productsreserve = campMapper.productsreserve(campNo);
         return productsreserve;
+    }
+    @Override
+    public List<Camp> productsenvironment(int campNo) throws Exception {
+        List<Camp> productsenvironment = campMapper.productsenvironment(campNo);
+        return productsenvironment;
+    }
+    @Override
+    public List<Camp> productsfacility(int campNo) throws Exception {
+        List<Camp> productsfacility = campMapper.productsfacility(campNo);
+        return productsfacility;
+    }
+    
+    
+    // 예약
     public List<Camp> reservation(Camp camp) throws Exception {
         List<Camp> reservationList = campMapper.reservation(camp);
-
+        
         return reservationList;
     }
-
+    
     @Override
     public List<Camp> schedule(Camp camp) throws Exception {
         List<Camp> scheduleList = campMapper.schedule(camp);
@@ -96,4 +110,6 @@ public class CampServiceImpl implements CampService{
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'cpdtList'");
     }
+
+
 }

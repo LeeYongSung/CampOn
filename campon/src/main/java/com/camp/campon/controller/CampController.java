@@ -12,12 +12,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.camp.campon.dto.Board;
 import com.camp.campon.dto.Camp;
+import com.camp.campon.dto.Users;
 
 import lombok.extern.slf4j.Slf4j;
 
 import com.camp.campon.dto.Camp;
 import com.camp.campon.service.BoardService;
 import com.camp.campon.service.CampService;
+import com.camp.campon.service.UserService;
+
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -34,6 +37,8 @@ public class CampController {
     private CampService campService;
     @Autowired
     private BoardService boardService;
+    @Autowired
+    private UserService userService;
 
     @GetMapping(value="/index")
     public String campMain(Model model) throws Exception {
@@ -114,10 +119,18 @@ public class CampController {
         List<Camp> productsimg = campService.productsimg(campNo);
         Camp productsproducts = campService.productsproducts(campNo);
         int productsreserve = campService.productsreserve(campNo);
+        Users productsseller = userService.productsseller(campNo);
+        List<Camp> productsenvironment = campService.productsenvironment(campNo);
+        Board productsreview = boardService.productsreview(campNo);
+        List<Camp> productsfacility = campService.productsfacility(campNo);
         
         model.addAttribute("productsimg", productsimg);
         model.addAttribute("productsproducts", productsproducts);
         model.addAttribute("productsreserve", productsreserve);
+        model.addAttribute("productsseller", productsseller);
+        model.addAttribute("productsenvironment", productsenvironment);
+        model.addAttribute("productsreview", productsreview);
+        model.addAttribute("productsfacility", productsfacility);
         
         
         return "camp/campproduct";

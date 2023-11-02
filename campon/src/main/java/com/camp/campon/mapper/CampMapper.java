@@ -30,6 +30,8 @@ public interface CampMapper {
     public List<Camp> productsimg(int campNo) throws Exception;
     public Camp productsproducts(int campNo) throws Exception;
     public int productsreserve(int campNo) throws Exception;
+    public List<Camp> productsenvironment(int campNo) throws Exception;
+    public List<Camp> productsfacility(int campNo) throws Exception;
     // 오픈 일정
     public List<Camp> reservation(Camp camp) throws Exception;
 
