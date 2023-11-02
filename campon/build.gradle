@@ -39,6 +39,10 @@ dependencies {
 
 	// 타임리프 레이아웃 다이얼렉트
 	implementation 'nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect'
+
+	// aop
+	implementation 'org.springframework.boot:spring-boot-starter-aop'
+
 }
 
 tasks.named('test') {
