@@ -42,10 +42,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         order by r.c desc limit 6
     </select>
 
+    <!-- 캠핑 타입 목록 -->
     <select id="camptype" resultType="Camp">
         SELECT *
         FROM camptype
     </select>
+
     <!-- 캠핑장 등록 -->
     <insert id="insertCamp">
         
@@ -60,7 +62,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
     <!-- 캠프상품 삭제-->
 
-
+    <!-- 오픈일정 가져오기 -->
+    <select id="reservation" resultType="Camp">
+        SELECT * FROM reservation
+    </select>
+    
     <!-- 찜 상품 목록 -->
     <select id="favoritesList" resultType="Camp">
         SELECT * FROM favorites f join campproduct c on f.camp_no = c.camp_no

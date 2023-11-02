@@ -3,6 +3,7 @@ header {width: 100%; background-color: white;}
 .main_header i {padding-top: 20px;}
 .main_header img {padding-top: 20px;}
 header>nav {border-bottom: 1px solid black;}
+.serch_btn {border: none; background-color: none;}
 .menu {width: 600px; position: fixed; bottom: 0; background-color: white; border-top: 1px solid black;}
 .main_menu {display: flex; justify-content: space-around; padding-left: 0!important; padding-top: 10px;}
 .main_menu>li {width: 100px;}
