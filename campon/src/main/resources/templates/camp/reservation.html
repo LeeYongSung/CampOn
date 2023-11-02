@@ -8,10 +8,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CampOn(캠프온) 오픈일정</title>
+    <title>CampOn(캠프온)</title>
 </head>
 <body layout:fragment="content">
-    <h3>오픈일정페이지</h3>
-    
+    <div>
+        <ul th:each="camp : ${campselect}">
+            <li th:text="${camp.campTypeName}"></li>
+            <li th:text="${camp.campName}"></li>
+            <li></li>
+            <li></li>
+        </ul>
+    </div>
 </body>
 </html>
