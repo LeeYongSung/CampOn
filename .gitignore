@@ -31,3 +31,5 @@ replay_pid*
 # gradle 확장 설정 파일 무시
 .gradle/
 
+# Mysql 설정 및 포트 설정
+application.properties
