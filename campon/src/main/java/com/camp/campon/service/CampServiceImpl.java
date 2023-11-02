@@ -48,4 +48,30 @@ public class CampServiceImpl implements CampService{
 
         return camptypeList;
     }
+
+    @Override
+    public int favoriteDelete(int favoritesNo) throws Exception {
+        int result = campMapper.favoriteDelete(favoritesNo);
+        return result;
+    }
+
+
+    // 캠핑장 페이지
+    @Override
+    public List<Camp> productsimg(int campNo) throws Exception {
+        List<Camp> productsimg = campMapper.productsimg(campNo);
+        return productsimg;
+    }
+    
+    @Override
+    public Camp productsproducts(int campNo) throws Exception {
+        Camp productsproducts = campMapper.productsproducts(campNo);
+        return productsproducts;
+    }
+    
+    @Override
+    public int productsreserve(int campNo) throws Exception {
+        int productsreserve = campMapper.productsreserve(campNo);
+        return productsreserve;
+    }
 }

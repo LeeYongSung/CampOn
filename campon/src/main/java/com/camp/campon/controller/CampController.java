@@ -17,6 +17,9 @@ import com.camp.campon.dto.Camp;
 import com.camp.campon.service.BoardService;
 import com.camp.campon.service.CampService;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+
 
 
 
@@ -82,13 +85,43 @@ public class CampController {
      * @return
      * @throws Exception
      */
-    @GetMapping(value="/campproduct")
+    @GetMapping(value="/campproducts")
     public String campProduct(Model model, int campTypeNo) throws Exception {
         List<Camp> campselect = campService.campSelect(campTypeNo);
         log.info("campselect" + campselect);
         model.addAttribute("campselect", campselect);
+        return "camp/campproducts";
+    }
+    
+    /**
+     * 즐겨찾기 항목 삭제
+     * @param favoritesNo
+     * @return
+     * @throws Exception
+     */
+    @GetMapping(value="/favoriteDelete")
+    public String favoriteDelete(int favoritesNo) throws Exception {
+        int result = campService.favoriteDelete(favoritesNo);
+        if(result==0) return "redirect:/camp/favorites";
+        return "redirect:/camp/favorites";
+    }
+    
+    //캠핑장페이지
+    @GetMapping(value="/campproduct")
+    public String campProducts(Model model, int campNo) throws Exception {
+        List<Camp> productsimg = campService.productsimg(campNo);
+        Camp productsproducts = campService.productsproducts(campNo);
+        int productsreserve = campService.productsreserve(campNo);
+        
+        model.addAttribute("productsimg", productsimg);
+        model.addAttribute("productsproducts", productsproducts);
+        model.addAttribute("productsreserve", productsreserve);
+        
+        
         return "camp/campproduct";
     }
+    
+    
     
     
 }
