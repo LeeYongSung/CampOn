@@ -84,18 +84,18 @@ public class CampController {
      * @return
      * @throws Exception
      */
-    @GetMapping(value="/campproduct")
+    @GetMapping(value="/campproducts")
     public String campProduct(Model model, int campTypeNo) throws Exception {
         List<Camp> campselect = campService.campSelect(campTypeNo);
         log.info("campselect" + campselect);
         model.addAttribute("campselect", campselect);
-        return "camp/campproduct";
+        return "camp/campproducts";
     }
     
     @GetMapping(value="/reservation")
     public String campReservation(Model model, Camp camp) throws Exception {
-        log.info("오픈일정 안내 페이지 진입...");
-        List<Camp> reservationList = campService.reservation(camp);
+        log.info("예약 조회페이지 진입...");
+        List<Camp> reservationList = campService.reservation();
 
         for(int i = 0; i < reservationList.size(); i++) {
             int campNo = reservationList.get(i).getCampNo();

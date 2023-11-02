@@ -22,7 +22,7 @@ public interface CampService {
     public List<Camp> camptype() throws Exception;
 
     // 예약 일정
-    public List<Camp> reservation(Camp camp) throws Exception;
+    public List<Camp> reservation() throws Exception;
     
     // 오픈 일정
     public List<Camp> schedule(Camp camp) throws Exception;

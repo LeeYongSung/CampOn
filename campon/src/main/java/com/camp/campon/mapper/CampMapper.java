@@ -24,8 +24,8 @@ public interface CampMapper {
     // 캠핑 종류
     public List<Camp> camptype() throws Exception;
 
-    // 오픈 일정
-    public List<Camp> reservation(Camp camp) throws Exception;
+    // 예약 조회
+    public List<Camp> reservation() throws Exception;
 
     // 오픈 일정
     public List<Camp> schedule(Camp camp) throws Exception;

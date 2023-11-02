@@ -54,8 +54,8 @@ public class CampServiceImpl implements CampService{
     }
 
     @Override
-    public List<Camp> reservation(Camp camp) throws Exception {
-        List<Camp> reservationList = campMapper.reservation(camp);
+    public List<Camp> reservation() throws Exception {
+        List<Camp> reservationList = campMapper.reservation();
 
         return reservationList;
     }
