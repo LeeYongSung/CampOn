@@ -91,8 +91,8 @@ public class CampServiceImpl implements CampService{
     
     
     // 예약
-    public List<Camp> reservation() throws Exception {
-        List<Camp> reservationList = campMapper.reservation();
+    public List<Camp> reservation(Integer userNo) throws Exception {
+        List<Camp> reservationList = campMapper.reservation(userNo);
         
         return reservationList;
     }
