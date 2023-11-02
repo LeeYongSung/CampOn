@@ -53,4 +53,7 @@ public class Camp {
 
     // 즐겨찾기번호
     private int favoritesNo;
+    // 오픈 시작일 / 종료일 체크
+    private String startDate;
+    private String endDate;
 }

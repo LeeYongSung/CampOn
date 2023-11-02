@@ -1,5 +1,9 @@
 package com.camp.campon.service;
 
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -73,5 +77,23 @@ public class CampServiceImpl implements CampService{
     public int productsreserve(int campNo) throws Exception {
         int productsreserve = campMapper.productsreserve(campNo);
         return productsreserve;
+    public List<Camp> reservation(Camp camp) throws Exception {
+        List<Camp> reservationList = campMapper.reservation(camp);
+
+        return reservationList;
+    }
+
+    @Override
+    public List<Camp> schedule(Camp camp) throws Exception {
+        List<Camp> scheduleList = campMapper.schedule(camp);
+
+        return scheduleList;
+
+    }
+
+    @Override
+    public List<Camp> cpdtList(int cpdtNo) throws Exception {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'cpdtList'");
     }
 }

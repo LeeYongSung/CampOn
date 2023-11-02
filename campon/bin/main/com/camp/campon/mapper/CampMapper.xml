@@ -11,6 +11,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         SELECT * 
         FROM campproduct
     </select>
+    
+    <select id="cpdtlist" resultType="Camp">
+        SELECT *
+        FROM campdetail
+    </select>
 
     <select id="campSelect" resultType="Camp">
         SELECT *
@@ -18,7 +23,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         JOIN campdetail cd ON c.camp_no = cd.camp_no
         JOIN camptype ct ON cd.camptype_no = ct.camptype_no
         JOIN campimg img ON c.camp_no = img.camp_no 
-        JOIN (SELECT max(cpi_no) no FROM campimg GROUP BY camp_no) imgno ON img.cpi_no = imgno.no
+        JOIN (SELECT min(cpi_no) no FROM campimg GROUP BY camp_no) imgno ON img.cpi_no = imgno.no
         WHERE ct.camptype_no = #{campTypeNo}
         ORDER BY c.camp_no DESC;
     </select>
@@ -42,10 +47,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         order by r.c desc limit 6
     </select>
 
+    <!-- 캠핑 타입 목록 -->
     <select id="camptype" resultType="Camp">
         SELECT *
         FROM camptype
     </select>
+
     <!-- 캠핑장 등록 -->
     <insert id="insertCamp">
         
@@ -60,7 +67,24 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
     <!-- 캠프상품 삭제-->
 
-
+    <!-- 오픈일정 가져오기 -->
+    <select id="schedule" resultType="Camp">
+        SELECT *
+        FROM campproduct c
+        JOIN campdetail cd ON c.camp_no = cd.camp_no
+        JOIN camptype ct ON cd.camptype_no = ct.camptype_no
+        JOIN campimg img ON c.camp_no = img.camp_no 
+        JOIN (SELECT min(cpi_no) no FROM campimg GROUP BY camp_no) imgno ON img.cpi_no = imgno.no
+        WHERE c.camp_open BETWEEN #{campOpen} AND #{campClose}
+        ORDER BY c.camp_no DESC;
+    </select>
+    <!-- 예약일정 가져오기 -->
+    <select id="reservation" resultType="Camp"></select>
+        SELECT * 
+        FROM reservation re
+        JOIN campproduct c ON re.camp_no = c.camp_no
+    </select>
+    
     <!-- 찜 상품 목록 -->
     <select id="favoritesList" resultType="Camp">
         SELECT * FROM favorites f join campproduct c on f.camp_no = c.camp_no ORDER BY favorites_no DESC

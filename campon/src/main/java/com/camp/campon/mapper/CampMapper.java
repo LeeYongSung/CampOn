@@ -8,8 +8,10 @@ import com.camp.campon.dto.Camp;
 
 @Mapper
 public interface CampMapper {
+
     // 상품 최신목록
     public List<Camp> newList() throws Exception;
+
     //상품 추천목록
     public List<Camp> hotList() throws Exception;
 
@@ -28,4 +30,12 @@ public interface CampMapper {
     public List<Camp> productsimg(int campNo) throws Exception;
     public Camp productsproducts(int campNo) throws Exception;
     public int productsreserve(int campNo) throws Exception;
+    // 오픈 일정
+    public List<Camp> reservation(Camp camp) throws Exception;
+
+    // 오픈 일정
+    public List<Camp> schedule(Camp camp) throws Exception;
+
+    // 캠핑 상세
+    public List<Camp> cpdtList(int cpdtNo) throws Exception;
 }
