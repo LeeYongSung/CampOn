@@ -48,4 +48,8 @@ public class Camp {
     // 캠핑장 이미지
     private int cpiNo;
     private String cpiUrl;
+
+    // 오픈 시작일 / 종료일 체크
+    private String startDate;
+    private String endDate;
 }

@@ -21,6 +21,12 @@ public interface CampService {
     // 캠핑 종류
     public List<Camp> camptype() throws Exception;
 
+    // 예약 일정
+    public List<Camp> reservation(Camp camp) throws Exception;
+    
     // 오픈 일정
-    public List<Camp> reservation() throws Exception;
+    public List<Camp> schedule(Camp camp) throws Exception;
+    
+    // 캠핑 상세
+    public List<Camp> cpdtList(int cpdtNo) throws Exception;
 }
