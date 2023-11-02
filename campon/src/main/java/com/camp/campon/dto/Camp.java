@@ -35,7 +35,7 @@ public class Camp {
     private int userNo;
 
     // 캠핑종류
-    private int camptypeNo;
+    private int campTypeNo;
     private String campTypeName;
 
     // 환경

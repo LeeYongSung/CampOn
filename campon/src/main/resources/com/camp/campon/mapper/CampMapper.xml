@@ -31,6 +31,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         join (select min(cpi_no) no from campimg group by camp_no) imgno on img.cpi_no = imgno.no
         order by c.reg_date desc limit 6
     </select>
+    
     <!-- 캠프 추천목록 -->
     <select id="hotList" resultType="Camp">
         SELECT * 
@@ -39,6 +40,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         join (select min(cpi_no) no from campimg group by camp_no) imgno on img.cpi_no = imgno.no
         join (select camp_no, count(*) c from reservation group by camp_no) r on c.camp_no = r.camp_no
         order by r.c desc limit 6
+    </select>
+
+    <select id="camptype" resultType="Camp">
+        SELECT *
+        FROM camptype
     </select>
     <!-- 캠핑장 등록 -->
     <insert id="insertCamp">
