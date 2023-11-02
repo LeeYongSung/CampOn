@@ -22,5 +22,11 @@ public class BoardServiceImple implements BoardService {
         List<Board> newReviewList = boardMapper.newReviewList();
         return newReviewList;
     }
+
+    @Override
+    public Board productsreview(int campNo) throws Exception {
+        Board productsreview = boardMapper.productsreview(campNo);
+        return productsreview;
+    }
     
 }

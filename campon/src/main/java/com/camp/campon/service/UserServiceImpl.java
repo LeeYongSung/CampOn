@@ -101,5 +101,11 @@ public class UserServiceImpl implements UserService {
         int result = userMapper.delete(userId);
         return result;
     }
+
+    @Override
+    public Users productsseller(int campNo) throws Exception {
+        Users seller = userMapper.productsseller(campNo);
+        return seller;
+    }
     
 }

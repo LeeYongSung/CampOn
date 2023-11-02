@@ -10,4 +10,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <select id="newReviewList" resultType="Board">
         SELECT * FROM review r join campproduct c on r.camp_no = c.camp_no ORDER BY r.reg_date DESC LIMIT 3
     </select>
+    <select id="productsreview" resultType="Board">
+        SELECT * FROM review r join campproduct c on r.camp_no = c.camp_no join user u on r.user_no = u.user_no where r.camp_no = #{campNo} ORDER BY r.reg_date DESC LIMIT 1
+    </select>
 </mapper>

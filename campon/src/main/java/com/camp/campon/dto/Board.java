@@ -17,4 +17,5 @@ public class Board {
     private int camptypeNo;  //캠핑종류번호가 왜들어가있지??
 
     private String campName;
+    private String userName;
 }
