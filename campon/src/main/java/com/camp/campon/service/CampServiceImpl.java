@@ -41,4 +41,24 @@ public class CampServiceImpl implements CampService{
         List<Camp> campHotList = campMapper.hotList();
         return campHotList;    
     }
+
+    @Override
+    public List<Camp> camptype() throws Exception {
+        List<Camp> camptypeList = campMapper.camptype();
+
+        return camptypeList;
+    }
+
+    @Override
+    public List<Camp> reservation() throws Exception {
+        List<Camp> reservationList = campMapper.reservation();
+
+        for(int i = 0; i < reservationList.size(); i++) {
+            Camp camp = new Camp();
+
+            
+        }
+
+        return reservationList;
+    }
 }

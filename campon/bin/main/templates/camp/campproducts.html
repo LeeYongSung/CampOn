@@ -12,11 +12,13 @@
 </head>
 <body layout:fragment="content">
     <div>
-        <ul th:each="camp : ${campselect}">
-            <li th:text="${camp.campTypeName}"></li>
-            <li th:text="${camp.campName}"></li>
-            <li></li>
-            <li></li>
+        <ul th:each="camp : ${campselect}"> 
+            <a th:href="|camp/campproduct?campNo=${camp.campNo}|">
+                <li><img th:src="${camp.cpiUrl}"></li>
+                <li th:text="${camp.campTypeName}"></li>
+                <li th:text="${camp.campName}"></li>
+                <li></li>
+            </a>
         </ul>
     </div>
 </body>
