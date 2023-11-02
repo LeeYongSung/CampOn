@@ -1,17 +1,24 @@
 package com.camp.campon.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.camp.campon.dto.Product;
+import com.camp.campon.mapper.ProductMapper;
 
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Service
-public class ProductServiceImpl implements ProductService {@Override
-    public int insert(Product product) throws Exception {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'insert'");
+public class ProductServiceImpl implements ProductService {
+
+    @Autowired
+    private ProductMapper productMapper;
+    
+    @Override
+    public int productInsert(Product product) throws Exception {
+        int result = productMapper.productInsert(product);
+        return result;
     }
     
 }
