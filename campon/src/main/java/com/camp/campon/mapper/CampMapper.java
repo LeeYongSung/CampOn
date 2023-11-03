@@ -32,6 +32,7 @@ public interface CampMapper {
     public int productsreserve(int campNo) throws Exception;
     public List<Camp> productsenvironment(int campNo) throws Exception;
     public List<Camp> productsfacility(int campNo) throws Exception;
+    public List<Camp> productsproductlist(int campNo) throws Exception;
 
     // 예약 현황 조회
     public List<Camp> reservation(Integer userNo) throws Exception;
@@ -41,4 +42,8 @@ public interface CampMapper {
 
     // 캠핑 상세
     public List<Camp> cpdtList(int cpdtNo) throws Exception;
+
+    // 캠핑상품 페이지
+    public List<Camp> productimg(int cpdtNo) throws Exception;
+    public Camp productintro(int cpdtNo) throws Exception;
 }

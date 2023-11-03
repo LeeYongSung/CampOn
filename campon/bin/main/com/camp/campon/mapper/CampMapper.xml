@@ -114,5 +114,22 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <select id="productsfacility" resultType="Camp">
         select * from facility f join facilitytype ft on f.facilitytype_no = ft.facilitytype_no where f.camp_no =#{campNo}
     </select>
+    <select id="productsproductlist" resultType="Camp">
+        select * from campdetail cd
+        join campdetailimg cdi on cd.cp_dt_no = cdi.cp_dt_no
+        join (select min(cpdi_no) no from campdetailimg group by cp_dt_no) cdin on cdi.cpdi_no = cdin.no
+        join camptype ct on cd.camptype_no = ct.camptype_no
+        where cd.camp_no=#{campNo}
+    </select>
 
+    <!-- 캠핑상품 페이지 -->
+    <select id="productimg" resultType="Camp">
+        select * from campdetailimg where cp_dt_no = #{cpdtNo}
+    </select>
+    <select id="productintro" resultType="Camp">
+        select * from campdetail cd
+        left join camptype ct on cd.camptype_no = ct.camptype_no
+        left join campproduct c on c.camp_no = cd.camp_no
+        where cd.cp_dt_no = #{cpdtNo}
+    </select>
 </mapper>

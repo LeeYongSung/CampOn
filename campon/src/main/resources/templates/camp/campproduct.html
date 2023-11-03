@@ -47,12 +47,19 @@
     <div>캠핑장배치도 : <img th:src="${productsproducts.campLayout}"></span></div>
     <hr>
     <div>캠핑상품</div>
+    <div th:each="productsproductlist : ${productsproductlist}">
+        <a th:href="|/camp/campdetail?cpdtNo=${productsproductlist.cpdtNo}|"> 이미지 : <img th:src="${productsproductlist.cpdiUrl}"> </a>
+        <div> 캠프타입 : <span th:text="${productsproductlist.campTypeName}"></span></div>
+        <div> 상품명 : <span th:text="${productsproductlist.cpdtName}"></span> </div>
+        <div> 상품명 : <span th:text="${productsproductlist.cpdtPrice}"></span></div>
+    </div>
     <hr>
     <div>캠핑장리뷰
-        <span th:text="${productsreview.userName}"></span>
-        <span th:text="${productsreview.campName}"></span>
-        <span th:text="${productsreview.reviewCon}"></span>
-        <img th:src="${productsreview.reviewImg}"></span>
+        <p th:if="${productsreview == null}" th:text="|등록된 리뷰가 없습니다.|"></p>
+        <p th:if="${productsreview != null}" th:text="${productsreview.userName}"></p>
+        <p th:if="${productsreview != null}" th:text="${productsreview.campName}"></p>
+        <p th:if="${productsreview != null}" th:text="${productsreview.reviewCon}"></p>
+        <img th:if="${productsreview != null}" th:src="${productsreview.reviewImg}">
     </div>
     <div>캠핑장 리뷰 더보기</div>
     <hr>
