@@ -8,41 +8,51 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>로그인</title>
-
 </head>
 <body layout:fragment="content">
-    <h1>로그인</h1>
+    <div class="login_banner">
+        <div class="login_banner_back"></div>
+        <div class="login_banner_txt">
+            <h4>캠핑온에 오신걸 환영합니다.</h4>
+        </div>
+    </div>
 
-    <div class="container">
+    <div class="container-sm">
         <!--주의-->
         <form action="/loginPro" method="POST">
             <!-- csrf -->
             <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
-
-            <input type="text" id="id" name="userId" placeholder="아이디" th:value="${userId}">
-            <br>
-            <input type="password" id="password" name="userPw" placeholder="비밀번호">
-
-            <th:block th:if="${rememberId}">    <!-- ✅ -->
-                <input type="checkbox" name="remember-id" id="remember-id" checked>
-            </th:block>
-            <th:block th:if="${!rememberId}">   <!-- ❌ -->
-                <input type="checkbox" name="remember-id" id="remember-id" >
-            </th:block>
-            <label for="remember-id">아이디 저장</label>
-
-            <!-- 자동로그인(Remember-Md) 기능 -->
-            <!-- remember-me 요청 파라미터로 자동 로그인 여부를 전달 -->
-            <input type="checkbox" name="remember-me" id="remember-me">
-            <label for="remember-me">자동 로그인</label>
-
-            <input type="submit" value="로그인">
-            <a href="/user/join">회원가입하기</a>
-
+            <div class="form-floating my-3">
+                <input type="text" id="id" name="userId" placeholder="아이디" th:value="${userId}" class="form-control">
+                <label for="id">아이디</label>
+            </div>
+            <div class="form-floating">
+                <input type="password" id="password" name="userPw" placeholder="비밀번호" class="form-control">
+                <label for="password">비밀번호</label>
+            </div>
+            <div class="d-flex justify-content-center">
+                <div class="form-check text-start my-3">
+                    <th:block th:if="${rememberId}">    <!-- ✅ -->
+                        <input type="checkbox" name="remember-id" id="remember-id" checked>
+                    </th:block>
+                    <th:block th:if="${!rememberId}">   <!-- ❌ -->
+                        <input type="checkbox" name="remember-id" id="remember-id" >
+                    </th:block>
+                    <label for="remember-id"><span></span>아이디 저장</label>
+                </div>
+            
+                <div class="form-check text-start my-3">
+                    <!-- 자동로그인(Remember-Md) 기능 -->
+                    <!-- remember-me 요청 파라미터로 자동 로그인 여부를 전달 -->
+                    <input type="checkbox" name="remember-me" id="remember-me">
+                    <label for="remember-me"><span></span>자동 로그인</label>
+                </div>
+            </div>
+            <input type="submit" value="로그인" class="btn btn-warning w-100 py-3">
+            <div class="w-100 text-center py-3">
+                <a href="/user/join" class="w-100 text-center">회원가입하기</a>
+            </div>
         </form>
-
-
-
     </div>
 </body>
 </html>

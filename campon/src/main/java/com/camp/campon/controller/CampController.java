@@ -154,6 +154,15 @@ public class CampController {
 
         log.info("예약 조회페이지 진입...");
         
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
+        // List<Users> user = (List<Users>) auth.getPrincipal();
+
+        // log.info("user : " + user);
+
+        // int userNo = user.get(0).getUserNo();
+        // log.info("name : " + userId);
+
         // 임시값
         userNo = 2;
 
@@ -165,14 +174,8 @@ public class CampController {
     }
 
     @GetMapping(value="/schedule")
-    public String campSchedule(Model model, Camp camp, Principal principal) throws Exception {
+    public String campSchedule(Model model, Camp camp) throws Exception {
 
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-
-        String userId = auth.getPrincipal().toString();
-
-        log.info("name : " + userId);
-        
         // 현재 날짜 가져오기
         LocalDate currentDate = LocalDate.now();
         
@@ -201,6 +204,13 @@ public class CampController {
 
         return "camp/schedule";
     }
+
+    @GetMapping(value="/campprogress")
+    public String campProgress(Model model) {
+
+        return "camp/campprogress";
+    }
+    
     
     
     

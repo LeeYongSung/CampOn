@@ -4,7 +4,7 @@ header {width: 100%; background-color: white;}
 .main_header img {padding-top: 20px;}
 header>nav {border-bottom: 1px solid black;}
 .serch_btn {border: none; background-color: none;}
-.menu {width: 500px; position: fixed; bottom: 0; background-color: white; border-top: 1px solid black;}
+.menu {width: 500px; position: fixed; bottom: 0; background-color: white; border-top: 0.5px solid black;}
 .main_menu {display: flex; justify-content: space-around; padding-left: 0!important; padding-top: 10px;}
 .main_menu>li {width: 100px;}
 .sub_menu {text-align: center; padding-left: 0!important;}
@@ -17,10 +17,51 @@ header>nav {border-bottom: 1px solid black;}
 .customer_box {width: 100%; height: 60px; background-color: white; border-radius: 10px; box-shadow: 1px 1px 1px 1px black; cursor: pointer;}
 .customer {display: flex; justify-content: space-around; padding-left: 0!important;}
 .customer>li {padding-top: 10px;}
-footer{ width: 100%; height: 500px; background-color: rgb(223, 223, 223);}
+footer{ width: 100%; height: 550px; background-color: rgba(243, 243, 243, 0.9);}
 .footer_logo {width: 100%; height: 100px; line-height: 130px; text-align: center;}
 .footer_company_box {width: 100%; height: 50px;}
 .footer_company {width: 70%; height: 50px; line-height: 50px; display: flex; justify-content: space-around; text-align: center; margin: 0 auto; padding-left: 0!important; font-size: 0.8em; font-weight: bold;}
 .footer_con {font-size: 0.7em; width: 100%; text-align: center; height: 60px;}
 .footer_con>p {padding-top: 20px;}
 .footer_copy {width: 100%; height: 60px; text-align: center; line-height: 60px; font-weight: bold;}
+
+
+/* 유저 CSS */
+.login_banner {position: relative; width: 100%; height: 200px;}
+.login_banner_back {position: absolute; background-image: url("../img/user/login_banner.jpg"); background-position: 0 -30px; background-size: 100%; z-index: 0; width: 100%; object-fit: cover; height: 200px;}
+.login_banner_txt {position: absolute; z-index: 1; top: 50%; left: 50%; transform: translate(-50%, -50%); }
+.login_banner_txt h4 {color: white; font-size: 1.2em; font-weight: bold;}
+#id {padding-top : 2rem!important; padding-bottom: 2rem!important;}
+#name {padding-top : 2rem!important; padding-bottom: 2rem!important;}
+#userEmail {padding-top : 2rem!important; padding-bottom: 2rem!important;}
+#userTel {padding-top : 2rem!important; padding-bottom: 2rem!important;}
+#userAddress {padding-top : 2rem!important; padding-bottom: 2rem!important;}
+#password {padding-top : 2rem!important; padding-bottom: 2rem!important;}
+#passwordCheck {padding-top : 2rem!important; padding-bottom: 2rem!important;}
+.company_join_info {font-size: 0.8em;}
+
+input[type="checkbox"] {
+    display:none;
+}
+
+input[type="checkbox"] + label {
+    color:black;
+}
+
+input[type="checkbox"] + label span {
+    display:inline-block;
+    width:19px;
+    height:19px;
+    margin:-2px 10px 0 0;
+    vertical-align:middle;
+    background:url(../img/check_radio_sheet.png) left top no-repeat;
+    cursor:pointer;
+}
+
+input[type="checkbox"]:checked + label span {
+    background:url(../img/check_radio_sheet.png) -19px top no-repeat;
+}
+
+
+.none {display: none;}
+.active {display: block;}

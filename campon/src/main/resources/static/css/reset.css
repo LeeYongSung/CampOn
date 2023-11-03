@@ -1,7 +1,7 @@
 * { margin: 0; padding: 0; vertical-align: top; box-sizing: border-box; }
-body { width: 100%; -ms-overflow-style: none; scrollbar-width: none; }
+body { width: 100%; -ms-overflow-style: none; scrollbar-width: none; user-select: none; background-image: url("../img/main_backgroun.jpg"); background-attachment: fixed; background-size: 100%;}
 body::-webkit-scrollbar {display: none;}
-.section { width: 500px; margin: 0 auto; background-color: #aaa; height: 100vh; position: relative;}
+.section { width: 500px; margin: 0 auto; background-color: white; height: auto; position: relative;}
 a { color: inherit; text-decoration: none; }
 li { list-style: none; }
 

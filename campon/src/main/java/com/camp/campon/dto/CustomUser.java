@@ -30,10 +30,12 @@ public class CustomUser extends User{
         //                                                                                     .map( (auth) -> new SimpleGrantedAuthority(users.getAuth()))
         //                                                                                     .collect(Collectors.toList())
         //      );
+
         /**
          * 수정 후
          */
         super(users.getUserId(), users.getUserPw(), Arrays.asList(new SimpleGrantedAuthority(users.getAuth())));
+        
         // super(users.getUserId(), users.getUserPw(), users.getAuthList().stream()
         //                                                                .map( (auth) -> new SimpleGrantedAuthority(auth.getAuth()))
         //                                                                .collect(Collectors.toList()));
