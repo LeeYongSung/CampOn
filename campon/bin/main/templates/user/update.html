@@ -46,6 +46,7 @@
             <!--기업회원일 경우 추가로 필요한 정보-->
             <!--문법이 맞는지 확인 필요(필요)-->
             <th:block th:if="${user.auth.equals('ROLE_SELL')}">
+                <!-- 위 오류나면 이걸로 하기 <th:block sec:authorize="hasRole('ROLE_SELL')"-->
                 <div id="company">
                     <p>기업 정보를 수정하세요.</p>
                     <label for="companyName">업체명</label>

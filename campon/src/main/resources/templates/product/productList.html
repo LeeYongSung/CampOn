@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/UI/user/layout/main_layout}"
+      >
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CampOn(캠프온)</title>
+
+    <style>
+        .active-category { background-color: orange;}
+    </style>
+
+</head>
+<body layout:fragment="content">
+    <div class="container">
+        <!-- 일단 a태그 사용-->
+        <a href="/product?category=텐트" data-category="텐트" class="btn-category"> <button class="btn-category" >텐트</button> </a>
+        <a href="/product?category=테이블" data-category="테이블" class="btn-category"> <button class="btn-category" >테이블</button> </a>
+        <a href="/product?category=체어" data-category="체어" class="btn-category"> <button class="btn-category" >체어</button> </a>
+        <a href="/product?category=매트" data-category="매트" class="btn-category"> <button class="btn-category" >매트</button> </a>
+        <a href="/product?category=조명" data-category="조명" class="btn-category"> <button class="btn-category" >조명</button> </a>
+        <a href="/product?category=화로대" data-category="화로대" class="btn-category"> <button class="btn-category" >화로대</button> </a>
+        <a href="/product?category=타프" data-category="타프" class="btn-category"> <button class="btn-category" >타프</button> </a>
+        <a href="/product?category=수납" data-category="수납" class="btn-category"> <button class="btn-category" >수납</button> </a>
+        <a href="/product?category=캠핑가전" data-category="캠핑가전" class="btn-category"> <button class="btn-category" >캠핑가전</button> </a>
+        <a href="/product?category=주방용품" data-category="주방용품" class="btn-category"> <button class="btn-category" >주방용품</button> </a>
+
+        <!-- ajax 사용할거면 버튼사용-->
+       <!-- <button oncbuttonck="getbuttonst()" class="btn-category" data-category="텐트">텐트</button>
+       <button oncbuttonck="getbuttonst()" class="btn-category" data-category="테이블">테이블</button>
+       <button oncbuttonck="getbuttonst()" class="btn-category" data-category="체어">체어</button>
+       <button oncbuttonck="getbuttonst()" class="btn-category" data-category="조명">조명</button>
+       <button oncbuttonck="getbuttonst()" class="btn-category" data-category="매트">매트</button>
+       <button oncbuttonck="getbuttonst()" class="btn-category" data-category="화로대">화로대</button>
+       <button oncbuttonck="getbuttonst()" class="btn-category" data-category="타프">타프</button>
+       <button oncbuttonck="getbuttonst()" class="btn-category" data-category="수납">수납</button>
+       <button oncbuttonck="getbuttonst()" class="btn-category" data-category="캠핑가전">캠핑가전</button>
+       <button oncbuttonck="getbuttonst()" class="btn-category" data-category="주방용품">주방용품</button> -->
+    </div>
+
+    <!--추천 상품 -->
+
+    <!-- 상품 목록 출력-->
+    <th:block th:each="product : ${productList}">
+        <div style="border: 1px solid black;">
+            <div>
+                <img th:src="${product.productThumnail}" alt="상품썸네일">
+            </div>
+            <div>
+                <div>
+                    <h3>카테고리 : <span th:text="${product.productCategory}"></span></h3>
+                    <h2>상품이름 : <span th:text="${product.productName}"></span></h2>
+                    <p>상품기본내용 : <span th:text="${product.productIntro}"></span></p>
+                </div>
+                <div>
+                    <h2>가격 : <span th:text="${product.productPrice}"></span></h2>
+                    <div>
+                        <a href="|/product?productNo=${productNo}|">상세 정보</a>
+                        <a href="|/product/addCart?productNo=${productNo}|">장바구니</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </th:block>
+
+
+    <script>
+        // 처음 클릭된 버튼 활성화
+        const urlParams = new URL(location.href).searchParams;
+        const category = urlParams.get('category');
+        console.log(category)
+        $('.btn-category').each(function () {
+            let dataNo = $(this).data('category');
+            console.log(dataNo)
+            if (dataNo == category) {
+             //   $(this).addClass("active-category");
+             $(this).children().addClass("active-category");
+            }
+        });
+        //클릭한 버튼 활성화시키기
+        $('.btn-category').on('click', function () {
+            console.log(this)
+           // $('.btn-category').removeClass('active-category'); // 모든 버튼에서 'active-category' 클래스 삭제
+           // $(this).addClass('active-category'); // 현재 클릭한 버튼에 'active-category' 클래스 추가
+           $('.btn-category').children().removeClass('active-category'); // 모든 버튼에서 'active-category' 클래스 삭제
+           $(this).children().addClass('active-category'); // 현재 클릭한 버튼에 'active-category' 클래스 추가
+        });
+
+        //버튼 클릭 시 getList()
+        // function getList(){
+        //     let category = $(this).data('category');
+        //     console.log("/product?category=" + category);
+        //     return "/product?category=" + category
+        // }
+       
+
+
+        // 상품리스트 가져오기 - 에이젝스로 하고싶었으나 실패
+        // function getbuttonst() {
+        //     const url = 'http://localhost:8080/product/getList'
+        //     $.ajax({
+        //         url     :   url,
+        //         type    :   'GET',
+        //         success : function(response) {
+        //             let productList = response
+        //         },
+        //         error           : function(request, status, error){
+        //             alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+        //         }
+        //     })
+        // }
+    </script>
+</body>
+</html>

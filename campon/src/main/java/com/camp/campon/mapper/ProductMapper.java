@@ -1,12 +1,16 @@
 package com.camp.campon.mapper;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Mapper;
 
 import com.camp.campon.dto.Product;
 
 @Mapper
 public interface ProductMapper {
-        // 상품 등록
+    //카테고리별 상품목록
+    public List<Product> getCategoryList(String category) throws Exception;
+    // 상품 등록
     public int productInsert(Product product) throws Exception;
     
 }

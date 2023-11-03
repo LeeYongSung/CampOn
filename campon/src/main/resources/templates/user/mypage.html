@@ -21,20 +21,42 @@
             <div><p>ID : <strong sec:authentication="principal.username"></strong></p></div>
         </div>
 
-        <th:block sec:authorize="isAuthenticated()">
-            <h3>ID : <strong sec:authentication="principal.username">아이디</strong></h3> 
-            <span sec:authentication="principal"></span>      
+        <!--중단 -->
+        <!-- 일반 유저인 경우-->
+        <th:block sec:authorize="hasRole('ROLE_USER')">
+            <div>
+                <a href="/user/update">내정보 관리</a>
+                <a href="#">내 예약 현황</a>
+                <a href="#">구매 후기</a>
+                <a href="#">찜한 캠핑장</a>
+                <a href="#">찜한 상품</a>
+                <a href="#">문의 내역</a>
+            </div>
         </th:block>
 
-        <!--중단 -->
-        <div>
-            <a href="/user/update">내정보 관리</a>
-            <a href="#">내 예약 현황</a>
-            <a href="#">구매 후기</a>
-            <a href="#">찜한 캠핑장</a>
-            <a href="#">찜한 상품</a>
-            <a href="#">문의 내역</a>
-        </div>
+        <!--판매자인 경우-->
+        <th:block sec:authorize="hasRole('ROLE_SELL')">
+            <div>
+                <a href="/user/update">내정보 관리</a>
+                <a href="#">광고 등록</a>
+                <a href="#">우리 캠핑장 후기</a>
+                <a href="#">문의 관리</a>
+            </div>
+        </th:block>
+
+        <!-- 관리자인 경우-->
+        <th:block sec:authorize="hasRole('ROLE_ADMIN')">
+            <div>
+                <a href="#">회원 관리</a>
+                <a href="#">캠핑장 관리</a>
+                <a href="#">광고 관리</a>
+                <a href="#">후기 관리</a>
+                <a href="#">캠핑장 예약 관리</a>
+                <a href="#">스토어상품 관리</a>
+                <a href="#">대여 내역</a>
+                <a href="#">문의 관리</a>
+            </div>
+        </th:block>
 
         <!--하단-->
         <form action="/logout" method="post">

@@ -12,7 +12,7 @@ import org.springframework.security.core.userdetails.User;
 import lombok.Data;
 
 
-
+//@Slf4j
 @Data
 public class CustomUser extends User{
     
@@ -34,6 +34,7 @@ public class CustomUser extends User{
          * 수정 후
          */
         super(users.getUserId(), users.getUserPw(), Arrays.asList(new SimpleGrantedAuthority(users.getAuth())));
+//        log.info(users.getUserId() + users.getUserPw() + users.getAuth());
         // super(users.getUserId(), users.getUserPw(), users.getAuthList().stream()
         //                                                                .map( (auth) -> new SimpleGrantedAuthority(auth.getAuth()))
         //                                                                .collect(Collectors.toList()));
