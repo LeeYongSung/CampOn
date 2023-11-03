@@ -122,6 +122,12 @@ public class CampServiceImpl implements CampService{
         return productintro;
     }
 
+    @Override
+    public Camp reservecomplete(String userId) throws Exception{
+        Camp reservecomplete = campMapper.reservecomplete(userId);
+        return reservecomplete;
+    }
+
 
 
 }

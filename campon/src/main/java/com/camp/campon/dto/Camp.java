@@ -69,4 +69,5 @@ public class Camp {
     private int reservationDate;
     private int userNo;
     private String userName;
+    private String campPaymentType;
 }

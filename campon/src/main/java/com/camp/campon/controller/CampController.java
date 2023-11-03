@@ -224,4 +224,28 @@ public class CampController {
         return "camp/campdetail";
     }
     
+    @GetMapping(value="/complete")
+    public String complete(Model model ) throws Exception {
+        Camp reservecomplete = null;
+        
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
+        String userId = "user";
+        // String userId = auth.getName();
+
+        log.info("name : " + userId);
+
+        Users user = userService.selectById(userId);
+
+        String name = user.getUserId();
+
+        if(userId.equals(name)){
+            reservecomplete = campService.reservecomplete(userId);
+            model.addAttribute("reservecomplete", reservecomplete);
+        }
+
+        return "camp/complete";
+    }
+    
+
 }
