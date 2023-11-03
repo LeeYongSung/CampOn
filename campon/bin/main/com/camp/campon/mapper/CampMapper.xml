@@ -132,4 +132,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         left join campproduct c on c.camp_no = cd.camp_no
         where cd.cp_dt_no = #{cpdtNo}
     </select>
+
+    <!-- 예약 페이지 -->
+    <select id="reservate" resultType="Camp">
+        SELECT * 
+        FROM campdetail cd
+        JOIN campproduct c ON cd.camp_no = c.camp_no
+        JOIN campdetailimg ci ON cd.cp_dt_no = ci.cp_dt_no
+        JOIN (SELECT MIN(cpdi_no) cpdi_no FROM campdetailimg GROUP BY cp_dt_no) cn on ci.cpdi_no = cn.cpdi_no
+        WHERE cd.cp_dt_no = #{cpdtNo}
+    </select>
 </mapper>

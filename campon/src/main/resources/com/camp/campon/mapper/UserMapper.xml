@@ -41,6 +41,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         WHERE user_no = #{userNo}
     </select>
 
+    <!-- 캠프 단에서 회원 조회 - id -->
+    <select id="selectById" resultType="Users">
+        SELECT *
+        FROM user
+        WHERE user_id = #{userId}
+    </select>
+
     <!-- 회원 조회 - id -->
     <select id="login" resultType="Users">
         SELECT *

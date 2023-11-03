@@ -36,6 +36,7 @@ public interface CampMapper {
 
     // 예약 현황 조회
     public List<Camp> reservation(Integer userNo) throws Exception;
+    public Camp reservate(int cpdtNo) throws Exception;
 
     // 오픈 일정
     public List<Camp> schedule(Camp camp) throws Exception;
