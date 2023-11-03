@@ -1,10 +1,18 @@
 package com.camp.campon.controller;
 
+import java.security.Principal;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -35,10 +43,15 @@ public class CampController {
 
     @Autowired
     private CampService campService;
+
     @Autowired
     private BoardService boardService;
+
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private AuthenticationManager authenticationManager;
 
     @GetMapping(value="/index")
     public String campMain(Model model) throws Exception {
@@ -152,7 +165,14 @@ public class CampController {
     }
 
     @GetMapping(value="/schedule")
-    public String campSchedule(Model model, Camp camp) throws Exception {
+    public String campSchedule(Model model, Camp camp, Principal principal) throws Exception {
+
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
+        String userId = auth.getPrincipal().toString();
+
+        log.info("name : " + userId);
+        
         // 현재 날짜 가져오기
         LocalDate currentDate = LocalDate.now();
         
