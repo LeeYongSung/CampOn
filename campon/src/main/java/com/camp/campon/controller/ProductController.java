@@ -50,22 +50,15 @@ public class ProductController {
 
     // 상품등록 페이지
     @GetMapping("/productadd")
-    public String productAdd(Model model) {
+    public String productAdd() {
         return "product/productadd";
     }
 
     // 상품등록 실행
-    @PostMapping("/productaddpro")
-    public String productAddPro(@ModelAttribute("product") Product product, Model model) {
-        try {
-            productService.productInsert(product);
-            model.addAttribute("success", "상품등록 완료");
-            return "product/productaddmessage";
-            
-        } catch (Exception e) {
-            model.addAttribute("fail", "상품등록에 실패했습니다.");
-            return "product/productaddmessage";
-        }
+    @PostMapping("/productInsert")
+    public String productInsert(Product product) throws Exception {
+        int result = productService.productInsert(product);
+        log.info("상품등록 성공여부 : " +result);
+            return "user/mypage";
     }
-
 }

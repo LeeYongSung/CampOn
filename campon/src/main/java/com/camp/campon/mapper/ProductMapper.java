@@ -12,5 +12,9 @@ public interface ProductMapper {
     public List<Product> getCategoryList(String category) throws Exception;
     // 상품 등록
     public int productInsert(Product product) throws Exception;
+    //상세이미지 등록
+    public int insertImgs(Product product) throws Exception;
+    //상품번호 최댓값
+    public int maxPk() throws Exception;
     
 }

@@ -6,7 +6,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <!-- namespace="매퍼 인터페이스 경로" -->
 <mapper namespace="com.camp.campon.mapper.ProductMapper">
 
-<!-- 상품등록 $을 #로 수정했어요 -->
+<!-- 상품등록 $을 #로 수정 -->
 <insert id="productInsert">
     INSERT INTO product (
         product_name, product_thumnail, product_category, product_price,
@@ -17,6 +17,20 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         #{productPrice}, #{productIntro}, #{productCon}
     )
 </insert>
+
+<insert id="insertImgs">
+INSERT INTO `productimg`
+(`product_no`, `productimg_url`)
+VALUES
+(#{productNo}, #{productimgUrl})
+</insert>
+
+     <!--상품 번호 최댓값 -->
+    <select id="maxPk" resultType="int">
+        SELECT MAX(product_no)
+        FROM product
+    </select>
+
 
 <select id="getCategoryList" resultType="Product">
 SELECT * FROM product WHERE product_category = #{category}
