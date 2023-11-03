@@ -48,6 +48,7 @@ public class Camp {
     // 캠핑장 이미지
     private int cpiNo;
     private String cpiUrl;
+    private String cpdiUrl;
     
     // 즐겨찾기번호
     private int favoritesNo;

@@ -136,6 +136,7 @@ public class CampController {
         List<Camp> productsenvironment = campService.productsenvironment(campNo);
         Board productsreview = boardService.productsreview(campNo);
         List<Camp> productsfacility = campService.productsfacility(campNo);
+        List<Camp> productsproductlist = campService.productsproductlist(campNo);
         
         model.addAttribute("productsimg", productsimg);
         model.addAttribute("productsproducts", productsproducts);
@@ -144,6 +145,7 @@ public class CampController {
         model.addAttribute("productsenvironment", productsenvironment);
         model.addAttribute("productsreview", productsreview);
         model.addAttribute("productsfacility", productsfacility);
+        model.addAttribute("productsproductlist", productsproductlist);
         
         
         return "camp/campproduct";
@@ -213,6 +215,23 @@ public class CampController {
     
     
     
-    
+    /**
+     * 상품상세페이지
+     * @param model
+     * @param campNo
+     * @param cpdtNo
+     * @return
+     * @throws Exception
+     */
+    @GetMapping(value="/campdetail")
+    public String campdetail(Model model, int cpdtNo) throws Exception {
+        List<Camp> productimg = campService.productimg(cpdtNo);
+        Camp productintro = campService.productintro(cpdtNo);
+
+        model.addAttribute("productimg", productimg);
+        model.addAttribute("productintro", productintro);
+        
+        return "camp/campdetail";
+    }
     
 }
