@@ -122,6 +122,13 @@ public class CampServiceImpl implements CampService{
         return productintro;
     }
 
+    @Override
+    public Camp reservate(int cpdtNo) throws Exception {
+        Camp camp = campMapper.reservate(cpdtNo);
+
+        return camp;
+    }
+
 
 
 }

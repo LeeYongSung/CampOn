@@ -233,5 +233,19 @@ public class CampController {
         
         return "camp/campdetail";
     }
+
+    @GetMapping(value="/reservate")
+    public String campReservate(Model model, int cpdtNo) throws Exception {
+        Camp camp = campService.reservate(cpdtNo);
+        // 임시값
+        String userId = "user";
+        Users user = userService.selectById(userId);
+        log.info("camp" + camp);
+        log.info("user" + user);
+        model.addAttribute("camp", camp);
+        model.addAttribute("user", user);
+        return "camp/reservate";
+    }
+    
     
 }
