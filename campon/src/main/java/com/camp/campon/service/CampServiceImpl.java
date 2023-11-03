@@ -128,6 +128,10 @@ public class CampServiceImpl implements CampService{
 
         return camp;
     }
+    public Camp reservecomplete(String userId) throws Exception{
+        Camp reservecomplete = campMapper.reservecomplete(userId);
+        return reservecomplete;
+    }
 
 
 

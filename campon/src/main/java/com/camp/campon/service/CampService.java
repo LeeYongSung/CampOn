@@ -40,4 +40,7 @@ public interface CampService {
     // 캠핑상품 페이지
     public List<Camp> productimg(int cpdtNo) throws Exception;
     public Camp productintro(int cpdtNo) throws Exception;
+
+    //예약완료페이지
+    public Camp reservecomplete(String userId) throws Exception;
 }

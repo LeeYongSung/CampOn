@@ -47,4 +47,7 @@ public interface CampMapper {
     // 캠핑상품 페이지
     public List<Camp> productimg(int cpdtNo) throws Exception;
     public Camp productintro(int cpdtNo) throws Exception;
+
+    // 예약완료 페이지
+    public Camp reservecomplete(String userId) throws Exception;
 }
