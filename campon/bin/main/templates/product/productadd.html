@@ -15,10 +15,12 @@
         <h3>렌탈샵 상품 등록</h3>
     </div>
 
-
+    
     <!-- 상품 등록 화면 -->
     <div class="container">
-        <form name="" action="/productAddPro" method="post" enctype="multipart/form-data">
+        <form name="product" action="/product/productaddpro" method="post" enctype="multipart/form-data">
+            <!-- csrf -->
+            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
 
 
             <!-- 상품이름 -->
@@ -28,10 +30,10 @@
             </div>
 
 
-            <!-- 상품이미지 업로드 -->
+            <!-- 썸네일 업로드 -->
             <div class="input-group mb-3 row border-bottom" style="margin-top: 40px;">
-                <label class="col-md-4 col-form-label" for="">상품 이미지</label>
-                <input type="file" class="form-control" name="productThumnail" id="productThumnail">
+                <label class="col-md-4 col-form-label" for="">상품 썸네일</label>
+                <input type="file" class="form-control" name="productThumnail" id="productThumnail" multiple>
             </div>
 
 
@@ -72,11 +74,13 @@
                         <label class="form-check-label" for="storage">수납</label>
                     </div>
                     <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="productCategory" id="appliances" value="캠핑가전">
+                        <input class="form-check-input" type="radio" name="productCategory" id="appliances"
+                            value="캠핑가전">
                         <label class="form-check-label" for="appliances">캠핑가전</label>
                     </div>
                     <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="productCategory" id="Kitchenware" value="주방용품">
+                        <input class="form-check-input" type="radio" name="productCategory" id="Kitchenware"
+                            value="주방용품">
                         <label class="form-check-label" for="Kitchenware">주방용품</label>
                     </div>
                 </div>
@@ -94,16 +98,15 @@
             <!-- 상품 기본내용 -->
             <div class="input-group mb-3 row border-bottom" style="margin-top: 40px;">
                 <label class="col-md-4 col-form-label" for="">상품 기본내용</label>
-                <input type="number" class="form-control" style="background-color:#F9F9F9; border-width: 0;"
-                    name="basicContent" id="basicContent">
+                <input type="text" class="form-control" style="background-color:#F9F9F9; border-width: 0;"
+                    name="productIntro" id="productIntro">
             </div>
 
 
-            <!-- 상품 상세내용 -->
-            <div class="input-group mb-3 row" style="margin-top: 40px;">
-                <label class="col-md-4 col-form-label" for="">상품 상세내용</label>
-                <textarea class="form-control" name="detailContent" id="detailContent"
-                    style="height: 300px !important; background-color:#F9F9F9;"></textarea>
+            <!-- 상세이미지 업로드 -->
+            <div class="input-group mb-3 row border-bottom" style="margin-top: 40px;">
+                <label class="col-md-4 col-form-label" for="">상품 상세이미지</label>
+                <input type="file" class="form-control" name="productCon" id="productCon">
             </div>
 
 
