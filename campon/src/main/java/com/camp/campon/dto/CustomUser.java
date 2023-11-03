@@ -1,6 +1,7 @@
 package com.camp.campon.dto;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.stream.Collectors;
 
@@ -21,10 +22,18 @@ public class CustomUser extends User{
         // this(), super() - 는 생성자 안에서 항상 첫번째 문장
         
         //(user_auth 테이블 없애고 auth열만 추가하려고 했을 때 이런식으로 해야 함. )
-        super(users.getUserId(), users.getUserPw(), new ArrayList<SimpleGrantedAuthority>().stream()
-                                                                                            .map( (auth) -> new SimpleGrantedAuthority(users.getAuth()))
-                                                                                            .collect(Collectors.toList())
-             );
+
+        /**
+         * 수정 전
+         */
+        // super(users.getUserId(), users.getUserPw(), new ArrayList<SimpleGrantedAuthority>().stream()
+        //                                                                                     .map( (auth) -> new SimpleGrantedAuthority(users.getAuth()))
+        //                                                                                     .collect(Collectors.toList())
+        //      );
+        /**
+         * 수정 후
+         */
+        super(users.getUserId(), users.getUserPw(), Arrays.asList(new SimpleGrantedAuthority(users.getAuth())));
         // super(users.getUserId(), users.getUserPw(), users.getAuthList().stream()
         //                                                                .map( (auth) -> new SimpleGrantedAuthority(auth.getAuth()))
         //                                                                .collect(Collectors.toList()));

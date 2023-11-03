@@ -4,7 +4,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <!-- namespace="매퍼 인터페이스 경로" -->
-<mapper namespace="com.camp.campon.mapper.ProdcutMapper">
+<mapper namespace="com.camp.campon.mapper.ProductMapper">
 
 <!-- 상품등록 -->
 <insert id="productInsert">

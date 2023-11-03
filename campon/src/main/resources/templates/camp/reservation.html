@@ -8,24 +8,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<<<<<<< HEAD
     <title>CampOn(캠프온) 예약조회</title>
 </head>
 <body layout:fragment="content">
-    <h3>예약조회</h3>
-    
-=======
-    <title>CampOn(캠프온)</title>
-</head>
-<body layout:fragment="content">
+    <h3>캠핑장 예약 현황</h3>
     <div>
-        <ul th:each="camp : ${campselect}">
-            <li th:text="${camp.campTypeName}"></li>
-            <li th:text="${camp.campName}"></li>
-            <li></li>
-            <li></li>
+        <!-- 캠핑장 -->
+        <ul th:each="reservation : ${reservationList}">
+            <li><img th:src="${reservation.cpiUrl}" alt=""></li>
+            <li th:text="${reservation.campName}"></li>
+            <li th:text="${reservation.reservationNo}"></li>
+            <li th:text="${reservation.reservationNo}"></li>
+            <li th:text="${reservation.userName}"></li>
+            <li th:text="${reservation.reservationNop}"></li>
+            <li th:text="${reservation.reservationDate}"></li>
+            <li th:text="|${reservation.reservationStart} ~ ${reservation.reservationEnd}|"></li>
+            <li th:text="${reservation.campTel}"></li>
         </ul>
+        <!-- 상품 -->
     </div>
->>>>>>> 944ffcb469820e0d699bd1abad14e389291ea674
+     
 </body>
 </html>
