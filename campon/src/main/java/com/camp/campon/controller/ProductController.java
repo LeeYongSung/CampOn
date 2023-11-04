@@ -1,10 +1,18 @@
 package com.camp.campon.controller;
 
+import java.io.FileInputStream;
 import java.util.List;
 
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,6 +23,8 @@ import com.camp.campon.service.ProductService;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestBody;
+
 
 
 @Slf4j
@@ -24,6 +34,9 @@ public class ProductController {
 
     @Autowired
     private ProductService productService;
+
+    @Value("${upload.path}")
+    private String uploadPath;
 
     // 메인페이지
     @GetMapping("/index")
@@ -38,7 +51,6 @@ public class ProductController {
         model.addAttribute("productList", productList);
         return "product/productList";
     }
-
     //카테고리별 상품 목록 ajax (사용x)
     @GetMapping(value="/getList", params="category")
     public List<Product> getCategoryListAjax(@RequestParam("category") String category) throws Exception {
@@ -46,14 +58,11 @@ public class ProductController {
         List<Product> productList = productService.getCategoryList(category);
         return productList;
     }
-    
-
     // 상품등록 페이지
     @GetMapping("/productadd")
     public String productAdd() {
         return "product/productadd";
     }
-
     // 상품등록 실행
     @PostMapping("/productInsert")
     public String productInsert(Product product) throws Exception {
@@ -61,6 +70,33 @@ public class ProductController {
         log.info("상품등록 성공여부 : " +result);
             return "user/mypage";
     }
+    //상품 수정 페이지
+    @GetMapping(value="/productupdate", params="productNo")
+    public String productUpdate(@RequestParam String productNo,  Model model) throws Exception {
+        Product product = productService.select( Integer.parseInt(productNo) );
+        model.addAttribute("product", product);
+        return "product/productupdate";
+    }
+    //상품 수정
+    @PostMapping(value="/productUpdate")
+    public String productUpdate(Product product) throws Exception {
+        int result = productService.productUpdate(product);
+        log.info("상품수정 성공여부 : " +result);
+        return "user/mypage" ;
+    }
+    //이미지 불러오기
+    @GetMapping(value="/img", params="file")
+    public void img(@RequestParam("file") String file, HttpServletResponse response) throws Exception  {
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.IMAGE_JPEG); 
+        headers.add("Content-Disposition", "inline;"); 
+        String filePath = file;
+        FileInputStream fis = new FileInputStream(filePath);
+        ServletOutputStream sos =  response.getOutputStream();
+        FileCopyUtils.copy(fis, sos);
+    }
+
+    
 
     // 상품 찜 목록
     @GetMapping("/wishlist")
