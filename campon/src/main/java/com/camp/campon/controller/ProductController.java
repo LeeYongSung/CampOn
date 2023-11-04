@@ -74,9 +74,6 @@ public class ProductController {
     @GetMapping(value="/wishlistDelete")
     public String wishlistDelete(int wishlistNo) {
         int result = productService.wishlistDelete(wishlistNo);
-        if (result == 0) {
-            return "redirect:/product/wishlist";
-        }
         return "redirect:/product/wishlist";
     }
     
