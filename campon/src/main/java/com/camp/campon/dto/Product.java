@@ -1,6 +1,10 @@
 package com.camp.campon.dto;
 
+import java.io.File;
 import java.util.Date;
+import java.util.List;
+
+import org.springframework.web.multipart.MultipartFile;
 
 import lombok.Data;
 
@@ -11,7 +15,7 @@ public class Product {
     private Integer productNo;
     private String productName;
     private String productThumnail; //이름에 product 넣음
-    private String productCon; //상세내용
+    private String productCon; //상세내용(이미지경로)
     private String productIntro; //기본내용
     private String productCategory;
     private Long productPrice;
@@ -22,8 +26,13 @@ public class Product {
     private Integer userNo;
 
     // 상품 이미지
-    private Integer productImgNo;
-    private String productImgUrl;
+    private Integer productimgNo; //I를 i로 수정
+    private String productimgUrl;
+
+    //상품 이미지들
+    private List<MultipartFile> productThmFile;
+    private List<MultipartFile> productConFile;
+    private List<MultipartFile> productImgs;
 
     // 장바구니
     private Integer cartNo;

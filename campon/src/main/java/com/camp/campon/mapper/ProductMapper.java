@@ -10,7 +10,20 @@ import com.camp.campon.dto.Product;
 public interface ProductMapper {
     //카테고리별 상품목록
     public List<Product> getCategoryList(String category) throws Exception;
+    
     // 상품 등록
     public int productInsert(Product product) throws Exception;
+    
+    //상세이미지 등록
+    public int insertImgs(Product product) throws Exception;
+    
+    //상품번호 최댓값
+    public int maxPk() throws Exception;
+
+    // 찜 목록
+    public List<Product> wishlist();
+
+    // 찜 삭제
+    public int wishlistDelete(int wishlistNo);
     
 }

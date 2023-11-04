@@ -11,50 +11,144 @@
     <title>CampOn(캠프온)</title>
 </head>
 <body layout:fragment="content">
+    <!-- Swiper -->
+    <div class="swiper mySwiper">
+        <div class="swiper-wrapper">
+          <div class="swiper-slide"><img src="/img/camp/camp1.jpg"></div>
+          <div class="swiper-slide"><img src="/img/camp/camp1.jpg"></div>
+          <div class="swiper-slide"><img src="/img/camp/camp1.jpg"></div>
+        </div>
+        <div class="swiper-button-next"></div>
+        <div class="swiper-button-prev"></div>
+        <div class="swiper-pagination"></div>
+      </div>
     <div>
-        광고배너
+        <ul class="camping_type d-flex justify-content-around py-3 my-5">
+            <th:block th:each="camp : ${camptypeList}">
+                <a th:href="|/camp/campproducts?campTypeNo=${camp.campTypeNo}|">
+                    <ul>
+                        <li><img th:src="${camp.campTypeImg}" alt=""></li>
+                        <li><span th:text="${camp.campTypeName}"></span></li>
+                    </ul>
+                </a>
+            </th:block>
+        </ul>
     </div>
-    <div>
-        캠핑종류
-        <ul th:each="camp : ${camptypeList}">
-            <a th:href="|/camp/campproducts?campTypeNo=${camp.campTypeNo}|">
-                <li th:text="${camp.campTypeName}"></li>
+    <div class="container-sm search_box">
+        <form action="camp/campSerch" method="post" class="w-100">
+            <ul class="my-4">
+                <li class="my-2">
+                    <input type="date" id="campdate" name="campdate" class="form-control py-3">
+                </li>
+                <li class="my-2">
+                    <div class="form-floating">
+                        <input type="text" id="campname" name="campname" class="form-control py-3">
+                        <label for="campname">캠핑장명</label>
+                    </div>
+                </li>
+                <li class="my-2">
+                    <ul class="d-flex justify-content-between text-center">
+                        <li class="w-100 region_select"><div id="region" style="cursor: pointer;">지역</div></li>
+                        <li class="w-100 theme_select"><div>테마</div></li>
+                    </ul>
+                </li>
+                <li class="my-2"><input type="text" value="검색" class="search_btn btn btn-outline-secondary btn-lg py-2 w-100"></li>
+            </ul>
+        </form>
+    </div>
+    <div class="camp_ads">
+        <ul class="d-flex justify-content-around my-4">
+            <li><img src="/img/camp/camp_ads.jpg" alt="캠핑장광고"></li>
+            <li><img src="/img/camp/camp_ads.jpg" alt="캠핑장광고"></li>
+        </ul>
+    </div>
+    <div class="w-100 info_btn">
+        <a href="/camp/information" class="btn btn-warning btn-lg w-100 py-3">캠프온이 처음이신가요? 캠프온 이용안내</a>
+    </div>
+    <div class="new_camp w-100 my-5">
+        <h5 class="mt-4">신규 캠핑장</h5>
+        <div class="row w-100">
+            <th:block th:each="camp : ${campnewList}">
+                <div class="col-4">
+                    <a th:href="|/camp/campproduct?campNo=${camp.campNo}|">
+                        <li class="mx-1"><img th:src="${camp.cpiUrl}"></li>
+                        <li class="w-100 text-center"><span th:text="${camp.campName}"></span></li>
+                    </a>
+                </div>
+            </th:block> 
+        </div>
+    </div>
+    <div class="best_camp w-100 my-5">
+        <h5 class="mt-4">추천 캠핑장</h5>
+        <div class="row w-100">
+            <th:block th:each="camp : ${campHotList}">
+                <div class="col-4">
+                    <a th:href="|/camp/campproduct?campNo=${camp.campNo}|">
+                        <li class="mx-1"><img th:src="${camp.cpiUrl}"></li>
+                        <li class="w-100 text-center"><span th:text="${camp.campName}"></span></li>
+                    </a>
+                </div>
+            </th:block>
+        </div>
+    </div>
+    <div class="review mb-5">
+        <h5 class="mt-3">실시간리뷰</h5>
+        <ul th:each="board : ${newReviewList}">
+            <a th:href="|/board/page?campNo=${board.reviewNo}|" class="d-flex justify-content-between">
+                <li class="review_imgbox">
+                    <img th:src="${board.reviewImg}">
+                </li>
+                <li class="review_conbox">
+                    <ul>
+                        <li>
+                            <p th:text="${board.reviewCon}"></p>
+                        </li>
+                        <li>
+                            <span th:text="${ #dates.format( board.regDate, 'yyyy-MM-dd') }"></span>
+                        </li>
+                        <li>
+                            <span th:text="${board.campName}"></span>
+                        </li>
+                    </ul>
+                </li>
             </a>
         </ul>
     </div>
-    <div>
-        검색란
+    <div class="region_box none">
+        <button class="region_close btn btn-danger btn-lg w-100">닫기</button>
     </div>
-    <div>
-        중간배너(광고, 이벤트)
-    </div>
-    <div>
-        <button>
-            <a href="/camp/information">캠프온 이용안내</a>
-        </button>
-    </div>
-    <div>
-        <h1>신규 상품</h1>
-        <ul th:each="camp : ${campnewList}">
-            <a th:href="|/camp/campproduct?campNo=${camp.campNo}|"><img th:src="${camp.cpiUrl}"></a>
-            <li th:text="${camp.campName}"></li>
-        </ul>
-    </div>
-    <div>
-        <h1>추천 상품</h1>
-        <ul th:each="camp : ${campHotList}">
-            <a th:href="|/camp/campproduct?campNo=${camp.campNo}|"><img th:src="${camp.cpiUrl}"></a>
-            <li th:text="${camp.campName}"></li>
-        </ul>
-    </div>
-    <div>
-        <h1>실시간리뷰</h1>
-        <ul th:each="board : ${newReviewList}">
-            <a th:href="|/board/page?campNo=${board.reviewNo}|"><img th:src="${board.reviewImg}"></a>
-            <a th:href="|/board/page?campNo=${board.reviewNo}|" th:text="${board.reviewCon}"></a>
-            <span th:text="${ #dates.format( board.regDate, 'yyyy-MM-dd') }"></span>
-            <span th:text="${board.campName}"></span>
-        </ul>
-    </div>
+    <!-- Swiper JS -->
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+
+    <!-- Initialize Swiper -->
+    <script>
+      var swiper = new Swiper(".mySwiper", {
+        spaceBetween: 0,
+        centeredSlides: true,
+        autoplay: {
+          delay: 3000,
+          disableOnInteraction: false,
+        },
+        pagination: {
+          el: ".swiper-pagination",
+          clickable: true,
+        },
+        navigation: {
+          nextEl: ".swiper-button-next",
+          prevEl: ".swiper-button-prev",
+        },
+      });
+
+    </script>
+    <script>
+        $(document).ready(function(){
+            $('#region').click(function() {
+                $('.region_box').fadeIn();
+            })
+            $('.region_close').click(function() {
+                $('.region_box').fadeOut();
+            })
+        })
+    </script>
 </body>
 </html>
