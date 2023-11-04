@@ -61,4 +61,23 @@ public class ProductController {
         log.info("상품등록 성공여부 : " +result);
             return "user/mypage";
     }
+
+    // 상품 찜 목록
+    @GetMapping("/wishlist")
+    public String wishlist(Model model) {
+        List<Product> wishlist = productService.wishlist();
+        model.addAttribute("wishlist", wishlist);
+        return "product/wishlist";
+    }
+
+    // 상품 찜 삭제
+    @GetMapping(value="/wishlistDelete")
+    public String wishlistDelete(int wishlistNo) {
+        int result = productService.wishlistDelete(wishlistNo);
+        if (result == 0) {
+            return "redirect:/product/wishlist";
+        }
+        return "redirect:/product/wishlist";
+    }
+    
 }

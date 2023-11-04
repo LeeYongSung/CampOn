@@ -81,5 +81,17 @@ public class ProductServiceImpl implements ProductService {
         List<Product> productList = productMapper.getCategoryList(category);
         return productList;
     }
+
+    @Override
+    public List<Product> wishlist() {
+        List<Product> wishlist = productMapper.wishlist();
+        return wishlist;
+    }
+
+    @Override
+    public int wishlistDelete(int wishlistNo) {
+        int result = productMapper.wishlistDelete(wishlistNo);
+        return result;
+    }
     
 }

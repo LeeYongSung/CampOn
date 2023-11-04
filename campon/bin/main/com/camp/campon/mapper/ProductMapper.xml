@@ -19,21 +19,36 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 </insert>
 
 <insert id="insertImgs">
-INSERT INTO `productimg`
-(`product_no`, `productimg_url`)
-VALUES
-(#{productNo}, #{productimgUrl})
+    INSERT INTO `productimg`
+    (`product_no`, `productimg_url`)
+    VALUES
+    (#{productNo}, #{productimgUrl})
 </insert>
 
-     <!--상품 번호 최댓값 -->
-    <select id="maxPk" resultType="int">
-        SELECT MAX(product_no)
-        FROM product
-    </select>
+<!--상품 번호 최댓값 -->
+<select id="maxPk" resultType="int">
+    SELECT MAX(product_no)
+    FROM product
+</select>
 
 
 <select id="getCategoryList" resultType="Product">
-SELECT * FROM product WHERE product_category = #{category}
+    SELECT * FROM product WHERE product_category = #{category}
 </select>
+
+<!-- 찜 목록 -->
+<select id="wishlist" resultType="Product">
+    SELECT *
+    FROM productsave s
+    JOIN product p ON f.product_no = p.product_no
+    ORDER BY wishlist_no DESC
+</select>
+
+<!-- 찜 삭제 -->
+<delete id="wishlistDelete">
+    DELETE FROM wishlist
+    WHERE wishlist_no = #{wishlistNo}
+</delete>   
+
 
 </mapper>
