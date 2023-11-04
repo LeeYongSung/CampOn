@@ -8,10 +8,33 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CampOn(캠프온)</title>
 </head>
-
-<body layout:fragment="content">
-    <h1>찜 목록</h1>
     
+<body layout:fragment="content">
+    <h1>찜 목록</h1> 
+    <!-- 반복문 시작 -->
+    <div th:each="product : ${wishlist}">
+        <!-- 썸네일 -->
+        <img th:src="${product.productThumnail}">
+        <br>
+        <!-- 카테고리 -->
+        <span th:text="'상품 - ' + ${product.productCategory}"></span>
+        <br>
+        <!-- 상품명 -->
+        <span th:text="${product.productName}"></span>
+        <br>
+        <!-- 상품기본내용 -->
+        <span th:text="${product.productIntro}"></span>
+        <br>
+        <!-- 금액 -->
+        <span th:text="${product.productPrice + '원'}"></span>
+        <br>
+        <a th:href="${product.productCon}" th:text="상세설명">
+        <button>장바구니 담기</button>
+        <button>삭제</button>
+    </div> 
+    <div>
+        전체 장바구니에 담기
+    </div>
 </body>
 
 </html>

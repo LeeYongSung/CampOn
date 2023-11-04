@@ -40,15 +40,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <select id="wishlist" resultType="Product">
     SELECT *
     FROM productsave s
-    JOIN product p ON f.product_no = p.product_no
-    ORDER BY wishlist_no DESC
+    JOIN product p ON s.product_no = p.product_no
+    ORDER BY productsave_no DESC
 </select>
 
 <!-- 찜 삭제 -->
 <delete id="wishlistDelete">
-    DELETE FROM wishlist
-    WHERE wishlist_no = #{wishlistNo}
+    DELETE FROM productsave
+    WHERE productsave_no = #{wishlistNo}
 </delete>   
 
-
+ 
 </mapper>
