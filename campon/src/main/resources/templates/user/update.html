@@ -14,57 +14,67 @@
     <h1>내 정보 수정</h1>
 
 
-    <div id="joinForm">
-        <h3>회원정보를 수정해주세요.</h3>
-
-        <form action="/user/update" method="POST">
-             <!-- csrf -->
-            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
-
-            <label for="id">아이디</label>
-            <input type="text" id="id" name="userId" th:value="${user.userId}">
-            <br>
-            <label for="name">이름</label>
-            <input type="text" id="name" name="userName"  th:value="${user.userName}">
-            <br>
-            <label for="userEmail">이메일</label>
-            <input type="text" id="userEmail" name="userEmail" th:value="${user.userEmail}" >
-            <br>
-            <label for="userTel">핸드폰번호</label>
-            <input type="text" id="userTel" name="userTel" th:value="${user.userTel}">
-            <br>
-            <label for="address">주소</label>
-            <input type="text" id="userAddress" name="userAddress" th:value="${user.userAddress}">
-            <br>
-            <label for="password">비밀번호</label>
-            <input type="password" id="password" name="userPw" th:value="${user.userPw}" >
-            <br>
-            <label for="passwordCheck">비밀번호 확인</label>
-            <input type="password" id="passwordCheck" name="userPwCheck" >
+    <div class="container-sm">
+        <div id="joinForm">
+            <h3>회원정보를 수정해주세요.</h3>
     
-            <br>
-            <!--기업회원일 경우 추가로 필요한 정보-->
-            <!--문법이 맞는지 확인 필요(필요)-->
-            <th:block th:if="${user.auth.equals('ROLE_SELL')}">
-                <!-- 위 오류나면 이걸로 하기 <th:block sec:authorize="hasRole('ROLE_SELL')"-->
-                <div id="company">
-                    <p>기업 정보를 수정하세요.</p>
-                    <label for="companyName">업체명</label>
-                    <input type="text" id="companyName" name="companyName"  th:value="${user.companyName}">
-                    <br>
-                    <label for="companyNumber">사업자번호</label>
-                    <input type="text" id="companyNumber" name="companyNumber"  th:value="${user.companyNumber}" >
-                    <br>
+            <form action="/user/update" method="POST">
+                 <!-- csrf -->
+                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+    
+                <div class="form-floating">
+                    <input type="text" id="id" name="userId" th:value="${user.userId}" class="form-control my-2">
+                    <label for="id">아이디</label>
                 </div>
-            </th:block>
-            <input type="submit" value="회원정보 수정">
-        </form>
+                <div class="form-floating">
+                    <input type="text" id="name" name="userName"  th:value="${user.userName}" class="form-control my-2">
+                    <label for="name">이름</label>
+                </div>
+                <div class="form-floating">
+                    <input type="text" id="userEmail" name="userEmail" th:value="${user.userEmail}" class="form-control my-2">
+                    <label for="userEmail">이메일</label>
+                </div>
+                <div class="form-floating">
+                    <input type="text" id="userTel" name="userTel" th:value="${user.userTel}" class="form-control my-2">
+                    <label for="userTel">핸드폰번호</label>
+                </div>
+                <div class="form-floating">
+                    <input type="text" id="userAddress" name="userAddress" th:value="${user.userAddress}" class="form-control my-2">
+                    <label for="address">주소</label>
+                </div>
+                <div class="form-floating">
+                    <input type="password" id="password" name="userPw" th:value="${user.userPw}" class="form-control my-2">
+                    <label for="password">비밀번호</label>
+                </div>
+                <div class="form-floating">
+                    <input type="password" id="passwordCheck" name="userPwCheck" class="form-control my-2">
+                    <label for="passwordCheck">비밀번호 확인</label>
+                </div>
 
-        <form action="|/user/delete?userId=${user.userId}|">
-            <input type="hidden" value="user.userId">
-            <input type="submit" value="탈퇴하기">
-        </form>
-      
+                <!--기업회원일 경우 추가로 필요한 정보-->
+                <!--문법이 맞는지 확인 필요(필요)-->
+                    <!-- 위 오류나면 이걸로 하기 <th:block sec:authorize="hasRole('ROLE_SELL')"-->
+                <th:block th:if="${user.auth.equals('ROLE_SELL')}">
+                    <div id="company">
+                        <p>기업 정보를 수정하세요.</p>
+                        <div class="form-floating">
+                            <input type="text" id="companyName" name="companyName" th:value="${user.companyName}" class="form-control my-2">
+                            <label for="companyName">업체명</label>
+                        </div>
+                        <div class="form-floating">
+                            <input type="text" id="companyNumber" name="companyNumber" th:value="${user.companyNumber}" class="form-control my-2">
+                            <label for="companyNumber">사업자번호</label>
+                        </div>
+                    </div>
+                </th:block>
+                <input type="submit" value="회원정보 수정" class="btn btn-warning btn-lg w-100 my-3">
+            </form>
+    
+            <form action="|/user/delete?userId=${user.userId}|">
+                    <input type="hidden" value="${user.userId}">
+                    <input type="submit" value="탈퇴하기" class="btn btn-danger btn-lg w-100 my-2">
+            </form>
+        </div>
     </div>
 
    
