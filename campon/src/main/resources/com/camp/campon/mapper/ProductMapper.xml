@@ -6,6 +6,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <!-- namespace="매퍼 인터페이스 경로" -->
 <mapper namespace="com.camp.campon.mapper.ProductMapper">
 
+<!--상품 하나 선택-->
+<select id="select" resultType="product">
+SELECT * FROM product WHERE product_no = #{productNo}
+</select>
+
 <!-- 상품등록 $을 #로 수정 -->
 <insert id="productInsert">
     INSERT INTO product (
@@ -24,6 +29,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     VALUES
     (#{productNo}, #{productimgUrl})
 </insert>
+
+<delete id="deleteImgs" >
+DELETE FROM productimg WHERE product_no = #{productNo};
+</delete>
 
 <!--상품 번호 최댓값 -->
 <select id="maxPk" resultType="int">
