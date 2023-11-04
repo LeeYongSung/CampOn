@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.camp.campon.dto.CustomUser;
 import com.camp.campon.dto.Users;
 import com.camp.campon.service.UserService;
 
@@ -140,7 +141,17 @@ public class UserController {
 
     //마이페이지
     @GetMapping("/mypage")
-    public String mypage(){
+    public String mypage(Model model){
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String userId = auth.getName();
+        CustomUser customuser = (CustomUser) auth.getPrincipal();
+        Users user = customuser.getUsers();
+        String role = user.getAuth();
+        log.info("userId : " + userId);
+        log.info("auth : " + role);
+
+        model.addAttribute("auth", role);
+
         return "user/mypage";
     }
 

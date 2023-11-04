@@ -23,7 +23,8 @@
 
         <!--중단 -->
         <!-- 일반 유저인 경우-->
-        <th:block sec:authorize="hasRole('ROLE_USER')">
+        <!-- <th:block sec:authorize="hasRole('ROLE_USER')"> -->
+        <th:block th:if="${auth == 'ROLE_USER'}">
             <div>
                 <a href="/user/update">내정보 관리</a>
                 <a href="#">내 예약 현황</a>
@@ -35,7 +36,8 @@
         </th:block>
 
         <!--판매자인 경우-->
-        <th:block sec:authorize="hasRole('ROLE_SELL')">
+        <!-- <th:block sec:authorize="hasRole('ROLE_SELL')"> -->
+        <th:block th:if="${auth == 'ROLE_SELL'}">
             <div>
                 <a href="/user/update">내정보 관리</a>
                 <a href="#">광고 등록</a>
@@ -45,7 +47,8 @@
         </th:block>
 
         <!-- 관리자인 경우-->
-        <th:block sec:authorize="hasRole('ROLE_ADMIN')">
+        <!-- <th:block sec:authorize="hasRole('ROLE_ADMIN')"> -->
+        <th:block th:if="${auth == 'ROLE_ADMIN'}">
             <div>
                 <a href="#">회원 관리</a>
                 <a href="#">캠핑장 관리</a>
