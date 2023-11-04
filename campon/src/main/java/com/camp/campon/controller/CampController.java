@@ -270,6 +270,14 @@ public class CampController {
 
         return "camp/complete";
     }
+
+    @GetMapping(value="/campdetailinsert")
+    public String campdetailinsert(Model model, int campNo) throws Exception{
+        log.info("캠핑장번호 : " + campNo);
+        model.addAttribute("campNo", campNo);
+        return "camp/campdetailinsert";
+    }
+    
     
 
 }

@@ -154,4 +154,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         order by r.reservation_no desc limit 1
     </select>
 
+    <!--캠핑상품 등록-->
+    <insert id="detailinsert">
+        INSERT INTO board( camp_no, cp_dt_name, cp_dt_nop, cp_dt_size, cp_dt_price, camptype_no, cp_dt_introduction )
+        VALUES ( #{campNo}, #{cpdtName}, #{cpdtNop}, #{cpdtSize}, #{cpdtPrice}, #{campTypeNo}, #{cpdtIntroduction} )
+    </insert>
+
 </mapper>

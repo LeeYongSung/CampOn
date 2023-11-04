@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/UI/user/layout/main_layout}"
+      >
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CampOn(캠프온) 안내페이지</title>
+</head>
+<body layout:fragment="content">
+    <h1>캠핑장 상품 등록</h1>
+    <h4>캠핑장 상품을 등록하기 위한 페이지입니다.</h4>
+    
+    <form action="/board/insert" method="POST" id="form" enctype="multipart/form-data">
+
+        <input type="hidden" name="campNo" th:value="${campNo}">
+        <table>
+            <tr>
+                <td>캠핑장 상품 이름</td>
+                <td>
+                    <input type="text" name="cpdtName"  placeholder="상품 이름">
+                </td>
+            </tr>
+            <tr>
+                <td>파일</td>
+                <td>
+                    <input type="file" name="campdetailimg" multiple>
+                </td>
+            </tr>
+            <tr>
+                <td>수용 가능 인원 수</td>
+                <td>
+                    <input type="number" name="cpdtNop" placeholder="인원" min="1">명
+                </td>
+                
+            </tr>
+            <tr>
+                <td>면적</td>
+                <td>
+                    <input type="text" name="cpdtSize" placeholder="면적">㎡
+                </td>
+            </tr>
+            <tr>
+                <td>금액</td>
+                <td>
+                    <input type="number" name="cpdtPrice" placeholder="금액" min="1">원
+                </td>
+            </tr>
+            <tr>
+                <td>캠핑종류</td>
+                <td>
+                    <input type="radio" name="campTypeNo" value="1" />오토캠핑
+                    <input type="radio" name="campTypeNo" value="2" />글램핑
+                    <input type="radio" name="campTypeNo" value="3" />카라반
+                    <input type="radio" name="campTypeNo" value="4" />펜션
+                    <input type="radio" name="campTypeNo" value="5" />피크닉
+                </td>
+            </tr>
+            <tr>
+                <td>캠핑상품 소개</td>
+                <td>
+                    <textarea name="cpdtIntroduction" cols="40" rows="5" placeholder="상품 소개"></textarea>
+                </td>
+            </tr>
+        </table>
+        <div>
+            <button type="button" onclick="history.back(-1)">목록</button>
+            <button type="button" onclick="actionInsert()">등록</button>
+        </div>
+    </form>
+
+    <script>
+        let form = document.getElementById('form')
+        
+
+
+    </script>
+</body>
+</html>
