@@ -144,15 +144,21 @@ public class UserController {
     public String mypage(Model model){
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String userId = auth.getName();
-        CustomUser customuser = (CustomUser) auth.getPrincipal();
-        Users user = customuser.getUsers();
-        String role = user.getAuth();
-        log.info("userId : " + userId);
-        log.info("auth : " + role);
-
-        model.addAttribute("auth", role);
-
-        return "user/mypage";
+        if(userId == "anonymousUser" && userId.equals("anonymousUser")) {
+            return "redirect:/user/login";
+        } else {
+            CustomUser customuser = (CustomUser) auth.getPrincipal();
+    
+            Users user = customuser.getUsers();
+            String role = user.getAuth();
+    
+            log.info("userId : " + userId);
+            log.info("auth : " + role);
+    
+            model.addAttribute("auth", role);
+    
+            return "user/mypage";
+        }
     }
 
 }

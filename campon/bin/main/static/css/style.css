@@ -26,11 +26,14 @@ footer{ width: 100%; height: 550px; background-color: rgba(243, 243, 243, 0.9);}
 .footer_copy {width: 100%; height: 60px; text-align: center; line-height: 60px; font-weight: bold;}
 
 
-/* 유저 CSS */
+/************************************ 유저 CSS ***********************************/
+/* 로그인페이지 */
 .login_banner {position: relative; width: 100%; height: 200px;}
 .login_banner_back {position: absolute; background-image: url("../img/user/login_banner.jpg"); background-position: 0 -30px; background-size: 100%; z-index: 0; width: 100%; object-fit: cover; height: 200px;}
 .login_banner_txt {position: absolute; z-index: 1; top: 50%; left: 50%; transform: translate(-50%, -50%); }
 .login_banner_txt h4 {color: white; font-size: 1.2em; font-weight: bold;}
+
+/* 회원가입페이지 */
 #id {padding-top : 2rem!important; padding-bottom: 2rem!important;}
 #name {padding-top : 2rem!important; padding-bottom: 2rem!important;}
 #userEmail {padding-top : 2rem!important; padding-bottom: 2rem!important;}
@@ -40,6 +43,110 @@ footer{ width: 100%; height: 550px; background-color: rgba(243, 243, 243, 0.9);}
 #passwordCheck {padding-top : 2rem!important; padding-bottom: 2rem!important;}
 .company_join_info {font-size: 0.8em;}
 
+/* 마이페이지 공통*/
+.mypage_banner {position: relative; width: 100%; height: 200px;}
+.mypage_banner_header {position: absolute; z-index: 1; color: white; padding-left: 20px; padding-top: 20px;}
+.mypage_banner_header>h4 {font-size: 1.2em;}
+.mypage_banner_back {position: absolute; background-image: url("../img/user/login_banner.jpg");  background-position: 0 -30px; background-size: 100%; z-index: 0; width: 100%; object-fit: cover; height: 200px;}
+.mypage_banner_con {position: absolute; z-index: 1; top: 50%; left: 50%; transform: translate(-50%, -50%);}
+.mypage_banner_con img {width: 50%;}
+.mypage_banner_con>ul>li:nth-of-type(1) {padding-top: 20px;}
+.mypage_banner_con>ul>li:nth-of-type(2) {padding-top: 10px;}
+.mypage_banner_con h4 {font-size: 1em; color: white; font-weight: bold;}
+.mypage_logout_btn {background-color: #FA9D4B; border-radius: 0!important;}
+
+/* 마이페이지 회원 */
+.mypage_user li {width: 120px; height: 60px; line-height: 60px; background-color: #FFC700; font-size: 0.8em;}
+.mypage_user>ul {padding-left: 0!important;}
+.mypage_user>ul:nth-of-type(1)>li {margin-top: 20px;}
+.mypage_user>ul:nth-of-type(2)>li {margin-bottom: 30px;}
+.mypage_user a {display: block;}
+
+/* 마이페이지 판매자 */
+.mypage_sell li {width: 100px; height: 60px; line-height: 60px; background-color: #FFC700; font-size: 0.8em; margin-top: 20px; margin-bottom: 30px;}
+.mypage_sell>ul {padding-left: 0!important;}
+.mypage_sell a {display: block;}
+
+/* 마이페이지 관리 */
+.mypage_admin li {width: 100px; height: 60px; line-height: 60px; background-color: #FFC700; font-size: 0.8em; margin-top: 20px; margin-bottom: 30px;}
+.mypage_admin>ul {padding-left: 0!important;}
+.mypage_admin>ul:nth-of-type(1)>li {margin-top: 20px;}
+.mypage_admin>ul:nth-of-type(2)>li {margin-bottom: 30px;}
+.mypage_admin a {display: block;}
+
+/* 캠프 */
+/* 캠프메인 슬라이드 */
+.swiper {
+    width: 100%;
+    height: 100%;
+}
+
+.swiper-slide {
+    text-align: center;
+    font-size: 18px;
+    background: #fff;
+
+    /* Center slide text vertically */
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    -webkit-justify-content: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    -webkit-align-items: center;
+    align-items: center;
+}
+
+.swiper-slide img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.mySwiper {position: relative; width: 100%; height: 300px;}
+.swiper-slide {position: absolute;}
+.swiper-slide:nth-of-type(0) {left: 0;}
+.swiper-slide:nth-of-type(1) {left: 500px;}
+.swiper-slide:nth-of-type(2) {left: 1000px;}
+
+/* 캠프메뉴 */
+.search_box {border: 1px solid #f2f2f2; width: 100%; height: 300px;}
+.search_box ul {padding-left: 0!important;}
+.region_select, .theme_select {height: 60px; line-height: 60px; border: 1px solid #d4d4d4;}
+.camping_type {padding-left: 0!important; text-align: center;}
+.camping_type ul {padding-left: 0!important;}
+.camping_type span {font-size: 0.8em;}
+
+/* 검색 */
+.region_box {height: 300px; width: 500px; background-color: #aaa; position: fixed; bottom: 75px;}
+.search_btn {border-radius: 0!important;}
+
+/* 광고 */
+.camp_ads {width: 100%;}
+.camp_ads ul {padding-left: 0!important;}
+.camp_ads ul>li {border-radius: 10px; overflow: hidden;}
+
+/* 안내 */
+.info_btn>a {font-size: 0.8em; border-radius: 0!important;}
+
+/* 신규 / 추천 캠핑장 */
+.new_camp {border-top: 1px solid #f2f2f2;}
+.best_camp {border-top: 1px solid #f2f2f2;}
+.new_camp img {width: 150px; height: 150px;}
+.best_camp img {width: 150px; height: 150px;}
+
+/* 리뷰 */
+.review {border-top: 1px solid #f2f2f2;}
+.review img {width: 150px; height: 100px;}
+.review_imgbox {width: 25%; border-radius: 10px; overflow: hidden;}
+.review_conbox {width: 75%;}
+.review_conbox>ul>li:nth-of-type(1){font-size: 0.8em;}
+.review_conbox>ul>li:nth-of-type(2){font-size: 0.6em;}
+.review_conbox>ul>li:nth-of-type(3){font-size: 0.9em; font-weight: bold;}
 input[type="checkbox"] {
     display:none;
 }
