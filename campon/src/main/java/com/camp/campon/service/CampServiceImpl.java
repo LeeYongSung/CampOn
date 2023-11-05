@@ -8,6 +8,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.camp.campon.dto.Camp;
 import com.camp.campon.mapper.CampMapper;
@@ -128,11 +129,30 @@ public class CampServiceImpl implements CampService{
 
         return camp;
     }
+    @Override
     public Camp reservecomplete(String userId) throws Exception{
         Camp reservecomplete = campMapper.reservecomplete(userId);
         return reservecomplete;
     }
 
+    //캠핑상품 등록
+    @Override
+    public int detailinsert(Camp camp) throws Exception{
+        int result = campMapper.detailinsert(camp);
+        String parentTable = "campdetail";
+        int cpdtNo = campMapper.maxdetailNo();
 
+        List<MultipartFile> fileList = camp.getFile();
+
+        // if(!fileList.isEmpty())
+        // for(MultipartFile file : fileList){
+        //     if(file.isEmpty()) continue;
+        //     String originName = 
+        // }
+
+
+        return result;
+        
+    }
 
 }
