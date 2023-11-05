@@ -11,30 +11,58 @@
     
 <body layout:fragment="content">
     <h1>찜 목록</h1> 
+
     <!-- 반복문 시작 -->
     <div th:each="product : ${wishlist}">
+
         <!-- 썸네일 -->
         <img th:src="${product.productThumnail}">
         <br>
+
         <!-- 카테고리 -->
         <span th:text="'상품 - ' + ${product.productCategory}"></span>
         <br>
+
         <!-- 상품명 -->
         <span th:text="${product.productName}"></span>
         <br>
+
         <!-- 상품기본내용 -->
         <span th:text="${product.productIntro}"></span>
         <br>
+
         <!-- 금액 -->
         <span th:text="${product.productPrice + '원'}"></span>
         <br>
-        <a th:href="${product.productCon}" th:text="상세설명">
+
+        <!-- 상세설명 -->
+        <a th:href="${product.productCon}" th:text="상세설명"></a>
+        <br>
+
         <button>장바구니 담기</button>
-        <button>삭제</button>
-    </div> 
+
+        <!-- 찜 삭제 -->
+        <a th:href="|/product/wishlistDelete?wishlistNo=${product.wishlistNo}|" onclick="actionDelete()">삭제</a>
+            <br>
+            <br>
+            <br>
+            <br>
+    </div>  
+    <br>
+    <br>
     <div>
-        전체 장바구니에 담기
+        <button> 전체 장바구니에 담기</button>
     </div>
+
+    <!-- 찜 삭제 클릭 이벤트 -->
+    <script>
+        function actionDelete() 
+        {
+            let check = confirm('찜 목록에서 삭제하시겠습니까?')
+            let form = document.getElementsByName('form')
+            if(check) form.submit()
+        }
+    </script>
 </body>
 
 </html>
