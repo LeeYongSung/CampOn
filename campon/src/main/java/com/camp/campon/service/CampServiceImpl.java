@@ -142,6 +142,7 @@ public class CampServiceImpl implements CampService{
         String parentTable = "campdetail";
         int cpdtNo = campMapper.maxdetailNo();
 
+
         List<MultipartFile> fileList = camp.getFile();
 
         // if(!fileList.isEmpty())
@@ -153,6 +154,13 @@ public class CampServiceImpl implements CampService{
 
         return result;
         
+    }
+
+    
+    @Override
+    public List<Camp> campproductUser(Integer userNo) throws Exception {
+        List<Camp> productUser = campMapper.campproductUser(userNo);
+        return productUser;
     }
 
 }

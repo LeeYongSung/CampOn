@@ -56,4 +56,7 @@ public interface CampMapper {
 
     // 캠핑상품 번호최댓값
     public int maxdetailNo() throws Exception;
+    
+    // 상품 등록 유저 확인
+    public List<Camp> campproductUser(Integer userNo) throws Exception;
 }

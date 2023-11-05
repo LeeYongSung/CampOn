@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/UI/user/layout/main_layout}"
+      >
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CampOn(캠프온)</title>
+</head>
+<body layout:fragment="content">
+    <div>
+        <ul>
+            <th:block th:each="camp : ${campList}">
+                <li>
+                    <img th:src="${camp.cpiUrl}" alt="캠핑장 이미지">
+                </li>
+                <li>
+                    <ul>
+                        <li><span th:text="${camp.campName}"></span></li>
+                        <li><span th:text="${camp.campAddress}"></span></li>
+                        <li><span th:text="${camp.regDate}"></span></li>
+                        <li><span th:text="${camp.updDate}"></span></li>
+                    </ul>
+                </li>
+                <li>
+                    <div><a href="#">상품등록</a></div>
+                    <div><a href="#">캠핑장 삭제</a></div>
+                </li>
+                <li><a href="#"><i class="metarial-outline-icon">test</i></a></li>
+                <ul>
+                    <li>
+                        <img th:src="${camp.cpdiUrl}" alt="상품이미지">
+                    </li>
+                    <li>
+                        <ul>
+                            <li><span th:text="${camp.cpdtName}"></span></li>
+                            <li><span th:text="${camp.campTypeName}"></span></li>
+                            <li><span th:text="${camp.regDate}"></span></li>
+                            <li><span th:text="${camp.updDate}"></span></li>
+                            <li><a href="#">상품수정</a></li>
+                            <li><a href="#">상품삭제</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </th:block>
+        </ul>
+    </div>
+</body>
+</html>

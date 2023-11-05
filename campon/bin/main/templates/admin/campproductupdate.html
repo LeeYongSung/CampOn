@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/UI/user/layout/main_layout}"
+      >
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CampOn(캠프온)</title>
+</head>
+<body layout:fragment="content">
+    <div class="container-sm">
+        <div class="w-100 text-center my-3">
+            <h5>캠핑장 수정</h5>
+        </div>
+        <form action="camp/campproductUpdatePro" method="post">
+            <div class="form-floating my-2">
+                <input type="text" id="campname" name="campname" class="form-control">
+                <label for="campname">캠핑장명</label>
+            </div>
+            <div class="form-floating">
+                <input type="file" id="campfile" name="campfile" class="form-control">
+                <label for="campfile">캠핑장이미지</label>
+            </div>
+            <div class="campadd_box d-flex justify-content-around w-100 my-1">
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+            <div class="form-floating my-2">
+                <input type="text" id="campaddress" name="campaddress" class="form-control">
+                <label for="campaddress">캠핑장 주소</label>
+            </div>
+            <div class="form-floating my-2">
+                <input type="text" id="camptel" name="camptel" class="form-control">
+                <label for="camptel">캠핑장 연락처</label>
+            </div>
+            <div class="form-floating my-2">
+                <input type="file" id="camplayout" name="camplayout" class="form-control">
+                <label for="camplayout">캠핑장 배치도</label>
+            </div>
+            <div class="form-floating my-2">
+                <input type="text" id="mannertime" name="mannertime" class="form-control">
+                <label for="mannertime">매너타임</label>
+            </div>
+            <div class="w-100 my-3">
+                <span>환경</span>
+                <input type="radio" id="mountain" name="reservate" value="1">
+                <label for="mountain"><span></span>산</label>
+                <input type="radio" id="ocean" name="reservate" value="2">
+                <label for="ocean"><span></span>바다</label>
+                <input type="radio" id="Valley" name="reservate" value="3">
+                <label for="Valley"><span></span>계곡/강/호수</label>
+                <input type="radio" id="champaign" name="reservate" value="4">
+                <label for="champaign"><span></span>평야</label>
+                <input type="radio" id="downtown" name="reservate" value="5">
+                <label for="downtown"><span></span>도심</label>
+            </div>
+            <div class="w-100 my-3">
+                <label for="facillity">기본시설</label>
+                <input type="checkbox" id="1" name="1" value="1">
+                <label for="1"><span></span>화장실</label>
+                <input type="checkbox" id="2" name="2" value="2">
+                <label for="2"><span></span>화장실</label>
+                <input type="checkbox" id="3" name="3" value="3">
+                <label for="3"><span></span>화장실</label>
+                <input type="checkbox" id="4" name="4" value="4">
+                <label for="4"><span></span>화장실</label>
+                <input type="checkbox" id="5" name="5" value="5">
+                <label for="5"><span></span>화장실</label>
+                <input type="checkbox" id="6" name="6" value="6">
+                <label for="6"><span></span>화장실</label>
+                <input type="checkbox" id="7" name="7" value="7">
+                <label for="7"><span></span>화장실</label>
+            </div>
+            <div class="d-flex justify-content-between border-top">
+                <a href="admin/campDeletePro?campNo=?" class="btn btn-danger btn-lg my-3 py-2 fs-6">캠핑장삭제</a>
+                <input type="submit" value="캠핑장수정" class="btn btn-warning btn-lg my-3 py-2 fs-6">
+            </div>
+        </form>
+    </div>
+</body>
+</html>
