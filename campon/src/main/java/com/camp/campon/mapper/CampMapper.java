@@ -50,4 +50,10 @@ public interface CampMapper {
 
     // 예약완료 페이지
     public Camp reservecomplete(String userId) throws Exception;
+
+    // 캠핑상품 등록
+    public int detailinsert(Camp camp) throws Exception;
+
+    // 캠핑상품 번호최댓값
+    public int maxdetailNo() throws Exception;
 }

@@ -156,8 +156,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
     <!--캠핑상품 등록-->
     <insert id="detailinsert">
-        INSERT INTO board( camp_no, cp_dt_name, cp_dt_nop, cp_dt_size, cp_dt_price, camptype_no, cp_dt_introduction )
-        VALUES ( #{campNo}, #{cpdtName}, #{cpdtNop}, #{cpdtSize}, #{cpdtPrice}, #{campTypeNo}, #{cpdtIntroduction} )
+        INSERT INTO campdetail( camp_no, user_no, cp_dt_name, cp_dt_nop, cp_dt_size, cp_dt_price, camptype_no, cp_dt_introduction )
+        VALUES ( #{campNo}, #{userNo}, #{cpdtName}, #{cpdtNop}, #{cpdtSize}, #{cpdtPrice}, #{campTypeNo}, #{cpdtIntroduction} )
     </insert>
-
+    <select id="maxdetailNo" resultType="int">
+        select max(cp_dt_no) from campdetail
+    </select>
+    <insert id="detailimginsert">
+        insert into campdetailimg()
+    </insert>    
 </mapper>

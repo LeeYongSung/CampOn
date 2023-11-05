@@ -16,6 +16,7 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.camp.campon.dto.Board;
@@ -271,13 +272,31 @@ public class CampController {
         return "camp/complete";
     }
 
+    //캠핑상품 등록
     @GetMapping(value="/campdetailinsert")
-    public String campdetailinsert(Model model, int campNo) throws Exception{
+    public String campdetailinsert(Model model, Integer campNo, Integer userNo, @ModelAttribute Camp camp) throws Exception{
         log.info("캠핑장번호 : " + campNo);
+        model.addAttribute("userNo", userNo);
         model.addAttribute("campNo", campNo);
         return "camp/campdetailinsert";
     }
     
+    @PostMapping(value="/campdetailinsert")
+    public String campdetailinsertPro(@ModelAttribute Camp camp) throws Exception {
+        log.info("타입번호 : " + camp.getCampTypeNo());
+        int result = campService.detailinsert(camp);
+        
+        if(result == 0) return "camp/campdetailinsert";
+
+        return "redirect:/camp/campdetailinsert";
+    }
     
+    //캠핑상품 수정
+    @GetMapping(value="/campdetailupdate")
+    public String campdetailupdate(Model model, int cpdtNo) throws Exception{
+        Camp camp = campService.productintro(cpdtNo);
+        model.addAttribute("camp", camp);
+        return "camp/campdetailupdate";
+    }
 
 }

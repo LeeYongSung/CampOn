@@ -43,4 +43,8 @@ public interface CampService {
 
     //예약완료페이지
     public Camp reservecomplete(String userId) throws Exception;
+
+    // 캠핑상품 등록
+    public int detailinsert(Camp camp) throws Exception;
+    
 }

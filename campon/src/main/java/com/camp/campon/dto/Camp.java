@@ -1,6 +1,9 @@
 package com.camp.campon.dto;
 
 import java.util.Date;
+import java.util.List;
+
+import org.springframework.web.multipart.MultipartFile;
 
 import lombok.Data;
 
@@ -71,4 +74,6 @@ public class Camp {
     private int userNo;
     private String userName;
     private String campPaymentType;
+
+    private List<MultipartFile> file;
 }
