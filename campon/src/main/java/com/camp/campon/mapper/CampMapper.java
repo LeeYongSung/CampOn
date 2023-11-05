@@ -50,4 +50,7 @@ public interface CampMapper {
 
     // 예약완료 페이지
     public Camp reservecomplete(String userId) throws Exception;
+
+    // 상품 등록 유저 확인
+    public List<Camp> campproductUser(Integer userNo) throws Exception;
 }

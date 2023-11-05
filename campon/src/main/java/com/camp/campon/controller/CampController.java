@@ -247,7 +247,6 @@ public class CampController {
         return "camp/reservate";
     }
     
-    
     @GetMapping(value="/complete")
     public String complete(Model model ) throws Exception {
         Camp reservecomplete = null;
@@ -270,6 +269,5 @@ public class CampController {
 
         return "camp/complete";
     }
-    
 
 }

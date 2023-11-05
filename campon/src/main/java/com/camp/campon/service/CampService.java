@@ -41,6 +41,9 @@ public interface CampService {
     public List<Camp> productimg(int cpdtNo) throws Exception;
     public Camp productintro(int cpdtNo) throws Exception;
 
-    //예약완료페이지
+    // 예약완료페이지
     public Camp reservecomplete(String userId) throws Exception;
+
+    // 상품 등록 유저 확인
+    public List<Camp> campproductUser(Integer userNo) throws Exception;
 }

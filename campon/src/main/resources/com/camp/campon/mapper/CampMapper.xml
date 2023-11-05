@@ -57,6 +57,19 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <insert id="insertCamp">
         
     </insert>
+    <!-- 캠핑장목록(판매자) -->
+    <select id="campproductUser" resultType="Camp">
+        SELECT *
+        FROM campproduct c
+        JOIN campdetail cd ON c.camp_no = cd.camp_no
+        JOIN camptype ct ON cd.camptype_no = ct.camptype_no
+        JOIN campimg img ON c.camp_no = img.camp_no 
+        JOIN (SELECT min(cpi_no) no FROM campimg GROUP BY camp_no) imgno ON img.cpi_no = imgno.no
+        JOIN campdetailimg ci ON cd.cp_dt_no = ci.cp_dt_no
+        JOIN (SELECT MIN(cpdi_no) cpdi_no FROM campdetailimg GROUP BY cp_dt_no) cn on ci.cpdi_no = cn.cpdi_no
+        WHERE c.user_no = #{userNo}
+        ORDER BY c.camp_no DESC;
+    </select>
     <!-- 캠프상품 등록 -->
 
     <!-- 캠핑장 수정 -->
