@@ -57,4 +57,15 @@ public interface CampService {
     //캠핑상품 삭제
     public int detaildelete(int cpdtNo) throws Exception;
     public int cpdidelete(int cpdtNo) throws Exception;
+    // 캠핑장 등록
+    public int campInsert(Camp camp, List<String> facilityTypeNo) throws Exception;
+
+    // // 캠핑장 이미지 등록
+    // public int campImgInsert(Camp camp) throws Exception;
+
+    // // 캠핑장 시설물 등록
+    // public int campFacilityInsert(Camp camp) throws Exception;
+
+    // // 캠핑장 환경 등록
+    // public int campEnvironmentInsert(Camp camp) throws Exception;
 }

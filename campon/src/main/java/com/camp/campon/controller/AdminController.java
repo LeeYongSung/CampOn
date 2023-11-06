@@ -3,6 +3,7 @@ package com.camp.campon.controller;
 import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.ServletOutputStream;
@@ -12,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.FileCopyUtils;
@@ -31,6 +33,8 @@ import com.camp.campon.service.ProductService;
 import com.camp.campon.service.UserService;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.bind.annotation.RequestBody;
+
 
 @Slf4j
 @Controller
@@ -125,7 +129,7 @@ public class AdminController {
 
     }
     
-        // 상품등록 페이지
+    // 상품등록 페이지
     @GetMapping("/productadd")
     public String productAdd() {
         return "admin/productadd";
@@ -134,8 +138,8 @@ public class AdminController {
     @PostMapping("/productInsert")
     public String productInsert(Product product) throws Exception {
         int result = productService.productInsert(product);
-        log.info("상품등록 성공여부 : " +result);
-            return "redirect:/user/mypage";
+        log.info("상품등록 성공여부 : " + result);
+            return "redirect:user/mypage";
     }
     //상품 수정 페이지
     @GetMapping(value="/productupdate", params="productNo")
@@ -170,7 +174,42 @@ public class AdminController {
         return "user/mypage";
     }
     
+    
+    // 캠핑장 등록
+    @GetMapping(value="/campproductadd")
+    public String campInsert(@ModelAttribute Camp camp, Model model) throws Exception{
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 
+        String userId = auth.getName();
+        Users user = userService.selectById(userId);
+        int userNo = user.getUserNo();
+        camp.setUserNo(userNo);
+        // log.info("camp : " + camp.getUserNo());
+        // model.addAttribute("camp", camp);
+
+        
+        
+
+        return "admin/campproductadd";
+    }
+
+    @PostMapping(value="/campproductadd")
+    public String campInsertPro(@ModelAttribute Camp camp, @RequestParam List<String> facilityTypeNo) throws Exception {
+        
+        int result = campService.campInsert(camp, facilityTypeNo);
+
+        if(result == 0) return "admin/campproductadd";
+
+        return "redirect:/admin/campproductlist";
+    }
+    
+
+    // 캠핑장 수정
+    @GetMapping(value="/campproductupdate")
+    public String campUpdate() {
+        return "admin/campproductupdate";
+    }
+    
     //캠핑상품 등록
     @GetMapping(value="/campdetailinsert")
     public String campdetailinsert(Model model, Integer campNo, Integer userNo, @ModelAttribute Camp camp) throws Exception{

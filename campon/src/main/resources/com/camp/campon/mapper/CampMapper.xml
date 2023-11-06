@@ -54,9 +54,37 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </select>
 
     <!-- 캠핑장 등록 -->
-    <insert id="insertCamp">
-        
+    <insert id="campInsert">
+        INSERT INTO 
+        campproduct ( 
+                        region_no, user_no, camp_name, camp_address, camp_tel, camp_location, camp_layout, camp_open, camp_close, camp_period, camp_introduction, camp_caution
+                    )
+        VALUES ( 
+                #{regionNo}, #{userNo}, #{campName}, #{campAddress}, #{campTel}, #{campLocation}, #{campLayout}, #{campOpen}, #{campClose}, #{campPeriod}, #{campIntroduction}, #{campCaution} 
+               )
     </insert>
+
+    <!-- 캠핑장 이미지파일 등록 -->
+    <insert id="campImgInsert">
+        INSERT INTO
+        campimg ( camp_no, cpi_url )
+        VALUES ( #{campNo}, #{cpiUrl} )
+    </insert>
+
+    <!-- 캠핑장 시설물 등록 -->
+    <insert id="campFacilityInsert">
+        INSERT INTO
+        facility ( camp_no, facilitytype_no )
+        VALUES ( #{campNo}, #{facilitytypeNo} )
+    </insert>
+
+    <!-- 캠핑장 환경 등록 -->
+    <insert id="campEnvironmentInsert">
+        INSERT INTO
+        environment ( camp_no, environmenttype_no )
+        VALUES ( #{campNo}, #{environmentTypeNo} )
+    </insert>
+
     <!-- 캠핑장목록(판매자) -->
     <select id="campproductUser" resultType="Camp">
         SELECT *
@@ -155,6 +183,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         JOIN (SELECT MIN(cpdi_no) cpdi_no FROM campdetailimg GROUP BY cp_dt_no) cn on ci.cpdi_no = cn.cpdi_no
         WHERE cd.cp_dt_no = #{cpdtNo}
     </select>
+
     <!-- 예약완료페이지 -->
     <select id="reservecomplete" resultType="Camp">
         select ci.cpi_url, c.camp_name, cd.cp_dt_name, r.reservation_no, u.user_name, r.reservation_nop, r.reservation_date, date_format(r.reservation_start, "%Y.%m.%d") reservation_start, date_format(r.reservation_end, "%Y.%m.%d") reservation_end, r.camp_paymenttype
@@ -193,4 +222,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <delete id="cpdidelete">
         delete from campdetailimg where cp_dt_no = #{cpdtNo}
     </delete>
+    <insert id="detailimginsert">
+        insert into campdetailimg()
+    </insert>    
+
+    <select id="maxcampNo" resultType="int">
+        SELECT MAX(camp_no) FROM campproduct
+    </select>
 </mapper>
