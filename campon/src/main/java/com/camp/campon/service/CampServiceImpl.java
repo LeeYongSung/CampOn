@@ -1,10 +1,7 @@
 package com.camp.campon.service;
 
 import java.io.File;
-<<<<<<< HEAD
-=======
 import java.nio.file.Files;
->>>>>>> 용성
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -17,11 +14,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.util.FileCopyUtils;
-<<<<<<< HEAD
-=======
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
->>>>>>> 용성
 import org.springframework.web.multipart.MultipartFile;
 
 import com.camp.campon.dto.Camp;
@@ -36,13 +30,8 @@ public class CampServiceImpl implements CampService{
     @Autowired
     private CampMapper campMapper;
 
-<<<<<<< HEAD
     @Value("${upload.path}")
     private String uploadPath;
-=======
-    @Value("${upload.path}")            // application.properties 에 설정한 업로드 경로 속성명
-    private String uploadPath;          // 업로드 경로
->>>>>>> 용성
 
     @Override
     public List<Camp> newList() throws Exception{

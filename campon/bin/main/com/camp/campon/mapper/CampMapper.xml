@@ -222,9 +222,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <delete id="cpdidelete">
         delete from campdetailimg where cp_dt_no = #{cpdtNo}
     </delete>
-    <!-- <insert id="detailimginsert">
+    <insert id="detailimginsert">
         insert into campdetailimg()
-    </insert>     -->
+    </insert>    
 
     <select id="maxcampNo" resultType="int">
         SELECT MAX(camp_no) FROM campproduct
