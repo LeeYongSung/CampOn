@@ -304,4 +304,22 @@ public class CampServiceImpl implements CampService{
         
         return result;
     }
+
+    @Override
+    public List<Camp> campdetailUser(Integer userNo) throws Exception {
+        List<Camp> campproductList = campMapper.campproductUser(userNo);
+
+        List<Camp> campdetailList = null;
+
+        for(int i = 0; i < campproductList.size(); i++ ) {
+            int campNo = campproductList.get(i).getCampNo();
+            log.info("campNo : " + campNo);
+            campdetailList = campMapper.campdetailUser(campNo);
+            campdetailList.addAll(campdetailList);
+            log.info("campdetailList : " + campdetailList);
+        }
+
+
+        return campdetailList;
+    }
 }
