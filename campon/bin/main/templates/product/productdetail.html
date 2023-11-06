@@ -24,18 +24,48 @@
     <div th:text="|상품 - ${select.productCategory}|"></div><br>
 
     <!-- 리뷰수 -->
-
+    <div th:text="${reviewCount}"></div>
 
     <!-- 상품명 -->
-    <div th:text="|${select.productName}|"></div><br>
+    <div th:text="${select.productName}"></div><br>
 
     <!-- 상품가격 -->
-    <div th:text="|${select.productPrice}|"></div><br>
+    <div th:text="${select.productPrice}"></div><br>
 
     <!-- 상세설명 이미지 -->
-    <div th:text="|${select.productCon}|"></div><br>
+    <img th:src="|/img?file=${select.productCon}|" alt="상세설명이미지">
 
     <!-- 상품리뷰 -->
+    <div class="review mb-5">
+        <h5 class="mt-3">상품 후기</h5>
+        <ul th:each="review : ${proReviewList}">
+            <!--상품후기를 클릭하면 상품상세페이지로 이동하게끔 a태그 수정해야 함. -->
+            <a th:href="|/product/page?prNo=${review.prNo}|" class="d-flex justify-content-between">
+                <li class="review_imgbox">
+                    <img th:src="|/img?file=${review.prImg}|">
+                </li>
+                <li class="review_conbox">
+                    <ul>
+                        <li>
+                            <span th:text="${review.productName}"></span>
+                        </li>
+                        <li>
+                            <p th:text="${review.prTitle}"></p>
+                        </li>
+                        <li>
+                            <p th:text="${review.prCon}"></p>
+                        </li>
+                        <li>
+                            <span th:text="${ #dates.format( review.regDate, 'yyyy-MM-dd') }"></span>
+                        </li>
+                        <li>
+                            <p th:text="${review.userId}"></p>
+                        </li>
+                    </ul>
+                </li>
+            </a>
+        </ul>
+    </div>
     
     <!-- 대여안내 -->
     <p>
