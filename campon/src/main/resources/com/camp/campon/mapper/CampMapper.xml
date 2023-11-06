@@ -175,7 +175,22 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <select id="maxdetailNo" resultType="int">
         select max(cp_dt_no) from campdetail
     </select>
-    <insert id="detailimginsert">
-        insert into campdetailimg()
-    </insert>    
+    <insert id="cpdiinsert">
+        insert into campdetailimg(cp_dt_no, camp_no, cpdi_url)
+        VALUES (#{cpdtNo}, #{campNo}, #{cpdiUrl})
+    </insert>
+
+    <!--캠핑상품 수정-->
+    <update id="detailupdate">
+        update campdetail set cp_dt_name=#{cpdtName}, cp_dt_nop=#{cpdtNop}, cp_dt_size=#{cpdtSize}, cp_dt_price=#{cpdtPrice}, camptype_no=#{campTypeNo}, cp_dt_introduction=#{cpdtIntroduction}
+        where cp_dt_no=#{cpdtNo}
+    </update>
+
+    <!--캠핑상품 삭제-->
+    <delete id="detaildelete">
+        delete from campdetail where cp_dt_no = #{cpdtNo}
+    </delete>
+    <delete id="cpdidelete">
+        delete from campdetailimg where cp_dt_no = #{cpdtNo}
+    </delete>
 </mapper>

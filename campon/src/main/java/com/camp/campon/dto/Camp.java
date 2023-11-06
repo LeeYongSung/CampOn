@@ -75,5 +75,5 @@ public class Camp {
     private String userName;
     private String campPaymentType;
 
-    private List<MultipartFile> file;
+    private List<MultipartFile> cpdiFiles;
 }

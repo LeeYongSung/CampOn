@@ -1,13 +1,17 @@
 package com.camp.campon.service;
 
+import java.io.File;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.camp.campon.dto.Camp;
@@ -21,6 +25,9 @@ public class CampServiceImpl implements CampService{
 
     @Autowired
     private CampMapper campMapper;
+
+    @Value("${upload.path}")
+    private String uploadPath;
 
     @Override
     public List<Camp> newList() throws Exception{
@@ -139,18 +146,33 @@ public class CampServiceImpl implements CampService{
     @Override
     public int detailinsert(Camp camp) throws Exception{
         int result = campMapper.detailinsert(camp);
-        String parentTable = "campdetail";
+        int campNo = camp.getCampNo();
         int cpdtNo = campMapper.maxdetailNo();
 
+        List<MultipartFile> fileList = camp.getCpdiFiles();
 
-        List<MultipartFile> fileList = camp.getFile();
+        if(!fileList.isEmpty())
+        for(MultipartFile file : fileList){
+            if(file.isEmpty()) continue;
+            String originName = file.getOriginalFilename();
+            long fileSize = file.getSize();
+            byte[] fileData = file.getBytes();
 
-        // if(!fileList.isEmpty())
-        // for(MultipartFile file : fileList){
-        //     if(file.isEmpty()) continue;
-        //     String originName = 
-        // }
+            String fileName = UUID.randomUUID().toString() + "_" + originName;
+            String filePath = uploadPath + "/" + fileName;
 
+            File uploadFile = new File(uploadPath, fileName);
+            FileCopyUtils.copy(fileData, uploadFile);
+
+            log.info("url : " + filePath);
+
+            Camp cpdi = new Camp();
+            cpdi.setCpdtNo(cpdtNo);
+            cpdi.setCpdiUrl(filePath);
+            cpdi.setCampNo(campNo);
+
+            campMapper.cpdiinsert(cpdi);
+        }
 
         return result;
         
@@ -161,6 +183,57 @@ public class CampServiceImpl implements CampService{
     public List<Camp> campproductUser(Integer userNo) throws Exception {
         List<Camp> productUser = campMapper.campproductUser(userNo);
         return productUser;
+    }
+
+    @Override
+    public int cpdiinsert(Camp camp) throws Exception {
+        int result = campMapper.cpdiinsert(camp);
+        return result;
+    }
+
+    @Override
+    public int detailupdate(Camp camp) throws Exception {  
+        int result = campMapper.detailupdate(camp);
+        int cpdtNo = camp.getCpdtNo();
+        int campNo = camp.getCampNo();
+
+        List<MultipartFile> fileList = camp.getCpdiFiles();
+
+        if(!fileList.isEmpty())
+        for(MultipartFile file : fileList){
+            if(file.isEmpty()) continue;
+            String originName = file.getOriginalFilename();
+            long fileSize = file.getSize();
+            byte[] fileData = file.getBytes();
+
+            String fileName = UUID.randomUUID().toString() + "_" + originName;
+            String filePath = uploadPath + "/" + fileName;
+
+            File uploadFile = new File(uploadPath, fileName);
+            FileCopyUtils.copy(fileData, uploadFile);
+
+            log.info("url : " + filePath);
+
+            Camp cpdi = new Camp();
+            cpdi.setCpdtNo(cpdtNo);
+            cpdi.setCpdiUrl(filePath);
+            cpdi.setCampNo(campNo);
+
+            campMapper.cpdiinsert(cpdi);
+        }
+        return result;
+    }
+
+    @Override
+    public int detaildelete(int cpdtNo) throws Exception {
+        int result = campMapper.detaildelete(cpdtNo);
+        return result;
+    }
+
+    @Override
+    public int cpdidelete(int cpdtNo) throws Exception {
+        int result = campMapper.cpdidelete(cpdtNo);
+        return result;
     }
 
 }
