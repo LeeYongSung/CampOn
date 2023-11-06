@@ -4,5 +4,60 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <!-- namespace="매퍼 인터페이스 경로" -->
-<mapper namespace="com.camp.campon.mapper.ProdcutMapper">
+<mapper namespace="com.camp.campon.mapper.ProductMapper">
+
+<!--상품 하나 선택-->
+<select id="select" resultType="product">
+SELECT * FROM product WHERE product_no = #{productNo}
+</select>
+
+<!-- 상품등록 $을 #로 수정 -->
+<insert id="productInsert">
+    INSERT INTO product (
+        product_name, product_thumnail, product_category, product_price,
+        product_intro, product_con
+    )
+    VALUES (
+        #{productName}, #{productThumnail}, #{productCategory}, 
+        #{productPrice}, #{productIntro}, #{productCon}
+    )
+</insert>
+
+<insert id="insertImgs">
+    INSERT INTO `productimg`
+    (`product_no`, `productimg_url`)
+    VALUES
+    (#{productNo}, #{productimgUrl})
+</insert>
+
+<delete id="deleteImgs" >
+DELETE FROM productimg WHERE product_no = #{productNo};
+</delete>
+
+<!--상품 번호 최댓값 -->
+<select id="maxPk" resultType="int">
+    SELECT MAX(product_no)
+    FROM product
+</select>
+
+
+<select id="getCategoryList" resultType="Product">
+    SELECT * FROM product WHERE product_category = #{category}
+</select>
+
+<!-- 찜 목록 -->
+<select id="wishlist" resultType="Product">
+    SELECT *
+    FROM productsave s
+    JOIN product p ON s.product_no = p.product_no
+    ORDER BY productsave_no DESC
+</select>
+
+<!-- 찜 삭제 -->
+<delete id="wishlistDelete">
+    DELETE FROM productsave
+    WHERE productsave_no = #{wishlistNo}
+</delete>   
+
+ 
 </mapper>
