@@ -6,12 +6,40 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <!-- namespace="매퍼 인터페이스 경로" -->
 <mapper namespace="com.camp.campon.mapper.ProductMapper">
 
+<!-- 상품수정시 상품 불러오기 productMap-->
+<resultMap type="Product" id="productMap">
+    <id property="productNo" column="product_no" />
+    <result property="productNo" column="product_no" />
+    <result property="productName" column="product_name" />
+    <result property="productThumnail" column="product_thumnail" />
+    <result property="productCon" column="product_con" />
+    <result property="productIntro" column="product_intro" />
+    <result property="productCategory" column="product_category" />
+    <result property="productPrice" column="product_price" />
+    <result property="regDate" column="reg_date" />
+    <result property="updDate" column="upd_date" />
+    <collection property="productImgsUrlList" resultMap="imgsMap"></collection>
+</resultMap>
+<resultMap type="String" id="imgsMap">
+    <result property="productimgUrl" column="productimg_url" />
+</resultMap>
+<select id="selectUpd" resultMap="productMap">
+SELECT p.* 
+      ,i.productimg_url
+FROM product p LEFT OUTER JOIN productimg i ON p.product_no = i.product_no
+WHERE p.product_no = #{productNo};
+</select>
+<!-- 전체 상품 조회-->
+<select id="getProductList" resultType="Product">
+SELECT * FROM product
+</select>
+
 <!--상품 하나 선택-->
-<select id="select" resultType="product">
+<select id="select" resultType="Product">
 SELECT * FROM product WHERE product_no = #{productNo}
 </select>
 
-<!-- 상품등록 $을 #로 수정 -->
+<!-- 상품등록 -->
 <insert id="productInsert">
     INSERT INTO product (
         product_name, product_thumnail, product_category, product_price,
@@ -30,6 +58,17 @@ SELECT * FROM product WHERE product_no = #{productNo}
     (#{productNo}, #{productimgUrl})
 </insert>
 
+<!--상품 수정-->
+<update id="productUpdate">
+UPDATE product SET
+product_name=#{productName}, product_thumnail=#{productThumnail}, product_category=#{productCategory}, product_price=#{productPrice},
+product_intro=#{productIntro}, product_con=#{productCon}, upd_date=now()
+WHERE product_no = #{productNo}
+</update>
+<delete id="deleteProduct">
+DELETE FROM product WHERE product_no = #{product_no}
+</delete>
+
 <delete id="deleteImgs" >
 DELETE FROM productimg WHERE product_no = #{productNo};
 </delete>
@@ -39,7 +78,10 @@ DELETE FROM productimg WHERE product_no = #{productNo};
     SELECT MAX(product_no)
     FROM product
 </select>
-
+<!-- 상품후기 모든목록 불러오기-->
+<select id="getReviewList" resultType="Productreview">
+SELECT r.*, u.user_id, p.product_name FROM productreview r JOIN `user` u ON  r.user_no = u.user_no JOIN product p ON r.product_no = p.product_no
+</select>
 
 <select id="getCategoryList" resultType="Product">
     SELECT * FROM product WHERE product_category = #{category}

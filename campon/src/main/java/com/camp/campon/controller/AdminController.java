@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.camp.campon.dto.Camp;
 import com.camp.campon.dto.Product;
+import com.camp.campon.dto.Productreview;
 import com.camp.campon.dto.Users;
 import com.camp.campon.service.BoardService;
 import com.camp.campon.service.CampService;
@@ -115,6 +116,14 @@ public class AdminController {
     public String campProductUpdate() {
         return "admin/campproductupdate";
     }
+    //(관리자) 상품 관리 페이지
+    @GetMapping(value="/productlist")
+    public String productList(Model model) throws Exception {
+        List<Product> productList = productService.getProductList();
+        model.addAttribute("productList", productList);
+        return "admin/productlist";
+
+    }
     
         // 상품등록 페이지
     @GetMapping("/productadd")
@@ -126,21 +135,22 @@ public class AdminController {
     public String productInsert(Product product) throws Exception {
         int result = productService.productInsert(product);
         log.info("상품등록 성공여부 : " +result);
-            return "redirect:user/mypage";
+            return "redirect:/user/mypage";
     }
     //상품 수정 페이지
     @GetMapping(value="/productupdate", params="productNo")
     public String productUpdate(@RequestParam String productNo,  Model model) throws Exception {
-        Product product = productService.select( Integer.parseInt(productNo) );
+        Product product = productService.selectUpd( Integer.parseInt(productNo) );
         model.addAttribute("product", product);
         return "admin/productupdate";
     }
-    //상품 수정
+    //상품 수정 pro
     @PostMapping(value="/productUpdate")
     public String productUpdate(Product product) throws Exception {
+        log.info("썸네일 있냐?"+ product.getProductThmFile().size());
         int result = productService.productUpdate(product);
         log.info("상품수정 성공여부 : " +result);
-        return "redirect:user/mypage" ;
+        return "redirect:/user/mypage" ;
     }
     //이미지 불러오기
     @GetMapping(value="/img", params="file")
@@ -153,6 +163,13 @@ public class AdminController {
         ServletOutputStream sos =  response.getOutputStream();
         FileCopyUtils.copy(fis, sos);
     }
+    //상품 삭제 pro
+    @GetMapping(value="/delete", params="productNo")
+    public String productDelete(@RequestParam String productNo) throws NumberFormatException, Exception {
+        int result = productService.deleteProduct(Integer.parseInt(productNo));
+        return "user/mypage";
+    }
+    
 
     //캠핑상품 등록
     @GetMapping(value="/campdetailinsert")
