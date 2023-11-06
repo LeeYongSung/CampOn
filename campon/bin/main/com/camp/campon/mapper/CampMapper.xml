@@ -185,4 +185,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         update campdetail set cp_dt_name=#{cpdtName}, cp_dt_nop=#{cpdtNop}, cp_dt_size=#{cpdtSize}, cp_dt_price=#{cpdtPrice}, camptype_no=#{campTypeNo}, cp_dt_introduction=#{cpdtIntroduction}
         where cp_dt_no=#{cpdtNo}
     </update>
+
+    <!--캠핑상품 삭제-->
+    <delete id="detaildelete">
+        delete from campdetail where cp_dt_no = #{cpdtNo}
+    </delete>
+    <delete id="cpdidelete">
+        delete from campdetailimg where cp_dt_no = #{cpdtNo}
+    </delete>
 </mapper>

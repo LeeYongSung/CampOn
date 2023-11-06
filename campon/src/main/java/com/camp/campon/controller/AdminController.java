@@ -170,7 +170,7 @@ public class AdminController {
         
         if(result == 0) return "redirect:/admin/campdetailinsert?campNo=" + campNo + "& userNo=" + userNo;
 
-        return "redirect:/camp/favorites";
+        return "redirect:/admin/campproductlist";
     }
     
     //캠핑상품 수정
@@ -183,11 +183,29 @@ public class AdminController {
     //캠핑상품 수정처리
     @PostMapping(value="/campdetailupdate")
     public String campdetailupdatePro(Camp camp) throws Exception{
+        int filedelete = campService.cpdidelete(camp.getCpdtNo());
         int result = campService.detailupdate(camp);
         int cpdtNo = camp.getCpdtNo();
         if(result == 0) return "redirect:/admin/campdetailupdate?cpdtNo" + cpdtNo;
 
-        return "redirect:/camp/favorites";
+        return "redirect:/admin/campproductlist";
+    }
+    //캠핑상품 삭제처리
+    @PostMapping(value="/campdetaildelete")
+    public String campdetaildelete(int cpdtNo) throws Exception{
+        log.info("숫자 : "+ cpdtNo);
+        int filedelete = campService.cpdidelete(cpdtNo);
+        int result = campService.detaildelete(cpdtNo);
+        if(result == 0) return "redirect:/admin/campdetailupdate?cpdtNo=" + cpdtNo;
+        return "redirect:/admin/campproductlist";
+    }
+    @GetMapping(value="/campdetaildelete")
+    public String campdetaildeletepro(int cpdtNo) throws Exception{
+        log.info("숫자 : "+ cpdtNo);
+        int filedelete = campService.cpdidelete(cpdtNo);
+        int result = campService.detaildelete(cpdtNo);
+        if(result == 0) return "redirect:/admin/campdetailupdate?cpdtNo=" + cpdtNo;
+        return "redirect:/admin/campproductlist";
     }
     
 }

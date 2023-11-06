@@ -80,10 +80,10 @@
         
         function actionUpdate(){ form.submit() }
         function actionDelete(){ 
-            let check = confirm('상품을 삭제하시겠습니까?')
+            let check = confirm('캠핑상품을 삭제하시겠습니까?')
             if(check){
                 form.action = '/admin/campdetaildelete'
-                from.submit()
+                form.submit()
             }
         }
 

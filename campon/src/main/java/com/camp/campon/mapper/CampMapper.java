@@ -63,4 +63,8 @@ public interface CampMapper {
 
     //캠핑상품 수정
     public int detailupdate(Camp camp) throws Exception;
+
+    //캠핑상품 삭제
+    public int detaildelete(int cpdtNo) throws Exception;
+    public int cpdidelete(int cpdtNo) throws Exception;
 }

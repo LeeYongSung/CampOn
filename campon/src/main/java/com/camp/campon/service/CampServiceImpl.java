@@ -194,6 +194,45 @@ public class CampServiceImpl implements CampService{
     @Override
     public int detailupdate(Camp camp) throws Exception {  
         int result = campMapper.detailupdate(camp);
+        int cpdtNo = camp.getCpdtNo();
+        int campNo = camp.getCampNo();
+
+        List<MultipartFile> fileList = camp.getCpdiFiles();
+
+        if(!fileList.isEmpty())
+        for(MultipartFile file : fileList){
+            if(file.isEmpty()) continue;
+            String originName = file.getOriginalFilename();
+            long fileSize = file.getSize();
+            byte[] fileData = file.getBytes();
+
+            String fileName = UUID.randomUUID().toString() + "_" + originName;
+            String filePath = uploadPath + "/" + fileName;
+
+            File uploadFile = new File(uploadPath, fileName);
+            FileCopyUtils.copy(fileData, uploadFile);
+
+            log.info("url : " + filePath);
+
+            Camp cpdi = new Camp();
+            cpdi.setCpdtNo(cpdtNo);
+            cpdi.setCpdiUrl(filePath);
+            cpdi.setCampNo(campNo);
+
+            campMapper.cpdiinsert(cpdi);
+        }
+        return result;
+    }
+
+    @Override
+    public int detaildelete(int cpdtNo) throws Exception {
+        int result = campMapper.detaildelete(cpdtNo);
+        return result;
+    }
+
+    @Override
+    public int cpdidelete(int cpdtNo) throws Exception {
+        int result = campMapper.cpdidelete(cpdtNo);
         return result;
     }
 

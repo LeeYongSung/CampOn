@@ -50,7 +50,11 @@ public interface CampService {
     
     // 상품 등록 유저 확인
     public List<Camp> campproductUser(Integer userNo) throws Exception;
-    
+
     //캠핑상품 수정
     public int detailupdate(Camp camp) throws Exception;
+
+    //캠핑상품 삭제
+    public int detaildelete(int cpdtNo) throws Exception;
+    public int cpdidelete(int cpdtNo) throws Exception;
 }
