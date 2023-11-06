@@ -46,7 +46,11 @@ public interface CampService {
 
     // 캠핑상품 등록
     public int detailinsert(Camp camp) throws Exception;
+    public int cpdiinsert(Camp camp) throws Exception;
     
     // 상품 등록 유저 확인
     public List<Camp> campproductUser(Integer userNo) throws Exception;
+    
+    //캠핑상품 수정
+    public int detailupdate(Camp camp) throws Exception;
 }
