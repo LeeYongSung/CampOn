@@ -38,5 +38,10 @@ public class Product {
     private Integer cartNo;
     private Integer cartCnt;
 
+    // 찜 하기
+    private int wishlistNo;
+
+
+
     
 }

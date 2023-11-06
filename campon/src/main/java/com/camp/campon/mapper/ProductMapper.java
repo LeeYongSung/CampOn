@@ -28,9 +28,15 @@ public interface ProductMapper {
     public int maxPk() throws Exception;
 
     // 찜 목록
-    public List<Product> wishlist();
+    public List<Product> wishList();
 
     // 찜 삭제
-    public int wishlistDelete(int wishlistNo);
+    public int wishListDelete(int wishlistNo);
+
+    // 장바구니 목록
+    public List<Product> cartList();
+
+    // 장바구니 삭제
+    public int cartListDelete(int cartlistNo);
     
 }

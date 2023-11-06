@@ -46,7 +46,7 @@ DELETE FROM productimg WHERE product_no = #{productNo};
 </select>
 
 <!-- 찜 목록 -->
-<select id="wishlist" resultType="Product">
+<select id="wishList" resultType="Product">
     SELECT *
     FROM productsave s
     JOIN product p ON s.product_no = p.product_no
@@ -54,10 +54,23 @@ DELETE FROM productimg WHERE product_no = #{productNo};
 </select>
 
 <!-- 찜 삭제 -->
-<delete id="wishlistDelete">
+<delete id="wishListDelete">
     DELETE FROM productsave
     WHERE productsave_no = #{wishlistNo}
 </delete>   
 
+<!-- 장바구니 목록 -->
+<select id="cartList" resultType="Product">
+    SELECT *
+    FROM cart c
+    JOIN product p ON c.product_no = p.product_no
+    ORDER BY cart_no DESC
+</select>
+
+<!-- 장바구니 삭제 -->
+<delete id="cartListDelete">
+    DELETE FROM cart
+    WHERE cart_no = #{cartListNo}
+</delete>   
  
 </mapper>

@@ -147,14 +147,14 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<Product> wishlist() {
-        List<Product> wishlist = productMapper.wishlist();
+    public List<Product> wishList() {
+        List<Product> wishlist = productMapper.wishList();
         return wishlist;
     }
 
     @Override
-    public int wishlistDelete(int wishlistNo) {
-        int result = productMapper.wishlistDelete(wishlistNo);
+    public int wishListDelete(int wishlistNo) {
+        int result = productMapper.wishListDelete(wishlistNo);
         return result;
     }
 
@@ -162,6 +162,18 @@ public class ProductServiceImpl implements ProductService {
     public Product select(int productNo) throws Exception {
         Product product = productMapper.select(productNo);
         return product;
+    }
+
+    @Override
+    public List<Product> cartList() {
+        List<Product> cartlist = productMapper.cartList();
+        return cartlist;
+    }
+
+    @Override
+    public int cartListDelete(int cartlistNo) {
+        int result = productMapper.cartListDelete(cartlistNo);
+        return result;
     }
 
 

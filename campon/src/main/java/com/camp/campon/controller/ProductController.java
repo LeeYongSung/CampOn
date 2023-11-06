@@ -62,7 +62,7 @@ public class ProductController {
     // 상품 찜 목록
     @GetMapping("/wishlist")
     public String wishlist(Model model) {
-        List<Product> wishlist = productService.wishlist();
+        List<Product> wishlist = productService.wishList();
         model.addAttribute("wishlist", wishlist);
         return "product/wishlist";
     }
@@ -70,9 +70,25 @@ public class ProductController {
     // 상품 찜 삭제
     @GetMapping(value="/wishlistDelete")
     public String wishlistDelete(int wishlistNo) {
-        int result = productService.wishlistDelete(wishlistNo);
-        if(result==0) return "redirect:/product/wishlist";
+        int result = productService.wishListDelete(wishlistNo);
+        if( result == 0 ) return "redirect:/product/wishlist";
         return "redirect:/product/wishlist";
+    }
+    
+    // 장바구니 목록
+    @GetMapping("/cart")
+    public String cartlist(Model model) {
+        List<Product> cartList = productService.cartList();
+        model.addAttribute("cartList", cartList);
+        return "product/cart";
+    }
+
+    // 장바구니 삭제
+    @GetMapping(value="/cart/Delete")
+    public String cartListDelete(int cartlistNo) {
+        int result = productService.cartListDelete(cartlistNo);
+        if( result == 0 ) return "redirect:/product/cart";
+        return "product/cart";
     }
     
 }
