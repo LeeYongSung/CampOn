@@ -121,4 +121,20 @@ SELECT r.*, u.user_id, p.product_name FROM productreview r JOIN `user` u ON  r.u
     FROM productimg
     WHERE product_no = #{productNo}
  </select>
+
+ <!-- 상품번호에 따른 후기 불러오기-->
+<select id="getReviewListByNo" resultType="Productreview">
+SELECT r.*, u.user_id, p.product_name FROM productreview r JOIN `user` u ON  r.user_no = u.user_no JOIN product p ON r.product_no = p.product_no WHERE p.product_no = #{productNo}
+</select>
+
+<!-- 리뷰 수 -->
+<select id="reviewCount" resultType="int">
+SELECT count(*) FROM productreview WHERE product_no = #{productNo}
+</select>
+
+<!-- 장바구니에 담기-->
+<insert id="cartadd">
+INSERT INTO productsave (product_no, user_no) VALUES  (#{productNo}, #{userNo})
+</insert>
+
 </mapper>
