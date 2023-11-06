@@ -205,5 +205,12 @@ public class ProductServiceImpl implements ProductService {
         List<Product> productList = productMapper.getProductList();
         return productList;
     }
+    @Override
+    public List<Product> productimg(Integer productNo) {
+        List<Product> productimg = productMapper.productimg(productNo);
+        return productimg;
+    }
+
+    
 
 }

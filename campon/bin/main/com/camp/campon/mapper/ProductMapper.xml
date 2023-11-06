@@ -114,5 +114,11 @@ SELECT r.*, u.user_id, p.product_name FROM productreview r JOIN `user` u ON  r.u
     DELETE FROM cart
     WHERE cart_no = #{cartListNo}
 </delete>   
- 
+
+<!-- 상품 상세페이지 -->
+ <select id="productimg" resultType="Product">
+    SELECT *
+    FROM productimg
+    WHERE product_no = #{productNo}
+ </select>
 </mapper>
