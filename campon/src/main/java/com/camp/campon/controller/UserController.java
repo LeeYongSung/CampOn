@@ -31,8 +31,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 @RequestMapping("/user")
 public class UserController {
+
     @Autowired
     private UserService userService;
+    
     @Autowired
     private PersistentTokenRepository persistentTokenRepository;
 
@@ -137,7 +139,7 @@ public class UserController {
     @GetMapping(value="/seller")
     public String userSeller(Model model) {
         return "user/seller";
-    }    
+    }
 
     //마이페이지
     @GetMapping("/mypage")
@@ -160,5 +162,4 @@ public class UserController {
             return "user/mypage";
         }
     }
-
 }

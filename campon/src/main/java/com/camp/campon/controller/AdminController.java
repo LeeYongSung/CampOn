@@ -1,17 +1,28 @@
 package com.camp.campon.controller;
 
+import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.camp.campon.dto.Camp;
+import com.camp.campon.dto.Product;
 import com.camp.campon.dto.Users;
 import com.camp.campon.service.BoardService;
 import com.camp.campon.service.CampService;
@@ -19,10 +30,6 @@ import com.camp.campon.service.ProductService;
 import com.camp.campon.service.UserService;
 
 import lombok.extern.slf4j.Slf4j;
-
-
- 
-
 
 @Slf4j
 @Controller
@@ -98,7 +105,6 @@ public class AdminController {
             return "redirect:/user/login";
         }
     }
-    
 
     @GetMapping(value="/campproductadd")
     public String campProductAdd() {
@@ -110,5 +116,69 @@ public class AdminController {
         return "admin/campproductupdate";
     }
     
+        // 상품등록 페이지
+    @GetMapping("/productadd")
+    public String productAdd() {
+        return "admin/productadd";
+    }
+    // 상품등록 실행
+    @PostMapping("/productInsert")
+    public String productInsert(Product product) throws Exception {
+        int result = productService.productInsert(product);
+        log.info("상품등록 성공여부 : " +result);
+            return "redirect:user/mypage";
+    }
+    //상품 수정 페이지
+    @GetMapping(value="/productupdate", params="productNo")
+    public String productUpdate(@RequestParam String productNo,  Model model) throws Exception {
+        Product product = productService.select( Integer.parseInt(productNo) );
+        model.addAttribute("product", product);
+        return "admin/productupdate";
+    }
+    //상품 수정
+    @PostMapping(value="/productUpdate")
+    public String productUpdate(Product product) throws Exception {
+        int result = productService.productUpdate(product);
+        log.info("상품수정 성공여부 : " +result);
+        return "redirect:user/mypage" ;
+    }
+    //이미지 불러오기
+    @GetMapping(value="/img", params="file")
+    public void img(@RequestParam("file") String file, HttpServletResponse response) throws Exception  {
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.IMAGE_JPEG); 
+        headers.add("Content-Disposition", "inline;"); 
+        String filePath = file;
+        FileInputStream fis = new FileInputStream(filePath);
+        ServletOutputStream sos =  response.getOutputStream();
+        FileCopyUtils.copy(fis, sos);
+    }
+
+    //캠핑상품 등록
+    @GetMapping(value="/campdetailinsert")
+    public String campdetailinsert(Model model, Integer campNo, Integer userNo, @ModelAttribute Camp camp) throws Exception{
+        log.info("캠핑장번호 : " + campNo);
+        model.addAttribute("userNo", userNo);
+        model.addAttribute("campNo", campNo);
+        return "admin/campdetailinsert";
+    }
+    
+    @PostMapping(value="/campdetailinsert")
+    public String campdetailinsertPro(@ModelAttribute Camp camp) throws Exception {
+        log.info("타입번호 : " + camp.getCampTypeNo());
+        int result = campService.detailinsert(camp);
+        
+        if(result == 0) return "camp/campdetailinsert";
+
+        return "redirect:/admin/campdetailinsert";
+    }
+    
+    //캠핑상품 수정
+    @GetMapping(value="/campdetailupdate")
+    public String campdetailupdate(Model model, int cpdtNo) throws Exception{
+        Camp camp = campService.productintro(cpdtNo);
+        model.addAttribute("camp", camp);
+        return "admin/campdetailupdate";
+    }
     
 }

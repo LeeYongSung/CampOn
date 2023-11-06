@@ -58,45 +58,6 @@ public class ProductController {
         List<Product> productList = productService.getCategoryList(category);
         return productList;
     }
-    // 상품등록 페이지
-    @GetMapping("/productadd")
-    public String productAdd() {
-        return "product/productadd";
-    }
-    // 상품등록 실행
-    @PostMapping("/productInsert")
-    public String productInsert(Product product) throws Exception {
-        int result = productService.productInsert(product);
-        log.info("상품등록 성공여부 : " +result);
-            return "user/mypage";
-    }
-    //상품 수정 페이지
-    @GetMapping(value="/productupdate", params="productNo")
-    public String productUpdate(@RequestParam String productNo,  Model model) throws Exception {
-        Product product = productService.select( Integer.parseInt(productNo) );
-        model.addAttribute("product", product);
-        return "product/productupdate";
-    }
-    //상품 수정
-    @PostMapping(value="/productUpdate")
-    public String productUpdate(Product product) throws Exception {
-        int result = productService.productUpdate(product);
-        log.info("상품수정 성공여부 : " +result);
-        return "user/mypage" ;
-    }
-    //이미지 불러오기
-    @GetMapping(value="/img", params="file")
-    public void img(@RequestParam("file") String file, HttpServletResponse response) throws Exception  {
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.IMAGE_JPEG); 
-        headers.add("Content-Disposition", "inline;"); 
-        String filePath = file;
-        FileInputStream fis = new FileInputStream(filePath);
-        ServletOutputStream sos =  response.getOutputStream();
-        FileCopyUtils.copy(fis, sos);
-    }
-
-    
 
     // 상품 찜 목록
     @GetMapping("/wishlist")
