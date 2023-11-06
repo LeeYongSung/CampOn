@@ -110,12 +110,10 @@ public class ProductController {
         Product select = productService.select(productNo);
         List<Productreview> proReviewList = productService.getReviewListByNo(productNo);
         int reviewCount = productService.reviewCount(productNo);
-        
         model.addAttribute("productimg", productimg);
         model.addAttribute( "select", select);
         model.addAttribute("proReviewList", proReviewList);
         model.addAttribute("reviewCount", reviewCount);
-
         return "product/productdetail";
     }
 

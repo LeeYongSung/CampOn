@@ -14,7 +14,7 @@
     <h1>캠핑장 상품 등록</h1>
     <h4>캠핑장 상품을 등록하기 위한 페이지입니다.</h4>
     
-    <form action="/camp/campdetailinsert" method="POST" id="form" enctype="multipart/form-data">
+    <form action="/admin/campdetailinsert" method="POST" id="form" enctype="multipart/form-data">
         <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
         <input type="hidden" name="campNo" th:value="${camp.campNo}">
         <input type="hidden" name="userNo" th:value="${camp.userNo}">
@@ -28,7 +28,7 @@
             <tr>
                 <td>파일</td>
                 <td>
-                    <input type="file" name="campdetailimg" multiple>
+                    <input type="file" name="cpdiFiles" multiple>
                 </td>
             </tr>
             <tr>
@@ -53,11 +53,11 @@
             <tr>
                 <td>캠핑종류</td>
                 <td>
-                    <input type="radio" name="campTypeNo" value="1" />오토캠핑
-                    <input type="radio" name="campTypeNo" value="2" />글램핑
-                    <input type="radio" name="campTypeNo" value="3" />카라반
-                    <input type="radio" name="campTypeNo" value="4" />펜션
-                    <input type="radio" name="campTypeNo" value="5" />피크닉
+                    <input type="radio" name="campTypeNo" id="1" value="1" /><label for="1"><span></span>오토캠핑</label>
+                    <input type="radio" name="campTypeNo" id="2" value="2" /><label for="2"><span></span>글램핑</label>
+                    <input type="radio" name="campTypeNo" id="3" value="3" /><label for="3"><span></span>카라반</label>
+                    <input type="radio" name="campTypeNo" id="4" value="4" /><label for="4"><span></span>펜션</label>
+                    <input type="radio" name="campTypeNo" id="5" value="5" /><label for="5"><span></span>피크닉</label>
                 </td>
             </tr>
             <tr>

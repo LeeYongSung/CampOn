@@ -18,10 +18,12 @@
             <ul class="w-100 text-center">
                 <li><img src="/img/user/test_user.png" alt=""></li>
                 <li>
-                    <h4>아이디</h4>
+                    <h4>아이디 : <span th:text="${#authentication.principal.users.userId}"></span></h4>
+                    <h4>아이디 : <span sec:authentication="principal.username"></span></h4>
                 </li>
             </ul>
         </div>
+
     </div>
     <div class="container">
         <!--중단 -->

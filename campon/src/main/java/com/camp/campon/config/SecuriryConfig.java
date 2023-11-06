@@ -66,7 +66,7 @@ public class SecuriryConfig extends WebSecurityConfigurerAdapter {
         // 인가 처리
 
         // 람다식
-        http.authorizeRequests(authorize -> authorize                                    // 인가 설정
+        http.authorizeRequests((authorize) -> authorize                                    // 인가 설정
                                 // anMatchers("자원 경로")                   - 인가에 대한 URL 경로를 설정
                                 // permitAll()                              - 모든 사용자 허용
                                 // hasAnyRole()                             - 여러 권한에 대한 허용
@@ -94,7 +94,7 @@ public class SecuriryConfig extends WebSecurityConfigurerAdapter {
 
         // 로그인 설정
         // http.formLogin().loginPage("/user/login");       // 지정된 경로의 로그인 페이지로 이동
-        http.formLogin(login -> login                   
+        http.formLogin((login) -> login                   
             .defaultSuccessUrl("/")             // 로그인 성공 시, URL : "/"(기본값)
             //(수정) 로그인페이지 경로 수정했슴
             .loginPage("/user/login")                        // 커스텀 로그인 페이지 지정 (default:/login)
@@ -107,7 +107,7 @@ public class SecuriryConfig extends WebSecurityConfigurerAdapter {
         );
         
         // 로그아웃 설정
-        http.logout(logout -> logout
+        http.logout((logout) -> logout
             // .logoutSuccessUrl("/login")    // 로그아웃 성공 시, URL : "/login?logout"(기본값)
             // .logoutUrl("/logout")                 // 로그아웃 요청 처리 경로 지정 (default:logout)
             // 쿠키 삭제
@@ -117,7 +117,7 @@ public class SecuriryConfig extends WebSecurityConfigurerAdapter {
         );
 
         // 자동 로그인 설정
-        http.rememberMe(rememberme -> rememberme
+        http.rememberMe((rememberme) -> rememberme
             . key("dldydtjd9")
             // DataSourece 가 등록된 PersistentRepository 토큰정보 객체
             .tokenRepository( tokenRepository() )
@@ -126,7 +126,7 @@ public class SecuriryConfig extends WebSecurityConfigurerAdapter {
         );
 
         // 인증 예외 처리
-        http.exceptionHandling(exception -> exception
+        http.exceptionHandling((exception) -> exception
             // .accessDeniedPage("/exception")
             .accessDeniedHandler( accessDeniedHandler() )
         );

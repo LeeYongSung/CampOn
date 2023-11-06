@@ -88,7 +88,7 @@ SELECT r.*, u.user_id, p.product_name FROM productreview r JOIN `user` u ON  r.u
 </select>
 
 <!-- 찜 목록 -->
-<select id="wishlist" resultType="Product">
+<select id="wishList" resultType="Product">
     SELECT *
     FROM productsave s
     JOIN product p ON s.product_no = p.product_no
@@ -96,10 +96,45 @@ SELECT r.*, u.user_id, p.product_name FROM productreview r JOIN `user` u ON  r.u
 </select>
 
 <!-- 찜 삭제 -->
-<delete id="wishlistDelete">
+<delete id="wishListDelete">
     DELETE FROM productsave
     WHERE productsave_no = #{wishlistNo}
 </delete>   
 
- 
+<!-- 장바구니 목록 -->
+<select id="cartList" resultType="Product">
+    SELECT *
+    FROM cart c
+    JOIN product p ON c.product_no = p.product_no
+    ORDER BY cart_no DESC
+</select>
+
+<!-- 장바구니 삭제 -->
+<delete id="cartListDelete">
+    DELETE FROM cart
+    WHERE cart_no = #{cartListNo}
+</delete>   
+
+<!-- 상품 상세페이지 -->
+ <select id="productimg" resultType="Product">
+    SELECT *
+    FROM productimg
+    WHERE product_no = #{productNo}
+ </select>
+
+ <!-- 상품번호에 따른 후기 불러오기-->
+<select id="getReviewListByNo" resultType="Productreview">
+SELECT r.*, u.user_id, p.product_name FROM productreview r JOIN `user` u ON  r.user_no = u.user_no JOIN product p ON r.product_no = p.product_no WHERE p.product_no = #{productNo}
+</select>
+
+<!-- 리뷰 수 -->
+<select id="reviewCount" resultType="int">
+SELECT count(*) FROM productreview WHERE product_no = #{productNo}
+</select>
+
+<!-- 장바구니에 담기-->
+<insert id="cartadd">
+INSERT INTO productsave (product_no, user_no) VALUES  (#{productNo}, #{userNo})
+</insert>
+
 </mapper>

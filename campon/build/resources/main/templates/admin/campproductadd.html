@@ -15,14 +15,16 @@
         <div class="w-100 text-center my-3">
             <h5>캠핑장 등록</h5>
         </div>
-        <form action="camp/campproductAddPro" method="post">
+        <form action="/admin/campproductadd" method="post" enctype="multipart/form-data">
+            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+            <input type="hidden" name="userNo" id="userNo" th:value="${camp.userNo}">
             <div class="form-floating my-2">
-                <input type="text" id="campname" name="campname" class="form-control">
-                <label for="campname">캠핑장명</label>
+                <input type="text" id="campName" name="campName" class="form-control">
+                <label for="campName">캠핑장명</label>
             </div>
             <div class="form-floating">
-                <input type="file" id="campfile" name="campfile" class="form-control">
-                <label for="campfile">캠핑장이미지</label>
+                <input type="file" id="file" name="file" class="form-control" multiple>
+                <label for="file">캠핑장이미지</label>
             </div>
             <div class="campadd_box d-flex justify-content-around w-100 my-1">
                 <div></div>
@@ -32,50 +34,91 @@
                 <div></div>
             </div>
             <div class="form-floating my-2">
-                <input type="text" id="campaddress" name="campaddress" class="form-control">
-                <label for="campaddress">캠핑장 주소</label>
+                <input type="text" id="campAddress" name="campAddress" class="form-control">
+                <label for="campAddress">캠핑장주소</label>
+            </div>
+            <div class="form-floating my-2 d-flex">
+                <input type="text" name="campLocation" id="campLocation" class="form-control">
+                <label for="campLocation">캠핑장위치</label>
+                <button type="button" class="" >검색</button>
+            </div>
+            <div>
+                <!-- api 지도 출력 부분 -->
             </div>
             <div class="form-floating my-2">
-                <input type="text" id="camptel" name="camptel" class="form-control">
-                <label for="camptel">캠핑장 연락처</label>
+                <input type="text" id="campTel" name="campTel" class="form-control">
+                <label for="campTel">캠핑장 연락처</label>
             </div>
             <div class="form-floating my-2">
-                <input type="file" id="camplayout" name="camplayout" class="form-control">
-                <label for="camplayout">캠핑장 배치도</label>
+                <input type="file" id="layoutFile" name="layoutFile" class="form-control">
+                <label for="layoutFile">캠핑장 배치도</label>
             </div>
             <div class="form-floating my-2">
-                <input type="text" id="mannertime" name="mannertime" class="form-control">
-                <label for="mannertime">매너타임</label>
+                <input type="text" id="campCaution" name="campCaution" class="form-control">
+                <label for="campCaution">매너타임</label>
+            </div>
+            <div class="w-100 my-2">
+                <span>지역</span>
+                <input type="radio" id="seoul" name="regionNo" value="1">
+                <label for="seoul"><span></span>서울</label>
+                <input type="radio" id="inchon" name="regionNo" value="2">
+                <label for="inchon"><span></span>인천</label>
+                <input type="radio" id="gyunggi" name="regionNo" value="3">
+                <label for="gyunggi"><span></span>경기도</label>
+                <input type="radio" id="gangwon" name="regionNo" value="4">
+                <label for="gangwon"><span></span>강원도</label>
+                <input type="radio" id="junra" name="regionNo" value="5">
+                <label for="junra"><span></span>전라도</label>
+                <input type="radio" id="choung" name="regionNo" value="5">
+                <label for="choung"><span></span>충청도</label>
+                <input type="radio" id="gyung" name="regionNo" value="5">
+                <label for="gyung"><span></span>경상도</label>
+                <input type="radio" id="jeju" name="regionNo" value="5">
+                <label for="jeju"><span></span>제주도</label>
             </div>
             <div class="w-100 my-2">
                 <span>환경</span>
-                <input type="radio" id="mountain" name="reservate" value="1">
+                <input type="radio" id="mountain" name="environmentTypeNo" value="1">
                 <label for="mountain"><span></span>산</label>
-                <input type="radio" id="ocean" name="reservate" value="2">
+                <input type="radio" id="ocean" name="environmentTypeNo" value="2">
                 <label for="ocean"><span></span>바다</label>
-                <input type="radio" id="Valley" name="reservate" value="3">
+                <input type="radio" id="Valley" name="environmentTypeNo" value="3">
                 <label for="Valley"><span></span>계곡/강/호수</label>
-                <input type="radio" id="champaign" name="reservate" value="4">
+                <input type="radio" id="champaign" name="environmentTypeNo" value="4">
                 <label for="champaign"><span></span>평야</label>
-                <input type="radio" id="downtown" name="reservate" value="5">
+                <input type="radio" id="downtown" name="environmentTypeNo" value="5">
                 <label for="downtown"><span></span>도심</label>
             </div>
             <div class="w-100 my-2">
                 <label for="facillity">기본시설</label>
-                <input type="checkbox" id="1" name="1" value="1">
+                <input type="checkbox" id="1" name="facilityTypeNo" value="1">
                 <label for="1"><span></span>화장실</label>
-                <input type="checkbox" id="2" name="2" value="2">
-                <label for="2"><span></span>화장실</label>
-                <input type="checkbox" id="3" name="3" value="3">
-                <label for="3"><span></span>화장실</label>
-                <input type="checkbox" id="4" name="4" value="4">
-                <label for="4"><span></span>화장실</label>
-                <input type="checkbox" id="5" name="5" value="5">
-                <label for="5"><span></span>화장실</label>
-                <input type="checkbox" id="6" name="6" value="6">
-                <label for="6"><span></span>화장실</label>
-                <input type="checkbox" id="7" name="7" value="7">
-                <label for="7"><span></span>화장실</label>
+                <input type="checkbox" id="2" name="facilityTypeNo" value="2">
+                <label for="2"><span></span>샤워실</label>
+                <input type="checkbox" id="3" name="facilityTypeNo" value="3">
+                <label for="3"><span></span>개수대</label>
+                <input type="checkbox" id="4" name="facilityTypeNo" value="4">
+                <label for="4"><span></span>매정</label>
+                <input type="checkbox" id="5" name="facilityTypeNo" value="5">
+                <label for="5"><span></span>바베큐장</label>
+                <input type="checkbox" id="6" name="facilityTypeNo" value="6">
+                <label for="6"><span></span>전기차충전소</label>
+                <input type="checkbox" id="7" name="facilityTypeNo" value="7">
+                <label for="7"><span></span>주차장</label>
+            </div>
+            <div class="form-floating">
+                <input type="date" class="form-control" id="campOpen" name="campOpen">
+                <label for="campOpen">오픈날짜</label>
+            </div>
+            <div class="form-floating">
+                <input type="date" class="form-control" id="campClose" name="campClose">
+                <label for="campClose">클로즈날짜</label>
+            </div>
+            <div class="form-floating">
+                <textarea name="campIntroduction" id="campIntroduction" class="form-control">
+
+                </textarea>
+                <label for="campIntroduction">캠핑장 소개</label>
             </div>
             <div>
                 <input type="submit" value="캠핑장등록" class="btn btn-warning btn-lg w-100 my-3 py-3">

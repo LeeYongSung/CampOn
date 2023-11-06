@@ -111,15 +111,12 @@ public class AdminController {
         }
     }
 
-    @GetMapping(value="/campproductadd")
-    public String campProductAdd() {
-        return "admin/campproductadd";
-    }
 
     @GetMapping(value="/campproductupdate")
     public String campProductUpdate() {
         return "admin/campproductupdate";
     }
+    
     //(관리자) 상품 관리 페이지
     @GetMapping(value="/productlist")
     public String productList(Model model) throws Exception {
@@ -134,6 +131,7 @@ public class AdminController {
     public String productAdd() {
         return "admin/productadd";
     }
+    
     // 상품등록 실행
     @PostMapping("/productInsert")
     public String productInsert(Product product) throws Exception {
@@ -186,10 +184,6 @@ public class AdminController {
         camp.setUserNo(userNo);
         // log.info("camp : " + camp.getUserNo());
         // model.addAttribute("camp", camp);
-
-        
-        
-
         return "admin/campproductadd";
     }
 
@@ -204,11 +198,6 @@ public class AdminController {
     }
     
 
-    // 캠핑장 수정
-    @GetMapping(value="/campproductupdate")
-    public String campUpdate() {
-        return "admin/campproductupdate";
-    }
     
     //캠핑상품 등록
     @GetMapping(value="/campdetailinsert")
