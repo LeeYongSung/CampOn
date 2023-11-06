@@ -49,4 +49,16 @@ public interface CampService {
     
     // 상품 등록 유저 확인
     public List<Camp> campproductUser(Integer userNo) throws Exception;
+
+    // 캠핑장 등록
+    public int campInsert(Camp camp, List<String> facilityTypeNo) throws Exception;
+
+    // // 캠핑장 이미지 등록
+    // public int campImgInsert(Camp camp) throws Exception;
+
+    // // 캠핑장 시설물 등록
+    // public int campFacilityInsert(Camp camp) throws Exception;
+
+    // // 캠핑장 환경 등록
+    // public int campEnvironmentInsert(Camp camp) throws Exception;
 }
