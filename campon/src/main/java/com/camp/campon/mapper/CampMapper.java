@@ -60,6 +60,7 @@ public interface CampMapper {
     
     // 상품 등록 유저 확인
     public List<Camp> campproductUser(Integer userNo) throws Exception;
+    public List<Camp> campdetailUser(Integer userNo) throws Exception;
 
     //캠핑상품 수정
     public int detailupdate(Camp camp) throws Exception;
