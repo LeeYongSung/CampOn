@@ -3,6 +3,7 @@ package com.camp.campon.controller;
 import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.ServletOutputStream;
@@ -12,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.FileCopyUtils;
@@ -31,6 +33,8 @@ import com.camp.campon.service.ProductService;
 import com.camp.campon.service.UserService;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.bind.annotation.RequestBody;
+
 
 @Slf4j
 @Controller
@@ -53,69 +57,7 @@ public class AdminController {
     public String adminUser(Model model) {
         return "admin/index";
     }
-
-    @GetMapping(value="/campproductlist")
-    public String campList(Model model, Authentication auth) throws Exception {
-        String name = "";
-        if(auth != null) {
-            name = auth.getName();
-        } else {
-            name = "anonymouseUser";
-        }
-        log.info("name : " + name);
-        if(name == null) {
-            return "redirect:/user/login";
-        } else {
-            if(!name.equals("anonymouseUser")) {
-
-                // 유저 정보 획득
-                Users user = userService.selectById(name);
-                int userNo = user.getUserNo();
-
-                // 획득한 유저 번호로 캠핑장 정보 획득
-                List<Camp> camp = campService.campproductUser(userNo);
-                log.info("camp" + camp);
-                // for(int i = 0; i < camp.size(); i++) {
-                //     Camp campList = new Camp();
-                //     int campNo = camp.get(i).getCampNo();
-                //     String campName = camp.get(i).getCampName();
-                //     String campAddress = camp.get(i).getCampAddress();
-                //     List<Camp> campDetail = campService.productsproductlist(campNo);
-                //     for(int j = 0; j < campDetail.size(); j++) {
-                //         Date regDate = camp.get(i).getRegDate();
-                //         Date updDate = camp.get(i).getUpdDate();
-                //         log.info("campNo(" + i + ") : " + campNo);
-                //         List<Camp> campimg = campService.productsimg(campNo);
-                //         String cpiUrl = campimg.get(i).getCpiUrl();
-                //         String cpdtName = campDetail.get(i).getCpdtName();
-                //         campList.setCampName(campName);
-                //         campList.setCampAddress(campAddress);
-                //         campList.setCpdtName(cpdtName);
-                //         campList.setRegDate(regDate);
-                //         campList.setUpdDate(updDate);
-                //         campList.setCpiUrl(cpiUrl);
-                //         String campDetatilImg = campDetail.get(i).getCpdiUrl();
-                //         // log.info("campDetail : " + campDetail);
-                //         log.info("campDetatilImg : " + campDetatilImg);
-                //         log.info("campList : " + campList);
-                        model.addAttribute("campList", camp);
-                //     }
-                // }
-                return "admin/campproductlist";
-            } 
-            return "redirect:/user/login";
-        }
-    }
-
-    @GetMapping(value="/campproductadd")
-    public String campProductAdd() {
-        return "admin/campproductadd";
-    }
-
-    @GetMapping(value="/campproductupdate")
-    public String campProductUpdate() {
-        return "admin/campproductupdate";
-    }
+    /********************************************** 상품 시작 ***********************************************/
     //(관리자) 상품 관리 페이지
     @GetMapping(value="/productlist")
     public String productList(Model model) throws Exception {
@@ -125,17 +67,18 @@ public class AdminController {
 
     }
     
-        // 상품등록 페이지
+    // 상품등록 페이지
     @GetMapping("/productadd")
     public String productAdd() {
         return "admin/productadd";
     }
+    
     // 상품등록 실행
     @PostMapping("/productInsert")
     public String productInsert(Product product) throws Exception {
         int result = productService.productInsert(product);
-        log.info("상품등록 성공여부 : " +result);
-            return "redirect:/user/mypage";
+        log.info("상품등록 성공여부 : " + result);
+            return "redirect:user/mypage";
     }
     //상품 수정 페이지
     @GetMapping(value="/productupdate", params="productNo")
@@ -169,8 +112,90 @@ public class AdminController {
         int result = productService.deleteProduct(Integer.parseInt(productNo));
         return "user/mypage";
     }
-    
 
+    /********************************************** 상품 끝 ***********************************************/
+
+    /********************************************** 캠핑장 시작 ***********************************************/
+
+    @GetMapping(value="/campproductlist")
+    public String campList(Model model, Authentication auth) throws Exception {
+        String name = "";
+        if(auth != null) {
+            name = auth.getName();
+        } else {
+            name = "anonymouseUser";
+        }
+        log.info("name : " + name);
+        if(name == null) {
+            return "redirect:/user/login";
+        } else {
+            if(!name.equals("anonymouseUser")) {
+
+                // 유저 정보 획득
+                Users user = userService.selectById(name);
+                int userNo = user.getUserNo();
+                
+                // List<camp> campdetail = campService.
+                // 획득한 유저 번호로 캠핑장 정보 획득
+                List<Camp> camp = campService.campproductUser(userNo);
+                List<Camp> campdetailList = null;
+                // log.info("camp" + camp);
+                for(int i = 0; i < camp.size(); i++) {
+                    int campNo = camp.get(i).getCampNo();
+                    campdetailList = campService.campdetailUser(campNo);
+                }
+                log.info("campdetailList : " + campdetailList);
+                model.addAttribute("campList", camp);
+                return "admin/campproductlist";
+            } 
+            return "redirect:/user/login";
+        }
+    }
+    /**
+     * 캠핑장 등록
+     * @param camp
+     * @return
+     * @throws Exception
+     */
+    @GetMapping(value="/campproductadd")
+    public String campInsert(@ModelAttribute Camp camp) throws Exception{
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
+        String userId = auth.getName();
+        Users user = userService.selectById(userId);
+        int userNo = user.getUserNo();
+        camp.setUserNo(userNo);
+        // log.info("camp : " + camp.getUserNo());
+        // model.addAttribute("camp", camp);
+        return "admin/campproductadd";
+    }
+
+    /**
+     * 캠핑장 등록처리
+     * @param camp
+     * @param facilityTypeNo
+     * @return
+     * @throws Exception
+     */
+    @PostMapping(value="/campproductadd")
+    public String campInsertPro(@ModelAttribute Camp camp, @RequestParam List<String> facilityTypeNo) throws Exception {
+        
+        int result = campService.campInsert(camp, facilityTypeNo);
+
+        if(result == 0) return "admin/campproductadd";
+
+        return "redirect:/admin/campproductlist";
+    }
+    
+    /**
+     * 캠핑장 수정
+     * @return
+     */
+    @GetMapping(value="/campproductupdate")
+    public String campUpdate() {
+        return "admin/campproductupdate";
+    }
+    
     //캠핑상품 등록
     @GetMapping(value="/campdetailinsert")
     public String campdetailinsert(Model model, Integer campNo, Integer userNo, @ModelAttribute Camp camp) throws Exception{
@@ -225,4 +250,5 @@ public class AdminController {
         return "redirect:/admin/campproductlist";
     }
     
+    /********************************************** 캠핑장 끝 ***********************************************/
 }

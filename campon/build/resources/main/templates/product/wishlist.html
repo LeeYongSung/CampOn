@@ -20,7 +20,7 @@
         <br>
 
         <!-- 카테고리 -->
-        <span th:text="'상품 - ' + ${product.productCategory}"></span>
+        <span th:text="|상품 - ${product.productCategory}|"></span>
         <br>
 
         <!-- 상품명 -->
@@ -39,10 +39,11 @@
         <a th:href="${product.productCon}" th:text="상세설명"></a>
         <br>
 
-        <button>장바구니 담기</button>
+        <a th:href="|/product/addCart?productNo=${product.productNo}|">장바구니 담기</a>
+
 
         <!-- 찜 삭제 -->
-        <a th:href="|/product/wishlistDelete?wishlistNo=${product.wishlistNo}|" onclick="actionDelete()">삭제</a>
+        <a th:href="|/product/wishListDelete?wishlistNo=${product.wishlistNo}|" onclick="actionDelete()">삭제</a>
             <br>
             <br>
             <br>

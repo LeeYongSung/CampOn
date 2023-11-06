@@ -1,5 +1,6 @@
 package com.camp.campon.dto;
 
+import java.io.File;
 import java.util.Date;
 import java.util.List;
 
@@ -62,6 +63,7 @@ public class Camp {
     private String endDate;
     
     // 시설물
+    private int facilitytypeNo;
     private String facilitytypeName;
     
     // 예약
@@ -76,4 +78,8 @@ public class Camp {
     private String campPaymentType;
 
     private List<MultipartFile> cpdiFiles;
+    
+    private List<MultipartFile> file;
+    private MultipartFile layoutFile;
+
 }

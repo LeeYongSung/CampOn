@@ -37,4 +37,13 @@ public interface ProductService {
 
     // 상품 상세페이지
     public List<Product> productimg(Integer productNo);
+
+    // 상품번호에 따른 후기 불러오기
+    public List<Productreview> getReviewListByNo(int productNo);
+
+        // 리뷰 수
+        public int reviewCount(int productNo);
+
+         //장바구니 등록
+    public int cartadd(int productNo, int userNo)  throws Exception;
 }

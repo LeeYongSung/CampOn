@@ -1,6 +1,7 @@
 package com.camp.campon.controller;
 
 import java.io.FileInputStream;
+import java.security.Principal;
 import java.util.List;
 
 import javax.servlet.ServletOutputStream;
@@ -20,7 +21,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.camp.campon.dto.Product;
 import com.camp.campon.dto.Productreview;
+import com.camp.campon.dto.Users;
 import com.camp.campon.service.ProductService;
+import com.camp.campon.service.UserService;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -35,6 +38,9 @@ public class ProductController {
 
     @Autowired
     private ProductService productService;
+
+    @Autowired
+    private UserService userService;
 
     @Value("${upload.path}")
     private String uploadPath;
@@ -100,12 +106,35 @@ public class ProductController {
     @GetMapping(value="/productdetail") 
     public String productDetail(Model model, Integer productNo) throws Exception {
         List<Product> productimg = productService.productimg(productNo);
+        log.info(productNo + "");
         Product select = productService.select(productNo);
-
+        List<Productreview> proReviewList = productService.getReviewListByNo(productNo);
+        int reviewCount = productService.reviewCount(productNo);
         model.addAttribute("productimg", productimg);
         model.addAttribute( "select", select);
-
+        model.addAttribute("proReviewList", proReviewList);
+        model.addAttribute("reviewCount", reviewCount);
         return "product/productdetail";
     }
+
+    @GetMapping(value="/addCart")
+    public String getMethodName(Integer productNo, Principal principal) throws Exception {
+        log.info(productNo + "프로덕트 넘");
+        int userNo = 100;
+       if (principal == null){ 
+       } else {
+        String userId = principal.getName();
+        log.info("장바구니에 넣는 사용자아이디 : "+ userId);
+        Users user = userService.selectById(userId);
+        userNo = user.getUserNo();
+       }
+        int result = productService.cartadd(productNo, userNo);
+        log.info("장바구니에 넣기 성공여부 : "+ result);
+        
+        return "product/wishlist";
+    }
+    
+
+
     
 }

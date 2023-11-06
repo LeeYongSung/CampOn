@@ -211,6 +211,24 @@ public class ProductServiceImpl implements ProductService {
         return productimg;
     }
 
+    @Override
+    public List<Productreview> getReviewListByNo(int productNo) {
+        List<Productreview> getreviewlistbyno = productMapper.getReviewListByNo(productNo);
+        return getreviewlistbyno;
+    }
+
+    @Override
+    public int reviewCount(int productNo) {
+        int reviewCount = productMapper.reviewCount(productNo);
+        return reviewCount;
+    }
+
+    @Override
+    public int cartadd(int productNo, int userNo)  throws Exception {
+        int result = productMapper.cartadd(productNo, userNo);
+        return result;
+    }
+
     
 
 }

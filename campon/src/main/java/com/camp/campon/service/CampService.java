@@ -41,20 +41,33 @@ public interface CampService {
     public List<Camp> productimg(int cpdtNo) throws Exception;
     public Camp productintro(int cpdtNo) throws Exception;
 
-    // 예약완료페이지
-    public Camp reservecomplete(String userId) throws Exception;
-
     // 캠핑상품 등록
     public int detailinsert(Camp camp) throws Exception;
     public int cpdiinsert(Camp camp) throws Exception;
-    
-    // 상품 등록 유저 확인
-    public List<Camp> campproductUser(Integer userNo) throws Exception;
 
-    //캠핑상품 수정
+     //캠핑상품 수정
     public int detailupdate(Camp camp) throws Exception;
 
     //캠핑상품 삭제
     public int detaildelete(int cpdtNo) throws Exception;
     public int cpdidelete(int cpdtNo) throws Exception;
+
+    // 예약완료페이지
+    public Camp reservecomplete(String userId) throws Exception;
+
+    // 관리자 캠핑장 목록 (유저번호)
+    public List<Camp> campproductUser(Integer userNo) throws Exception;
+    public List<Camp> campdetailUser(Integer userNo) throws Exception;
+
+    // 캠핑장 등록
+    public int campInsert(Camp camp, List<String> facilityTypeNo) throws Exception;
+
+    // // 캠핑장 이미지 등록
+    // public int campImgInsert(Camp camp) throws Exception;
+
+    // // 캠핑장 시설물 등록
+    // public int campFacilityInsert(Camp camp) throws Exception;
+
+    // // 캠핑장 환경 등록
+    // public int campEnvironmentInsert(Camp camp) throws Exception;
 }

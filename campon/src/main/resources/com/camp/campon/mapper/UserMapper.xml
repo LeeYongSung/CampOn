@@ -30,36 +30,36 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
     <!-- 회원가입 -->
     <insert id="insert">
-        INSERT INTO user ( user_id, user_pw, user_name, user_tel, user_email, user_address, company_name, company_number, auth )
+        INSERT INTO `user` ( user_id, user_pw, user_name, user_tel, user_email, user_address, company_name, company_number, auth )
         VALUES ( #{userId}, #{userPw}, #{userName}, #{userTel}, #{userEmail}, #{userAddress}, #{companyName}, #{companyNumber}, #{auth} )
     </insert>
 
     <!-- 회원 조회 -->
     <select id="select" resultType="Users">
         SELECT *
-        FROM user
+        FROM `user`
         WHERE user_no = #{userNo}
     </select>
 
     <!-- 캠프 단에서 회원 조회 - id -->
     <select id="selectById" resultType="Users">
         SELECT *
-        FROM user
+        FROM `user`
         WHERE user_id = #{userId}
     </select>
 
     <!-- 회원 조회 - id -->
     <select id="selectedById" resultType="Users">
         SELECT *
-        FROM user
+        FROM `user`
         WHERE user_id = #{userId}
     </select>
 
     <!-- 회원 조회 - id -->
     <select id="login" resultType="Users">
         SELECT *
-        FROM user
-        WHERE user_id = #{userId}
+        FROM `user`
+        WHERE user_id = #{username}
     </select>
 
         <!-- 회원 조회 - id -->
