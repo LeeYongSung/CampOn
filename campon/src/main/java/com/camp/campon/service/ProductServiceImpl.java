@@ -11,6 +11,7 @@ import org.springframework.util.FileCopyUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.camp.campon.dto.Product;
+import com.camp.campon.dto.Productreview;
 import com.camp.campon.mapper.ProductMapper;
 
 import lombok.extern.slf4j.Slf4j;
@@ -80,48 +81,47 @@ public class ProductServiceImpl implements ProductService {
     public int productUpdate(Product product) throws Exception {
         Product oldProduct = productMapper.select(product.getProductNo());
         // * 썸네일 이미지
-        if (product.getProductThmFile() == null || product.getProductThmFile().size() == 0 ){
-            product.setProductThumnail(oldProduct.getProductThumnail());
-        } else {
-            List<MultipartFile> productThmFile =  product.getProductThmFile();
-            if( !productThmFile.isEmpty() )
-            for (MultipartFile file : productThmFile) {
-                if( file.isEmpty() ) continue;
-                String fileName = UUID.randomUUID().toString()+"_"+ file.getOriginalFilename();
-                String filepath = uploadPath+"/"+fileName;
-                File uploadfile = new File(uploadPath, fileName);
-                byte[] filedata = file.getBytes();
-                FileCopyUtils.copy(filedata, uploadfile);
-                product.setProductThumnail(filepath);
-            }
+        List<MultipartFile> productThmFile =  product.getProductThmFile();
+        if( !productThmFile.isEmpty() )
+        for (MultipartFile file : productThmFile) {
+            log.info(""+file.isEmpty()); //true
+            if( file.isEmpty() ) {
+                    product.setProductThumnail(oldProduct.getProductThumnail());
+            } else {
+            String fileName = UUID.randomUUID().toString()+"_"+ file.getOriginalFilename();
+            String filepath = uploadPath+"/"+fileName;
+            File uploadfile = new File(uploadPath, fileName);
+            byte[] filedata = file.getBytes();
+            FileCopyUtils.copy(filedata, uploadfile);
+            product.setProductThumnail(filepath);
         }
+        }
+        
         // * 상품 상세 설명
-        if (product.getProductConFile() == null || product.getProductConFile().size() == 0 ){
-            product.setProductCon(oldProduct.getProductCon());
-        } else {
-            List<MultipartFile> productConFile =  product.getProductConFile();
-            if( !productConFile.isEmpty() )
-            for (MultipartFile file : productConFile) {
-                if( file.isEmpty() ) continue;
-                String fileName = UUID.randomUUID().toString()+"_"+ file.getOriginalFilename();
-                String filepath = uploadPath+"/"+fileName;
-                File uploadfile = new File(uploadPath, fileName);
-                byte[] filedata = file.getBytes();
-                FileCopyUtils.copy(filedata, uploadfile);
-                product.setProductCon(filepath);
+        List<MultipartFile> productConFile =  product.getProductConFile();
+        for (MultipartFile file : productConFile) {
+            if( file.isEmpty() ) {
+                product.setProductCon(oldProduct.getProductCon());
+            } else {
+            String fileName = UUID.randomUUID().toString()+"_"+ file.getOriginalFilename();
+            String filepath = uploadPath+"/"+fileName;
+            File uploadfile = new File(uploadPath, fileName);
+            byte[] filedata = file.getBytes();
+            FileCopyUtils.copy(filedata, uploadfile);
+            product.setProductCon(filepath);
             }
         }
         //product 테이블 수정
         int result = productMapper.productUpdate(product);
+        log.info(product.toString());
         log.info("상품수정여부 : "+result);
+
         // * 상세이미지들
-         if (product.getProductImgs() == null || product.getProductImgs().size() == 0 ){
-            
-        } else {
-            List<MultipartFile> productImgs = product.getProductImgs();
-            if( !productImgs.isEmpty() )
+        List<MultipartFile> productImgs = product.getProductImgs();
+        if( ! productImgs.get(0).isEmpty() ){
+            int result2 = productMapper.deleteImgs(product.getProductNo());
+            log.info("수정중인 productimg 테이블 삭제 여부 : " +result2);
             for (MultipartFile file : productImgs) {
-                if( file.isEmpty() ) continue;
                 String originName = file.getOriginalFilename();
                 String fileName = UUID.randomUUID().toString() + "_" + originName;
                 String filePath = uploadPath + "/" + fileName;
@@ -130,15 +130,13 @@ public class ProductServiceImpl implements ProductService {
                 FileCopyUtils.copy(fileData, uploadFile);
                 //productimg 테이블에 정보 넣기
                 product.setProductimgUrl(filePath);
-                int result2 = productMapper.deleteImgs(product.getProductNo());
                 int result3 = productMapper.insertImgs(product);
-                log.info("수정중인 productimg 테이블 삭제 여부 : " +result2);
-                log.info("수정중인 productimg 테이블 등록 여부 : " +result3);
+                log.info("수정중인 productimg 테이블 등록 여부 : " +result3);  
             }
         }
+    
         return result;
     }
-
 
     @Override
     public List<Product> getCategoryList(String category) throws Exception {
@@ -164,6 +162,37 @@ public class ProductServiceImpl implements ProductService {
         return product;
     }
 
+    @Override
+    public Product selectUpd(int productNo) throws Exception {
+        Product product = productMapper.selectUpd(productNo);
 
-    
+        List<String> fileList = product.getProductImgsUrlList();
+
+        for (String imgUrl : fileList) {
+            log.info("imgUrl : " + imgUrl);
+        }
+        return product;
+    }
+
+    @Override
+    public int deleteProduct(int productNo) throws Exception {
+        int result1 = productMapper.deleteImgs(productNo);
+        log.info("상세이미지들 삭제여부 : " + result1);
+        int result = productMapper.deleteProduct(productNo);
+        log.info("상품 삭제 여부 : "+result);
+        return result;
+    }
+
+    @Override
+    public List<Productreview> getReviewList() throws Exception {
+        List<Productreview> productreviewList = productMapper.getReviewList();
+        return productreviewList;
+    }
+
+    @Override
+    public List<Product> getProductList() throws Exception {
+        List<Product> productList = productMapper.getProductList();
+        return productList;
+    }
+
 }

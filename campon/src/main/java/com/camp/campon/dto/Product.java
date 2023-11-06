@@ -1,6 +1,5 @@
 package com.camp.campon.dto;
 
-import java.io.File;
 import java.util.Date;
 import java.util.List;
 
@@ -28,6 +27,7 @@ public class Product {
     // 상품 이미지
     private Integer productimgNo; //I를 i로 수정
     private String productimgUrl;
+    private List<String> productImgsUrlList;
 
     //상품 이미지들
     private List<MultipartFile> productThmFile;

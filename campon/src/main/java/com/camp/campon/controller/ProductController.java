@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.camp.campon.dto.Product;
+import com.camp.campon.dto.Productreview;
 import com.camp.campon.service.ProductService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -40,7 +41,11 @@ public class ProductController {
 
     // 메인페이지
     @GetMapping("/index")
-    public String productMain(Model model) {
+    public String productMain(Model model) throws Exception {
+        //상품 후기 불러오기
+        List<Productreview> proReviewList =  productService.getReviewList();
+        log.info("후기목록의 사이즈 : "+proReviewList.size());
+        model.addAttribute("proReviewList", proReviewList);
         return "product/index";
     }
     //카페고리별 상품 목록

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/UI/user/layout/main_layout}"
+      >
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CampOn(캠프온)</title>
+</head>
+<body layout:fragment="content">
+    <div class="container">
+            <h1>렌탈샵 상품 관리</h1>
+        
+        <!--상품 등록 버튼-->
+        <a href="/admin/productadd" value="상품 등록" class="btn btn-warning w-100 py-3">렌탈샵 상품 등록</a>
+        <!-- 상품 목록 출력-->
+        <th:block th:each="product : ${productList}">
+            <div style="border: 1px solid black;">
+                <div>
+                    <img th:src="|/img?file=${product.productThumnail}|" alt="상품썸네일">
+                </div>
+                <div>
+                    <div>
+                        <h4>카테고리 : <span th:text="${product.productCategory}"></span></h4>
+                        <h4>상품이름 : <span th:text="${product.productName}"></span></h4>
+                        <p>상품기본내용 : <span th:text="${product.productIntro}"></span></p>
+                    </div>
+                    <div>
+                        <p>등록일자 : <span th:text="${product.regDate}"></span></p>
+                        <p>수정일자 : <span th:text="${product.updDate}"></span></p>
+                        <h4>가격 : <span th:text="${product.productPrice}"></span></h4>
+                        <div>
+                            <a th:href="|/admin/productupdate?productNo=${product.productNo}|" class="btnn btn-warning">상품 수정</a>
+                            <a th:href="|/admin/delete?productNo=${product.productNo}|" class="btnn btn-warning">상품 삭제</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </th:block>
+    </div>
+
+
+</body>
+</html>

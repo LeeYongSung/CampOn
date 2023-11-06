@@ -38,6 +38,38 @@
 
         <!--하단 광고-->
 
+        <!-- 상품 후기-->
+        <div class="review mb-5">
+            <h5 class="mt-3">상품 후기</h5>
+            <ul th:each="review : ${proReviewList}">
+                <!--상품후기를 클릭하면 상품상세페이지로 이동하게끔 a태그 수정해야 함. -->
+                <a th:href="|/product/page?prNo=${review.prNo}|" class="d-flex justify-content-between">
+                    <li class="review_imgbox">
+                        <img th:src="|/img?file=${review.prImg}|">
+                    </li>
+                    <li class="review_conbox">
+                        <ul>
+                            <li>
+                                <span th:text="${review.productName}"></span>
+                            </li>
+                            <li>
+                                <p th:text="${review.prTitle}"></p>
+                            </li>
+                            <li>
+                                <p th:text="${review.prCon}"></p>
+                            </li>
+                            <li>
+                                <span th:text="${ #dates.format( review.regDate, 'yyyy-MM-dd') }"></span>
+                            </li>
+                            <li>
+                                <p th:text="${review.userId}"></p>
+                            </li>
+                        </ul>
+                    </li>
+                </a>
+            </ul>
+        </div>
+
 
 
     </div>
