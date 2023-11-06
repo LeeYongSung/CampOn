@@ -91,4 +91,16 @@ public class ProductController {
         return "product/cart";
     }
     
+    // 상품 상세페이지
+    @GetMapping(value="/productdetail") 
+    public String productDetail(Model model, Integer productNo) throws Exception {
+        List<Product> productimg = productService.productimg(productNo);
+        Product select = productService.select(productNo);
+
+        model.addAttribute("productimg", productimg);
+        model.addAttribute( "select", select);
+
+        return "product/productdetail";
+    }
+    
 }

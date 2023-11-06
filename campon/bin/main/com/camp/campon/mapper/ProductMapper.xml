@@ -72,5 +72,11 @@ DELETE FROM productimg WHERE product_no = #{productNo};
     DELETE FROM cart
     WHERE cart_no = #{cartListNo}
 </delete>   
- 
+
+<!-- 상품 상세페이지 -->
+ <select id="productimg" resultType="Product">
+    SELECT *
+    FROM productimg
+    WHERE product_no = #{productNo}
+ </select>
 </mapper>

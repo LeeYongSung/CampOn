@@ -26,4 +26,7 @@ public interface ProductService {
 
     // 장바구니 삭제
     public int cartListDelete(int cartlistNo);
+
+    // 상품 상세페이지
+    public List<Product> productimg(Integer productNo);
 }
