@@ -103,6 +103,7 @@ public class UserController {
                                 , HttpServletResponse response) throws Exception {
         log.info("user : " + user);
         int result = userService.update(user);
+        log.info("회원정보 수정여부 : "+result);
         // 회원정보 수정 실패
         if( result == 0 ) {
             return "redirect:/user/update";
@@ -118,7 +119,7 @@ public class UserController {
         // 토큰 삭제
         persistentTokenRepository.removeUserTokens(user.getUserId());
         // 로그아웃 후 ➡ 로그인 페이지
-        return "redirect:/login";
+        return "redirect:/user/login";
     }
 
     //회원정보 삭제
@@ -134,8 +135,6 @@ public class UserController {
         }
     }
     
-    
-    
     @GetMapping(value="/seller")
     public String userSeller(Model model) {
         return "user/seller";
@@ -150,15 +149,9 @@ public class UserController {
             return "redirect:/user/login";
         } else {
             CustomUser customuser = (CustomUser) auth.getPrincipal();
-    
             Users user = customuser.getUsers();
             String role = user.getAuth();
-    
-            log.info("userId : " + userId);
-            log.info("auth : " + role);
-    
             model.addAttribute("auth", role);
-    
             return "user/mypage";
         }
     }
