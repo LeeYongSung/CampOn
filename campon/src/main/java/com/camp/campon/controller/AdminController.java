@@ -78,7 +78,7 @@ public class AdminController {
     public String productInsert(Product product) throws Exception {
         int result = productService.productInsert(product);
         log.info("상품등록 성공여부 : " + result);
-            return "redirect:user/mypage";
+            return "redirect:/user/mypage";
     }
     //상품 수정 페이지
     @GetMapping(value="/productupdate", params="productNo")
@@ -111,6 +111,23 @@ public class AdminController {
     public String productDelete(@RequestParam String productNo) throws NumberFormatException, Exception {
         int result = productService.deleteProduct(Integer.parseInt(productNo));
         return "user/mypage";
+    }
+
+    //멤버 관리 페이지
+    @GetMapping(value="/memberList")
+    public String memberList(Model model) throws Exception {
+        List<Users> userList = userService.memberList("ROLE_USER");
+        List<Users> sellList = userService.memberList("ROLE_SELL");
+        model.addAttribute("userList", userList);
+        model.addAttribute("sellList", sellList);
+        return "admin/memberList";
+    }
+
+    @GetMapping(value="/memberDelete")
+    public String memberDelete(String userId) throws Exception {
+        int result = userService.delete(userId);
+        log.info("회원 삭제 여부 : " +result);
+        return "redirect:/admin/memberList";
     }
 
     /********************************************** 상품 끝 ***********************************************/

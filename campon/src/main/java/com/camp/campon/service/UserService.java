@@ -1,5 +1,7 @@
 package com.camp.campon.service;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 
 
@@ -13,6 +15,9 @@ public interface UserService {
 
     // 회원 조회
     public Users select(int userNo) throws Exception;
+
+    //회원 조회(일반회원, 기업회원)
+    public List<Users> memberList(String auth) throws Exception;
 
     // 회원 조회 - id
     public Users selectById(String userId) throws Exception;

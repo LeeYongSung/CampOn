@@ -1,6 +1,8 @@
 package com.camp.campon.mapper;
 
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Mapper;
 
 import com.camp.campon.dto.Users;
@@ -17,6 +19,9 @@ public interface UserMapper {
 
     // 회원 조회
     public Users selectById(String userId) throws Exception;
+
+    //회원 조회(일반회원, 기업회원)
+    public List<Users> memberList(String auth) throws Exception;
     
     // 사용자 인증(로그인) - id
     public Users login(String username);
