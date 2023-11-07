@@ -118,23 +118,22 @@ public class ProductController {
     }
 
     @GetMapping(value="/addCart")
-    public String getMethodName(Integer productNo, Principal principal) throws Exception {
-        log.info(productNo + "프로덕트 넘");
-        int userNo = 100;
-       if (principal == null){ 
-       } else {
-        String userId = principal.getName();
-        log.info("장바구니에 넣는 사용자아이디 : "+ userId);
-        Users user = userService.selectById(userId);
-        userNo = user.getUserNo();
-       }
-        int result = productService.cartadd(productNo, userNo);
+    public String getMethodName(@RequestParam("productNo") int productNo, Principal principal) throws Exception {
+        
+        int userNo = 1;
+        
+        log.info("유저 넘버 : " + userNo );
+        log.info("프로덕트 넘버 : " + productNo );
+        
+        // String userId = principal.getName();
+
+        // log.info("장바구니에 넣는 사용자아이디 : "+ userId);
+
+        // Users user = userService.selectById(userId);
+        // userNo = user.getUserNo();
+        int result = productService.addCart(productNo, userNo);
         log.info("장바구니에 넣기 성공여부 : "+ result);
         
         return "product/wishlist";
     }
-    
-
-
-    
 }
