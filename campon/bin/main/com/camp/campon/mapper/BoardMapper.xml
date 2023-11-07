@@ -8,12 +8,41 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
     <!-- 캠핑 리뷰 최신목록 -->
     <select id="newReviewList" resultType="Board">
-        SELECT * FROM review r join campproduct c on r.camp_no = c.camp_no ORDER BY r.reg_date DESC LIMIT 3
+        SELECT * FROM review r join campproduct c on r.camp_no = c.camp_no join campdetail cd on r.cp_dt_no = cd.cp_dt_no ORDER BY r.reg_date DESC LIMIT 3
     </select>
     <!-- 해당 캠핑장 리뷰-->
     <select id="productsreview" resultType="Board">
         SELECT * FROM review r join campproduct c on r.camp_no = c.camp_no join user u on r.user_no = u.user_no where r.camp_no = #{campNo} ORDER BY r.reg_date DESC LIMIT 1
     </select>
+    <!-- 캠핑리뷰 목록-->
+    <select id="crlist" resultType="Board">
+        select * from review r join user u on r.user_no = u.user_no order by r.review_no desc
+    </select>
+    <!--캠핑리뷰 조회-->
+    <select id="crread" resultType="Board">
+        SELECT * FROM review r
+        join campproduct c on r.camp_no = c.camp_no
+        join campdetail cd on r.cp_dt_no = cd.cp_dt_no
+        join user u on r.user_no = u.user_no
+        join reservation v on r.reservation_no = v.reservation_no
+        where r.review_no = #{reviewNo}
+    </select>
 
+    <!-- 상품 리뷰 최신목록 -->
+    <select id="newprlist" resultType="Board">
+        select * from productreview cr join product p on cr.product_no = p.product_no join user u on cr.user_no = u.user_no order by cr.reg_date desc limit 3
+    </select>
+    <!-- 상품 리뷰 목록-->
+    <select id="prlist" resultType="Board">
+        select * from productreview pr join user u on pr.user_no = u.user_no order by pr.pr_no desc
+    </select>
+    <!-- 상품 리뷰 조회-->
+    <select id="prread" resultType="Board">
+        select * from productreview cr
+        join product p on cr.product_no = p.product_no
+        join user u on cr.user_no = u.user_no
+        join `order` o on cr.order_no = o.order_no
+        where cr.pr_no = #{prNo}
+    </select>
     
 </mapper>
