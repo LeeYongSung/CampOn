@@ -57,10 +57,12 @@ public interface CampService {
 
     // 관리자 캠핑장 목록 (유저번호)
     public List<Camp> campproductUser(Integer userNo) throws Exception;
-    public List<Camp> campdetailUser(Integer userNo) throws Exception;
 
     // 캠핑장 등록
     public int campInsert(Camp camp, List<String> facilityTypeNo) throws Exception;
+
+    // 예약 진행
+    public int reservateInsert(Camp camp) throws Exception;
 
     // // 캠핑장 이미지 등록
     // public int campImgInsert(Camp camp) throws Exception;
@@ -70,4 +72,7 @@ public interface CampService {
 
     // // 캠핑장 환경 등록
     // public int campEnvironmentInsert(Camp camp) throws Exception;
+
+    // 상품 검색
+    public List<Camp> campSearch(Camp camp) throws Exception;
 }

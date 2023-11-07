@@ -48,7 +48,7 @@ public class CampServiceImpl implements CampService{
     @Override
     public List<Camp> campSelect(int campTypeNo) throws Exception {
         List<Camp> campselect = campMapper.campSelect(campTypeNo);
-        log.info("campTypeNo : " + campselect);
+        // log.info("campTypeNo : " + campselect);
         return campselect;
     }
     
@@ -186,6 +186,11 @@ public class CampServiceImpl implements CampService{
     @Override
     public List<Camp> campproductUser(Integer userNo) throws Exception {
         List<Camp> productUser = campMapper.campproductUser(userNo);
+
+        for (Camp camp : productUser) {
+            camp.setDetailsList(campMapper.campdetailUser(camp.getCampNo()));
+        }
+        
         return productUser;
     }
 
@@ -242,10 +247,10 @@ public class CampServiceImpl implements CampService{
 
     public int campInsert(@RequestBody Camp camp, @RequestParam List<String> facilityTypeNo) throws Exception {
         // String parentTable = "board";
-        log.info("camp : " + camp);
+        // log.info("camp : " + camp);
         MultipartFile campLayout = camp.getLayoutFile();
         int environNo = camp.getEnvironmentTypeNo();
-        log.info("environNo : " + environNo);
+        // log.info("environNo : " + environNo);
         // log.info("campLayout : " + campLayout);
         String layoutOriginName = campLayout.getOriginalFilename();
         String layoutFileName = UUID.randomUUID().toString() + "_" + layoutOriginName;
@@ -259,7 +264,7 @@ public class CampServiceImpl implements CampService{
 
         int result = campMapper.campInsert(camp);
         int parentNo = campMapper.maxcampNo();
-        log.info("parentNo : " + parentNo);
+        // log.info("parentNo : " + parentNo);
 
 
         // log.info("오리진 네임 : " + layoutOriginName);
@@ -293,7 +298,7 @@ public class CampServiceImpl implements CampService{
             }
                 camp.setCampNo(parentNo);
                 for (String s : facilityTypeNo) {
-                    log.info("s : " + s);
+                    // log.info("s : " + s);
                     camp.setFacilitytypeNo(Integer.parseInt(s));
                     campMapper.campFacilityInsert(camp);
                     // int facilNo = camp.getFacilitytypeNo();
@@ -305,21 +310,23 @@ public class CampServiceImpl implements CampService{
         return result;
     }
 
+    /**
+     * 예약 진행
+     */
     @Override
-    public List<Camp> campdetailUser(Integer userNo) throws Exception {
-        List<Camp> campproductList = campMapper.campproductUser(userNo);
+    public int reservateInsert(Camp camp) throws Exception {
 
-        List<Camp> campdetailList = null;
-
-        for(int i = 0; i < campproductList.size(); i++ ) {
-            int campNo = campproductList.get(i).getCampNo();
-            log.info("campNo : " + campNo);
-            campdetailList = campMapper.campdetailUser(campNo);
-            campdetailList.addAll(campdetailList);
-            log.info("campdetailList : " + campdetailList);
-        }
-
-
-        return campdetailList;
+        int result = campMapper.reservateInsert(camp);
+        
+        return result;
     }
+
+    @Override
+    public List<Camp> campSearch(Camp camp) throws Exception {
+        List<Camp> searchCamps = campMapper.campSearch(camp);
+
+        return searchCamps;
+    }
+
+    
 }

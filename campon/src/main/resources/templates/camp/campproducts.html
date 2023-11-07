@@ -11,15 +11,117 @@
     <title>CampOn(캠프온)</title>
 </head>
 <body layout:fragment="content">
-    <div>
-        <ul th:each="camp : ${campselect}"> 
-            <a th:href="|/camp/campproduct?campNo=${camp.campNo}|">
-                <li><img th:src="${camp.cpiUrl}"></li>
-                <li th:text="${camp.campTypeName}"></li>
-                <li th:text="${camp.campName}"></li>
-                <li></li>
-            </a>
-        </ul>
+    <div class="container-sm w-100 border-bottom">
+            <div class="form-floating my-2">
+                <input type="text" id="keyword" name="keyword" class="form-control" placeholder="검색명">
+                <label for="keyword">검색명</label>
+            </div>
+            <div class="w-100 d-flex justify-content-between">
+                <div class="form-floating w-100 me-1">
+                    <input type="date" class="form-control" id="searchDate" name="searchDate">
+                </div>
+                <div class="form-floating w-100 ms-1">
+                    <input type="button" class="form-control" value="지역">
+                </div>
+            </div>
+            <div class="w-100 d-flex justify-content-between my-2">
+                <div class="form-floating w-100">
+                    <input type="button" class="form-control" id="reset" name="reset" value="초기화">
+                </div>
+                <div class="form-floating w-100">
+                    <input type="button" class="form-control bg-warning">
+                </div>
+                <div class="form-floating w-100">
+                    <input type="button" class="form-control">
+                </div>
+                <div class="form-floating w-100">
+                    <input type="button" class="form-control">
+                </div>
+                <div class="form-floating w-100">
+                    <input type="button" class="form-control">
+                </div>
+            </div>
+            <div class="form-floating mb-3">
+                <a href="javascript:;" class="btn btn-outline-secondary btn-lg w-100 py-3 rounded-0" id="search_keyword">검색</a>
+            </div>
     </div>
+    <div class="w-100 my-3">
+        <img src="/img/camp/wide_banner.jpg" alt="와이드배너" class="w-100">
+    </div>
+    <div id="camplist" class="w-100">
+        <th:block th:each="camp : ${campselect}">
+            <ul class="w-100"> 
+                <a th:href="|/camp/campproduct?campNo=${camp.campNo}|">
+                    <li><img th:src="${camp.cpiUrl}" class="w-100"></li>
+                    <li th:text="${camp.campName}"></li>
+                    <li th:text="${camp.campTypeName}"></li>
+                    <li th:text="${camp.campAddress}"></li>
+                    <li></li>
+                </a>
+            </ul>
+        </th:block>
+    </div>
+    <script>
+        let keyword = '';           // 검색명
+        let campData = '';          // 캠프 목록
+        $('#search_keyword').on('click', function() {
+            search();
+        });
+
+        function search() {
+            keyword = $('#keyword').val();
+            searchDate = $('#searchDate').val()
+            let data = {
+                'keyword'       : keyword,
+                'searchDate'    : searchDate
+            }
+
+            const url = 'campSearch'
+
+            $.ajax({
+                url     : url,
+                data    : data,
+                success : function (response) {
+                    console.log(response);  // 서버로부터 받은 데이터를 콘솔에 출력
+                    let campList = response
+
+                    campOutput(campList)
+                }
+            })
+        }
+
+        function campOutput(campList) {
+            campData = '';  // campData 초기화
+            if(campList.length == 0) {
+                let msg = '검색된 캠핑장이 없습니다.'
+                console.log(msg)
+
+                let div = `<div>
+                            <p>${msg}</p>
+                          </div>
+                         `
+                campData += div
+            }
+            
+            for(let i = 0; i < campList.length; i++) {
+                let camp = campList[i];
+        
+                let div = `
+                            <ul> 
+                                <a href="/camp/campproduct?campNo=${camp.campNo}">
+                                    <li><img src="${camp.cpiUrl}"></li>
+                                    <li>${camp.campTypeName}</li>
+                                    <li>${camp.campName}</li>
+                                    <li>${camp.campAddress}</li>
+                                    <li></li>
+                                </a>
+                            </ul>
+                        `
+                campData += div
+            }
+            
+            $('#camplist').html(campData)
+        }
+    </script>
 </body>
 </html>
