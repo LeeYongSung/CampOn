@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+    xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{/UI/user/layout/main_layout}">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CampOn(캠프온)</title>
+</head>
+    
+<body layout:fragment="content">
+    <h1>주문 상품</h1>
+    
+    <!-- 반복문 시작 -->
+    <div th:each="cart : ${cartList}">
+        <!-- 썸네일 -->
+        <img th:src="${cart.productThumnail}"> <br>
+
+        <!-- 상품명 -->
+        <span th:text="${cart.productName}"></span> <br> 
+
+        <!-- 상품기본내용 -->
+        <span th:text="${cart.productIntro}"></span> <br>
+
+        <!-- 금액 -->
+        <span th:text="|${cart.productPrice} / 1일|"></span> <br><br>
+
+        <!-- 수량증감 -->
+        <div>
+            <button id="decrease">-</button>
+            <span id="quantity">1</span>
+            <button id="increase">+</button>
+        </div>
+    
+        <script>
+            var quantity = 1;
+    
+            // "-" 버튼 클릭 시 수량 감소
+            document.getElementById("decrease").addEventListener("click",
+            function() {
+                if (quantity > 1) {
+                    quantity--;
+                    document.getElementById("quantity").textContent = quantity;
+                }
+            });
+    
+            // "+" 버튼 클릭 시 수량 증가
+            document.getElementById("increase").addEventListener("click",
+            function() {
+                quantity++;
+                document.getElementById("quantity").textContent = quantity;
+            });
+        </script>
+    </div>
+</body>
+</html>
