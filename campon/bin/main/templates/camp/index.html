@@ -94,7 +94,7 @@
     <div class="review mb-5">
         <h5 class="mt-3">실시간리뷰</h5>
         <ul th:each="board : ${newReviewList}">
-            <a th:href="|/board/page?campNo=${board.reviewNo}|" class="d-flex justify-content-between">
+            <a th:href="|/board/crread?reviewNo=${board.reviewNo}|" class="d-flex justify-content-between">
                 <li class="review_imgbox">
                     <img th:src="${board.reviewImg}">
                 </li>

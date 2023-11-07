@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 
 import com.camp.campon.dto.Board;
+import com.camp.campon.dto.Camp;
 
 
 @Mapper
@@ -25,4 +26,21 @@ public interface BoardMapper {
     public List<Board> prlist() throws Exception;
     // 상품 리뷰 조회
     public Board prread(int prNo) throws Exception;
+
+    // 예약정보 가져오기
+    public Camp reservation(int reservationNo) throws Exception;
+    // 대여정보 가져오기
+    public Board order(int orderNo) throws Exception;
+
+    //캠핑 리뷰 등록
+    public int crinsert(Board board) throws Exception;
+    //상품 리뷰 등록
+    public int prinsert(Board board) throws Exception;
+
+    //캠핑 리뷰 수정 / 삭제
+    public int crupdate(Board board) throws Exception;
+    public int crdelete(int reviewNo) throws Exception;
+    //상품 리뷰 수정 / 삭제
+    public int prupdate(Board board) throws Exception;
+    public int prdelete(int prNo) throws Exception;
 }

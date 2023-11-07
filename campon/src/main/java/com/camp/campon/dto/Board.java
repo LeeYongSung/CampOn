@@ -2,6 +2,8 @@ package com.camp.campon.dto;
 
 import java.util.Date;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import lombok.Data;
 
 @Data
@@ -10,7 +12,9 @@ public class Board {
     private int userNo;
     private int campNo;
     private int reservationNo;
+    private int orderNo;
     private String reviewTitle;
+    private MultipartFile reviewImgfile;
     private String reviewImg;
     private String reviewCon;
     private Date regDate;
@@ -26,7 +30,9 @@ public class Board {
     private String prTitle;
     private String prCon;
     private String prImg;
+    private MultipartFile prImgfile;
 
+    private int productNo;
     private String productName;
     private String productCategory;
 
