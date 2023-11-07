@@ -45,6 +45,7 @@ public class ProductController {
     @Value("${upload.path}")
     private String uploadPath;
 
+    //-------------------- 상품 메인 --------------------
     // 메인페이지
     @GetMapping("/index")
     public String productMain(Model model) throws Exception {
@@ -70,6 +71,11 @@ public class ProductController {
         return productList;
     }
 
+
+
+
+
+    //-------------------- 찜 목록 --------------------
     // 상품 찜 목록
     @GetMapping("/wishlist")
     public String wishlist(Model model) {
@@ -85,7 +91,20 @@ public class ProductController {
         if( result == 0 ) return "redirect:/product/wishlist";
         return "redirect:/product/wishlist";
     }
+
+    // 장바구니 담기
+    @GetMapping(value="/addcart")
+    public String addCart(Product product) throws Exception {
+        int result = productService.addCart(product);
+        log.info("장바구니에 넣기 성공여부 : "+ result);
+        return "product/wishlist";
+    }
     
+
+
+
+
+    //-------------------- 장바구니 --------------------
     // 장바구니 목록
     @GetMapping("/cart")
     public String cartlist(Model model) {
@@ -117,23 +136,16 @@ public class ProductController {
         return "product/productdetail";
     }
 
-    @GetMapping(value="/addCart")
-    public String getMethodName(@RequestParam("productNo") int productNo, Principal principal) throws Exception {
-        
-        int userNo = 1;
-        
-        log.info("유저 넘버 : " + userNo );
-        log.info("프로덕트 넘버 : " + productNo );
-        
-        // String userId = principal.getName();
 
-        // log.info("장바구니에 넣는 사용자아이디 : "+ userId);
 
-        // Users user = userService.selectById(userId);
-        // userNo = user.getUserNo();
-        int result = productService.addCart(productNo, userNo);
-        log.info("장바구니에 넣기 성공여부 : "+ result);
-        
-        return "product/wishlist";
+
+
+    //-------------------- 결제하기 --------------------
+    @GetMapping(value="/payment")
+    public String payMent(Model model) throws Exception {
+        List<Product> cartList = productService.cartList();
+        model.addAttribute("cartList", cartList);
+        return "product/payment";
     }
+    
 }

@@ -40,7 +40,7 @@
         <br>
 
         <!-- 장바구니 담기 -->
-        <a th:href="|/product/addCart?productNo=${product.productNo}|">장바구니 담기</a>
+        <a th:href="|/product/addCart?productNo=${product.productNo}&userNo=${#authentication.principal.users.userNo}|">장바구니 담기</a>
 
 
         <!-- 찜 삭제 -->
