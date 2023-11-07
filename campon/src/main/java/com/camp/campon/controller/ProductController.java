@@ -19,9 +19,11 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.camp.campon.dto.Camp;
 import com.camp.campon.dto.Product;
 import com.camp.campon.dto.Productreview;
 import com.camp.campon.dto.Users;
+import com.camp.campon.service.CampService;
 import com.camp.campon.service.ProductService;
 import com.camp.campon.service.UserService;
 
@@ -42,6 +44,9 @@ public class ProductController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private CampService campService;
+    
     @Value("${upload.path}")
     private String uploadPath;
 
@@ -142,9 +147,15 @@ public class ProductController {
 
     //-------------------- 결제하기 --------------------
     @GetMapping(value="/payment")
-    public String payMent(Model model) throws Exception {
+    public String payMent(Model model, Integer userNo) throws Exception {
+        // 임시값
+        userNo = 2;
         List<Product> cartList = productService.cartList();
+        List<Camp> reservationList = campService.reservation(userNo);
+
         model.addAttribute("cartList", cartList);
+        model.addAttribute("reservationList", reservationList);
+
         return "product/payment";
     }
     

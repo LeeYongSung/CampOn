@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/UI/user/layout/main_layout}"
+      >
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CampOn(캠프온)</title>
+</head>
+<body layout:fragment="content">
+    <div>
+        <button type="button" onclick="history.back(-1)">목록</button>
+        <a th:href="|/baord/crupdate?reviewNo=${crread.reviewNo}">수정</a>
+    </div>
+    <hr>
+    <div>
+        <span th:text="${crread.reviewNo}"></span>
+        <span th:text="${crread.reviewTitle}"></span>
+        <span th:text="${ #dates.format( crread.regDate, 'yyyy-MM-dd') }"></span>
+    </div>
+    <hr>
+    <div>
+        <p th:text="${crread.campName}"></p>
+        <p th:text="${crread.cpdtName}"></p>
+        <p th:text="${crread.userId}"></p>
+        숙박일자 : <span th:text="${ #dates.format( crread.reservationStart, 'yyyy-MM-dd') }"></span>
+        ~
+        <span th:text="${#dates.format( crread.reservationEnd, 'yyyy-MM-dd')}"></span>
+    </div>
+    <hr>
+    <div>
+        <p th:text="${crread.reviewCon}"></p>
+        <img th:src="${crread.reviewImg}">
+    </div>
+    
+</body>
+</html>
