@@ -1,6 +1,7 @@
 package com.camp.campon.dto;
 
 import java.util.Date;
+import java.util.List;
 
 import lombok.Data;
 
@@ -13,6 +14,10 @@ public class Order {
     private Date startDate;
     private Date endDate;
     private String orderNumber;
+    private int reservationNo;
+    private Date orderDate;
+
+    private int cpDtNo;
 
     // 상품
     private int productNo;
@@ -28,4 +33,11 @@ public class Order {
     private String pmType;
     private String pmPrice;
     private Date pmDate;
+
+
+
+    
+    private List<Product> productList;  
+    private Camp camp; 
+    private Date depositDeadLine; //무통장입금 시 입금기한
 }
