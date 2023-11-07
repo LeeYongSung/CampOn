@@ -155,14 +155,27 @@ public class AdminController {
                 // List<camp> campdetail = campService.
                 // 획득한 유저 번호로 캠핑장 정보 획득
                 List<Camp> camp = campService.campproductUser(userNo);
-                List<Camp> campdetailList = null;
-                // log.info("camp" + camp);
-                for(int i = 0; i < camp.size(); i++) {
-                    int campNo = camp.get(i).getCampNo();
-                    campdetailList = campService.campdetailUser(campNo);
-                }
-                log.info("campdetailList : " + campdetailList);
+
+                // for (Camp campEl : camp) {
+                    // campEl.getDetailList(campService.campdetailUser(campEl.getCampNo()));
+                // }
+                // List<Camp> campdetailList = null;
+                // // campdetailList = null;
+                // // log.info("camp" + camp);
+                
+                // for(int i = 0; i < camp.size(); i++) {
+                //     int campNo = camp.get(i).getCampNo();
+                //     campdetailList = campService.campdetailUser(campNo);
+                    
+                //     log.info("campdetailList : " + campdetailList);
+                    
+                //     System.out.println();
+                //     if(campdetailList != null) campdetailList.addAll(campdetailList);
+                // }
+                
+                // model.addAttribute("campdetailList", campdetailList);
                 model.addAttribute("campList", camp);
+
                 return "admin/campproductlist";
             } 
             return "redirect:/user/login";

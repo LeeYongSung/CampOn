@@ -13,18 +13,37 @@
 <body layout:fragment="content">
     <h3>캠핑장 예약 현황</h3>
     <div>
-        <ul>
-            <li><img th:src="${camp.cpdiUrl}" alt="캠핑상품이미지"></li>
-            <li th:text="${camp.campName}"></li>
-            <li th:text="${camp.cpdtName}"></li>
-            <li>체크인 11월 01일 (수)</li>
-            <li><input type="date"></li>
-            <li>체크인 11월 03일 (금)</li>
-            <li><input type="date"></li>
-            <li>숙박인원 : <input type="number"></li>
-            <li th:text="${user.userName}"></li>
-            <li th:text="${user.userTel}"></li>
-        </ul>
+        <form action="/camp/reservate" method="post">
+            <ul>
+                <!-- csrf -->
+                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+
+                <input type="hidden" id="campNo" name="campNo" th:value="${camp.campNo}">
+                <input type="hidden" id="cpdtNo" name="cpdtNo" th:value="${camp.cpdtNo}">
+                <input type="hidden" id="userNo" name="userNo" th:value="${user.userNo}">
+                <input type="hidden" id="userName" name="userName" th:value="${user.userName}">
+                <input type="hidden" id="userTel" name="userTel" th:value="${user.userTel}">
+                <li><img th:src="${camp.cpdiUrl}" alt="캠핑상품이미지"></li>
+                <li th:text="${camp.campName}"></li>
+                <li th:text="${camp.cpdtName}"></li>
+                <li>체크인 11월 01일 (수)</li>
+                <li><input type="date" id="reservationStart" name="reservationStart"></li>
+                <li>체크인 11월 03일 (금)</li>
+                <li><input type="date" id="reservationEnd" name="reservationEnd"></li>
+                <li>숙박인원 : <input type="number" id="reservationNop" name="reservationNop"></li>
+                <li th:text="${user.userName}"></li>
+                <li th:text="${user.userTel}"></li>
+                <li>
+                    <label>결제수단</label>
+                        <input type="radio" id="card" name="campPaymentType" value="card">
+                        <label for="card"><span></span>카드</label>
+
+                        <input type="radio" id="bank" name="campPaymentType" value="bankbook">
+                        <label for="bank"><span></span>무통장입금</label>
+                </li>
+                <li><input type="submit" value="결제하기"></li>
+            </ul>
+        </form>
     </div>
      
 </body>
