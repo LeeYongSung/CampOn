@@ -86,7 +86,6 @@ public class ProductController {
         model.addAttribute("reviewCount", reviewCount);
         return "product/productdetail";
     }
-<<<<<<< HEAD
 
 
     //-------------------- 찜 목록 --------------------
@@ -159,22 +158,5 @@ public class ProductController {
        int result = productService.cartListDelete(cartNo);
         return "redirect:/product/cart";
     }
-    
-
-    //-------------------- 결제하기 --------------------
-    @GetMapping(value="/payment")
-    public String payMent(Model model, Integer userNo) throws Exception {
-        // 임시값
-        userNo = 2;
-        List<Product> cartList = productService.cartList(userNo);
-        List<Camp> reservationList = campService.reservation(userNo);
-
-        model.addAttribute("cartList", cartList);
-        model.addAttribute("reservationList", reservationList);
-
-        return "product/payment";
-    }
-=======
->>>>>>> 재원
     
 }

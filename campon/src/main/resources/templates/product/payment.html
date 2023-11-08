@@ -7,11 +7,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CampOn(캠프온)</title>
-    <style>
-        .selected {
-            background-color: lightblue; /* 선택한 캠핑장을 강조하는 스타일 */
-        }
-    </style>
 </head>
 
 <body layout:fragment="content">
@@ -20,19 +15,14 @@
     <form action="경로지정" method="post" id="form">
         <!-- 반복문 시작 -->
         <div th:each="cart : ${cartList}">
-
             <!-- 썸네일 -->
             <img th:src="${cart.productThumnail}"> <br>
-
             <!-- 상품명 -->
             <span th:text="${cart.productName}"></span> <br>
-
             <!-- 상품기본내용 -->
             <span th:text="${cart.productIntro}"></span> <br>
-
             <!-- 금액 -->
             <span th:text="|${cart.productPrice} / 1일|"></span> <br><br>
-
             <!-- 상품수량 및 증감 -->
             <div>
                 <button class="decrease" type="button">-</button>
@@ -40,7 +30,6 @@
                 <button class="increase" type="button">+</button>
             </div>
         </div>
-
 
         <!-- 배송지 선택 -->
         <div>
@@ -52,18 +41,14 @@
                 <li th:text="|캠핑날짜 ${reservation.reservationStart} ~ ${reservation.reservationEnd}|"></li>
                 <li th:text="|예약번호 ${reservation.reservationNo}|"></li><br><br><br>
             </ul>
-        <!-- 결제방법 선택 -->
 
-        <input type="radio" name="paymentMethod" value="무통장">
-        <label><span></span>무통장</label>
-        <input type="radio" name="paymentMethod" value="카드">
-        <label><span></span>카드</label><br>
-
-        <input type="submit" value="결제하기">
-
-
+            <!-- 결제방법 선택 -->
+            <input type="radio" name="paymentMethod" value="무통장">
+            <label><span></span>무통장</label>
+            <input type="radio" name="paymentMethod" value="카드">
+            <label><span></span>카드</label><br>
+            <input type="submit" value="결제하기">
     </form>
-
 
     <script>
         // "-" 버튼 클릭 시 수량 감소
