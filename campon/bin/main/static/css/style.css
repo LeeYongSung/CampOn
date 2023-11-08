@@ -1,9 +1,10 @@
 header {width: 100%; background-color: white;}
-.campproduct_header {width: 100%; background-color: inherit!important;}
+.campproduct_header {width: 500px; background-color: rgba(255, 255, 255, 0); position: fixed; z-index: 5;}
 .main_header {display: flex; justify-content: space-between; padding: 0 1rem;}
 .main_header i {padding-top: 35px;}
 .main_header img {padding-top: 20px;}
 header>nav {border-bottom: 1px solid black;}
+.campproduct_header>nav {border: none;}
 .serch_btn {border: none; background-color: none;}
 .menu {width: 500px; position: fixed; bottom: 0; background-color: white; border-top: 0.5px solid black;}
 .main_menu {display: flex; justify-content: space-around; padding-left: 0!important; padding-top: 10px;}
@@ -158,11 +159,23 @@ input[type="checkbox"] {
 .regionBox>div>a {transition: all 0.5s;}
 .regionBox>div>a:focus, .regionBox>div>a:hover {background-color: #FFC700;}
 
-
+/* 캠프/검색 목록 */
 #camplist {width: 100%; }
 #camplist h3 {font-weight: bold;}
 #camplist p {margin-bottom: 0!important; font-size: 0.8em;}
 .camp_box {width: 100%; border-bottom: 1px solid #dee2e6; border-top: #dee2e6; margin-bottom: 1rem; border-radius: 10px 10px 0; overflow: hidden;}
+
+/* 캠핑장 상세 */
+.camp_info {height: 200px; overflow: hidden; transition: all 0.5;}
+
+/* 캠핑장 시설 */
+.campfacility ul {padding-left: 0!important;}
+
+/* 캠핑상품목록 */
+.campdetail {height: 200px; overflow: hidden;}
+.campdetail_box {background-color: #FFDC70; border-radius: 10px;}
+.campdetail_product>div:nth-of-type(1) {width: 30%;}
+.campdetail_product>div:nth-of-type(2) {width: 70%;}
 input[type="checkbox"] + label {
     color:black;
 }
