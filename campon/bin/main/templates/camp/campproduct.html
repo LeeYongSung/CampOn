@@ -3,7 +3,7 @@
       xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{/UI/user/layout/main_layout}"
+      layout:decorate="~{/UI/camp/layout/camp_layout}"
       >
 <head>
     <meta charset="UTF-8">
@@ -11,66 +11,165 @@
     <title>CampOn(캠프온)</title>
 </head>
 <body layout:fragment="content">
-    <div th:each="img : ${productsimg}">
-        <img th:src="${img.cpiUrl}">
+    <!-- Swiper -->
+    <div class="swiper mySwiper">
+        <div class="swiper-wrapper">
+          <div class="swiper-slide" th:each="img : ${productsimg}"><img th:src="${img.cpiUrl}"></div>
+        </div>
+        <div class="swiper-button-next"></div>
+        <div class="swiper-button-prev"></div>
+        <div class="swiper-pagination"></div>
     </div>
-    캠핑장전체사진
-    <div>
-        캠핑장 환경 :
+    <div class="py-2 ps-2">
         <div th:each="productsenvironment : ${productsenvironment}">
             <span th:text="${productsenvironment.environmentTypeName}"></span>
         </div>
     </div>
-    <div>
-        캠핑장 이름 : <span th:text="${productsproducts.campName}"></span>
+    <div class="pb-2 border-bottom ps-2">
+        <h4 th:text="${productsproducts.campName}"></h4>
     </div>
-    <hr>
-    <div>기본정보</div>
-    <div>주소 : <span th:text="${productsproducts.campAddress}"></span></div>
-    <div>캠핑장 연락처 : <span th:text="${productsproducts.campTel}"></span></div>
-    <div>캠핑장 오픈날짜 : <span th:text="${productsproducts.campOpen}"></span></div>
-    <div>캠핑장 클로즈날짜 : <span th:text="${productsproducts.campClose}"></span></div>
-    <div>캠핑장 매너타임 : <span th:text="${productsproducts.campCaution}"></span></div>
-    <div> 그동안 <span th:text="${productsreserve}"></span>명이 다녀갔습니다.</div>
-    <hr>
-    <div>캠핑장소개 : <span th:text="${productsproducts.campIntroduction}"></span></div>
-    <hr>
-    <div>
-        캠핑장시설
-        <div th:each="productsfacility : ${productsfacility}">
-            <span th:text="${productsfacility.facilitytypeName}"></span>
+    <div class="border-bottom border-top">
+        <div class="container-sm py-3">
+            <div class="py-1"><h5>기본정보</h5></div>
+            <div class="py-1 d-flex justify-content-between">
+                <div>주&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;소 : </div>
+                <div>
+                    <span th:text="${productsproducts.campAddress}"></span>
+                </div>
+            </div>
+            <div class="py-1 d-flex justify-content-between">
+                <div>캠핑장번호 : </div>
+                <div>
+                    <span th:text="${productsproducts.campTel}"></span>
+                </div>
+            </div>
+            <div class="py-1 d-flex justify-content-between">
+                <div>오&nbsp;&nbsp;&nbsp;픈&nbsp;&nbsp;&nbsp;일 : </div>
+                <div>
+                    <span th:text="${productsproducts.campOpen}"></span>
+                </div>
+            </div>
+            <div class="py-1 d-flex justify-content-between">
+                <div>클&nbsp;로&nbsp;즈&nbsp;일 : </div>
+                <div>
+                    <span th:text="${productsproducts.campClose}"></span>
+                </div>
+            </div>
+            <div class="py-1 d-flex justify-content-between">
+                <div>매&nbsp;너&nbsp;타&nbsp;임 : </div>
+                <div>
+                    <span th:text="${productsproducts.campCaution}"></span>
+                </div>
+            </div>
+            <div class="w-100 text-center py-3 bg-warning mt-3"></span> 그동안 <span th:text="${productsreserve}"></span>명이 다녀갔습니다.</div>
         </div>
     </div>
-    <hr>
-    <div>카카오API</div>
-    <hr>
-    <div>캠핑장배치도 : <img th:src="${productsproducts.campLayout}"></span></div>
-    <hr>
-    <div>캠핑상품</div>
-    <div th:each="productsproductlist : ${productsproductlist}">
-        <a th:href="|/camp/campdetail?cpdtNo=${productsproductlist.cpdtNo}|"> 이미지 : <img th:src="${productsproductlist.cpdiUrl}"> </a>
-        <div> 캠프타입 : <span th:text="${productsproductlist.campTypeName}"></span></div>
-        <div> 상품명 : <span th:text="${productsproductlist.cpdtName}"></span> </div>
-        <div> 상품가격 : <span th:text="${productsproductlist.cpdtPrice}"></span></div>
+    <div class="camp_info container-sm py-3 w-100 position-relative border-bottom">
+        <div>
+            <h5>캠핑장소개</h5>
+        </div>
+        <span th:text="${productsproducts.campIntroduction}"></span>
+        <div class="position-absolute w-100 bottom-0 text-center"><a href="javascript:;" class="w-100 d-block" id="camp_info_more">더보기<span class="material-symbols-outlined expandmore">expand_more</span><span class="material-symbols-outlined expandless none">expand_less</span></div>
     </div>
-    <hr>
-    <div>캠핑장리뷰
+    <div class="container-sm campfacility w-100 py-2 border-bottom">
+       <div class="pt-2"><h5>캠핑장시설</h5></div>
+        <div class="d-flex justify-content-around">
+            <th:block th:each="productsfacility : ${productsfacility}">
+                <ul class="text-center">
+                    <li><img th:src="${productsfacility.facilitytypeImg}" alt="시설물사진"></li>
+                    <li><span th:text="${productsfacility.facilitytypeName}"></span></li>
+                </ul>
+            </th:block>
+        </div>
+    </div>
+    <div class="container-sm w-100 py-2 border-bottom">
+        <div class="pt-2"><h5>카카오API</h5></div>
+        <div></div>
+    </div>
+    <div class="container-sm w-100 py-2 border-bottom">
+        <div><h5>캠핑장배치도</h5></div>
+        <div><img th:src="${productsproducts.campLayout}"></div>
+    </div>
+    <div class="campdetail container-sm w-100 py-2 position-relative">
+        <div><h5>캠핑상품</h5></div>
+        <th:block th:each="productsproductlist : ${productsproductlist}">
+            <div class="campdetail_box w-100 mb-3 py-5">
+                <a th:href="|/camp/campdetail?cpdtNo=${productsproductlist.cpdtNo}|"> 
+                    <div class="campdetail_product d-flex justify-content-between">
+                        <div>
+                            <img th:src="${productsproductlist.cpdiUrl}">
+                        </div>
+                        <div>
+                            <div><span th:text="${productsproductlist.campTypeName}"></span></div>
+                            <div><h5 th:text="${productsproductlist.cpdtName}"></h5> </div>
+                            <div class="text-end pe-3"><span class="fs-5" th:text="|${productsproductlist.cpdtPrice}원|"></span></div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </th:block>
+        <div class="text-center w-100 position-absolute bottom-0 "><a href="javascript:;" class="campdetail_btn w-100 d-block">더보기<span class="material-symbols-outlined">expand_more</span></a></div>
+    </div>
+    <div class="border-top">
+        <div>캠핑장리뷰</div>
+        <div>
+
+        </div>
         <p th:if="${productsreview == null}" th:text="|등록된 리뷰가 없습니다.|"></p>
-        <p th:if="${productsreview != null}" th:text="${productsreview.userName}"></p>
-        <p th:if="${productsreview != null}" th:text="${productsreview.campName}"></p>
-        <p th:if="${productsreview != null}" th:text="${productsreview.reviewCon}"></p>
+        <th:block th:if="${productsreview != null}">
+            <a th:href="|/board/crread?reviewNo=${productsreview.reviewNo}|">
+                <p th:text="${productsreview.userName}"></p>
+                <p th:text="${productsreview.campName}"></p>
+                <p th:text="${productsreview.reviewCon}"></p>
+            </a>
+        </th:block>
         <img th:if="${productsreview != null}" th:src="${productsreview.reviewImg}">
     </div>
-    <div>캠핑장 리뷰 더보기</div>
+    <div><a href="#">리뷰 더보기</a></div>
     <hr>
     <div>캠핑장 운영정책</div>
+    <div>캠핑장 운영정책 모달창</div>
     <hr>
     <div>취소 환불 규정</div>
+    <div>취소 환불 규정 모달창</div>
     <hr>
     <div>사업자정보
         <li>업체명 : <span th:text="${productsseller.companyName}"></span></li>
         <li>사업자번호 : <span th:text="${productsseller.companyNumber}"></span></li>
         <li>사업주 : <span th:text="${productsseller.userName}"></span></li>
     </div>
+
+     <!-- Swiper JS -->
+     <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+
+     <!-- Initialize Swiper -->
+     <script>
+       var swiper = new Swiper(".mySwiper", {
+         spaceBetween: 0,
+         centeredSlides: true,
+         autoplay: {
+           delay: 3000,
+           disableOnInteraction: false,
+         },
+         pagination: {
+           el: ".swiper-pagination",
+           clickable: true,
+         },
+         navigation: {
+           nextEl: ".swiper-button-next",
+           prevEl: ".swiper-button-prev",
+         },
+       });
+ 
+     </script>
+     <script>
+        $('#camp_info_more').on('click', function(){
+            $('.camp_info').css('height', 'auto')
+        })
+
+        $('.campdetail_btn').on('click', function() {
+            $('.campdetail').css('height', 'auto')
+        })
+     </script>
 </body>
 </html>
