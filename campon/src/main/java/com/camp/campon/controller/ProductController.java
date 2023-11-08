@@ -58,7 +58,12 @@ public class ProductController {
         //상품 후기 불러오기
         List<Productreview> proReviewList =  productService.getReviewList();
         log.info("후기목록의 사이즈 : "+proReviewList.size());
+        // 추천상품 리스트
+        List<Product> productHotList = productService.hotList();
+        
         model.addAttribute("proReviewList", proReviewList);
+        model.addAttribute("productHotList", productHotList);
+        
         return "product/index";
     }
     //카페고리별 상품 목록

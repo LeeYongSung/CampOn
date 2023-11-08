@@ -30,7 +30,11 @@
         </ul>
 
         <!--추천상품 목록-->
-
+        <h5>추천 상품</h5>
+        <div th:each="product : ${productHotList}">
+            <img th:src="|/img?file=${product.productThumnail}|">
+            
+        </div>
         <!--캠프온 이용안내-->
         <div class="w-100 info_btn">
             <a href="/camp/information" class="btn btn-warning btn-lg w-100 py-3">캠프온이 처음이신가요? 캠프온 이용안내</a>

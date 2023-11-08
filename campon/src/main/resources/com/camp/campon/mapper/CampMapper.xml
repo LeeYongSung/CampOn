@@ -42,8 +42,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         SELECT * 
         FROM campproduct c 
         join campimg img on c.camp_no = img.camp_no 
-        join (select min(cpi_no) no from campimg group by camp_no) imgno on img.cpi_no = imgno.no
-        join (select camp_no, count(*) c from reservation group by camp_no) r on c.camp_no = r.camp_no
+        join (select min(cpi_no) no 
+            from campimg 
+            group by camp_no) 
+            imgno on img.cpi_no = imgno.no
+        join (select camp_no, count(*) c 
+            from reservation 
+            group by camp_no) 
+            r on c.camp_no = r.camp_no
         order by r.c desc limit 6
     </select>
 

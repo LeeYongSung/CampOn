@@ -57,4 +57,7 @@ public interface ProductService {
 
   // 장바구니 등록
   public int addCart(Product product) throws Exception;
+
+  // 추천상품 목록
+  public List<Product> hotList() throws Exception;
 }
