@@ -32,13 +32,15 @@ public interface ProductService {
   public List<Productreview> getReviewList() throws Exception;
 
   // 찜 목록
-  public List<Product> wishList();
+  public List<Product> wishList(int userNo);
 
   // 찜 삭제
   public int wishListDelete(int wishlistNo);
+   // 찜목록 전부다 장바구니에 담기
+   public int addcartAll(int userNo) throws Exception;
 
   // 장바구니 목록
-  public List<Product> cartList();
+  public List<Product> cartList(int userNo);
 
   // 장바구니 삭제
   public int cartListDelete(int cartlistNo);

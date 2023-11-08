@@ -59,8 +59,15 @@
                 <div>
                     <h2>가격 : <span th:text="${product.productPrice}"></span></h2>
                     <div>
-                        <a href="|/product?productNo=${productNo}|">상세 정보</a>
-                        <a href="|/product/addCart?productNo=${productNo}|">장바구니</a>
+                        <a th:href="|/product/productdetail?productNo=${product.productNo}|">상세 정보</a>
+                         <!-- 비 로그인 시 (나중에 비회원장바구니 구현시 수정필요)-->
+                        <th:block sec:authorize="isAnonymous()">
+                            <a th:href="|/product/addcart?productNo=${product.productNo}&userNo=1000|">장바구니 담기(비회원은 현재 안됨)</a>
+                        </th:block>
+                        <!-- 로그인 시 -->
+                        <th:block sec:authorize="isAuthenticated()">
+                            <a th:href="|/product/addcart?productNo=${product.productNo}&userNo=${#authentication.principal.users.userNo}|">장바구니 담기</a>
+                        </th:block>
                     </div>
                 </div>
             </div>

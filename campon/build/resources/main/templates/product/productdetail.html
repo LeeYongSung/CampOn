@@ -7,40 +7,27 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CampOn(캠프온)</title>
-
-    <style>
-        .active-category {
-            background-color: orange;
-        }
-    </style>
-
 </head>
 
 <body layout:fragment="content">
-    <!-- 썸네일 -->
-    <img th:src="${productimg[0].productimgUrl}"><br>
+    <div class="container">
 
-    <!-- 카테고리 -->
-    <div th:text="|상품 - ${select.productCategory}|"></div><br>
 
-    <!-- 리뷰수 -->
-    <div th:text="${reviewCount}"></div>
+        <!--상품상세-->
+        <div>
+            <div><img th:src="|/img?file=${product.productThumnail}" alt="썸네일이미지"></div>
+            <p>카테고리 : <span th:text="${product.productCategory}"></span></p>
+            <p>상품명 : <span th:text="${product.productName}"></span></p>
+            <p>리뷰수 : <span th:text="${reviewCount}"></span></p>
+            <p>가격 : <span th:text="${product.productPrice}"></span></p>
+            <div><img th:src="|/img?file=${product.productCon}" alt="상세설명이미지"></div>
+        </div>
 
-    <!-- 상품명 -->
-    <div th:text="${select.productName}"></div><br>
 
-    <!-- 상품가격 -->
-    <div th:text="${select.productPrice}"></div><br>
-
-    <!-- 상세설명 이미지 -->
-    <img th:src="|/img?file=${select.productCon}|" alt="상세설명이미지">
-
-    <!-- 상품리뷰 -->
-    <div class="review mb-5">
-        <h5 class="mt-3">상품 후기</h5>
-        <ul th:each="review : ${proReviewList}">
-            <!--상품후기를 클릭하면 상품상세페이지로 이동하게끔 a태그 수정해야 함. -->
-            <a th:href="|/product/page?prNo=${review.prNo}|" class="d-flex justify-content-between">
+        <!--리뷰목록-->
+        <div>
+            <h2>상품 리뷰</h2>
+            <div th:each="review : ${proReviewList}">
                 <li class="review_imgbox">
                     <img th:src="|/img?file=${review.prImg}|">
                 </li>
@@ -58,35 +45,38 @@
                         <li>
                             <span th:text="${ #dates.format( review.regDate, 'yyyy-MM-dd') }"></span>
                         </li>
+                        <!--글쓴이 프로필사진 넣을거면 넣어야 함-->
                         <li>
                             <p th:text="${review.userId}"></p>
                         </li>
                     </ul>
                 </li>
-            </a>
-        </ul>
+            </div>
+        </div>
+
+
+
+        <!-- 대여안내 -->
+        <p>
+            대여서비스는 "캠핑온"을 통해 캠핑장을 예약한 당사의 고객만 이용가능합니다.
+            1. 캠핑장을 예약하셔야 정상적인 서비스 이용이 가능합니다.
+            2. 렌탈기간은 예약하신 캠핑이용 기간과 동일하게 이용가능합니다.
+            3. 분실 및 파손, 회수 지연시 아래 위약금이 청구됩니다.
+                분실 : (1일 렌탈비 * 365일)
+                파손 : (1일 렌탈비 * 180일)
+                지연 : (1일 렌탈비 * 지연일)
+        </p>
+
+        <!-- 상품 정보 고시 -->
+        <p>
+            상품명: 상세페이지 참조
+            제조국: 상세페이지 참조
+            인증번호: 상세페이지 참조
+
+            상품의 분쟁 발생시 관련 법령 또는 "소비자분쟁해결기준"
+            (공정거래위원회 고시 제2022-25호, 2022. 12. 28. 발령·시행)에 따라 해결할 수 있습니다.
+        </p>
     </div>
-    
-    <!-- 대여안내 -->
-    <p>
-        대여서비스는 "캠핑온"을 통해 캠핑장을 예약한 당사의 고객만 이용가능합니다.
-        1. 캠핑장을 예약하셔야 정상적인 서비스 이용이 가능합니다.
-        2. 렌탈기간은 예약하신 캠핑이용 기간과 동일하게 이용가능합니다.
-        3. 분실 및 파손, 회수 지연시 아래 위약금이 청구됩니다.
-            분실 : (1일 렌탈비 * 365일)
-            파손 : (1일 렌탈비 * 180일)
-            지연 : (1일 렌탈비 * 지연일)
-    </p>
-
-    <!-- 상품 정보 고시 -->
-    <p>
-        상품명: 상세페이지 참조
-        제조국: 상세페이지 참조
-        인증번호: 상세페이지 참조
-
-        상품의 분쟁 발생시 관련 법령 또는 "소비자분쟁해결기준"
-        (공정거래위원회 고시 제2022-25호, 2022. 12. 28. 발령·시행)에 따라 해결할 수 있습니다.
-    </p>
 </body>
 
 </html>

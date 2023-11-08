@@ -39,7 +39,8 @@ public class Product {
     private Integer cartCnt;
 
     // 찜 하기
-    private int wishlistNo;
+    private int productsaveNo; //찜번호
+    private int wishlistNo; //없어도 됨
 
     //주문별 대여상품 갯수
     private int orderCnt;

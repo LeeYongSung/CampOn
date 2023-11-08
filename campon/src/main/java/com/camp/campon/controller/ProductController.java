@@ -75,82 +75,97 @@ public class ProductController {
         List<Product> productList = productService.getCategoryList(category);
         return productList;
     }
-
-
-
-
-
-    //-------------------- 찜 목록 --------------------
-    // 상품 찜 목록
-    @GetMapping("/wishlist")
-    public String wishlist(Model model) {
-        List<Product> wishlist = productService.wishList();
-        model.addAttribute("wishlist", wishlist);
-        return "product/wishlist";
-    }
-
-    // 상품 찜 삭제
-    @GetMapping(value="/wishlistDelete")
-    public String wishlistDelete(int wishlistNo) {
-        int result = productService.wishListDelete(wishlistNo);
-        if( result == 0 ) return "redirect:/product/wishlist";
-        return "redirect:/product/wishlist";
-    }
-
-    // 장바구니 담기
-    @GetMapping(value="/addcart")
-    public String addCart(Product product) throws Exception {
-        int result = productService.addCart(product);
-        log.info("장바구니에 넣기 성공여부 : "+ result);
-        return "product/wishlist";
-    }
-    
-
-
-
-
-    //-------------------- 장바구니 --------------------
-    // 장바구니 목록
-    @GetMapping("/cart")
-    public String cartlist(Model model) {
-        List<Product> cartList = productService.cartList();
-        model.addAttribute("cartList", cartList);
-        return "product/cart";
-    }
-
-    // 장바구니 삭제
-    @GetMapping(value="/cart/Delete")
-    public String cartListDelete(int cartlistNo) {
-        int result = productService.cartListDelete(cartlistNo);
-        if( result == 0 ) return "redirect:/product/cart";
-        return "product/cart";
-    }
-    
     // 상품 상세페이지
     @GetMapping(value="/productdetail") 
     public String productDetail(Model model, Integer productNo) throws Exception {
-        List<Product> productimg = productService.productimg(productNo);
-        log.info(productNo + "");
-        Product select = productService.select(productNo);
+        Product product = productService.select(productNo);
         List<Productreview> proReviewList = productService.getReviewListByNo(productNo);
         int reviewCount = productService.reviewCount(productNo);
-        model.addAttribute("productimg", productimg);
-        model.addAttribute( "select", select);
+        model.addAttribute("product", product);
         model.addAttribute("proReviewList", proReviewList);
         model.addAttribute("reviewCount", reviewCount);
         return "product/productdetail";
     }
 
 
+    //-------------------- 찜 목록 --------------------
+    // 상품 찜 목록
+    @GetMapping("/wishlist")
+    public String wishlist(Model model, Principal principal) throws Exception {
+        String userId = principal.getName();
+        Users users = userService.selectById(userId);
+        int userNo = users.getUserNo();
+        List<Product> wishlist = productService.wishList(userNo);
+        model.addAttribute("wishlist", wishlist);
+        return "product/wishlist";
+    }
 
+    // // 상품 찜 등록
+    // @GetMapping(value="/addProductsave")
+    // public void addProductsave(int productNo, Principal principal) {
+        
+    // }
+    
 
+    // 상품 찜 삭제
+    @PostMapping(value="/wishlistDelete")
+    public String wishlistDelete(int productsaveNo) {
+        int result = productService.wishListDelete(productsaveNo);
+        if( result == 0 ) return "redirect:/product/wishlist";
+        return "redirect:/product/wishlist";
+    }
+   
+
+    //-------------------- 장바구니 --------------------
+    // 장바구니 목록
+    @GetMapping("/cart")
+    public String cartlist(Model model, Principal principal) throws Exception {
+        String userId = principal.getName();
+        Users users = userService.selectById(userId);
+        int userNo = users.getUserNo();
+        List<Product> cartList = productService.cartList(userNo);
+        for (Product product : cartList) {
+            log.info(product.getCartNo() + "카트번호가뭐얌");
+        }
+        model.addAttribute("cartList", cartList);
+        return "product/cart";
+    }
+    // 장바구니 담기
+    @GetMapping(value="/addcart")
+    public String addCart(Product product) throws Exception {
+        log.info("여기에 들어가니..?");
+        log.info("장바구니에넣을 프로덕트" + product.toString());
+        int result = productService.addCart(product);
+        log.info("장바구니에 넣기 성공여부 : "+ result);
+        return "redirect:/product/cart";
+    }
+    //찜목록 전부다 장바구니에 담기
+    @GetMapping(value="/addcartAll")
+    public String addcartAll(Principal principal) throws Exception {
+        String userId = principal.getName();
+        Users users = userService.selectById(userId);
+        int userNo = users.getUserNo();
+        int result = productService.addcartAll(userNo);
+        log.info("장바구니에 담긴 상품 갯수 : " + result);
+        return "redirect:/product/cart";
+    }
+    
+
+    // 장바구니 삭제
+    @PostMapping(value="/cartDelete")
+    public String cartListDelete(Product product) {
+       int cartNo = product.getCartNo();
+       int result = productService.cartListDelete(cartNo);
+        return "redirect:/product/cart";
+    }
+    
 
     //-------------------- 결제하기 --------------------
     @GetMapping(value="/payment")
     public String payMent(Model model, Integer userNo) throws Exception {
         // 임시값
         userNo = 2;
-        List<Product> cartList = productService.cartList();
+        List<Product> cartList = productService.cartList(userNo);
         List<Camp> reservationList = campService.reservation(userNo);
 
         model.addAttribute("cartList", cartList);

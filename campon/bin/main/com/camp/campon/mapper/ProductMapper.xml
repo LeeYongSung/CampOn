@@ -87,12 +87,12 @@ SELECT r.*, u.user_id, p.product_name FROM productreview r JOIN `user` u ON  r.u
     SELECT * FROM product WHERE product_category = #{category}
 </select>
 
-<!-- 찜 목록 -->
+<!-- 찜 목록 (WHERE절 추가)-->
 <select id="wishList" resultType="Product">
     SELECT *
     FROM productsave s
     JOIN product p ON s.product_no = p.product_no
-    ORDER BY productsave_no DESC
+    WHERE s.user_no = #{userNo}
 </select>
 
 <!-- 찜 삭제 -->

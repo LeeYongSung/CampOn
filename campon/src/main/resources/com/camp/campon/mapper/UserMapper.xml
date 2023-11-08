@@ -74,7 +74,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         </choose>
     </select>
 
-    <!-- 캠프 단에서 회원 조회 - id -->
+    <!-- 회원 조회 - id -->
     <select id="selectById" resultType="Users">
         SELECT *
         FROM `user`
