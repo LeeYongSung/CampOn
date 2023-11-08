@@ -1,39 +1,31 @@
 package com.camp.campon.controller;
 
-import java.security.Principal;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
-
-import org.apache.ibatis.javassist.compiler.ast.Keyword;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.camp.campon.dto.Board;
 import com.camp.campon.dto.Camp;
 import com.camp.campon.dto.Users;
-
-import lombok.extern.slf4j.Slf4j;
-
-import com.camp.campon.dto.Camp;
 import com.camp.campon.service.BoardService;
 import com.camp.campon.service.CampService;
 import com.camp.campon.service.UserService;
 
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.PostMapping;
+import lombok.extern.slf4j.Slf4j;
 
 
 
@@ -108,9 +100,38 @@ public class CampController {
      * @throws Exception
      */
     @GetMapping(value="/campproducts")
-    public String campProduct(Model model, int campTypeNo) throws Exception {
-        List<Camp> campselect = campService.campSelect(campTypeNo);
-        // log.info("campselect" + campselect);
+    public String campProduct(Model model
+                            , Integer campTypeNo
+                            , Integer[] campTypeNos, Camp camp) throws Exception {
+        List<Camp> campselect = null;
+        campTypeNo = campTypeNo == null ? 0 : campTypeNo;
+        log.info("campTypeNo : " + campTypeNo);
+
+        if(campTypeNo == 0) {
+            
+            if( campTypeNos != null && campTypeNos.length != 0 )
+            for (Integer no : campTypeNos) {
+                log.info("no  :  " + no);
+            }
+            
+            List<String> checkBoxList = new ArrayList<>();
+            for (int i = 0; i < campTypeNos.length; i++) {
+                checkBoxList.add(campTypeNos[i] + "");
+            }
+
+            if(campTypeNos != null && campTypeNos.length == 0) campTypeNo = -1;
+
+            camp.setCheckBoxList(checkBoxList);
+            camp.setSearchDate(new Date());
+            camp.setCampTypeNo(campTypeNo);
+
+            campselect = campService.campSearch(camp);
+            log.info("searchDate : " + camp.getSearchDate() );
+        } else {
+            campselect = campService.campSelect(campTypeNo);
+            log.info("campselect" + campselect);
+        }
+
         model.addAttribute("campselect", campselect);
         return "camp/campproducts";
     }
@@ -290,11 +311,26 @@ public class CampController {
     @ResponseBody
     @GetMapping(value="/campSearch")
     public List<Camp> campSearch(Model model, Camp camp) throws Exception {
-        
 
         log.info("keywordValue : " + camp.getKeyword());
         log.info("dateValue : " + camp.getSearchDate());
+        log.info("regionNoValue : " + camp.getRegionNo());
+        log.info("checkBoxList : " + camp.getCheckBoxList());
+        List<String> checkBoxList = camp.getCheckBoxList();
 
+        if( checkBoxList != null )
+        for(int i = 0; i < checkBoxList.size(); i++) {
+            // Integer[] campTypeNo = checkBoxList.get(i).split(',');
+            log.info("campTypeNo : " + checkBoxList.get(i));
+        }
+
+        if( checkBoxList == null )  {
+            camp.setCampTypeNo(-1);
+            camp.setCheckBoxList(new ArrayList<>());
+        }
+
+
+        camp.setSearchDate(new Date());
         List<Camp> campList = campService.campSearch(camp);
 
         model.addAttribute("campselect", campList);
@@ -302,5 +338,34 @@ public class CampController {
         return campList;
     }
     
+
+    @GetMapping(value="/campSearch2")
+    public String campSearch2(Model model, Camp camp) throws Exception {
+
+        log.info("keywordValue : " + camp.getKeyword());
+        log.info("dateValue : " + camp.getSearchDate());
+        log.info("regionNoValue : " + camp.getRegionNo());
+        log.info("checkBoxList : " + camp.getCheckBoxList());
+        List<String> checkBoxList = camp.getCheckBoxList();
+
+        if( checkBoxList != null )
+        for(int i = 0; i < checkBoxList.size(); i++) {
+            // Integer[] campTypeNo = checkBoxList.get(i).split(',');
+            log.info("campTypeNo : " + checkBoxList.get(i));
+        }
+
+        if( checkBoxList == null )  {
+            camp.setCampTypeNo(-1);
+            camp.setCheckBoxList(new ArrayList<>());
+        }
+
+
+        camp.setSearchDate(new Date());
+        List<Camp> campList = campService.campSearch(camp);
+
+        model.addAttribute("campselect", campList);
+        // return "camp/campproducts";
+        return "UI/component/camp/list";
+    }
 
 }

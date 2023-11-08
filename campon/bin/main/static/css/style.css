@@ -151,6 +151,17 @@ input[type="checkbox"] {
     display:none;
 }
 
+
+/* 지역 검색 창 */
+.regionBox {width: 500px; background-color: white; bottom: 75px;}
+.regionBox>div>a {transition: all 0.5s;}
+.regionBox>div>a:focus, .regionBox>div>a:hover {background-color: #FFC700;}
+
+
+#camplist {width: 100%; }
+#camplist h3 {font-weight: bold;}
+#camplist p {margin-bottom: 0!important; font-size: 0.8em;}
+.camp_box {width: 100%; border-bottom: 1px solid #dee2e6; border-top: #dee2e6; margin-bottom: 1rem; border-radius: 10px 10px 0; overflow: hidden;}
 input[type="checkbox"] + label {
     color:black;
 }

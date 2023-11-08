@@ -89,4 +89,11 @@ public class Camp {
     
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date searchDate;
+
+    // 캠핑 타입 리스트 받아오기
+    private List<String> checkBoxList;
+
+    public Camp() {
+        this.searchDate = new Date();
+    }
 }
