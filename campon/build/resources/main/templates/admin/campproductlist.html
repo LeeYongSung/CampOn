@@ -12,8 +12,9 @@
 </head>
 <body layout:fragment="content">
     <div>
-        <ul>
-            <th:block th:each="camp : ${campList}">
+        <th:block th:each="camp : ${campList}">
+            <ul>
+                <input type="hidden" class="campNo" id="campNo" name="campNo" th:value="${camp.campNo}">
                 <li>
                     <img th:src="${camp.cpiUrl}" alt="캠핑장 이미지">
                 </li>
@@ -23,30 +24,34 @@
                         <li><span th:text="${camp.campAddress}"></span></li>
                         <li><span th:text="${camp.regDate}"></span></li>
                         <li><span th:text="${camp.updDate}"></span></li>
+                        <!-- <th:block th:each="${campDetail : ${camp.detailList}"></th:block> -->
                     </ul>
                 </li>
                 <li>
                     <div><a th:href="|/admin/campdetailinsert?campNo=${camp.campNo}&userNo=${camp.userNo}|">상품등록</a></div>
                     <div><a href="#">캠핑장 삭제</a></div>
                 </li>
-                <li><a href="#"><i class="metarial-outline-icon">test</i></a></li>
-                <!-- <ul>
-                    <li>
-                        <img th:src="${camp.cpdiUrl}" alt="상품이미지">
-                    </li>
-                    <li>
-                        <ul>
-                            <li><span th:text="${camp.cpdtName}"></span></li>
-                            <li><span th:text="${camp.campTypeName}"></span></li>
-                            <li><span th:text="${camp.regDate}"></span></li>
-                            <li><span th:text="${camp.updDate}"></span></li>
-                            <li><a th:href="|/admin/campdetailupdate?cpdtNo=${camp.cpdtNo}|">상품수정</a></li>
-                            <li><a th:href="|/admin/campdetaildelete?cpdtNo=${camp.cpdtNo}|" onclick="return confirm('캠핑상품을 삭제하시겠습니까?')">상품삭제</a></li>
-                        </ul>
-                    </li>
-                </ul> -->
-            </th:block>
-        </ul>
+                <li><a href="#" class="down" th:value="${camp.campNo}"><i class="metarial-outline-icon">test</i></a></li>
+                
+                <th:block th:if="${camp.detailsList!=null&&!camp.detailsList.isEmpty()}" th:each="detail : ${camp.detailsList}">
+                    <ul class="campdetail_box">
+                        <li>
+                            <img th:src="${detail.cpdiUrl}" alt="상품이미지">
+                        </li>
+                        <li>
+                            <ul>
+                                <li><span th:text="${detail.cpdtName}"></span></li>
+                                <li><span th:text="${detail.campTypeName}"></span></li>
+                                <li><span th:text="${detail.regDate}"></span></li>
+                                <li><span th:text="${detail.updDate}"></span></li>
+                                <li><a th:href="|/admin/campdetailupdate?cpdtNo=${detail.cpdtNo}|">상품수정</a></li>
+                                <li><a th:href="|/admin/campdetaildelete?cpdtNo=${detail.cpdtNo}|" onclick="return confirm('캠핑상품을 삭제하시겠습니까?')">상품삭제</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </th:block>
+            </ul>
+        </th:block>
     </div>
 </body>
 </html>

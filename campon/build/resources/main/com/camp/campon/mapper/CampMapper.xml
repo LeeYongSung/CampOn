@@ -92,15 +92,23 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         JOIN campimg img ON c.camp_no = img.camp_no 
         JOIN (SELECT min(cpi_no) no FROM campimg GROUP BY camp_no) imgno ON img.cpi_no = imgno.no
         WHERE c.user_no = #{userNo}
-        ORDER BY c.camp_no DESC;
+        ORDER BY c.camp_no DESC
     </select>
+
     <select id="campdetailUser" resultType="Camp">
-        SELECT *
-        FROM campdetail cd
-        JOIN campdetailimg cdi ON cd.cp_dt_no = cdi.cp_dt_no
+        SELECT
+        cd.cp_dt_no AS cpdtNo,
+        cdi.cpdi_url AS cpdiUrl,
+        ct.camptype_name AS campTypeName,
+        cd.cp_dt_name AS cpdtName,
+        cd.reg_date AS regDate,
+        cd.upd_date AS updDate
+        FROM campdetail AS cd
+        JOIN campdetailimg AS cdi ON cd.cp_dt_no = cdi.cp_dt_no
         JOIN (SELECT min(cpdi_no) no FROM campdetailimg GROUP BY cp_dt_no) imgno ON cdi.cpdi_no = imgno.no
+        JOIN camptype AS ct ON (cd.camptype_no = ct.camptype_no)
         WHERE cd.camp_no = #{campNo}
-        ORDER BY cd.camp_no DESC;
+        ORDER BY cd.camp_no DESC
     </select>
 
     <!-- 캠프상품 등록 -->
@@ -131,6 +139,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         JOIN campproduct c ON re.camp_no = c.camp_no
         JOIN campimg img ON c.camp_no = img.camp_no 
         JOIN (SELECT min(cpi_no) no FROM campimg GROUP BY camp_no) imgno ON img.cpi_no = imgno.no
+        JOIN campdetail cd ON c.camp_no = cd.camp_no
         WHERE re.user_no = #{userNo}
         ORDER BY c.camp_no DESC;
     </select>
@@ -189,7 +198,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         WHERE cd.cp_dt_no = #{cpdtNo}
     </select>
 
-    <!-- 예약완료페이지 -->
+    <!-- 예약 진행 페이지-->
+    <insert id="reservateInsert">
+        INSERT INTO reservation (camp_no, cp_dt_no, user_no, reservation_nop, reservation_start, reservation_end, reservation_date, camp_paymenttype)
+        VALUES (#{campNo}, #{cpdtNo}, #{userNo}, #{reservationNop}, #{reservationStart}, #{reservationEnd}, #{reservationDate}, #{campPaymentType})
+    </insert>
+
+    <!-- 예약 완료 페이지 -->
     <select id="reservecomplete" resultType="Camp">
         select ci.cpi_url, c.camp_name, cd.cp_dt_name, r.reservation_no, u.user_name, r.reservation_nop, r.reservation_date, date_format(r.reservation_start, "%Y.%m.%d") reservation_start, date_format(r.reservation_end, "%Y.%m.%d") reservation_end, r.camp_paymenttype
         from reservation r
@@ -233,5 +248,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
     <select id="maxcampNo" resultType="int">
         SELECT MAX(camp_no) FROM campproduct
+    </select>
+
+    <select id="campSearch" resultType="Camp">
+        SELECT *
+        FROM campproduct c
+        JOIN campdetail cd ON c.camp_no = cd.camp_no
+        JOIN camptype ct ON cd.camptype_no = ct.camptype_no
+        JOIN campimg img ON c.camp_no = img.camp_no 
+        JOIN (SELECT min(cpi_no) no FROM campimg GROUP BY camp_no) imgno ON img.cpi_no = imgno.no
+        WHERE c.camp_name LIKE CONCAT('%', #{keyword}, '%') AND c.camp_open >= STR_TO_DATE(#{searchDate}, '%Y-%m-%d')
+        ORDER BY c.camp_no DESC;
     </select>
 </mapper>

@@ -33,14 +33,48 @@
             <button class="increase">+</button>
         </div>
     </div>
-    
+    <div>
+        <h5>배송받을 캠핑장을 선택해주세요 </h5>
+        <ul th:each="reservation : ${reservationList}">
+            <li><img th:src="${reservation.cpiUrl}" alt=""></li>
+            <!-- 캠핑장명 -->
+            <li th:text="${reservation.campName}"></li>
+
+            <!-- 캠핑 상품명 -->
+            <li th:text="${reservation.cpdtName}"></li>
+
+            <!-- 캠핑일자 -->
+            <li th:text="|캠핑날짜  ${reservation.reservationStart} ~ ${reservation.reservationEnd}|"></li>
+
+            <!-- 예약번호 -->
+            <li th:text="|예약번호  ${reservation.reservationNo}|"></li>
+
+            <!-- 숙박일 -->
+            <li th:text="${reservation .reservationDate}"></li>
+        </ul>
+    </div>
+
+    <!-- 결제방법 선택 -->
+    <form>
+        <input type="radio" name="paymentMethod" value="무통장"> 
+        <label><span></span>
+            무통장
+        </label>
+        <input type="radio" name="paymentMethod" value="카드"> 
+        <label><span></span>
+            카드
+        </label>
+        <br>
+        <input type="submit" value="결제하기">
+    </form>
+
     <script>
         // "-" 버튼 클릭 시 수량 감소
         document.querySelectorAll(".decrease").forEach(function(button) {
             button.addEventListener("click", function() {
                 var quantityElement = button.nextElementSibling;
                 var quantity = parseInt(quantityElement.textContent);
-                if (quantity > 1) {
+                if (quantity > 1) {    
                     quantity--;
                     quantityElement.textContent = quantity;
                 }
@@ -57,6 +91,5 @@
             });
         });
     </script>
-    </div>
 </body>
 </html>
