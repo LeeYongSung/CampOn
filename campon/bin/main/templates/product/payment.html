@@ -7,83 +7,79 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CampOn(캠프온)</title>
+    <style>
+        .selected {
+            background-color: lightblue; /* 선택한 캠핑장을 강조하는 스타일 */
+        }
+    </style>
 </head>
-    
+
 <body layout:fragment="content">
     <h1>주문 상품</h1>
-    
-    <!-- 반복문 시작 -->
-    <div th:each="cart : ${cartList}">
-        <!-- 썸네일 -->
-        <img th:src="${cart.productThumnail}"> <br>
 
-        <!-- 상품명 -->
-        <span th:text="${cart.productName}"></span> <br> 
+    <form action="경로지정" method="post" id="form">
+        <!-- 반복문 시작 -->
+        <div th:each="cart : ${cartList}">
 
-        <!-- 상품기본내용 -->
-        <span th:text="${cart.productIntro}"></span> <br>
+            <!-- 썸네일 -->
+            <img th:src="${cart.productThumnail}"> <br>
 
-        <!-- 금액 -->
-        <span th:text="|${cart.productPrice} / 1일|"></span> <br><br>
+            <!-- 상품명 -->
+            <span th:text="${cart.productName}"></span> <br>
 
-        <!-- 수량증감 -->
-        <div>
-            <button class="decrease">-</button>
-            <span class="quantity">1</span>
-            <button class="increase">+</button>
+            <!-- 상품기본내용 -->
+            <span th:text="${cart.productIntro}"></span> <br>
+
+            <!-- 금액 -->
+            <span th:text="|${cart.productPrice} / 1일|"></span> <br><br>
+
+            <!-- 상품수량 및 증감 -->
+            <div>
+                <button class="decrease" type="button">-</button>
+                <span class="quantity" th:text="${cart.cartCnt}"></span>
+                <button class="increase" type="button">+</button>
+            </div>
         </div>
-    </div>
-    <div>
-        <h5>배송받을 캠핑장을 선택해주세요 </h5>
-        <ul th:each="reservation : ${reservationList}">
-            <li><img th:src="${reservation.cpiUrl}" alt=""></li>
-            <!-- 캠핑장명 -->
-            <li th:text="${reservation.campName}"></li>
 
-            <!-- 캠핑 상품명 -->
-            <li th:text="${reservation.cpdtName}"></li>
 
-            <!-- 캠핑일자 -->
-            <li th:text="|캠핑날짜  ${reservation.reservationStart} ~ ${reservation.reservationEnd}|"></li>
+        <!-- 배송지 선택 -->
+        <div>
+            <h5>배송받을 캠핑장을 선택해주세요 </h5>
+            <ul th:each="reservation : ${reservationList}">
+                <li><img th:src="${reservation.cpiUrl}" alt=""></li>
+                <li th:text="${reservation.campName}"></li>
+                <li th:text="${reservation.cpdtName}"></li>
+                <li th:text="|캠핑날짜 ${reservation.reservationStart} ~ ${reservation.reservationEnd}|"></li>
+                <li th:text="|예약번호 ${reservation.reservationNo}|"></li><br><br><br>
+            </ul>
+        <!-- 결제방법 선택 -->
 
-            <!-- 예약번호 -->
-            <li th:text="|예약번호  ${reservation.reservationNo}|"></li>
+        <input type="radio" name="paymentMethod" value="무통장">
+        <label><span></span>무통장</label>
+        <input type="radio" name="paymentMethod" value="카드">
+        <label><span></span>카드</label><br>
 
-            <!-- 숙박일 -->
-            <li th:text="${reservation .reservationDate}"></li>
-        </ul>
-    </div>
-
-    <!-- 결제방법 선택 -->
-    <form>
-        <input type="radio" name="paymentMethod" value="무통장"> 
-        <label><span></span>
-            무통장
-        </label>
-        <input type="radio" name="paymentMethod" value="카드"> 
-        <label><span></span>
-            카드
-        </label>
-        <br>
         <input type="submit" value="결제하기">
+
+
     </form>
+
 
     <script>
         // "-" 버튼 클릭 시 수량 감소
-        document.querySelectorAll(".decrease").forEach(function(button) {
-            button.addEventListener("click", function() {
+        document.querySelectorAll(".decrease").forEach(function (button) {
+            button.addEventListener("click", function () {
                 var quantityElement = button.nextElementSibling;
                 var quantity = parseInt(quantityElement.textContent);
-                if (quantity > 1) {    
+                if (quantity > 1) {
                     quantity--;
                     quantityElement.textContent = quantity;
                 }
             });
         });
-    
         // "+" 버튼 클릭 시 수량 증가
-        document.querySelectorAll(".increase").forEach(function(button) {
-            button.addEventListener("click", function() {
+        document.querySelectorAll(".increase").forEach(function (button) {
+            button.addEventListener("click", function () {
                 var quantityElement = button.previousElementSibling;
                 var quantity = parseInt(quantityElement.textContent);
                 quantity++;
@@ -91,5 +87,7 @@
             });
         });
     </script>
+
 </body>
+
 </html>

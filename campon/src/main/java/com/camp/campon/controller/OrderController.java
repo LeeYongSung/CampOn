@@ -1,5 +1,7 @@
 package com.camp.campon.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -9,8 +11,12 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.camp.campon.dto.Camp;
 import com.camp.campon.dto.Order;
+import com.camp.campon.dto.Product;
+import com.camp.campon.service.CampService;
 import com.camp.campon.service.OrderService;
+import com.camp.campon.service.ProductService;
 import com.camp.campon.service.UserService;
 
 
@@ -22,6 +28,10 @@ public class OrderController {
         private OrderService orderService;
         @Autowired
         private UserService userService;
+        @Autowired
+        private ProductService productService;
+        @Autowired
+        private CampService campService;
 
     //상품 결제완료 페이지
     // 테스트 : http://localhost:8081/order/depositcomp?orderNumber=...
@@ -41,5 +51,20 @@ public class OrderController {
         return "product/depositcomp";
     }
     
+
+    //-------------------- 결제하기 --------------------
+    @GetMapping(value="/payment")
+    public String payMent(Model model, Integer userNo) throws Exception {
+        // 임시값
+        userNo = 2;
+
+        List<Product> cartList = productService.cartList();
+        List<Camp> reservationList = campService.reservation(userNo);
+
+        model.addAttribute("cartList", cartList);
+        model.addAttribute("reservationList", reservationList);
+
+        return "product/payment";
+    }
     
 }
