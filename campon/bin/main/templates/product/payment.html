@@ -10,72 +10,97 @@
 </head>
 
 <body layout:fragment="content">
-    <h1>주문 상품</h1>
+    <h1>결제하기</h1>
 
-    <form action="경로지정" method="post" id="form">
-        <!-- 반복문 시작 -->
-        <div th:each="cart : ${cartList}">
-            <!-- 썸네일 -->
-            <img th:src="${cart.productThumnail}"> <br>
-            <!-- 상품명 -->
-            <span th:text="${cart.productName}"></span> <br>
-            <!-- 상품기본내용 -->
-            <span th:text="${cart.productIntro}"></span> <br>
-            <!-- 금액 -->
-            <span th:text="|${cart.productPrice} / 1일|"></span> <br>
-            <!-- 상품수량 및 증감 -->
+    <h2>주문상품</h2>
+    <th:block th:each="product : ${cartList}">
+        <div style="border: 1px solid black;">
             <div>
-                <button class="decrease" type="button">-</button>
-                <span class="quantity" th:text="${cart.cartCnt}"></span>
-                <button class="increase" type="button">+</button>
-            </div><br><br><br>
-
-        </div>
-
-        <!-- 배송지 선택 -->
-        <div>
-            <h5>배송받을 캠핑장을 선택해주세요 </h5>
-            <div th:each="reservation : ${reservationList}">
-                <input type="radio" name="selectedReservation" th:value="${reservation.reservationNo}">
-                <label><span></span>무통장</label>
-                <li><img th:src="${reservation.cpiUrl}" alt=""></li>
-                <li th:text="${reservation.campName}"></li>
-                <li th:text="${reservation.cpdtName}"></li>
-                <li th:text="|캠핑날짜 ${reservation.reservationStart} ~ ${reservation.reservationEnd}|"></li>
-                <li th:text="|예약번호 ${reservation.reservationNo}|"></li><br><br><br>
+                <img th:src="|/img?file=${product.productThumnail}|" alt="상품썸네일">
             </div>
+            <div>
+                <div>
+                    <h2>상품이름 : <span th:text="${product.productName}"></span></h2>
+                   <p>상품기본내용 : <span th:text="${product.productIntro}"></span></p>
+                </div>
+                <div>
+                    <h2>가격 : <span th:text="${product.productPrice}"></span></h2>
+                     <!-- 상품수량 및 증감 -->
+                    <div>
+                        <button class="decrease" type="button">-</button>
+                        <span class="quantity" th:text="${product.cartCnt}"></span>
+                        <button class="increase" type="button">+</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </th:block> 
 
-            <!-- 결제방법 선택 -->
-            <input type="radio" name="paymentMethod" value="무통장">
-            <label><span></span>무통장</label>
-            <input type="radio" name="paymentMethod" value="카드">
-            <label><span></span>카드</label><br>
-            <input type="submit" value="결제하기">
-    </form>
+    <h2>배송받을 캠핑장을 선택해주세요 </h2>
+    <th:block th:each="camp : ${reservationList}">
+        <ul>
+            <li>
+                <img th:src="|/img?file=${camp.cpdiUrl}|" alt="캠핑상품 이미지" />
+            </li>
+            <li>
+                <ul>
+                    <li>캠핑장명 : <span th:text="${camp.campName}"></span></li>
+                    <li>캠핑상품명 : <span th:text="${camp.cpdtName}"></span></li>
+                    <li>예약날짜 : <span th:text="|${ #dates.format(camp.reservationEnd,'yyyy-MM-dd')} ~ ${ #dates.format(camp.endDate, 'yyyy-MM-dd')}|"></span></li>
+                    <li>예약번호 : <span th:text="${camp.reservationNo}"></span></li>
+                </ul>
+            </li>
+        </ul> 
+        <input type="radio" id="selectCamp" th:value="${camp.reservationNo}">
+        <label for="selectCamp">캠핑장 선택</label>
+    </th:block>
+
+
+    <!-- 결제방법 선택 -->
+    <div>
+        <div><p>결제 방법 선택</p></div>
+        <div>
+            <input type="radio" id="card" value="카드">
+            <label for="card">카드 결제</label>
+            <input type="radio" id="bankPay" value="무통장입금">
+            <label for="bankPay">무통장 입금</label>
+        </div>
+    </div>
+
+
+    <!--총 렌트 금액-->
+    <div>
+        <h4>총 렌트 금액 : <span>???</span>원</h4>
+    </div>
+
+
+    <!--결제하기 버튼-->
+    <button type="submit">결제하기</button>   
 
     <script>
-        // "-" 버튼 클릭 시 수량 감소
-        document.querySelectorAll(".decrease").forEach(function (button) {
-            button.addEventListener("click", function () {
-                var quantityElement = button.nextElementSibling;
-                var quantity = parseInt(quantityElement.textContent);
+
+window.onload = function(){
+    $(".decrease").click(function () {
+                let quantityElement = $(this).next(".quantity");
+                let quantity = parseInt(quantityElement.text());
+                console.log(quantity);
                 if (quantity > 1) {
                     quantity--;
-                    quantityElement.textContent = quantity;
+                    quantityElement.text(quantity);
                 }
             });
-        });
-        // "+" 버튼 클릭 시 수량 증가
-        document.querySelectorAll(".increase").forEach(function (button) {
-            button.addEventListener("click", function () {
-                var quantityElement = button.previousElementSibling;
-                var quantity = parseInt(quantityElement.textContent);
+
+            // "+" 버튼 클릭 시 수량 증가
+            $(".increase").click(function () {
+                let quantityElement = $(this).prev(".quantity");
+                let quantity = parseInt(quantityElement.text());
                 quantity++;
-                quantityElement.textContent = quantity;
+                quantityElement.text(quantity);
             });
-        });
+
+
+};
+        
     </script>
-
 </body>
-
 </html>
