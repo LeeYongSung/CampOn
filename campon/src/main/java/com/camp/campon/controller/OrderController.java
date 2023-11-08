@@ -58,7 +58,7 @@ public class OrderController {
         // 임시값
         userNo = 2;
 
-        List<Product> cartList = productService.cartList();
+        List<Product> cartList = productService.cartList(userNo);
         List<Camp> reservationList = campService.reservation(userNo);
 
         model.addAttribute("cartList", cartList);
