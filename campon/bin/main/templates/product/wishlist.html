@@ -11,60 +11,44 @@
     
 <body layout:fragment="content">
     <h1>찜 목록</h1> 
-
     <!-- 반복문 시작 -->
     <div th:each="product : ${wishlist}">
-
         <!-- 썸네일 -->
-        <img th:src="${product.productThumnail}">
+        <img th:src="|/img?file=${product.productThumnail}|">
         <br>
-
         <!-- 카테고리 -->
         <span th:text="|상품 - ${product.productCategory}|"></span>
         <br>
-
         <!-- 상품명 -->
         <span th:text="${product.productName}"></span>
         <br>
-
         <!-- 상품기본내용 -->
         <span th:text="${product.productIntro}"></span>
         <br>
-
         <!-- 금액 -->
         <span th:text="${product.productPrice + '원'}"></span>
         <br>
-
         <!-- 상세설명 -->
-        <a th:href="${product.productCon}" th:text="상세설명"></a>
+        <a th:href="|/product/productdetail?productNo=${product.productNo}|">상세정보</a>
         <br>
-
-        <!-- 장바구니 담기 -->
-        <a th:href="|/product/addCart?productNo=${product.productNo}&userNo=${#authentication.principal.users.userNo}|">장바구니 담기</a>
-
-
-        <!-- 찜 삭제 -->
-        <a th:href="|/product/wishListDelete?wishlistNo=${product.wishlistNo}|" onclick="actionDelete()">삭제</a>
-            <br>
-            <br>
-            <br>
-            <br>
+        <!-- 장바구니 담기(성공) -->
+        <a th:href="|/product/addcart?productNo=${product.productNo}&userNo=${#authentication.principal.users.userNo}|">장바구니 담기</a>
+        <!-- 찜 삭제 (성공) -->
+        <form action="/product/wishlistDelete" method="post">
+            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+            <input type="hidden" th:value="${product.productsaveNo}" name="productsaveNo">
+            <button type="submit" onclick="confirm('찜 목록에서 삭제하시겠습니까?')">삭제</button>
+        </form>
+        <br>
+        <br>
+        <br>
+        <br>
     </div>  
     <br>
-    <br>
     <div>
-        <button> 전체 장바구니에 담기</button>
+        <a href="/product/addcartAll"> 전체 장바구니에 담기</a>
     </div>
 
-    <!-- 찜 삭제 클릭 이벤트 -->
-    <script>
-        function actionDelete() 
-        {
-            let check = confirm('찜 목록에서 삭제하시겠습니까?')
-            let form = document.getElementsByName('form')
-            if(check) form.submit()
-        }
-    </script>
 </body>
 
 </html>

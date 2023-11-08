@@ -86,6 +86,7 @@ public class ProductController {
         model.addAttribute("reviewCount", reviewCount);
         return "product/productdetail";
     }
+<<<<<<< HEAD
 
 
     //-------------------- 찜 목록 --------------------
@@ -173,5 +174,7 @@ public class ProductController {
 
         return "product/payment";
     }
+=======
+>>>>>>> 재원
     
 }
