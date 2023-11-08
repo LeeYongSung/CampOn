@@ -1,4 +1,5 @@
 header {width: 100%; background-color: white;}
+.campproduct_header {width: 100%; background-color: inherit!important;}
 .main_header {display: flex; justify-content: space-between; padding: 0 1rem;}
 .main_header i {padding-top: 35px;}
 .main_header img {padding-top: 20px;}
