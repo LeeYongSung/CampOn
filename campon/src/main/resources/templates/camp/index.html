@@ -35,25 +35,44 @@
         </ul>
     </div>
     <div class="container-sm search_box">
-        <form action="camp/campSerch" method="post" class="w-100">
-            <ul class="my-4">
-                <li class="my-2">
-                    <input type="date" id="campdate" name="campdate" class="form-control py-3">
-                </li>
-                <li class="my-2">
-                    <div class="form-floating">
-                        <input type="text" id="campname" name="campname" class="form-control py-3">
-                        <label for="campname">캠핑장명</label>
-                    </div>
-                </li>
-                <li class="my-2">
-                    <ul class="d-flex justify-content-between text-center">
-                        <li class="w-100 region_select"><div id="region" style="cursor: pointer;">지역</div></li>
-                        <li class="w-100 theme_select"><div>테마</div></li>
-                    </ul>
-                </li>
-                <li class="my-2"><input type="text" value="검색" class="search_btn btn btn-outline-secondary btn-lg py-2 w-100"></li>
-            </ul>
+        <!-- <form action="camp/campSerch" method="post" class="w-100" > -->
+        <form action="/camp/campproducts" method="get" class="w-100" >
+
+            <div class="form-floating my-2">
+                <input type="text" id="keyword" name="keyword" class="form-control" placeholder="검색명">
+                <label for="keyword">검색명</label>
+            </div>
+            <div class="w-100 d-flex justify-content-between">
+                <div class="form-floating w-100 me-1">
+                    <input type="date" class="form-control" id="searchDate" name="searchDate">
+                </div>
+                <div class="form-floating w-100 ms-1">
+                    <input type="hidden" id="regionNo" name="regionNo" value="0">
+                    <input type="button" class="form-control" id="region" value="지역">
+                </div>
+            </div>
+            <div class="w-100 d-flex justify-content-between my-4">
+                <span>캠핑종류</span>
+                <input type="hidden" name="campTypeNos" >
+                <input type="checkbox" id="autocamping" name="campTypeNos" class="form-control" value="1">
+                <label for="autocamping"><span></span>오토캠핑</label>
+
+                <input type="checkbox" id="glamping" name="campTypeNos" class="form-control" value="2">
+                <label for="glamping"><span></span>글램핑</label>
+
+                <input type="checkbox" id="caravan" name="campTypeNos" class="form-control" value="3">
+                <label for="caravan"><span></span>카라반</label>
+
+                <input type="checkbox" id="pension" name="campTypeNos" class="form-control" value="4">
+                <label for="pension"><span></span>펜션</label>
+
+                <input type="checkbox" id="campnik" name="campTypeNos" class="form-control" value="5">
+                <label for="campnik"><span></span>캠프닉</label>
+            </div>
+            <div class="form-floating mb-3">
+                <!-- <a href="javascript:;" class="btn btn-outline-secondary btn-lg w-100 py-3 rounded-0" id="search_keyword">검색</a> -->
+                <button type="submit"  class="btn btn-outline-secondary btn-lg w-100 py-3 rounded-0" >검색</button>
+            </div>
         </form>
     </div>
     <div class="camp_ads">
@@ -114,8 +133,58 @@
             </a>
         </ul>
     </div>
-    <div class="region_box none">
-        <button class="region_close btn btn-danger btn-lg w-100">닫기</button>
+    <div class="regionBox none position-fixed">
+        <div>
+            <a href="javascript:;" class="reginon_close w-100 d-block text-center px-3 py-1 bg-danger">닫기</a>
+        </div>
+        <div>
+            <a href="javascript:;" class="w-100 region_btn w-100 py-3 text-center d-block border my-2">
+                <input type="hidden"  value="서울">
+                서울
+            </a>
+        </div>
+        <div>
+            <a href="javascript:;" class="w-100 region_btn w-100 py-3 text-center d-block border my-2">
+                <input type="hidden" value="인천">
+                인천
+            </a>
+        </div>
+        <div>
+            <a href="javascript:;" class="w-100 region_btn w-100 py-3 text-center d-block border my-2">
+                <input type="hidden" value="경기도">
+                경기도
+            </a>
+        </div>
+        <div>
+            <a href="javascript:;" class="w-100 region_btn w-100 py-3 text-center d-block border my-2">
+                <input type="hidden" value="강원도">
+                강원도
+            </a>
+        </div>
+        <div>
+            <a href="javascript:;" class="w-100 region_btn w-100 py-3 text-center d-block border my-2">
+                <input type="hidden" value="전라도">
+                전라도
+            </a>
+        </div>
+        <div>
+            <a href="javascript:;" class="w-100 region_btn w-100 py-3 text-center d-block border my-2">
+                <input type="hidden" value="충청도">
+                충청도
+            </a>
+        </div>
+        <div>
+            <a href="javascript:;" class="w-100 region_btn w-100 py-3 text-center d-block border my-2">
+                <input type="hidden" value="경상도">
+                경상도
+            </a>
+        </div>
+        <div>
+            <a href="javascript:;" class="w-100 region_btn w-100 py-3 text-center d-block">
+                <input type="hidden" value="제주도">
+                제주도
+            </a>
+        </div>
     </div>
     <!-- Swiper JS -->
     <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
@@ -141,14 +210,120 @@
 
     </script>
     <script>
-        $(document).ready(function(){
-            $('#region').click(function() {
-                $('.region_box').fadeIn();
+        let keyword = '';           // 검색명
+        let campData = '';          // 캠프 목록
+        let regionName = '';        // 지역 이름
+        let regionNo = 0;           // 지역 번호
+        let checkedValues = [];     // 캠핑 종류
+        let campTypeNo = 0;         // 캠핑 종류 번호
+
+        $('#search_keyword').on('click', function() {
+            search();
+        });
+
+        function search() {
+            keyword = $('#keyword').val();
+            searchDate = $('#searchDate').val();
+            checkedValues= [];
+
+            $('input[name="campTypeName"]:checked').each(function() {
+                let checkboxLabel = $(this).next('label').text();
+
+                switch (checkboxLabel) {
+                    case '오토캠핑': campTypeNo = 1; break;
+                    case '글램핑': campTypeNo = 2; break;
+                    case '카라반': campTypeNo = 3; break;
+                    case '펜션': campTypeNo = 4; break;
+                    case '캠프닉': campTypeNo = 5; break;
+                }
+                checkedValues.push(campTypeNo);
+            });
+            console.log(checkedValues)
+            
+            let data = {
+                'keyword'       : keyword,
+                'searchDate'    : searchDate,
+                'regionNo'      : regionNo,
+                'checkBoxList'  : checkedValues
+            }
+
+            const url = 'camp/campSearch'
+
+            $.ajax({
+                url     : url,
+                data    : data,
+                success : function (response) {
+                    console.log(response);      // 서버로부터 받은 데이터를 콘솔에 출력
+                    let campList = response
+                    
+                    campOutput(campList)
+                }
             })
-            $('.region_close').click(function() {
-                $('.region_box').fadeOut();
-            })
+        }
+
+        function campOutput(campList) {
+            campData = '';  // campData 초기화
+            if(campList.length == 0) {
+                let msg = '검색된 캠핑장이 없습니다.'
+                console.log(msg)
+
+                let div = `<div>
+                            <p>${msg}</p>
+                          </div>
+                         `
+                campData += div
+            }
+            
+            for(let i = 0; i < campList.length; i++) {
+                let camp = campList[i];
+        
+                let div = `
+                            <ul> 
+                                <a href="/camp/campproduct?campNo=${camp.campNo}">
+                                    <li><img src="${camp.cpiUrl}"></li>
+                                    <li>${camp.campTypeName}</li>
+                                    <li>${camp.campName}</li>
+                                    <li>${camp.campAddress}</li>
+                                    <li></li>
+                                </a>
+                            </ul>
+                        `
+                campData += div
+            }
+            
+            $('#camplist').html(campData)
+        }
+
+        $('#region').click(function() {
+            $('.regionBox').fadeIn();
         })
+
+        $('.reginon_close').click(function() {
+            $('.regionBox').fadeOut();
+        })
+
+        $('.region_btn').on('click', function() {
+            regionName = $(this).find('input').val();
+
+            
+            $('#regionNo').val(regionName);
+            $('#region').val(regionName);
+
+            switch (regionName) {
+            case '서울'     : regionNo = 1; break;
+            case '인천'     : regionNo = 2; break;
+            case '경기도'   : regionNo = 3; break;
+            case '강원도'   : regionNo = 4; break;
+            case '전라도'   : regionNo = 5; break;
+            case '충청도'   : regionNo = 6; break;
+            case '경상도'   : regionNo = 7; break;
+            case '제주도'   : regionNo = 8; break;
+        }
+
+            $('#regionNo').val(regionNo);
+            $('.regionBox').fadeOut();
+
+        });
     </script>
 </body>
 </html>
