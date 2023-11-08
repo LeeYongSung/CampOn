@@ -44,5 +44,46 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         join `order` o on cr.order_no = o.order_no
         where cr.pr_no = #{prNo}
     </select>
-    
+
+    <!-- 예약정보 가져오기 -->
+    <select id="reservation" resultType="Camp">
+        select * from reservation r
+        join campproduct c on r.camp_no=c.camp_no
+        join campdetail cd on r.cp_dt_no = cd.cp_dt_no
+        where reservation_no = #{reservationNo}
+    </select>
+    <!-- 대여정보 가져오기 -->
+    <select id="order"  resultType="Board">
+        select * from `order` o
+        join product p on o.product_no=p.product_no
+        where order_no = #{orderNo}
+    </select>
+
+    <!-- 캠핑리뷰 등록-->
+    <insert id="crinsert">
+        insert into review( user_no, camp_no, cp_dt_no, reservation_no, review_title, review_img, review_con)
+        values (#{userNo}, #{campNo}, #{cpdtNo}, #{reservationNo}, #{reviewTitle}, #{reviewImg}, #{reviewCon})
+    </insert>
+    <!-- 대여상품 리뷰 등록-->
+    <insert id="prinsert">
+        insert into productreview( order_no, user_no, product_no, pr_title, pr_img, pr_con)
+        values (#{orderNo}, #{userNo}, #{productNo}, #{prTitle}, #{prImg}, #{prCon})
+    </insert>
+
+    <!--캠핑리뷰 수정 -->
+    <update id="crupdate">
+        update review set review_title=#{reviewTitle}, review_img=#{reviewImg}, review_con=#{reviewCon} where review_no=#{reviewNo}
+    </update>
+    <!--캠핑리뷰 삭제-->
+    <delete id="crdelete">
+        delete from review where review_no=#{reviewNo}
+    </delete>
+    <!--대여상품 리뷰 수정 -->
+    <update id="prupdate">
+        update productreview set pr_title=#{prTitle}, pr_img=#{prImg}, pr_con=#{prCon} where pr_no=#{prNo}
+    </update>
+    <!--대여상품 리뷰 삭제-->
+    <delete id="prdelete">
+        delete from productreview where pr_no=#{prNo}
+    </delete>
 </mapper>

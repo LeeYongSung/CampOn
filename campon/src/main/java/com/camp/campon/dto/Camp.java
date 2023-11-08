@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.Date;
 import java.util.List;
 
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.multipart.MultipartFile;
 
 import lombok.Data;
@@ -81,4 +82,11 @@ public class Camp {
     private List<MultipartFile> file;
     private MultipartFile layoutFile;
 
+    private List<Camp> detailsList;
+
+    // 검색
+    private String keyword;
+    
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date searchDate;
 }

@@ -1,11 +1,17 @@
 package com.camp.campon.service;
 
+import java.io.File;
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.util.FileCopyUtils;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.camp.campon.dto.Board;
+import com.camp.campon.dto.Camp;
 import com.camp.campon.mapper.BoardMapper;
 
 import lombok.extern.slf4j.Slf4j;
@@ -16,6 +22,9 @@ public class BoardServiceImple implements BoardService {
 
     @Autowired
     private BoardMapper boardMapper;
+
+    @Value("${upload.path}")
+    private String uploadPath;
 
     @Override
     public List<Board> newReviewList() throws Exception {
@@ -58,5 +67,105 @@ public class BoardServiceImple implements BoardService {
         Board prread = boardMapper.prread(prNo);
         return prread;
     }
+
+    @Override
+    public Camp reservation(int reservationNo) throws Exception {
+        Camp reservation = boardMapper.reservation(reservationNo);
+        return reservation;
+    }
+
+    @Override
+    public int crinsert(Board board) throws Exception {
+        MultipartFile reviewImgfile = board.getReviewImgfile();
+        
+        String originName = reviewImgfile.getOriginalFilename();
+        byte[] fileData = reviewImgfile.getBytes();
+        String fileName = UUID.randomUUID().toString() + "_" + originName;
+        String filePath = uploadPath + "/" + fileName;
+        
+        File uploadFile = new File(uploadPath, fileName);
+        FileCopyUtils.copy(fileData, uploadFile);
+        
+        board.setReviewImg(filePath);
+        
+        int result = boardMapper.crinsert(board);
+        
+        return result;
+    }
+    
+    @Override
+    public Board order(int orderNo) throws Exception {
+        Board order = boardMapper.order(orderNo);
+        return order;
+    }
+    @Override
+    public int prinsert(Board board) throws Exception {
+        MultipartFile prImgfile = board.getPrImgfile();
+        
+        String originName = prImgfile.getOriginalFilename();
+        byte[] fileData = prImgfile.getBytes();
+        String fileName = UUID.randomUUID().toString() + "_" + originName;
+        String filePath = uploadPath + "/" + fileName;
+        
+        File uploadFile = new File(uploadPath, fileName);
+        FileCopyUtils.copy(fileData, uploadFile);
+
+        board.setPrImg(filePath);
+
+        int result = boardMapper.prinsert(board);
+
+        return result;
+    }
+
+    @Override
+    public int crupdate(Board board) throws Exception {
+        MultipartFile reviewImgfile = board.getReviewImgfile();
+        
+        String originName = reviewImgfile.getOriginalFilename();
+        byte[] fileData = reviewImgfile.getBytes();
+        String fileName = UUID.randomUUID().toString() + "_" + originName;
+        String filePath = uploadPath + "/" + fileName;
+        
+        File uploadFile = new File(uploadPath, fileName);
+        FileCopyUtils.copy(fileData, uploadFile);
+        
+        board.setReviewImg(filePath);
+        
+        int result = boardMapper.crupdate(board);
+
+        return result;
+    }
+
+    @Override
+    public int crdelete(int reviewNo) throws Exception {
+        int result = boardMapper.crdelete(reviewNo);
+        return result;
+    }
+
+    @Override
+    public int prupdate(Board board) throws Exception {
+        MultipartFile prImgfile = board.getPrImgfile();
+        
+        String originName = prImgfile.getOriginalFilename();
+        byte[] fileData = prImgfile.getBytes();
+        String fileName = UUID.randomUUID().toString() + "_" + originName;
+        String filePath = uploadPath + "/" + fileName;
+        
+        File uploadFile = new File(uploadPath, fileName);
+        FileCopyUtils.copy(fileData, uploadFile);
+        
+        board.setPrImg(filePath);
+        
+        int result = boardMapper.prupdate(board);
+
+        return result;
+    }
+
+    @Override
+    public int prdelete(int prNo) throws Exception {
+        int result = boardMapper.prdelete(prNo);
+        return result;
+    }
+
     
 }

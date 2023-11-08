@@ -54,7 +54,23 @@
         </ul>
     </div>
 
+<<<<<<< HEAD
     <a href="">결제하기</a>
+=======
+    <!-- 결제방법 선택 -->
+    <form>
+        <input type="radio" name="paymentMethod" value="무통장"> 
+        <label><span></span>
+            무통장
+        </label>
+        <input type="radio" name="paymentMethod" value="카드"> 
+        <label><span></span>
+            카드
+        </label>
+        <br>
+        <input type="submit" value="결제하기">
+    </form>
+>>>>>>> main
 
     <script>
         // "-" 버튼 클릭 시 수량 감소
@@ -62,7 +78,7 @@
             button.addEventListener("click", function() {
                 var quantityElement = button.nextElementSibling;
                 var quantity = parseInt(quantityElement.textContent);
-                if (quantity > 1) {
+                if (quantity > 1) {    
                     quantity--;
                     quantityElement.textContent = quantity;
                 }

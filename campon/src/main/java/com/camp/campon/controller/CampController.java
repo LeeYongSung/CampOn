@@ -7,6 +7,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.ibatis.javassist.compiler.ast.Keyword;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -31,8 +32,8 @@ import com.camp.campon.service.CampService;
 import com.camp.campon.service.UserService;
 
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 
 
 
@@ -60,7 +61,7 @@ public class CampController {
         List<Camp> campnewList = campService.newList();
         List<Camp> campHotList = campService.hotList();
         List<Board> newReviewList = boardService.newReviewList();
-        log.info("camptypeList : " + camptypeList);
+        // log.info("camptypeList : " + camptypeList);
         model.addAttribute("camptypeList", camptypeList);
         model.addAttribute("campnewList", campnewList);
         model.addAttribute("campHotList", campHotList);
@@ -109,7 +110,7 @@ public class CampController {
     @GetMapping(value="/campproducts")
     public String campProduct(Model model, int campTypeNo) throws Exception {
         List<Camp> campselect = campService.campSelect(campTypeNo);
-        log.info("campselect" + campselect);
+        // log.info("campselect" + campselect);
         model.addAttribute("campselect", campselect);
         return "camp/campproducts";
     }
@@ -237,16 +238,31 @@ public class CampController {
 
     @GetMapping(value="/reservate")
     public String campReservate(Model model, int cpdtNo) throws Exception {
+
         Camp camp = campService.reservate(cpdtNo);
+
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String userId = auth.getName();
         // 임시값
-        String userId = "user";
+        // String userId = "user";
         Users user = userService.selectById(userId);
-        log.info("camp" + camp);
-        log.info("user" + user);
+        // log.info("camp" + camp);
+        // log.info("user" + user);
         model.addAttribute("camp", camp);
         model.addAttribute("user", user);
         return "camp/reservate";
     }
+    @PostMapping(value="/reservate")
+    public String campReservatePay(Model model, Camp camp) throws Exception {
+        
+        int result = campService.reservateInsert(camp);
+        int cpdtNo = camp.getCpdtNo();
+        
+        if(result == 0) return "camp/reservate?cpdtNo=" + cpdtNo;
+        
+        return "redirect:/camp/complete";
+    }
+    
     
     @GetMapping(value="/complete")
     public String complete(Model model ) throws Exception {
@@ -270,5 +286,21 @@ public class CampController {
 
         return "camp/complete";
     }
+
+    @ResponseBody
+    @GetMapping(value="/campSearch")
+    public List<Camp> campSearch(Model model, Camp camp) throws Exception {
+        
+
+        log.info("keywordValue : " + camp.getKeyword());
+        log.info("dateValue : " + camp.getSearchDate());
+
+        List<Camp> campList = campService.campSearch(camp);
+
+        model.addAttribute("campselect", campList);
+        // return "camp/campproducts";
+        return campList;
+    }
+    
 
 }
