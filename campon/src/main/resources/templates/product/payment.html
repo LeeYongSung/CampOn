@@ -37,12 +37,12 @@
             <h5>배송받을 캠핑장을 선택해주세요 </h5>
             <div th:each="reservation : ${reservationList}">
                 <input type="radio" name="selectedReservation" th:value="${reservation.reservationNo}">
-                <label><span></span>무통장</label>
-                <li><img th:src="${reservation.cpiUrl}" alt=""></li>
-                <li th:text="${reservation.campName}"></li>
-                <li th:text="${reservation.cpdtName}"></li>
-                <li th:text="|캠핑날짜 ${reservation.reservationStart} ~ ${reservation.reservationEnd}|"></li>
-                <li th:text="|예약번호 ${reservation.reservationNo}|"></li><br><br><br>
+                <label><span></span></label>
+                <img th:src="${reservation.cpiUrl}" alt=""><br>
+                <span th:text="${reservation.campName}"></span><br>
+                <span th:text="${reservation.cpdtName}"></span><br>
+                <span th:text="|캠핑날짜 ${reservation.reservationStart} ~ ${reservation.reservationEnd}|"></span><br>
+                <span th:text="|예약번호 ${reservation.reservationNo}|"></span><br><br><br>
             </div>
 
             <!-- 결제방법 선택 -->

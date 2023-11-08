@@ -64,5 +64,8 @@ public interface ProductMapper {
 
     //장바구니 등록
     public int addCart(Product product) throws Exception;
+
+    // 추천상품 리스트
+    public List<Product> hotList() throws Exception;
     
 }

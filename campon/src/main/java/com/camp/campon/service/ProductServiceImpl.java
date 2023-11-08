@@ -250,6 +250,12 @@ public class ProductServiceImpl implements ProductService {
         return result;
     }
 
+    @Override
+    public List<Product> hotList() throws Exception {
+        List<Product> productHotList = productMapper.hotList();
+        return productHotList;
+    }
+
     
 
 }
