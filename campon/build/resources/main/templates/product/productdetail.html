@@ -12,6 +12,9 @@
 <body layout:fragment="content">
     <div class="container">
 
+        <!--찜 버튼-->
+        <button type="button" onclick="addProductsave()">찜</button>
+        <!-- <a th:href="|/product/addProductsave?productNo=${product.productNo}|" onclick="return false;">찜</a> -->
 
         <!--상품상세-->
         <div>
@@ -77,6 +80,28 @@
             (공정거래위원회 고시 제2022-25호, 2022. 12. 28. 발령·시행)에 따라 해결할 수 있습니다.
         </p>
     </div>
+
+
+    <script>
+        function addProductsave(){
+            let productNo = "[[${product.productNo}]]"
+          //  location.href = "/product/addProductsave?productNo=" + productNo
+          const url = '/product/addProductsave?productNo='
+          let urll = url + productNo 
+
+            $.ajax({
+                url     :   urll,
+                type    :   'GET',
+                success : function(response) {
+                    let responsee = response
+                    console.log(responsee)
+                },
+                error           : function(request, status, error){
+                    alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+                }
+            })
+        }
+    </script>
 </body>
 
 </html>

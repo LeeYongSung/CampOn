@@ -32,27 +32,28 @@ public interface ProductService {
   public List<Productreview> getReviewList() throws Exception;
 
   // 찜 목록
-  public List<Product> wishList(int userNo);
-
+  public List<Product> wishList(int userNo) throws Exception;
+  //찜 등록
+  public int addProductsave(Product product) throws Exception;
   // 찜 삭제
-  public int wishListDelete(int wishlistNo);
+  public int wishListDelete(int wishlistNo) throws Exception;
    // 찜목록 전부다 장바구니에 담기
    public int addcartAll(int userNo) throws Exception;
 
   // 장바구니 목록
-  public List<Product> cartList(int userNo);
+  public List<Product> cartList(int userNo) throws Exception;
 
   // 장바구니 삭제
-  public int cartListDelete(int cartlistNo);
+  public int cartListDelete(int cartlistNo) throws Exception;
 
   // 상품 상세페이지
-  public List<Product> productimg(Integer productNo);
+  public List<Product> productimg(Integer productNo) throws Exception;
 
   // 상품번호에 따른 후기 불러오기
-  public List<Productreview> getReviewListByNo(int productNo);
+  public List<Productreview> getReviewListByNo(int productNo) throws Exception;
 
   // 리뷰 수
-  public int reviewCount(int productNo);
+  public int reviewCount(int productNo) throws Exception;
 
   // 장바구니 등록
   public int addCart(Product product) throws Exception;

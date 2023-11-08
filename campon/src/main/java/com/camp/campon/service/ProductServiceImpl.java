@@ -235,6 +235,21 @@ public class ProductServiceImpl implements ProductService {
         return result;
     }
 
+    //찜 등록
+    @Override
+    public int addProductsave(Product product) throws Exception {
+        //만약 상품이 이미 찜에 등록되어있다면, 등록 안하고 넘어가야 함. 
+        int userNo = product.getUserNo();
+        List<Product> wishlist = productMapper.wishList(userNo);
+        for (Product product2 : wishlist) {
+            if ( product2.getProductNo() == product.getProductNo() ){
+                return 0;
+            }
+        }
+        int result = productMapper.addProductsave(product);
+        return result;
+    }
+
     
 
 }

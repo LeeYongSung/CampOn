@@ -29,6 +29,7 @@ import com.camp.campon.service.UserService;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RequestBody;
 
 
@@ -100,16 +101,27 @@ public class ProductController {
         return "product/wishlist";
     }
 
-    // // 상품 찜 등록
-    // @GetMapping(value="/addProductsave")
-    // public void addProductsave(int productNo, Principal principal) {
-        
-    // }
+    // 상품 찜 등록
+    @ResponseBody
+    @GetMapping(value="/addProductsave")
+    public String addProductsave(int productNo, Principal principal) throws Exception {
+        String userId = principal.getName();
+        Users users = userService.selectById(userId);
+        int userNo = users.getUserNo();
+        Product product = new Product();
+        product.setProductNo(productNo);
+        product.setUserNo(userNo);
+        int result = productService.addProductsave(product);
+        log.info("찜등록여부 : " + result);
+        // return "redirect:/product/productdetail?productNo="+productNo;
+        if (result > 0) return "SUCCESS";
+        else return "FAIL";
+    }
     
 
     // 상품 찜 삭제
     @PostMapping(value="/wishlistDelete")
-    public String wishlistDelete(int productsaveNo) {
+    public String wishlistDelete(int productsaveNo) throws Exception  {
         int result = productService.wishListDelete(productsaveNo);
         if( result == 0 ) return "redirect:/product/wishlist";
         return "redirect:/product/wishlist";
@@ -153,7 +165,7 @@ public class ProductController {
 
     // 장바구니 삭제
     @PostMapping(value="/cartDelete")
-    public String cartListDelete(Product product) {
+    public String cartListDelete(Product product)  throws Exception {
        int cartNo = product.getCartNo();
        int result = productService.cartListDelete(cartNo);
         return "redirect:/product/cart";

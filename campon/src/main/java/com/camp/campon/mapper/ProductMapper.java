@@ -40,7 +40,7 @@ public interface ProductMapper {
     // 찜 목록
     public List<Product> wishList(int userNo);
     //찜 등록
-    
+    public int addProductsave(Product product);
     // 찜 삭제
     public int wishListDelete(int wishlistNo);
 

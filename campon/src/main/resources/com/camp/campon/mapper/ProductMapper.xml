@@ -95,6 +95,11 @@ SELECT r.*, u.user_id, p.product_name FROM productreview r JOIN `user` u ON  r.u
     WHERE s.user_no = #{userNo}
 </select>
 
+<!--찜 등록-->
+<insert id="addProductsave">
+INSERT INTO productsave (product_no, user_no) VALUES (#{productNo}, #{userNo})
+</insert>
+
 <!-- 찜 삭제 -->
 <delete id="wishListDelete">
     DELETE FROM productsave
