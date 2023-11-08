@@ -22,25 +22,28 @@
             <!-- 상품기본내용 -->
             <span th:text="${cart.productIntro}"></span> <br>
             <!-- 금액 -->
-            <span th:text="|${cart.productPrice} / 1일|"></span> <br><br>
+            <span th:text="|${cart.productPrice} / 1일|"></span> <br>
             <!-- 상품수량 및 증감 -->
             <div>
                 <button class="decrease" type="button">-</button>
                 <span class="quantity" th:text="${cart.cartCnt}"></span>
                 <button class="increase" type="button">+</button>
-            </div>
+            </div><br><br><br>
+
         </div>
 
         <!-- 배송지 선택 -->
         <div>
             <h5>배송받을 캠핑장을 선택해주세요 </h5>
-            <ul th:each="reservation : ${reservationList}">
+            <div th:each="reservation : ${reservationList}">
+                <input type="radio" name="selectedReservation" th:value="${reservation.reservationNo}">
+                <label><span></span>무통장</label>
                 <li><img th:src="${reservation.cpiUrl}" alt=""></li>
                 <li th:text="${reservation.campName}"></li>
                 <li th:text="${reservation.cpdtName}"></li>
                 <li th:text="|캠핑날짜 ${reservation.reservationStart} ~ ${reservation.reservationEnd}|"></li>
                 <li th:text="|예약번호 ${reservation.reservationNo}|"></li><br><br><br>
-            </ul>
+            </div>
 
             <!-- 결제방법 선택 -->
             <input type="radio" name="paymentMethod" value="무통장">
