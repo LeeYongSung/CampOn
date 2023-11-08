@@ -268,6 +268,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
                 #{item}
             </foreach>
         </if>
-        ORDER BY c.camp_no DESC
+        ORDER BY c.camp_no DESC;
     </select>
 </mapper>
