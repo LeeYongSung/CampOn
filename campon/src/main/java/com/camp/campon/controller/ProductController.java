@@ -93,7 +93,6 @@ public class ProductController {
         return "product/productdetail";
     }
 
-
     //-------------------- 찜 목록 --------------------
     // 상품 찜 목록
     @GetMapping("/wishlist")
@@ -105,7 +104,6 @@ public class ProductController {
         model.addAttribute("wishlist", wishlist);
         return "product/wishlist";
     }
-
     // 상품 찜 등록
     @ResponseBody
     @GetMapping(value="/addProductsave")
@@ -118,12 +116,9 @@ public class ProductController {
         product.setUserNo(userNo);
         int result = productService.addProductsave(product);
         log.info("찜등록여부 : " + result);
-        // return "redirect:/product/productdetail?productNo="+productNo;
         if (result > 0) return "SUCCESS";
         else return "FAIL";
     }
-    
-
     // 상품 찜 삭제
     @PostMapping(value="/wishlistDelete")
     public String wishlistDelete(int productsaveNo) throws Exception  {
@@ -132,7 +127,6 @@ public class ProductController {
         return "redirect:/product/wishlist";
     }
    
-
     //-------------------- 장바구니 --------------------
     // 장바구니 목록
     @GetMapping("/cart")
@@ -141,17 +135,12 @@ public class ProductController {
         Users users = userService.selectById(userId);
         int userNo = users.getUserNo();
         List<Product> cartList = productService.cartList(userNo);
-        for (Product product : cartList) {
-            log.info(product.getCartNo() + "카트번호가뭐얌");
-        }
         model.addAttribute("cartList", cartList);
         return "product/cart";
     }
     // 장바구니 담기
     @GetMapping(value="/addcart")
     public String addCart(Product product) throws Exception {
-        log.info("여기에 들어가니..?");
-        log.info("장바구니에넣을 프로덕트" + product.toString());
         int result = productService.addCart(product);
         log.info("장바구니에 넣기 성공여부 : "+ result);
         return "redirect:/product/cart";
@@ -166,8 +155,6 @@ public class ProductController {
         log.info("장바구니에 담긴 상품 갯수 : " + result);
         return "redirect:/product/cart";
     }
-    
-
     // 장바구니 삭제
     @PostMapping(value="/cartDelete")
     public String cartListDelete(Product product)  throws Exception {

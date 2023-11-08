@@ -1,5 +1,6 @@
 package com.camp.campon.controller;
 
+import java.security.Principal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.camp.campon.dto.Camp;
 import com.camp.campon.dto.Order;
 import com.camp.campon.dto.Product;
+import com.camp.campon.dto.Users;
 import com.camp.campon.service.CampService;
 import com.camp.campon.service.OrderService;
 import com.camp.campon.service.ProductService;
@@ -54,16 +56,18 @@ public class OrderController {
 
     //-------------------- 결제하기 --------------------
     @GetMapping(value="/payment")
-    public String payMent(Model model, Integer userNo) throws Exception {
-        // 임시값
-        userNo = 2;
-
+    public String payMent(Model model, Principal principal) throws Exception {
+        int userNo = 0;
+        if (principal == null){ userNo = 1000;}
+        else {
+            String userId = principal.getName();
+            Users users = userService.selectById(userId);
+            userNo = users.getUserNo();
+        }
         List<Product> cartList = productService.cartList(userNo);
         List<Camp> reservationList = campService.reservation(userNo);
-
         model.addAttribute("cartList", cartList);
         model.addAttribute("reservationList", reservationList);
-
         return "product/payment";
     }
     
