@@ -41,6 +41,9 @@ public class Product {
     // 찜 하기
     private int wishlistNo;
 
+    //주문별 대여상품 갯수
+    private int orderCnt;
+
 
 
     

@@ -133,8 +133,10 @@ SELECT count(*) FROM productreview WHERE product_no = #{productNo}
 </select>
 
 <!-- 장바구니에 담기-->
-<insert id="cartadd">
-INSERT INTO productsave (product_no, user_no) VALUES  (#{productNo}, #{userNo})
+<insert id="addCart">
+INSERT INTO
+    cart ( product_no, user_no, cart_date ) 
+    VALUES ( #{productNo}, #{userNo}, now())
 </insert>
 
 </mapper>

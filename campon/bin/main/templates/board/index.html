@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/UI/user/layout/main_layout}"
+      >
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CampOn(캠프온)</title>
+</head>
+<body layout:fragment="content">
+    <button>캠핑</button>
+    <button>스토어</button>
+    <div>
+        <div class="review mb-5">
+            <h5 class="mt-3">실시간 캠핑 리뷰</h5>
+            <ul th:each="board : ${newReviewList}">
+                <a th:href="|/board/crread?reviewNo=${board.reviewNo}|" class="d-flex justify-content-between">
+                    <li class="review_imgbox">
+                        <img th:src="${board.reviewImg}">
+                    </li>
+                    <li class="review_conbox">
+                        <ul>
+                            <li>
+                                <p th:text="${board.reviewTitle}"></p>
+                            </li>
+                            <li>
+                                <span th:text="${ #dates.format( board.regDate, 'yyyy-MM-dd') }"></span>
+                            </li>
+                            <li>
+                                <span th:text="${board.cpdtName}"></span>
+                            </li>
+                            <li>
+                                <span th:text="${board.campName}"></span>
+                            </li>
+                        </ul>
+                    </li>
+                </a>
+            </ul>
+        </div>
+    </div>
+    <div>
+        <span>캠핑 리뷰 리스트</span>
+        <table>
+            <tr>
+                <th width="50">번호</th>
+                <th width="300">제목</th>
+                <th width="100">작성자</th>
+                <th width="200">작성일</th>
+            </tr>
+            <tr th:each="crlist : ${crlist}">
+                <td th:text="${crlist.reviewNo}"></td>
+                <td>
+                    <a th:href="|/board/crread?reviewNo=${crlist.reviewNo}|" th:text="${crlist.reviewTitle}"></a>
+                </td>
+                <td th:text="${crlist.userId}"></td>
+                <td>
+                    <span th:text="${ #dates.format( crlist.regDate, 'yyyy-MM-dd') }"></span>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div>
+        <div class="review mb-5">
+            <h5 class="mt-3">실시간 상품 리뷰</h5>
+            <ul th:each="board : ${newprlist}">
+                <a th:href="|/board/prread?prNo=${board.prNo}|" class="d-flex justify-content-between">
+                    <li class="review_imgbox">
+                        <img th:src="${board.prImg}">
+                    </li>
+                    <li class="review_conbox">
+                        <ul>
+                            <li>
+                                <p th:text="${board.prTitle}"></p>
+                            </li>
+                            <li>
+                                <span th:text="${ #dates.format( board.regDate, 'yyyy-MM-dd') }"></span>
+                            </li>
+                            <li>
+                                <span th:text="${board.productName}"></span>
+                            </li>
+                            <li>
+                                <span th:text="${board.userId}"></span>
+                            </li>
+                        </ul>
+                    </li>
+                </a>
+            </ul>
+        </div>
+    </div>
+    <div>
+        <span>상품 리뷰 리스트</span>
+        <table>
+            <tr>
+                <th width="50">번호</th>
+                <th width="300">제목</th>
+                <th width="100">작성자</th>
+                <th width="200">작성일</th>
+            </tr>
+            <tr th:each="prlist : ${prlist}">
+                <td th:text="${prlist.prNo}"></td>
+                <td>
+                    <a th:href="|/board/prread?prNo=${prlist.prNo}|" th:text="${prlist.prTitle}"></a>
+                </td>
+                <td th:text="${prlist.userId}"></td>
+                <td>
+                    <span th:text="${ #dates.format( prlist.regDate, 'yyyy-MM-dd') }"></span>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+</body>
+</html>

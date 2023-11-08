@@ -57,7 +57,8 @@ public interface ProductMapper {
 
     // 리뷰 수
     public int reviewCount(int productNo);
+
     //장바구니 등록
-    public int cartadd(int productNo, int userNo) throws Exception;
+    public int addCart(Product product) throws Exception;
     
 }

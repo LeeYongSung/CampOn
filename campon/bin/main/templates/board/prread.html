@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/UI/user/layout/main_layout}"
+      >
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CampOn(캠프온)</title>
+</head>
+<body layout:fragment="content">
+    <div>
+        <a href="/board/index">목록</a>
+        <a th:href="|/board/prupdate?prNo=${prread.prNo}">수정</a>
+    </div>
+    <hr>
+    <div>
+        <span th:text="${prread.prNo}"></span>
+        <span th:text="${prread.prTitle}"></span>
+        <span th:text="${ #dates.format( prread.regDate, 'yyyy-MM-dd') }"></span>
+    </div>
+    <hr>
+    <div>
+        <p th:text="${prread.productName}"></p>
+        <p th:text="${prread.productCategory}"></p>
+        <p th:text="${prread.userId}"></p>
+        대여 기간 : <span th:text="${ #dates.format( prread.startDate, 'yyyy-MM-dd') }"></span>
+        ~
+        <span th:text="${#dates.format( prread.endDate, 'yyyy-MM-dd')}"></span>
+    </div>
+    <hr>
+    <div>
+        <p th:text="${prread.prCon}"></p>
+        <img th:src="${prread.prImg}">
+    </div>
+    
+</body>
+</html>

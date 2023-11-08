@@ -19,9 +19,11 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.camp.campon.dto.Camp;
 import com.camp.campon.dto.Product;
 import com.camp.campon.dto.Productreview;
 import com.camp.campon.dto.Users;
+import com.camp.campon.service.CampService;
 import com.camp.campon.service.ProductService;
 import com.camp.campon.service.UserService;
 
@@ -42,9 +44,13 @@ public class ProductController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private CampService campService;
+    
     @Value("${upload.path}")
     private String uploadPath;
 
+    //-------------------- 상품 메인 --------------------
     // 메인페이지
     @GetMapping("/index")
     public String productMain(Model model) throws Exception {
@@ -70,6 +76,11 @@ public class ProductController {
         return productList;
     }
 
+
+
+
+
+    //-------------------- 찜 목록 --------------------
     // 상품 찜 목록
     @GetMapping("/wishlist")
     public String wishlist(Model model) {
@@ -85,7 +96,20 @@ public class ProductController {
         if( result == 0 ) return "redirect:/product/wishlist";
         return "redirect:/product/wishlist";
     }
+
+    // 장바구니 담기
+    @GetMapping(value="/addcart")
+    public String addCart(Product product) throws Exception {
+        int result = productService.addCart(product);
+        log.info("장바구니에 넣기 성공여부 : "+ result);
+        return "product/wishlist";
+    }
     
+
+
+
+
+    //-------------------- 장바구니 --------------------
     // 장바구니 목록
     @GetMapping("/cart")
     public String cartlist(Model model) {
@@ -117,24 +141,22 @@ public class ProductController {
         return "product/productdetail";
     }
 
-    @GetMapping(value="/addCart")
-    public String getMethodName(Integer productNo, Principal principal) throws Exception {
-        log.info(productNo + "프로덕트 넘");
-        int userNo = 100;
-       if (principal == null){ 
-       } else {
-        String userId = principal.getName();
-        log.info("장바구니에 넣는 사용자아이디 : "+ userId);
-        Users user = userService.selectById(userId);
-        userNo = user.getUserNo();
-       }
-        int result = productService.cartadd(productNo, userNo);
-        log.info("장바구니에 넣기 성공여부 : "+ result);
-        
-        return "product/wishlist";
+
+
+
+
+    //-------------------- 결제하기 --------------------
+    @GetMapping(value="/payment")
+    public String payMent(Model model, Integer userNo) throws Exception {
+        // 임시값
+        userNo = 2;
+        List<Product> cartList = productService.cartList();
+        List<Camp> reservationList = campService.reservation(userNo);
+
+        model.addAttribute("cartList", cartList);
+        model.addAttribute("reservationList", reservationList);
+
+        return "product/payment";
     }
-    
-
-
     
 }

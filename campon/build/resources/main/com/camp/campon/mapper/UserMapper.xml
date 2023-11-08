@@ -9,7 +9,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <!-- Users 매핑-->
     <!-- <resultMap type="Users" id="userMap">
         <id property="userNo" column="user_no" />
-        
         <result property="userNo" column="user_no" />
         <result property="userId" column="user_id" />
         <result property="userPw" column="user_pw" />
@@ -18,7 +17,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="enabled" column="enabled" />
         <result property="regDate" column="reg_date" />
         <result property="updDate" column="upd_date" />
-        
         <collection property="authList" resultMap="authMap"></collection>
     </resultMap> -->
         
@@ -27,40 +25,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="userId" column="user_id" />
         <result property="auth" column="auth" />
     </resultMap> -->
-
-    <!-- 회원가입 -->
-    <insert id="insert">
-        INSERT INTO `user` ( user_id, user_pw, user_name, user_tel, user_email, user_address, company_name, company_number, auth )
-        VALUES ( #{userId}, #{userPw}, #{userName}, #{userTel}, #{userEmail}, #{userAddress}, #{companyName}, #{companyNumber}, #{auth} )
-    </insert>
-
-    <!-- 회원 조회 -->
-    <select id="select" resultType="Users">
-        SELECT *
-        FROM `user`
-        WHERE user_no = #{userNo}
-    </select>
-
-    <!-- 캠프 단에서 회원 조회 - id -->
-    <select id="selectById" resultType="Users">
-        SELECT *
-        FROM `user`
-        WHERE user_id = #{userId}
-    </select>
-
-    <!-- 회원 조회 - id -->
-    <select id="selectedById" resultType="Users">
-        SELECT *
-        FROM `user`
-        WHERE user_id = #{userId}
-    </select>
-
-    <!-- 회원 조회 - id -->
-    <select id="login" resultType="Users">
-        SELECT *
-        FROM `user`
-        WHERE user_id = #{username}
-    </select>
 
         <!-- 회원 조회 - id -->
     <!-- <select id="login" resultMap="userMap">
@@ -85,6 +49,51 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         INSERT INTO user_auth( user_id, auth ) 
         VALUES ( #{userId}, #{auth} )
     </insert> -->
+
+
+
+    <!-- 회원가입 -->
+    <insert id="insert">
+        INSERT INTO `user` ( user_id, user_pw, user_name, user_tel, user_email, user_address, company_name, company_number, auth )
+        VALUES ( #{userId}, #{userPw}, #{userName}, #{userTel}, #{userEmail}, #{userAddress}, #{companyName}, #{companyNumber}, #{auth} )
+    </insert>
+
+    <!-- 회원 조회 -->
+    <select id="select" resultType="Users">
+        SELECT *
+        FROM `user`
+        WHERE user_no = #{userNo}
+    </select>
+
+    <!--회원 조회 (일반회원 / 기업회원)-->
+    <select id="memberList" resultType="Users">
+    SELECT * FROM `user` WHERE auth=
+        <choose>
+        <when test="auth == 'ROLE_USER'">'ROLE_USER'</when>
+        <when test="auth == 'ROLE_SELL'">'ROLE_SELL'</when>
+        </choose>
+    </select>
+
+    <!-- 캠프 단에서 회원 조회 - id -->
+    <select id="selectById" resultType="Users">
+        SELECT *
+        FROM `user`
+        WHERE user_id = #{userId}
+    </select>
+
+    <!-- 회원 조회 - id -->
+    <select id="selectedById" resultType="Users">
+        SELECT *
+        FROM `user`
+        WHERE user_id = #{userId}
+    </select>
+
+    <!-- 회원 조회 - id -->
+    <select id="login" resultType="Users">
+        SELECT *
+        FROM `user`
+        WHERE user_id = #{username}
+    </select>
 
     <!-- 회원 수정 -->
     <update id="update">

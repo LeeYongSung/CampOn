@@ -224,8 +224,8 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public int cartadd(int productNo, int userNo)  throws Exception {
-        int result = productMapper.cartadd(productNo, userNo);
+    public int addCart(Product product)  throws Exception {
+        int result = productMapper.addCart(product);
         return result;
     }
 

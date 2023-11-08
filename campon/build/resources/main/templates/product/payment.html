@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+    xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{/UI/user/layout/main_layout}">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CampOn(캠프온)</title>
+</head>
+    
+<body layout:fragment="content">
+    <h1>주문 상품</h1>
+    
+    <!-- 반복문 시작 -->
+    <div th:each="cart : ${cartList}">
+        <!-- 썸네일 -->
+        <img th:src="${cart.productThumnail}"> <br>
+
+        <!-- 상품명 -->
+        <span th:text="${cart.productName}"></span> <br> 
+
+        <!-- 상품기본내용 -->
+        <span th:text="${cart.productIntro}"></span> <br>
+
+        <!-- 금액 -->
+        <span th:text="|${cart.productPrice} / 1일|"></span> <br><br>
+
+        <!-- 수량증감 -->
+        <div>
+            <button class="decrease">-</button>
+            <span class="quantity">1</span>
+            <button class="increase">+</button>
+        </div>
+    </div>
+    
+    <script>
+        // "-" 버튼 클릭 시 수량 감소
+        document.querySelectorAll(".decrease").forEach(function(button) {
+            button.addEventListener("click", function() {
+                var quantityElement = button.nextElementSibling;
+                var quantity = parseInt(quantityElement.textContent);
+                if (quantity > 1) {
+                    quantity--;
+                    quantityElement.textContent = quantity;
+                }
+            });
+        });
+    
+        // "+" 버튼 클릭 시 수량 증가
+        document.querySelectorAll(".increase").forEach(function(button) {
+            button.addEventListener("click", function() {
+                var quantityElement = button.previousElementSibling;
+                var quantity = parseInt(quantityElement.textContent);
+                quantity++;
+                quantityElement.textContent = quantity;
+            });
+        });
+    </script>
+    </div>
+</body>
+</html>

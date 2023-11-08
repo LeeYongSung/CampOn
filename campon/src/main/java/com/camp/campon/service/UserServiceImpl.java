@@ -1,5 +1,7 @@
 package com.camp.campon.service;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -106,6 +108,12 @@ public class UserServiceImpl implements UserService {
     public Users productsseller(int campNo) throws Exception {
         Users seller = userMapper.productsseller(campNo);
         return seller;
+    }
+
+    @Override
+    public List<Users> memberList(String auth) throws Exception {
+        List<Users> memberList = userMapper.memberList(auth);
+        return memberList;
     }
     
 }

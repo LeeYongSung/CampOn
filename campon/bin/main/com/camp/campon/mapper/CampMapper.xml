@@ -139,6 +139,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         JOIN campproduct c ON re.camp_no = c.camp_no
         JOIN campimg img ON c.camp_no = img.camp_no 
         JOIN (SELECT min(cpi_no) no FROM campimg GROUP BY camp_no) imgno ON img.cpi_no = imgno.no
+        JOIN campdetail cd ON c.camp_no = cd.camp_no
         WHERE re.user_no = #{userNo}
         ORDER BY c.camp_no DESC;
     </select>
