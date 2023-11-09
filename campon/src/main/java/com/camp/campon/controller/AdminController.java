@@ -78,7 +78,7 @@ public class AdminController {
     public String productInsert(Product product) throws Exception {
         int result = productService.productInsert(product);
         log.info("상품등록 성공여부 : " + result);
-            return "redirect:/user/mypage";
+            return "redirect:/admin/productlist";
     }
     //상품 수정 페이지
     @GetMapping(value="/productupdate", params="productNo")
@@ -93,7 +93,7 @@ public class AdminController {
         log.info("썸네일 있냐?"+ product.getProductThmFile().size());
         int result = productService.productUpdate(product);
         log.info("상품수정 성공여부 : " +result);
-        return "redirect:/user/mypage" ;
+        return "redirect:/admin/productlist" ;
     }
     //이미지 불러오기
     @GetMapping(value="/img", params="file")
@@ -110,7 +110,7 @@ public class AdminController {
     @GetMapping(value="/delete", params="productNo")
     public String productDelete(@RequestParam String productNo) throws NumberFormatException, Exception {
         int result = productService.deleteProduct(Integer.parseInt(productNo));
-        return "user/mypage";
+        return "redirect:/admin/productlist";
     }
 
     //멤버 관리 페이지
@@ -147,15 +147,12 @@ public class AdminController {
             return "redirect:/user/login";
         } else {
             if(!name.equals("anonymouseUser")) {
-
                 // 유저 정보 획득
                 Users user = userService.selectById(name);
                 int userNo = user.getUserNo();
-                
                 // List<camp> campdetail = campService.
                 // 획득한 유저 번호로 캠핑장 정보 획득
                 List<Camp> camp = campService.campproductUser(userNo);
-
                 // for (Camp campEl : camp) {
                     // campEl.getDetailList(campService.campdetailUser(campEl.getCampNo()));
                 // }
@@ -172,10 +169,8 @@ public class AdminController {
                 //     System.out.println();
                 //     if(campdetailList != null) campdetailList.addAll(campdetailList);
                 // }
-                
                 // model.addAttribute("campdetailList", campdetailList);
                 model.addAttribute("campList", camp);
-
                 return "admin/campproductlist";
             } 
             return "redirect:/user/login";

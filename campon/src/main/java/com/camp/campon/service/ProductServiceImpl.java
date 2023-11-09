@@ -262,6 +262,12 @@ public class ProductServiceImpl implements ProductService {
         return result;
     }
 
+    @Override
+    public List<Product> reservedProduct(int userNo) throws Exception {
+        List<Product> productList = productMapper.reservedProduct(userNo);
+        return productList;
+    }
+
     
 
 }

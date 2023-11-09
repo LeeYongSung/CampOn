@@ -32,7 +32,7 @@
         <!--추천상품 목록-->
         <h5>추천 상품</h5>
         <div th:each="product : ${productHotList}">
-            <img th:src="|/img?file=${product.productThumnail}|">
+            <img th:src="|/img?file=${product.productimgUrl}|">
             
         </div>
         <!--캠프온 이용안내-->

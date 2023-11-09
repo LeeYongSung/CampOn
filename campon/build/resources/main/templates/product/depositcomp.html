@@ -17,7 +17,6 @@
        <hr>
 
        <h2>결제 확인</h2>
-       <!--결제된 상품 목록-->
          <!-- 상품 목록 출력-->
      <th:block th:each="product : ${order.productList}">
         <div style="border: 1px solid black;">
@@ -57,7 +56,7 @@
 
     <hr>
 
-    <th:block th:if="${pmType.equals('무통장입금')}">
+    <th:block th:if="${pmType=='무통장입금'}">
         <!-- * 무통장입금 시 -->
         <h4>아직 입금이 확인되지 않았어요. <span th:text="${ #dates.format(order.depositDeadLine, 'yyyy-MM-dd')}"></span>오후 12시 57분까지 입금을 완료할 경우 예약이 최종 확정됩니다.</h4>
         <hr>
@@ -69,11 +68,11 @@
             <p>총 입금 금액 : <span th:text="${paytotal}"></span></p>
         </div>
     </th:block>
-    <th:block th:if="${pmType.equals('무통장입금')}">
+    <th:block th:if="${pmType=='카드'}">
     <!-- * 카드결제 시 -->
         <div>
             <h5>결제 정보</h5>
-            <p>주문번호: <spam th:text="${order.orderNumber}"></spam></p> 
+            <p>주문번호: <span th:text="${order.orderNumber}"></span></p> 
             <p>총 결제 금액 : <span th:text="${paytotal}"></span></p>
         </div>
     </th:block>
@@ -86,7 +85,7 @@
 
        <!--버튼-->
        <div>
-        <a href="javascript:;">내 예약으로</a>
+        <a href="/camp/reservation">내 예약으로</a>
         <a href="/">홈으로</a>
        </div>
     </div>
