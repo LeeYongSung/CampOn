@@ -39,4 +39,8 @@ public interface BoardService {
     //상품 리뷰 수정 / 삭제
     public int prupdate(Board board) throws Exception;
     public int prdelete(int prNo) throws Exception;
+
+    // 캠핑 리뷰 목록
+    public List<Board> crlistpage(Board board) throws Exception;
+    public int crlistcount() throws Exception;
 }
