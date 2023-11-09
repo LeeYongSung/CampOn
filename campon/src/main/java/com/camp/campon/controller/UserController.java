@@ -123,12 +123,22 @@ public class UserController {
     }
 
     //회원정보 삭제
-    @GetMapping(value="/delete/{userId}")
-    public String delete(@PathVariable("userId") String userId) throws Exception {
+    @GetMapping(value="/delete")
+    public String delete(String userId, HttpServletRequest request, HttpServletResponse response) throws Exception {
         log.info("삭제할 아이디 : " + userId);
         int result = userService.delete(userId);
         log.info("유저 삭제 여부 : "+ result);
         if (result > 0){
+            // 시큐리티 강제 로그아웃
+            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+            new SecurityContextLogoutHandler().logout(request, response, authentication);
+            // remember-me 쿠키 삭제
+            Cookie cookie = new Cookie("remember-me", "");     
+            cookie.setMaxAge(0);                                  
+            cookie.setPath("/");        
+            response.addCookie(cookie);
+            // 토큰 삭제
+            persistentTokenRepository.removeUserTokens(userId);
             return "redirect:/";
         } else {
              return "redirect:/user/update";

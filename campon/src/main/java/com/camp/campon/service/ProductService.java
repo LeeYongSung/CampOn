@@ -61,4 +61,6 @@ public interface ProductService {
 
   // 추천상품 목록
   public List<Product> hotList() throws Exception;
+   //유저번호에 따른 대여된 상품들
+   public List<Product> reservedProduct(int userNo) throws Exception;
 }

@@ -95,6 +95,11 @@
                 success : function(response) {
                     let responsee = response
                     console.log(responsee)
+                    if (responsee == 'SUCCESS'){
+                        alert('찜에 등록되었습니다')
+                    } else {
+                        alert('이미 찜에 등록된 상품입니다')
+                    }
                 },
                 error           : function(request, status, error){
                     alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);

@@ -11,7 +11,7 @@
     <title>CampOn(캠프온) 예약조회</title>
 </head>
 <body layout:fragment="content">
-    <h3>캠핑장 예약 현황</h3>
+    <h2>캠핑장 예약 현황</h2>
     <div>
         <!-- 캠핑장 -->
         <ul th:each="reservation : ${reservationList}">
@@ -25,7 +25,29 @@
             <li th:text="|${reservation.reservationStart} ~ ${reservation.reservationEnd}|"></li>
             <li th:text="${reservation.campTel}"></li>
         </ul>
-        <!-- 상품 -->
+
+         <!-- 상품-->
+         <h2>렌탈상품 대여 현황</h2>
+     <th:block th:each="product : ${productList}">
+        <div style="border: 1px solid black;">
+            <div>
+                <img th:src="|/img?file=${product.productThumnail}|" alt="상품썸네일">
+            </div>
+            <div>
+                <div>
+                    <h2>상품이름 : <span th:text="${product.productName}"></span></h2>
+                   <p>상품기본내용 : <span th:text="${product.productIntro}"></span></p>
+                </div>
+                <div>
+                    <h2>가격 : <span th:text="${product.productPrice}"></span></h2>
+                    <h3>주문갯수: <span th:text="${product.sum}"></span>개</h3>
+                </div>
+            </div>
+        </div>
+    </th:block> 
+
+
+    <a href="/">홈으로</a>
     </div>
      
 </body>

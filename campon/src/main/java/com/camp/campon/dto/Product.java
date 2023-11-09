@@ -45,6 +45,9 @@ public class Product {
     //주문별 대여상품 갯수
     private int orderCnt;
 
+    //대여된 상품갯수
+    private String sum;
+
 
 
     

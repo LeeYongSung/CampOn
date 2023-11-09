@@ -15,7 +15,7 @@
     <h1>찜한 캠핑장</h1>
 
     <div th:each="camp : ${favoritesList}">
-        <a th:href="|/camp/campdetail?campNo=${camp.campNo}|" th:text="${camp.campName}"></a>
+        <a th:href="|/camp/campproduct?campNo=${camp.campNo}|" th:text="${camp.campName}"></a>
         /
         <span th:text="${camp.campAddress}"></span>
         /
