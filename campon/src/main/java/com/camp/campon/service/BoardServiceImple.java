@@ -178,5 +178,17 @@ public class BoardServiceImple implements BoardService {
         return crlistcount;
     }
 
+    @Override
+    public List<Board> prlistpage(Board board) throws Exception {
+        List<Board> prlistpage = boardMapper.prlistpage(board);
+        return prlistpage;
+    }
+
+    @Override
+    public int prlistcount() throws Exception {
+        int prlistcount = boardMapper.prlistcount();
+        return prlistcount;
+    }
+
     
 }
