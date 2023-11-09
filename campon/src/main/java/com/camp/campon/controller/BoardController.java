@@ -11,6 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.camp.campon.dto.Board;
 import com.camp.campon.dto.Camp;
@@ -131,7 +132,34 @@ public class BoardController {
     }
     
     
-    
+    @ResponseBody
+    @GetMapping(value="/getcrlist") 
+    public List<Board> getcrlist(Model model) throws Exception {
+        List<Board> results = boardService.crlist();
+        return results;
+    }
+    @ResponseBody
+    @GetMapping(value="/getcrlist/page") 
+    public List<Board> getcrlistpage(Model model, int page) throws Exception {
+        log.info("page : " + page);
+        int sn = page;
+        int start = 10 * (sn - 1);
+        int end = 10;
+
+        Board board = new Board(page, start, end);
+        board.setPage(page);
+        board.setStart(start);
+        board.setEnd(end);
+
+        List<Board> results = boardService.crlistpage(board);
+        return results;
+    }
+    @ResponseBody
+    @GetMapping(value="/getcrlist/pagination") 
+    public int getcrlistppagination(Model model) throws Exception {
+        int results = boardService.crlistcount();
+        return results;
+    }
     
     
     
