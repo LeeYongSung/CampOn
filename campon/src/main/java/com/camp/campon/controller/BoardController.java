@@ -156,10 +156,35 @@ public class BoardController {
     }
     @ResponseBody
     @GetMapping(value="/getcrlist/pagination") 
-    public int getcrlistppagination(Model model) throws Exception {
+    public int getcrlistppagination() throws Exception {
         int results = boardService.crlistcount();
         return results;
     }
+    
+    @ResponseBody
+    @GetMapping(value="/getprlist/page1")
+    public List<Board> getprlistpage(Model model, int page1) throws Exception {
+        log.info("page1 : " + page1);
+        int sn = page1;
+        int start = 10 * (sn - 1);
+        int end = 10;
+
+        Board board = new Board(page1, start, end);
+        board.setPage(page1);
+        board.setStart(start);
+        board.setEnd(end);
+
+        List<Board> results = boardService.prlistpage(board);
+        return results;
+    }
+    @ResponseBody
+    @GetMapping(value="/getprlist/pagination1")
+    public int getprlistpagination() throws Exception {
+        int results = boardService.prlistcount();
+        return results;
+    }
+    
+    
     
     
     

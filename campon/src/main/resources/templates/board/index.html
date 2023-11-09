@@ -78,15 +78,6 @@
                 
                 <div class="page-list">
                     <a href="javascript:;" class="page-no">1</a>
-                    <a href="javascript:;" class="page-no">2</a>
-                    <a href="javascript:;" class="page-no">3</a>
-                    <a href="javascript:;" class="page-no">4</a>
-                    <a href="javascript:;" class="page-no">5</a>
-                    <a href="javascript:;" class="page-no">6</a>
-                    <a href="javascript:;" class="page-no">7</a>
-                    <a href="javascript:;" class="page-no">8</a>
-                    <a href="javascript:;" class="page-no">9</a>
-                    <a href="javascript:;" class="page-no">10</a>
                 </div>
 
                 <a href="javascript:;" class="page-arrow" id="next">&rsaquo;</a>
@@ -128,26 +119,45 @@
         <div>
             <span>상품 리뷰 리스트</span>
             <table>
-                <tr>
-                    <th width="50">번호</th>
-                    <th width="300">제목</th>
-                    <th width="100">작성자</th>
-                    <th width="200">작성일</th>
-                </tr>
-                <tr th:each="prlist : ${prlist}">
-                    <td th:text="${prlist.prNo}"></td>
-                    <td>
-                        <a th:href="|/board/prread?prNo=${prlist.prNo}|" th:text="${prlist.prTitle}"></a>
-                    </td>
-                    <td th:text="${prlist.userId}"></td>
-                    <td>
-                        <span th:text="${ #dates.format( prlist.regDate, 'yyyy-MM-dd') }"></span>
-                    </td>
-                </tr>
+                <thead>
+
+                    <tr>
+                        <th width="50">번호</th>
+                        <th width="300">제목</th>
+                        <th width="100">작성자</th>
+                        <th width="200">작성일</th>
+                    </tr>
+                </thead>
+                <tbody id="pr-data">
+                    <tr>
+                        <td colspan="4">작성된 리뷰가 없습니다.</td>
+                    </tr>
+                    <!-- <tr th:each="prlist : ${prlist}">
+                        <td th:text="${prlist.prNo}"></td>
+                        <td>
+                            <a th:href="|/board/prread?prNo=${prlist.prNo}|" th:text="${prlist.prTitle}"></a>
+                        </td>
+                        <td th:text="${prlist.userId}"></td>
+                        <td>
+                            <span th:text="${ #dates.format( prlist.regDate, 'yyyy-MM-dd') }"></span>
+                        </td>
+                    </tr> -->
+                </tbody>
             </table>
+            <div class="pagination">
+                <a href="javascript:;" class="page-arrow1" id="first1">&laquo;</a>
+                <a href="javascript:;" class="page-arrow1" id="prev1">&lsaquo;</a>
+                
+                <div class="page-list1">
+                    <a href="javascript:;" class="page-no1">1</a>
+                </div>
+
+                <a href="javascript:;" class="page-arrow1" id="next1">&rsaquo;</a>
+                <a href="javascript:;" class="page-arrow1" id="last1">&raquo;</a>
+            </div>
         </div>
     </div>
-
+    
     <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
     
     <script>
@@ -167,11 +177,14 @@
         })
         // 페이지 관련 변수
         let page = 1;            // 현재 페이지 번호
+        let page1 = 1;
         
         // 게시글 목록 요청
         // getList()
         getPageList(page)
         initPage()
+        getPageList1(page1)
+        initPage1()
         
         // 게시글 목록
         function getList() {
@@ -334,6 +347,146 @@
         }
 
 
+        ///////////////////
+
+        function initPage1() {
+
+            // 페이지 번호 정보
+            const url = '/board/getprlist/pagination1'
+
+            $.ajax({
+                url     :   url,
+                type    :   'GET',
+                success :   function(response) {
+                let prcount = response
+
+                let totalPage = parseInt( prcount / 10)
+                if(prcount % 10 > 0) {totalPage++;}
+
+
+
+                let pagination = ''
+                for (let i = 1; i <= totalPage ; i++) {
+                    let a = `<a href='javascript:;' class='page-no1' data='${i}'>${i}</a>`
+                    pagination += a
+                }                  
+            
+                // 페이지 출력
+                $('.page-list1').html(pagination)
+                // 화살표 페이지 번호
+                $('#first1').attr('data', 1)
+                $('#last1').attr('data', totalPage)
+                $('#prev1').attr('data', --page1)
+                $('#next1').attr('data', ++page1)
+
+
+                $('.page-no1').removeClass('on')
+                // 현재 페이지 지정
+                $('.page-no1[data=' + page1 +']').addClass('on')
+
+
+                // 화살표 버튼 유효성 처리
+                $('.page-arrow1').show()
+                if( page1 == 1 ) {
+                    $('#prev1').hide()
+                }
+            
+                if( page1 == totalPage ) {
+                    $('#next1').hide()
+                }
+
+
+
+
+                // 페이지 번호 클릭 이벤트
+                $('.page-no1, .page-arrow1').on('click', function() {
+
+
+                    // 이벤트 제거 - 이벤트 정의가 쌓이는 것을 방지
+                    $('.page-no1, .page-arrow1').off()
+                
+                    // 페이지 번호
+                    let clickedPage = $(this).attr('data')
+                    page1 = clickedPage
+                    initPage1(page1)          // 페이지 번호 갱신
+                    getPageList1(page1)       // 페이지 목록 갱신
+                })
+
+
+
+
+
+
+            },
+            error           : function(request, status, error){
+                alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+            }
+        })
+
+
+        }        
+
+
+        // 게시글 목록 - 페이징
+        function getPageList1(page1) {
+        const url = '/board/getprlist/page1'
+
+        $.ajax({
+            url     :   url,
+            type    :   'GET',
+            data    :   {page1 : page1},
+            success : function(response) {
+                let boardList = response
+
+
+                displayList1( boardList )
+            },
+            error           : function(request, status, error){
+                alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+            }
+        })
+        }
+
+
+        // 게시글 목록 출력
+        function displayList1( boardList ) {
+        // 게시글 목록 존재여부
+        if( boardList.length == 0 ) {
+            let msg = '등록된 리뷰가 없습니다...'
+            console.log(msg);
+
+
+            let tr = `<tr>
+                        <td colspan="4">${msg}</td>
+                    </tr>
+                        `
+            $('#pr-data').html(tr)
+            return
+        }
+
+
+        // 게시글 목록 출력
+        let boardData = ''
+        for(let i = 0 ; i < boardList.length ; i++ ){
+            const reviewNo = boardList[i].prNo
+            const title = `<a href="/board/prread?prNo=${reviewNo}">${boardList[i].prTitle}</a>`
+
+
+            const date = new Date(boardList[i].regDate)
+            const regDate = date.toISOString().split("T")[0]
+
+
+            let tr = `<tr>
+                        <td class='num'>${boardList[i].prNo}</td>
+                        <td class='title'>${title}</td>
+                        <td class='writer'>${boardList[i].userId}</td>
+                        <td class='date'>${regDate}</td>
+                        </tr>
+                        `
+            boardData += tr
+        }
+        $('#pr-data').html(boardData)
+        }
 
     </script>
 </body>

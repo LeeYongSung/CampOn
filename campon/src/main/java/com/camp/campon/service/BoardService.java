@@ -43,4 +43,7 @@ public interface BoardService {
     // 캠핑 리뷰 목록
     public List<Board> crlistpage(Board board) throws Exception;
     public int crlistcount() throws Exception;
+    //상품리뷰목록
+    public List<Board> prlistpage(Board board) throws Exception;
+    public int prlistcount() throws Exception;
 }

@@ -95,4 +95,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <select id="crlistcount" resultType="int">
         select ifnull(count(*), 0) from review r join user u on r.user_no = u.user_no
     </select>
+    <!--상품리뷰 목록-->
+    <select id="prlistpage" resultType="Board">
+        select * from productreview pr join user u on pr.user_no = u.user_no order by pr.pr_no desc limit #{start}, #{end}
+    </select>
+    <select id="prlistcount" resultType="int">
+        select ifnull(count(*), 0) from productreview
+    </select>
 </mapper>
