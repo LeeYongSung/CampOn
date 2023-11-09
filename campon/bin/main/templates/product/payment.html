@@ -22,31 +22,8 @@
             </div><br><br><br>
 
         </div>
-    </th:block> 
 
-    <h2>배송받을 캠핑장을 선택해주세요 </h2>
-    <th:block th:each="camp : ${reservationList}">
-        <ul>
-            <li>
-                <img th:src="|/img?file=${camp.cpdiUrl}|" alt="캠핑상품 이미지" />
-            </li>
-            <li>
-                <ul>
-                    <li>캠핑장명 : <span th:text="${camp.campName}"></span></li>
-                    <li>캠핑상품명 : <span th:text="${camp.cpdtName}"></span></li>
-                    <li>예약날짜 : <span th:text="|${ #dates.format(camp.reservationEnd,'yyyy-MM-dd')} ~ ${ #dates.format(camp.endDate, 'yyyy-MM-dd')}|"></span></li>
-                    <li>예약번호 : <span th:text="${camp.reservationNo}"></span></li>
-                </ul>
-            </li>
-        </ul> 
-        <input type="radio" id="selectCamp" th:value="${camp.reservationNo}">
-        <label for="selectCamp">캠핑장 선택</label>
-    </th:block>
-
-
-    <!-- 결제방법 선택 -->
-    <div>
-        <div><p>결제 방법 선택</p></div>
+        <!-- 배송지 선택 -->
         <div>
             <h5>배송받을 캠핑장을 선택해주세요 </h5>
             <div th:each="reservation : ${reservationList}">
