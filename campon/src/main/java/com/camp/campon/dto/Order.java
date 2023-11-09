@@ -21,7 +21,9 @@ public class Order {
 
     // 상품
     private int productNo;
-
+    //상품 갯수
+    private int cartCnt;
+    
     // 유저
     private int userNo;
 
@@ -34,10 +36,14 @@ public class Order {
     private String pmPrice;
     private Date pmDate;
 
-
-
-    
     private List<Product> productList;  
     private Camp camp; 
     private Date depositDeadLine; //무통장입금 시 입금기한
+
+
+    //
+    private int[] cartCnts;
+    private int[] productNos;
+
+
 }

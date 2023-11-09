@@ -63,12 +63,25 @@ SELECT * FROM payments WHERE order_number = #{orderNumber}
 <insert id="addOrder">
 INSERT INTO `order` 
 (order_cnt, product_no, user_no, reservation_no, start_date, end_date, cp_dt_no, camp_no, order_number) 
-(SELECT c.cart_cnt, c.product_no, c.user_no, r.reservation_no, r.reservation_start, r.reservation_end,  r.cp_dt_no, r.camp_no, #{orderNumber}
+(SELECT c.cart_cnt, c.product_no, c.user_no, r.reservation_no, 
+r.reservation_start, r.reservation_end,  r.cp_dt_no, r.camp_no, #{orderNumber}
 FROM cart c JOIN (SELECT * FROM reservation WHERE reservation_no = #{reservationNo}) r
 WHERE c.user_no = #{userNo})
 </insert>
+
+<!--결제 합계금액-->
+<select id="payAmount" resultType="Long">
+SELECT sum(p.product_price * o.order_cnt * r.reservation_date) FROM `order` o JOIN product p ON p.product_no = o.product_no
+JOIN reservation r ON o.reservation_no = r.reservation_no
+WHERE o.user_no = #{userNo} AND o.order_number = #{orderNumber}
+</select>
 <insert id="addPayments">
 INSERT INTO payments (order_number, pm_type, pm_price) VALUES (#{orderNumber}, #{pmType}, #{pmPrice})
+</insert>
+
+<!--배송정보 입력-->
+<insert id="addDelivery">
+INSERT INTO delivery (order_no) (SELECT order_no FROM `order` WHERE order_number = #{orderNumber})
 </insert>
 
 

@@ -57,7 +57,7 @@
 
     <hr>
 
-    <th:block th:if="${pmType.equals('무통장입금')}">
+    <th:block th:if="${order.pmType.equals('무통장입금')}">
         <!-- * 무통장입금 시 -->
         <h4>아직 입금이 확인되지 않았어요. <span th:text="${ #dates.format(order.depositDeadLine, 'yyyy-MM-dd')}"></span>오후 12시 57분까지 입금을 완료할 경우 예약이 최종 확정됩니다.</h4>
         <hr>
@@ -69,7 +69,7 @@
             <p>총 입금 금액 : <span th:text="${paytotal}"></span></p>
         </div>
     </th:block>
-    <th:block th:if="${pmType.equals('무통장입금')}">
+    <th:block th:if="${order.pmType.equals('무통장입금')}">
     <!-- * 카드결제 시 -->
         <div>
             <h5>결제 정보</h5>

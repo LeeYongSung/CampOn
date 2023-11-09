@@ -36,5 +36,29 @@ public class OrderServiceImpl implements OrderService {
         Order order = orderMapper.paymentsByOrNo(orderNumber);
         return order;
     }
+
+    @Override
+    public Long payAmount(Order order) throws Exception {
+        Long payAmount = orderMapper.payAmount(order);
+        return payAmount;
+    }
+
+    @Override
+    public int addOrder(Order order) throws Exception {
+        int result = orderMapper.addOrder(order);
+        return result;
+    }
+
+    @Override
+    public int addPayments(Order order) throws Exception {
+        int result = orderMapper.addPayments(order);
+        return result;
+    }
+
+    @Override
+    public int addDelivery(String orderNumber) throws Exception {
+        int result = orderMapper.addDelivery(orderNumber);
+        return result;
+    }
     
 }
