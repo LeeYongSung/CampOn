@@ -113,7 +113,10 @@ INSERT INTO productsave (product_no, user_no) VALUES (#{productNo}, #{userNo})
     JOIN product p ON c.product_no = p.product_no
     WHERE c.user_no = #{userNo}
 </select>
-
+<!--장바구니에서 수량 업뎃-->
+<update id="cartUpdate">
+UPDATE cart SET cart_cnt = #{cartCnt} WHERE product_no = #{productNo} AND user_no = #{userNo}
+</update>
 <!-- 장바구니 삭제 -->
 <delete id="cartListDelete">
     DELETE FROM cart
@@ -134,21 +137,29 @@ SELECT r.*, u.user_id, p.product_name FROM productreview r JOIN `user` u ON  r.u
 
 <!-- 리뷰 수 -->
 <select id="reviewCount" resultType="int">
-SELECT count(*) FROM productreview WHERE product_no = #{productNo}
+    SELECT count(*) FROM productreview WHERE product_no = #{productNo}
 </select>
 
 <!-- 장바구니에 담기-->
 <insert id="addCart">
-INSERT INTO
+    INSERT INTO
     cart ( product_no, user_no, cart_date, cart_cnt ) 
     VALUES ( #{productNo}, #{userNo}, now(), 1)
 </insert>
 
 <!--찜목록 전부다 장바구니에 담기-->
 <insert id="addcartAll">
-INSERT INTO cart (cart_cnt,product_no,user_no) (SELECT 1, ps.product_no, ps.user_no
-FROM productsave ps LEFT OUTER JOIN cart c ON ps.user_no = c.user_no AND ps.product_no = c.product_no
-WHERE ps.product_no NOT IN (SELECT product_no FROM cart) 
-AND ps.user_no = #{userNo}) 
+    INSERT INTO cart (cart_cnt,product_no,user_no) (SELECT 1, ps.product_no, ps.user_no
+    FROM productsave ps LEFT OUTER JOIN cart c ON ps.user_no = c.user_no AND ps.product_no = c.product_no
+    WHERE ps.product_no NOT IN (SELECT product_no FROM cart) 
+    AND ps.user_no = #{userNo}) 
 </insert>
+
+<!-- 추천상품 리스트 -->
+ <select id="hotList" resultType="Product">
+    SELECT product_thumnail
+    FROM product 
+    order by product_no desc limit 3
+ </select>
+
 </mapper>

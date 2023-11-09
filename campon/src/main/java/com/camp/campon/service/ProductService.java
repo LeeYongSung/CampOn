@@ -42,7 +42,8 @@ public interface ProductService {
 
   // 장바구니 목록
   public List<Product> cartList(int userNo) throws Exception;
-
+  //장바구니 업뎃
+  public int cartUpdate(Product product) throws Exception;
   // 장바구니 삭제
   public int cartListDelete(int cartlistNo) throws Exception;
 

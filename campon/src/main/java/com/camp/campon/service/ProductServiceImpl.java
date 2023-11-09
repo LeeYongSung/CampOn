@@ -145,13 +145,13 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<Product> wishList(int userNo) {
+    public List<Product> wishList(int userNo) throws Exception  {
         List<Product> wishlist = productMapper.wishList(userNo);
         return wishlist;
     }
 
     @Override
-    public int wishListDelete(int wishlistNo) {
+    public int wishListDelete(int wishlistNo) throws Exception  {
         int result = productMapper.wishListDelete(wishlistNo);
         return result;
     }
@@ -163,13 +163,13 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<Product> cartList(int userNo) {
+    public List<Product> cartList(int userNo)  throws Exception {
         List<Product> cartlist = productMapper.cartList(userNo);
         return cartlist;
     }
 
     @Override
-    public int cartListDelete(int cartlistNo) {
+    public int cartListDelete(int cartlistNo) throws Exception  {
         int result = productMapper.cartListDelete(cartlistNo);
         return result;
     }
@@ -206,19 +206,19 @@ public class ProductServiceImpl implements ProductService {
         return productList;
     }
     @Override
-    public List<Product> productimg(Integer productNo) {
+    public List<Product> productimg(Integer productNo) throws Exception  {
         List<Product> productimg = productMapper.productimg(productNo);
         return productimg;
     }
 
     @Override
-    public List<Productreview> getReviewListByNo(int productNo) {
+    public List<Productreview> getReviewListByNo(int productNo)  throws Exception {
         List<Productreview> getreviewlistbyno = productMapper.getReviewListByNo(productNo);
         return getreviewlistbyno;
     }
 
     @Override
-    public int reviewCount(int productNo) {
+    public int reviewCount(int productNo)  throws Exception {
         int reviewCount = productMapper.reviewCount(productNo);
         return reviewCount;
     }
@@ -254,6 +254,12 @@ public class ProductServiceImpl implements ProductService {
     public List<Product> hotList() throws Exception {
         List<Product> productHotList = productMapper.hotList();
         return productHotList;
+    }
+
+    @Override
+    public int cartUpdate(Product product) throws Exception {
+        int result = productMapper.cartUpdate(product);
+        return result;
     }
 
     
