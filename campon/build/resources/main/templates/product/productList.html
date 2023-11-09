@@ -48,7 +48,7 @@
     <th:block th:each="product : ${productList}">
         <div style="border: 1px solid black;">
             <div>
-                <img th:src="${product.productThumnail}" alt="상품썸네일">
+                <img th:src="|img?file=${product.productThumnail}|" alt="상품썸네일">
             </div>
             <div>
                 <div>
