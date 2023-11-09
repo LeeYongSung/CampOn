@@ -113,7 +113,10 @@ INSERT INTO productsave (product_no, user_no) VALUES (#{productNo}, #{userNo})
     JOIN product p ON c.product_no = p.product_no
     WHERE c.user_no = #{userNo}
 </select>
-
+<!--장바구니에서 수량 업뎃-->
+<update id="cartUpdate">
+UPDATE cart SET cart_cnt = #{cartCnt} WHERE product_no = #{productNo} AND user_no = #{userNo}
+</update>
 <!-- 장바구니 삭제 -->
 <delete id="cartListDelete">
     DELETE FROM cart

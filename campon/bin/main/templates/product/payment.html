@@ -12,10 +12,16 @@
 <body layout:fragment="content">
     <h1>결제하기</h1>
 
-    <h2>주문상품</h2>
-    <th:block th:each="product : ${cartList}">
-        <div style="border: 1px solid black;">
-            <div>
+
+    <!--윤주꺼-->
+
+    <form action="/order/paymentpro" method="post">
+        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+        <h2>주문상품</h2>
+        <th:block th:each="product : ${cartList}">
+            <input type="hidden" th:value="${product.productNo}" name="productNos">
+            <div style="border: 1px solid black;">
+<div>
                 <button class="decrease" type="button">-</button>
                 <span class="quantity" th:text="${cart.cartCnt}"></span>
                 <button class="increase" type="button">+</button>
@@ -38,87 +44,70 @@
             </div>
             <div>
                 <div>
-                    <h2>상품이름 : <span th:text="${product.productName}"></span></h2>
-                   <p>상품기본내용 : <span th:text="${product.productIntro}"></span></p>
+                    <img th:src="${product.productThumnail}" alt="상품썸네일">
                 </div>
                 <div>
-                    <h2>가격 : <span th:text="${product.productPrice}"></span></h2>
-                     <!-- 상품수량 및 증감 -->
                     <div>
-                        <button class="decrease" type="button">-</button>
-                        <span class="quantity" th:text="${product.cartCnt}"></span>
-                        <button class="increase" type="button">+</button>
+                        <p>카테고리 : <span th:text="${product.productCategory}"></span></p>
+                        <h5>상품이름 : <span th:text="${product.productName}"></span></h5>
+                        <p>상품기본내용 : <span th:text="${product.productIntro}"></span></p>
+                    </div>
+                    <div>
+                        <p>가격 : <span th:text="${product.productPrice}"></span></p>
+                        <label for="cartCnt">수량 입력 : <span></span></label>
+                        <input type="text" name="cartCnts" th:value="${product.cartCnt}" id="cartCnt">
                     </div>
                 </div>
             </div>
+        </th:block>
+
+
+        <h2>배송받을 캠핑장을 선택해주세요 </h2>
+        <div th:each="camp, status : ${reservationList}" style="border: 1px solid black;"> 
+            <ul>
+                <li>
+                    <img th:src="|/img?file=${camp.cpdiUrl}|" alt="캠핑상품 이미지" />
+                </li>
+                <li>
+                    <ul>
+                        <li>캠핑장명 : <span th:text="${camp.campName}"></span></li>
+                        <li>캠핑상품명 : <span th:text="${camp.cpdtName}"></span></li>
+                        <li>예약시작날짜 : <span th:text="${camp.reservationStart}"></span></li>
+                        <li>예약끝날짜 : <span th:text="${camp.reservationEnd}"></span></li>
+                        <li>예약번호 : <span th:text="${camp.reservationNo}"></span></li>
+                    </ul>
+                </li>
+            </ul> 
+            <input type="radio" th:id="|selectCamp-${status.index}|" th:value="${camp.reservationNo}" name="reservationNo">
+            <label th:for="|selectCamp-${status.index}|"><span></span>캠핑장 선택</label>
         </div>
-    </th:block> 
 
-    <h2>배송받을 캠핑장을 선택해주세요 </h2>
-    <th:block th:each="camp : ${reservationList}">
-        <ul>
-            <li>
-                <img th:src="|/img?file=${camp.cpdiUrl}|" alt="캠핑상품 이미지" />
-            </li>
-            <li>
-                <ul>
-                    <li>캠핑장명 : <span th:text="${camp.campName}"></span></li>
-                    <li>캠핑상품명 : <span th:text="${camp.cpdtName}"></span></li>
-                    <li>예약날짜 : <span th:text="|${ #dates.format(camp.reservationEnd,'yyyy-MM-dd')} ~ ${ #dates.format(camp.endDate, 'yyyy-MM-dd')}|"></span></li>
-                    <li>예약번호 : <span th:text="${camp.reservationNo}"></span></li>
-                </ul>
-            </li>
-        </ul> 
-        <input type="radio" id="selectCamp" th:value="${camp.reservationNo}">
-        <label for="selectCamp">캠핑장 선택</label>
-    </th:block>
-
-
-    <!-- 결제방법 선택 -->
-    <div>
-        <div><p>결제 방법 선택</p></div>
+        <!-- 결제방법 선택 -->
         <div>
-            <input type="radio" id="card" value="카드">
-            <label for="card">카드 결제</label>
-            <input type="radio" id="bankPay" value="무통장입금">
-            <label for="bankPay">무통장 입금</label>
+            <div><p>결제 방법 선택</p></div>
+            <div>
+                <input type="radio" id="card" value="카드" name="pmType">
+                <label for="card"><span></span>카드 결제</label>
+                <input type="radio" id="bankPay" value="무통장입금" name="pmType">
+                <label for="bankPay"><span></span>무통장 입금</label>
+            </div>
         </div>
-    </div>
 
 
-    <!--총 렌트 금액-->
-    <div>
-        <h4>총 렌트 금액 : <span>???</span>원</h4>
-    </div>
+        <!--총 렌트 금액 (수정 필요)-->
+        <div>
+            <h4>총 렌트 금액 : <span>???</span>원</h4>
+        </div>
 
 
-    <!--결제하기 버튼-->
-    <button type="submit">결제하기</button>   
+        <!--결제하기 버튼-->
+        <button type="submit">결제하기</button>   
+
+    </form>
 
     <script>
 
-window.onload = function(){
-    $(".decrease").click(function () {
-                let quantityElement = $(this).next(".quantity");
-                let quantity = parseInt(quantityElement.text());
-                console.log(quantity);
-                if (quantity > 1) {
-                    quantity--;
-                    quantityElement.text(quantity);
-                }
-            });
-
-            // "+" 버튼 클릭 시 수량 증가
-            $(".increase").click(function () {
-                let quantityElement = $(this).prev(".quantity");
-                let quantity = parseInt(quantityElement.text());
-                quantity++;
-                quantityElement.text(quantity);
-            });
-
-
-};
-        
     </script>
+
 </body>
 </html>
