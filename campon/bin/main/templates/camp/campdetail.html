@@ -12,24 +12,98 @@
 </head>
 <body layout:fragment="content">
     <form>
-
-        <div th:each="img : ${productimg}">
-            <img th:src="${img.cpdiUrl}">
+        <!-- Swiper -->
+        <div class="swiper mySwiper">
+            <div class="swiper-wrapper">
+            <div class="swiper-slide" th:each="img : ${productimg}"><img th:src="${img.cpdiUrl}"></div>
+            </div>
+            <div class="swiper-button-next"></div>
+            <div class="swiper-button-prev"></div>
+            <div class="swiper-pagination"></div>
         </div>
-        캠핑상품전체사진
-        <div>
-            캠핑장 이름 : <span th:text="${productintro.campName}"></span>
-            상품 이름 : <span th:text="${productintro.cpdtName}"></span>
+        <div class="w-100 campdetail_productBox pt-2">
+            <ul>
+                <li class="w-100 text-center">
+                    <span th:text="${productintro.campName}"></span>
+                </li>
+                <li class="w-100 text-center fs-4">
+                    <span th:text="${productintro.cpdtName}"></span>
+                </li>
+            </ul>
         </div>
-        <hr>
-        <div>기본정보</div>
-        <div>가격 : <span th:text="${productintro.cpdtPrice}"></span></div>
-        <div>유형 : <span th:text="${productintro.campTypeName}"></span></div>
-        <div>크기 : <span th:text="${productintro.cpdtSize}"></span></div>
-        <div>인원 : <span th:text="${productintro.cpdtNop}"></span></div>
-        <div>소개 : <span th:text="${productintro.cpdtIntroduction}"></span></div>
-        <buton type="button" onclick="reservate()"> 예약하기 </buton>
+        <div class="container-sm w-100 campdetail_basic py-3 border-bottom">
+            <div class="container-sm border d-flex justify-content-around text-center py-3">
+                <ul>
+                    <li class="pb-1">
+                        <span>유형</span>
+                    </li>
+                    <li>
+                        <span th:text="${productintro.campTypeName}"></span>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="pb-1">
+                        <span>크기</span>
+                    </li>
+                    <li>
+                        <span th:text="${productintro.cpdtSize}"></span>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="pb-1">
+                        <span>인원</span>
+                    </li>
+                    <li>
+                        <span th:text="${productintro.cpdtNop}"></span>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="pb-1">
+                        <span>가격</span>
+                    </li>
+                    <li>
+                        <span th:text="${productintro.cpdtPrice}"></span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="w-100 py-3 border-bottom">
+            <div class="container-sm">
+                <div>
+                    <h5>캠핑장 상품 소개</h5>
+                </div>
+                <div class="campdetail_introduction">
+                    <span th:text="${productintro.cpdtIntroduction}"></span>
+                </div>
+            </div>
+        </div>
+        <div class="w-100 my-3">
+            <buton type="button" class="btn btn-lg w-100 reservate_btn" onclick="reservate()"> 예약하기 </buton>
+        </div>
     </form>
+    <!-- Swiper JS -->
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+
+    <!-- Initialize Swiper -->
+    <script>
+      var swiper = new Swiper(".mySwiper", {
+        spaceBetween: 0,
+        centeredSlides: true,
+        autoplay: {
+          delay: 3000,
+          disableOnInteraction: false,
+        },
+        pagination: {
+          el: ".swiper-pagination",
+          clickable: true,
+        },
+        navigation: {
+          nextEl: ".swiper-button-next",
+          prevEl: ".swiper-button-prev",
+        },
+      });
+
+    </script>
     <script>
         let cpdtNo = "[[${productintro.cpdtNo}]]"
         function reservate(){

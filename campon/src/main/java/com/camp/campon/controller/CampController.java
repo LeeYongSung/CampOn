@@ -165,6 +165,7 @@ public class CampController {
         List<Camp> productsproductlist = campService.productsproductlist(campNo);
         
         model.addAttribute("productsimg", productsimg);
+        log.info("productsproducts : " + productsproducts);
         model.addAttribute("productsproducts", productsproducts);
         model.addAttribute("productsreserve", productsreserve);
         model.addAttribute("productsseller", productsseller);
@@ -269,6 +270,7 @@ public class CampController {
         model.addAttribute("user", user);
         return "camp/reservate";
     }
+    
     @PostMapping(value="/reservate")
     public String campReservatePay(Model model, Camp camp) throws Exception {
         
