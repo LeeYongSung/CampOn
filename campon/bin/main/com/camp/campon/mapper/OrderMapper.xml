@@ -70,6 +70,4 @@ WHERE c.user_no = #{userNo})
 <insert id="addPayments">
 INSERT INTO payments (order_number, pm_type, pm_price) VALUES (#{orderNumber}, #{pmType}, #{pmPrice})
 </insert>
-
-
 </mapper>
