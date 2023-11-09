@@ -10,6 +10,7 @@ header>nav {border-bottom: 1px solid black;}
 .main_menu {display: flex; justify-content: space-around; padding-left: 0!important; padding-top: 10px;}
 .main_menu>li {width: 100px;}
 .sub_menu {text-align: center; padding-left: 0!important;}
+.sub_menu>li:nth-of-type(2) {font-size: 0.8em;}
 .sns_box {width: 100%; height: 60px;}
 .sns {display: flex; justify-content: space-around; width: 60%; margin: 0 auto; height: 60px; line-height: 60px; padding-left: 0!important;}
 .info_box {width: 100%; height: 130px;}
@@ -215,6 +216,27 @@ input[type="checkbox"] {
 .reservateCampName {width: 60%;}
 .reservateCampName p {margin-bottom: 0!important;}
 .reservecomplete_btnBox a {width: 200px;}
+
+/* 예약현황 */
+.reservation_box {background-color: #FFDF6C; border-radius: 15px 15px 0 0;}
+.reservationImg {width: 40%;}
+.reservationImg img {width: 150px; height: 150px; object-fit: cover; border-radius: 15px;}
+.reservationTitle {width: 60%;}
+.reservationTitle p {margin-bottom: 0!important;}
+.reservationTitle h5 {margin-bottom: 0!important;}
+.reservation_cancle {position: absolute; top: 20px; right: 20px;}
+.reservation_more {position: absolute; bottom: 5px; right: 10px; font-size: 0.8em;}
+.reservation_less {position: absolute; bottom: 5px; right: 10px; font-size: 0.8em;}
+.reservationCon {font-size: 0.8em;}
+.campproduct_home_btn {background-color: #FA9D4B; transition: all 0.5s;}
+.campproduct_home_btn:hover {background-color: white; border: 1px solid #686868;}
+
+.campProductImg {width: 30%;}
+.campProductImg img {width: 120px; height: 50px; object-fit: cover;}
+.campProductCon {width: 70%;}
+.campproduct_close {position: absolute; top: 5px; right: 10px;}
+
+
 
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {

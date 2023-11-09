@@ -186,6 +186,7 @@ public class CampController {
             String userId = principal.getName();
             Users users = userService.selectById(userId);
             userNo = users.getUserNo();
+            log.info(userNo + "");
         }
         List<Product> productList = productService.reservedProduct(userNo);
         List<Camp> reservationList = campService.reservation(userNo);
@@ -261,6 +262,8 @@ public class CampController {
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String userId = auth.getName();
+        if(userId.equals("anonymousUser")) return "redirect:/user/login";
+        // log.info(userId);
         // 임시값
         // String userId = "user";
         Users user = userService.selectById(userId);
