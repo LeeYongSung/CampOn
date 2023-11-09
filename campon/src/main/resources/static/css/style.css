@@ -172,10 +172,60 @@ input[type="checkbox"] {
 .campfacility ul {padding-left: 0!important;}
 
 /* 캠핑상품목록 */
-.campdetail {height: 200px; overflow: hidden;}
+.campdetail {height: 200px; overflow: hidden; transition: height 0.3s ease-out;}
 .campdetail_box {background-color: #FFDC70; border-radius: 10px;}
 .campdetail_product>div:nth-of-type(1) {width: 30%;}
 .campdetail_product>div:nth-of-type(2) {width: 70%;}
+.review_img {width: 100px; height: 100px; object-fit: cover; overflow: hidden;}
+.review_box {border-radius: 15px;}
+.review_box ul {padding-left: 0!important;}
+.review_box ul:nth-of-type(1) p {font-size: 0.9em;}
+.review_box ul:nth-of-type(2) p {font-size: 0.8em;}
+.review_box p {margin-bottom: 0!important;}
+
+.facilitytypeImg_box>img {width: 40px; height: 40px;}
+.facilitytypeName_box>span{font-size: 0.8em;}
+
+/* 캠핑 상품 상세 */
+.campdetail_productBox>ul {padding-left: 0!important;}
+.campdetail_basic ul {padding-left: 0!important;}
+.campdetail_basic>div>ul>li:nth-of-type(1)>span {font-size: 0.7em;}
+.campdetail_introduction {font-size: 0.8em;}
+.reservate_btn {background-color: #FFDC70;}
+
+/* 예약진행 */
+.reservate_box {width: 100%; height: 150px;}
+.reservate_box>div p {margin-bottom: 0!important;}
+.reservate_box>div:nth-of-type(1) {width: 30%;}
+.reservate_box>div:nth-of-type(2) {width: 70%;}
+.reservation_date>input{border: none;  text-align: center;}
+.checkinBox {width: 40%;}
+.checkoutBox {width: 40%;}
+.daycount {width: 20%;}
+.daycount>input {border: none; text-align: center;}
+.reservationNop_box {border: 1px solid gray; width: 110px;}
+#reservationNop, .plus, .minus {padding-top: 0.625rem!important;}
+.plus, .minus {background-color: #f2f2f2;}
+.reservate_user_box p {margin-bottom: 0!important;}
+
+/* 예약완료 */
+.reservate_cmp {height: 200px;}
+.reservateComImg {width: 40%;}
+.reservateComImg>img {width: 150px; height: 150px; border-radius: 15px;}
+.reservateCampName {width: 60%;}
+.reservateCampName p {margin-bottom: 0!important;}
+.reservecomplete_btnBox a {width: 200px;}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+/* Firefox */
+.minus input[type=number], .plus input[type=number] {
+  -moz-appearance: textfield;
+}
+
 input[type="checkbox"] + label {
     color:black;
 }

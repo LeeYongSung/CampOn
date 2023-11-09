@@ -76,21 +76,26 @@
         <div class="d-flex justify-content-around">
             <th:block th:each="productsfacility : ${productsfacility}">
                 <ul class="text-center">
-                    <li><img th:src="${productsfacility.facilitytypeImg}" alt="시설물사진"></li>
-                    <li><span th:text="${productsfacility.facilitytypeName}"></span></li>
+                    <li class="facilitytypeImg_box"><img th:src="${productsfacility.facilitytypeImg}" alt="시설물사진"></li>
+                    <li class="facilitytypeName_box"><span th:text="${productsfacility.facilitytypeName}"></span></li>
                 </ul>
             </th:block>
         </div>
     </div>
     <div class="container-sm w-100 py-2 border-bottom">
-        <div class="pt-2"><h5>카카오API</h5></div>
-        <div></div>
+        <div class="pt-2"><h5>캠핑장 위치</h5></div>
+
+        <input type="hidden" id="latitude" th:value="${productsproducts.campLatitude}">
+        <input type="hidden" id="longitude" th:value="${productsproducts.campLongitude}">
+        <div id="map" style="width:100%; height:600px;">
+            <!-- api 지도 출력 부분 -->
+        </div>
     </div>
     <div class="container-sm w-100 py-2 border-bottom">
         <div><h5>캠핑장배치도</h5></div>
         <div><img th:src="${productsproducts.campLayout}"></div>
     </div>
-    <div class="campdetail container-sm w-100 py-2 position-relative">
+    <div class="campdetail container-sm w-100 py-2 position-relative mb-2">
         <div><h5>캠핑상품</h5></div>
         <th:block th:each="productsproductlist : ${productsproductlist}">
             <div class="campdetail_box w-100 mb-3 py-5">
@@ -108,32 +113,70 @@
                 </a>
             </div>
         </th:block>
-        <div class="text-center w-100 position-absolute bottom-0 "><a href="javascript:;" class="campdetail_btn w-100 d-block">더보기<span class="material-symbols-outlined">expand_more</span></a></div>
+        <div class="text-center w-100 position-absolute bottom-0"><a href="javascript:;" class="campdetail_btn w-100 d-block bg-white">더보기<span class="material-symbols-outlined">expand_more</span></a></div>
     </div>
-    <div class="border-top">
-        <div>캠핑장리뷰</div>
-        <div>
-
+    <div class="border-top border-bottom">
+        <div class="container-sm w-100 my-2">
+            <div><h5>캠핑장리뷰</h5></div>
+            <div>
+                <p th:if="${productsreview == null}" th:text="|등록된 리뷰가 없습니다.|" class="w-100 text-center"></p>
+                <th:block th:if="${productsreview != null}">
+                    <div class="review_box w-100 border">
+                        <a th:href="|/board/crread?reviewNo=${productsreview.reviewNo}|">
+                            <ul>
+                                <li class="ps-4 pt-2">
+                                    <p th:text="${productsreview.userName}"></p>
+                                </li>
+                                <li class="ps-4">
+                                    <p th:text="${productsreview.campName}"></p>
+                                </li>
+                            </ul>
+                            <ul class="d-flex justify-content-between py-2">
+                                <li class="ps-3">
+                                    <p th:text="${productsreview.reviewCon}"></p>
+                                </li>
+                                <li class="pe-3">
+                                    <div class="review_img">
+                                        <img th:src="${productsreview.reviewImg}">
+                                    </div>
+                                </li>
+                            </ul>
+                        </a>
+                    </div>
+                </th:block>
+            </div>
+            <div class="w-100 text-center mt-2">
+                <a href="#" class="d-block bg-warning py-2">리뷰 더보기</a>
+            </div>
         </div>
-        <p th:if="${productsreview == null}" th:text="|등록된 리뷰가 없습니다.|"></p>
-        <th:block th:if="${productsreview != null}">
-            <a th:href="|/board/crread?reviewNo=${productsreview.reviewNo}|">
-                <p th:text="${productsreview.userName}"></p>
-                <p th:text="${productsreview.campName}"></p>
-                <p th:text="${productsreview.reviewCon}"></p>
-            </a>
-        </th:block>
-        <img th:if="${productsreview != null}" th:src="${productsreview.reviewImg}">
     </div>
-    <div><a href="#">리뷰 더보기</a></div>
-    <hr>
-    <div>캠핑장 운영정책</div>
-    <div>캠핑장 운영정책 모달창</div>
-    <hr>
-    <div>취소 환불 규정</div>
-    <div>취소 환불 규정 모달창</div>
-    <hr>
-    <div>사업자정보
+    <div class="container-sm w-100 py-3 mt-3 border-bottom border-top">
+        <a href="javascript:;" class="d-flex w-100">
+            <div class="d-flex justify-content-between">
+                <div><h6>캠핑장 운영정책</h6></div>
+                <div><span class="material-symbols-outlined">chevron_right</span></a></div>
+            </div>
+        </a>
+    </div>
+    <div class="none">캠핑장 운영정책 모달창</div>
+    <div class="container-sm w-100 py-3 mt-3 border-bottom border-top">
+        <a href="javascript:;" class="d-flex w-100">
+            <div class="d-flex justify-content-between">
+                <div><h6>취소 환불 규정</h6></div>
+                <div><span class="material-symbols-outlined">chevron_right</span></a></div>
+            </div>
+        </a>
+    </div>
+    <div class="none">취소 환불 규정 모달창</div>
+    <div class="container-sm w-100 py-3 mt-3 border-bottom border-top">
+        <a href="javascript:;" class="d-flex w-100">
+            <div class="d-flex justify-content-between">
+                <div><h6>사업자정보</h6></div>
+                <div><span class="material-symbols-outlined">chevron_right</span></a></div>
+            </div>
+        </a>
+    </div>
+    <div class="none">
         <li>업체명 : <span th:text="${productsseller.companyName}"></span></li>
         <li>사업자번호 : <span th:text="${productsseller.companyNumber}"></span></li>
         <li>사업주 : <span th:text="${productsseller.userName}"></span></li>
@@ -168,8 +211,113 @@
         })
 
         $('.campdetail_btn').on('click', function() {
-            $('.campdetail').css('height', 'auto')
+            $('.campdetail').css('height' , 'auto')
         })
      </script>
+
+    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=66c31d7d2fe00c73f61774f2c881769e&​libraries=services"></script>
+    <script>
+        let latitude = $('#latitude').val();
+        let longitude = $('#longitude').val();
+        console.log(latitude);
+        console.log(longitude);
+        let lat = latitude     // 위도
+        let lon = longitude    // 경도
+        // let lat = 37.49100953576117     // 위도
+        // let lon = 126.72047625631083    // 경도
+        
+
+        
+        // let lat = 37.5207569     // 위도
+        // let lon = 126.9003409    // 경도
+
+        var container = document.getElementById('map'); //지도를 담을 영역의 DOM 레퍼런스
+        var options = { //지도를 생성할 때 필요한 기본 옵션
+            center: new kakao.maps.LatLng(lat, lon), //지도의 중심좌표.
+            level: 3 //지도의 레벨(확대, 축소 정도)
+        };
+
+        // 지도를 생성한다
+        var map = new kakao.maps.Map(container, options); 
+
+        // 지도 타입 변경 컨트롤을 생성한다
+        var mapTypeControl = new kakao.maps.MapTypeControl();
+
+        // 지도 상단 우측에 타입 변경 컨트롤을 추가한다
+        map.addControl(mapTypeControl, kakao.maps.ControlPosition.TOPRIGHT)
+
+        // 지도에 확대/축소 컨트롤을 생성한다
+        var zoomControl = new kakao.maps.ZoomControl();
+
+        // 지도의 우측에 확대/축소 컨트롤을 추가한다
+        map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT)
+
+        // 지도에 마커를 생성하고 표시한다
+		var marker = new kakao.maps.Marker({
+		    position: new kakao.maps.LatLng(lat, lon), // 마커의 좌표
+		    map: map                                    // 마커를 표시할 지도 객체
+		});
+
+        // 지도 클릭 이벤트를 등록한다 (좌클릭 : click, 우클릭 : rightclick, 더블클릭 : dblclick)
+		kakao.maps.event.addListener(map, 'click', function (mouseEvent) {
+			console.log('지도에서 클릭한 위치의 좌표는 ' + mouseEvent.latLng.toString() + ' 입니다.');
+
+            let position = document.getElementById('position')            
+            // 위도,경도 정보
+            let latlng = mouseEvent.latLng
+            let lat = latlng.getLat()       // 위도
+            let lng = latlng.getLng()       // 경도
+            let msg = `위도 : ${lat}, 경도 : ${lng}`
+
+            position.innerHTML = msg
+		});	
+
+
+        // 커스텀 오버레이를 생성하고 지도에 표시한다
+        var campName = "[[${productsproducts.campName}]]"
+		var customOverlay = new kakao.maps.CustomOverlay({
+			map: map,
+			content: `<div class="my-place">${campName}</div>`, 
+			position: new kakao.maps.LatLng(lat, lon), // 커스텀 오버레이를 표시할 좌표
+			xAnchor: 0.5, // 컨텐츠의 x 위치
+			yAnchor: 0 // 컨텐츠의 y 위치
+		});
+
+
+        //로드뷰를 표시할 div
+		var roadviewContainer = document.getElementById('roadview'); 
+
+        // 로드뷰 위치
+        // var rvPosition = new kakao.maps.LatLng(37.56613, 126.97837);
+        
+        var roadviewClient = new kakao.maps.RoadviewClient()
+        var roadview = new kakao.maps.Roadview(roadviewContainer)
+        var position = new kakao.maps.LatLng(lat, lon)
+        //로드뷰 객체를 생성한다
+        // var roadview = new kakao.maps.Roadview(roadviewContainer, {
+        //     panoId : 1050215190, // 로드뷰 시작 지역의 고유 아이디 값
+        //     panoX : 126.97837, // panoId가 유효하지 않을 경우 지도좌표를 기반으로 데이터를 요청할 수평 좌표값
+        //     panoY : 37.56613, // panoId가 유효하지 않을 경우 지도좌표를 기반으로 데이터를 요청할 수직 좌표값
+        //     pan: 68, // 로드뷰 처음 실행시에 바라봐야 할 수평 각
+        //     tilt: 1, // 로드뷰 처음 실행시에 바라봐야 할 수직 각
+        //     zoom: -1 // 로드뷰 줌 초기값
+        // }); 
+
+        // 로드뷰 파노라마 ID 변화 이벤트를 등록한다
+		kakao.maps.event.addListener(roadview, 'panoid_changed', function() {
+
+            console.log(roadview.getPanoId());
+		});
+
+
+        roadviewClient.getNearestPanoId(position, 50, function(panoId) {
+            roadview.setPanoId(panoId, position);
+        });
+
+
+        
+        
+
+    </script>
 </body>
 </html>

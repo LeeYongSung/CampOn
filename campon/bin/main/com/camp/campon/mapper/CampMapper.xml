@@ -63,10 +63,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <insert id="campInsert">
         INSERT INTO 
         campproduct ( 
-                        region_no, user_no, camp_name, camp_address, camp_tel, camp_location, camp_layout, camp_open, camp_close, camp_period, camp_introduction, camp_caution
+                        region_no, user_no, camp_name, camp_address, camp_tel, camp_location, camp_layout, camp_open, camp_close, camp_period, camp_introduction, camp_caution, camp_latitude, camp_longitude
                     )
         VALUES ( 
-                #{regionNo}, #{userNo}, #{campName}, #{campAddress}, #{campTel}, #{campLocation}, #{campLayout}, #{campOpen}, #{campClose}, #{campPeriod}, #{campIntroduction}, #{campCaution} 
+                #{regionNo}, #{userNo}, #{campName}, #{campAddress}, #{campTel}, #{campLocation}, #{campLayout}, #{campOpen}, #{campClose}, #{campPeriod}, #{campIntroduction}, #{campCaution}, #{campLatitude}, #{campLongitude} 
                )
     </insert>
 
@@ -212,7 +212,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
     <!-- 예약 완료 페이지 -->
     <select id="reservecomplete" resultType="Camp">
-        select ci.cpi_url, c.camp_name, cd.cp_dt_name, r.reservation_no, u.user_name, r.reservation_nop, r.reservation_date, date_format(r.reservation_start, "%Y.%m.%d") reservation_start, date_format(r.reservation_end, "%Y.%m.%d") reservation_end, r.camp_paymenttype
+        select ci.cpi_url, c.camp_name, cd.cp_dt_name, r.reservation_no, 
+               u.user_name, r.reservation_nop, r.reservation_date, 
+               date_format(r.reservation_start, "%Y.%m.%d") reservation_start, 
+               date_format(r.reservation_end, "%Y.%m.%d") reservation_end, 
+               r.camp_paymenttype, u.user_no
         from reservation r
         left join user u on r.user_no = u.user_no
         left join campproduct c on r.camp_no = c.camp_no

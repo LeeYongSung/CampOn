@@ -97,4 +97,9 @@ public class Camp {
     public Camp() {
         this.searchDate = new Date();
     }
+
+
+    // 위치값
+    private String campLatitude;
+    private String campLongitude;
 }
