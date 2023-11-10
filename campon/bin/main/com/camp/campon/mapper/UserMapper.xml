@@ -101,7 +101,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         UPDATE user
            SET user_pw = #{userPw}
               ,user_name = #{userName}
-              ,email = #{email}
+              ,user_email = #{userEmail}
               ,user_address = #{userAddress}
               ,company_name = #{companyName}
               ,company_number = #{companyNumber}

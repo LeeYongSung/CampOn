@@ -43,7 +43,7 @@
                     <label for="address">주소</label>
                 </div>
                 <div class="form-floating">
-                    <input type="password" id="password" name="userPw" th:value="${user.userPw}" class="form-control my-2">
+                    <input type="password" id="password" name="userPw" class="form-control my-2">
                     <label for="password">비밀번호</label>
                 </div>
                 <div class="form-floating">
@@ -70,10 +70,12 @@
                 <input type="submit" value="회원정보 수정" class="btn btn-warning btn-lg w-100 my-3">
             </form>
     
-            <form action="|/user/delete?userId=${user.userId}|">
+            <!-- <form action="|/user/delete?userId=${user.userId}|">
                     <input type="hidden" value="${user.userId}">
                     <input type="submit" value="탈퇴하기" class="btn btn-danger btn-lg w-100 my-2">
-            </form>
+            </form> -->
+
+            <a th:href="|/user/delete?userId=${user.userId}|" class="btn btn-danger btn-lg w-100 my-2">탈퇴하기</a>
         </div>
     </div>
 

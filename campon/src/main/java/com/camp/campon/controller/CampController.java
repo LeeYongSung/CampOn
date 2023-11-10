@@ -165,6 +165,7 @@ public class CampController {
         List<Camp> productsproductlist = campService.productsproductlist(campNo);
         
         model.addAttribute("productsimg", productsimg);
+        log.info("productsproducts : " + productsproducts);
         model.addAttribute("productsproducts", productsproducts);
         model.addAttribute("productsreserve", productsreserve);
         model.addAttribute("productsseller", productsseller);
@@ -185,6 +186,7 @@ public class CampController {
             String userId = principal.getName();
             Users users = userService.selectById(userId);
             userNo = users.getUserNo();
+            log.info(userNo + "");
         }
         List<Product> productList = productService.reservedProduct(userNo);
         List<Camp> reservationList = campService.reservation(userNo);
@@ -260,6 +262,8 @@ public class CampController {
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String userId = auth.getName();
+        if(userId.equals("anonymousUser")) return "redirect:/user/login";
+        // log.info(userId);
         // 임시값
         // String userId = "user";
         Users user = userService.selectById(userId);
@@ -269,6 +273,7 @@ public class CampController {
         model.addAttribute("user", user);
         return "camp/reservate";
     }
+    
     @PostMapping(value="/reservate")
     public String campReservatePay(Model model, Camp camp) throws Exception {
         
