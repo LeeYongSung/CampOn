@@ -1,12 +1,14 @@
 package com.camp.campon.controller;
 
 import java.io.FileInputStream;
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,10 +25,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.camp.campon.dto.Ad;
 import com.camp.campon.dto.Camp;
 import com.camp.campon.dto.Product;
 import com.camp.campon.dto.Productreview;
 import com.camp.campon.dto.Users;
+import com.camp.campon.service.AdService;
 import com.camp.campon.service.BoardService;
 import com.camp.campon.service.CampService;
 import com.camp.campon.service.ProductService;
@@ -52,6 +56,9 @@ public class AdminController {
 
     @Autowired
     private BoardService boardService;
+    
+    @Autowired
+    private AdService adService;
 
     @GetMapping(value="/index")
     public String adminUser(Model model) {
@@ -288,10 +295,46 @@ public class AdminController {
     
         // 광고 등록
         @GetMapping("/adinsert")
-        public String adinsert() {
+        public String adinsert(Model model, int campNo) {
+            model.addAttribute("campNo", campNo);
             return "admin/adinsert";
         }
     
         // 광고 등록처리
         // @PostMapping(value="/addinsert")
+
+
+    @GetMapping(value="/adlist")
+    public String adlist(Model model) throws Exception {
+        List<Ad> adlist = adService.adlist();
+        model.addAttribute("adlist", adlist);
+        return "admin/adlist";
+    }
+    @GetMapping(value="/adcheck")
+    public String adcheck(int adNo) throws Exception {
+        int result = adService.adcheck(adNo);
+        return "redirect:/admin/adlist";
+    }
+    @GetMapping(value="/adlistseller")
+    public String adlistseller(Model model, Principal principal) throws Exception {
+        int userNo = 0;
+        if (principal == null){ userNo = 1000;}
+        else {
+            String userId = principal.getName();
+            Users users = userService.selectById(userId);
+            userNo = users.getUserNo();
+        }
+        List<Ad> adlistseller = adService.adlistseller(userNo);
+        model.addAttribute("adlistseller", adlistseller);
+        return "admin/adlistseller";
+    }
+    
+    
+    
+        @PostMapping(value="/addinsertpro")
+        public String adinsertpro(@ModelAttribute Ad ad){
+            
+
+            return "redirect:admin/adlistseller";
+        }
 }

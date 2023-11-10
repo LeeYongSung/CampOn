@@ -13,14 +13,16 @@
     <div>
         <h5>광고정보를 입력해주세요</h5>
     </div>
-    
+
     <form action="/admin/adinsertpro" method="post" enctype="multipart/form-data">
         <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+
+        <input type="hidden" name="campNo" th:value="${campNo}">
 
         <!-- 광고이미지 업로드 -->
         <div class="input-group mb-3 row border-bottom" style="margin-top: 40px;">
             <label class="col-md-4 col-form-label" for="">광고이미지</label>
-            <input type="file" class="form-control" name="campThmFile" id="campThumnail" onchange="campImg(event)">
+            <input type="file" class="form-control" name="adImg" id="adImg" onchange="campImg(event)">
             <p>파일형식 .PNG, .JPG / 가로세로 비율 1000*1500px / 용량 20MB</p>
         </div>
 
@@ -30,6 +32,7 @@
         </div>
         
         <!-- 광고위치 -->
+        <!-- 컬럼추가, 캠프장 상단, 중단, 숍 상단,중단 -->
         <div>
             광고위치
             <select id="position" name="position">
@@ -40,11 +43,11 @@
 
         <!-- 광고 요청 일자 -->
         <div class="form-floating">
-            <input type="date" class="form-control" id="campOpen" name="campOpen">
+            <input type="date" class="form-control" id="adStart" name="adStart">
             <label for="campOpen">시작일자</label>
         </div>
         <div class="form-floating">
-            <input type="date" class="form-control" id="campClose" name="campClose">
+            <input type="date" class="form-control" id="adEnd" name="adEnd">
             <label for="campClose">종료일자</label>
         </div>
         <div>
