@@ -14,5 +14,7 @@ public class Ad {
     int adCheck;
     Date regDate;
     Date updDate;
-    
+
+    String campName;
+
 }
