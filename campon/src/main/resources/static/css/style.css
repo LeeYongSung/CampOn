@@ -306,6 +306,20 @@ input[type="checkbox"] {
 /* 대여상품 상세 */
 .productdetailInfo {height: 600px; overflow: hidden;}
 
+/* 찜 */
+.wishlistImg {height: 200px; overflow: hidden;}
+.wishlistCon h5 {margin-bottom: 0!important;}
+.wishlistCon span {font-size: 0.8em;}
+.wishlistTotal {width: 500px; height: 50px; background-color: #f2f2f2; border: 1px solid #f2f2f2; bottom: 70px; z-index: 1;}
+.wishlistTotal span {font-size: 0.8em; }
+
+/* 장바구니 */
+.cartImg {height: 200px;}
+.cartCon h5 {margin-bottom: 0!important;}
+.cartCon span {font-size: 0.8em;}
+.cartTotal {width: 500px; bottom:70px; }
+
+
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
   -webkit-appearance: none;

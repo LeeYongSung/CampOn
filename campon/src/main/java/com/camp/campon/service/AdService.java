@@ -13,6 +13,4 @@ public interface AdService {
    // 광고리스트 (seller)
    public List<Ad> adlistseller(int userNo) throws Exception;
 
-public interface AdService {
-    public int adinsert(Ad ad) throws Exception;
 }
