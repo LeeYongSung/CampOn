@@ -15,7 +15,7 @@
 
     <!--윤주꺼-->
 
-    <form action="/order/paymentpro" method="post">
+    <form action="/order/paymentpro" method="post"  target="param">
         <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
         <h2>주문상품</h2>
         <th:block th:each="product : ${cartList}">
@@ -31,7 +31,7 @@
                         <p>상품기본내용 : <span th:text="${product.productIntro}"></span></p>
                     </div>
                     <div>
-                        <p>가격 : <span th:text="${product.productPrice}"></span></p>
+                        <p>가격 : <span name="productPrice" th:text="${product.productPrice}"></span></p>
                         <label for="cartCnt">수량 입력 : <span></span></label>
                         <input type="text" name="cartCnts" th:value="${product.cartCnt}" id="cartCnt">
                     </div>
@@ -79,13 +79,32 @@
 
 
         <!--결제하기 버튼-->
-        <button type="submit">결제하기</button>   
+        <button type="submit" onclick="requestPay()">결제하기</button>   
 
     </form>
+    <!-- iframe 설정 -->
+    <iframe id="if" name="param"></iframe>
 
     <script>
+        $(document).ready(function () {
+        // 페이지 로딩 시 초기 총 가격 계산
+            updateTotalPrice();
+            // 수량이 변경될 때마다 총 가격 업데이트
+            $('input[name="cartCnts"]').on('input', updateTotalPrice);
 
+            function updateTotalPrice() {
+                let total = 0;
+
+                $('input[name="cartCnts"]').each(function () {
+                    let cnt = parseInt($(this).val(), 10) || 0; // 수량 입력값, 없으면 0으로 처리
+                    let price = parseFloat($(this).closest('div').find('span[name="productPrice"]').text().replace(/[^0-9.-]+/g,"")) || 0; // 상품 가격, 없으면 0으로 처리
+                    total += cnt * price;
+                });
+
+                // 총 가격을 화면에 업데이트
+                $('#totalPrice').text('총 가격: ' + total.toFixed(2) + '원');
+            }
+        });
     </script>
-
 </body>
 </html>
