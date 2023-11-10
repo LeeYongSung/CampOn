@@ -1,8 +1,11 @@
 package com.camp.campon.controller;
 
+import java.security.Principal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,7 +18,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.camp.campon.dto.Board;
 import com.camp.campon.dto.Camp;
+import com.camp.campon.dto.CustomUser;
+import com.camp.campon.dto.Users;
 import com.camp.campon.service.BoardService;
+import com.camp.campon.service.UserService;
+
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -28,6 +35,9 @@ public class BoardController {
     
     @Autowired
     private BoardService boardService;
+
+    @Autowired
+    private UserService userService;
 
     @GetMapping(value="/index")
     public String index(Model model) throws Exception {
@@ -95,19 +105,27 @@ public class BoardController {
         return "board/crupdate";
     }
     @PostMapping(value="/crupdate")
-    public String crupdatePro(@ModelAttribute Board board) throws Exception {
+    public String crupdatePro(Board board) throws Exception {
         int result = boardService.crupdate(board);
         int reviewNo = board.getReviewNo();
         if(result == 0) return "board/crupdate?reviewNo=" + reviewNo;
-        return "redirect:/board/crread?reviewNo="+ reviewNo;
+        return "redirect:/board/boardlist";
     }
     //캠핑리뷰 삭제
     @PostMapping(value="/crdelete")
     public String crdelete(int reviewNo) throws Exception {
         int result = boardService.crdelete(reviewNo);
         if(result == 0) return "board/crupdate?reviewNo=" + reviewNo;
-        return "redirect:/board/index";
+        return "redirect:/board/boardlist";
     }
+    @GetMapping(value="/crdelete")
+    public String crdeletePro(int reviewNo) throws Exception {
+        int result = boardService.crdelete(reviewNo);
+        if(result == 0) return "board/crupdate?reviewNo=" + reviewNo;
+        return "redirect:/board/boardlist";
+    }
+    
+
 
     //상품 리뷰 수정
     @GetMapping(value="/prupdate")
@@ -121,15 +139,22 @@ public class BoardController {
         int result = boardService.prupdate(board);
         int prNo = board.getPrNo();
         if(result == 0) return "board/prupdate?prNo=" + prNo;
-        return "redirect:/board/prread?prNo="+ prNo;
+        return "redirect:/board/boardlist";
     }
-    //캠핑리뷰 삭제
+    //상품리뷰 삭제
     @PostMapping(value="/prdelete")
     public String prdelete(int prNo) throws Exception {
         int result = boardService.prdelete(prNo);
         if(result == 0) return "board/prupdate?prNo=" + prNo;
-        return "redirect:/board/index";
+        return "redirect:/board/boardlist";
     }
+    @GetMapping(value="/prdelete")
+    public String prdeletePro(int prNo) throws Exception {
+        int result = boardService.prdelete(prNo);
+        if(result == 0) return "board/prupdate?prNo=" + prNo;
+        return "redirect:/board/boardlist";
+    }
+    
     
     
     @ResponseBody
@@ -184,8 +209,38 @@ public class BoardController {
         return results;
     }
     
-    
-    
-    
+    ////////리스트
+    @GetMapping(value="/boardlist")
+    public String boardlist(Model model, Principal principal) throws Exception {
+        int userNo = 0;
+        if (principal == null){ userNo = 1000;}
+        else {
+            String userId = principal.getName();
+            Users users = userService.selectById(userId);
+            userNo = users.getUserNo();
+            log.info(userNo + "");
+        }
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
+        CustomUser customuser = (CustomUser) auth.getPrincipal();
+        Users user = customuser.getUsers();
+        String role = user.getAuth();
+        model.addAttribute("auth", role);
+
+        List<Board> usercrlist = boardService.usercrlist(userNo);
+        List<Board> userprlist = boardService.userprlist(userNo);
+        model.addAttribute("usercrlist", usercrlist);
+        model.addAttribute("userprlist", userprlist);
+
+        List<Board> campreviewlist = boardService.campreviewlist(userNo);
+        model.addAttribute("campreviewlist", campreviewlist);
+
+        List<Board> crlist = boardService.crlist();
+        model.addAttribute("crlist", crlist);
+        List<Board> prlist = boardService.prlist();
+        model.addAttribute("prlist", prlist);
+
+        return "board/boardlist";
+    }
     
 }

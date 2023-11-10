@@ -42,22 +42,13 @@ public class Board {
     private Date endDate;
 
 
-    private int page;
-    private int start;
-    private int end;
+    private Integer page;
+    private Integer start;
+    private Integer end;
     
-    public Board(int page, int start, int end){
+    public Board(Integer page, Integer start, Integer end){
         this.page = page;
         this.start = start;
-        this.end = end;
-    }
-    public void setPage(int page){
-        this.page = page;
-    }
-    public void setStart(int start){
-        this.start = start;
-    }
-    public void setEnd(int end){
         this.end = end;
     }
 }
