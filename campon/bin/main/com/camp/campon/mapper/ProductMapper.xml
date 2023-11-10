@@ -60,10 +60,10 @@ SELECT * FROM product WHERE product_no = #{productNo}
 
 <!--상품 수정-->
 <update id="productUpdate">
-UPDATE product SET
-product_name=#{productName}, product_thumnail=#{productThumnail}, product_category=#{productCategory}, product_price=#{productPrice},
-product_intro=#{productIntro}, product_con=#{productCon}, upd_date=now()
-WHERE product_no = #{productNo}
+    UPDATE product SET
+    product_name=#{productName}, product_thumnail=#{productThumnail}, product_category=#{productCategory}, product_price=#{productPrice},
+    product_intro=#{productIntro}, product_con=#{productCon}, upd_date=now()
+    WHERE product_no = #{productNo}
 </update>
 <delete id="deleteProduct">
 DELETE FROM product WHERE product_no = #{product_no}

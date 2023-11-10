@@ -6,6 +6,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <!-- namespace="매퍼 인터페이스 경로" -->
 <mapper namespace="com.camp.campon.mapper.AdMapper">
 
+    <!-- 광고 신청 -->
+    <insert id="adinsert">
+    INSERT INTO ad (
+        camp_no, ad_img, ad_start, ad_end
+    )
+    VALUES (
+        #{campNo}, #{adImg}, #{adStart}, #{adEnd}
+    )
+    </insert>
+
 
     
 </mapper>

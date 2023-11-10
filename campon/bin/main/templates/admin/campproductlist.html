@@ -36,6 +36,7 @@
                     </div>
                 </div>
                 <div class="campproductListBtn position-absolute top-0 end-0 d-flex pt-2">
+                    <div><a th:href="|/admin/adinsert?campNo=${camp.campNo}|" class="btn btn-success">광고신청</a></div>
                     <div><a th:href="|/admin/campdetailinsert?campNo=${camp.campNo}&userNo=${camp.userNo}|" class="btn btn-success">상품등록</a></div>
                     <div><a href="#" class="btn btn-danger mx-1">캠핑장삭제</a></div>
                 </div>

@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +24,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.camp.campon.dto.Ad;
 import com.camp.campon.dto.Camp;
 import com.camp.campon.dto.Product;
 import com.camp.campon.dto.Productreview;
@@ -288,10 +290,16 @@ public class AdminController {
     
         // 광고 등록
         @GetMapping("/adinsert")
-        public String adinsert(Model model, int ) {
+        public String adinsert(Model model, int campNo) {
+            model.addAttribute("campNo", campNo);
             return "admin/adinsert";
         }
     
         // 광고 등록처리
-        // @PostMapping(value="/addinsert")
+        @PostMapping(value="/addinsertpro")
+        public String adinsertpro(@ModelAttribute Ad ad){
+            
+
+            return "redirect:admin/adlistseller";
+        }
 }
