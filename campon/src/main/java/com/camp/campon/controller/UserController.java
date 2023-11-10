@@ -166,14 +166,4 @@ public class UserController {
             return "user/mypage";
         }
     }
-
-    // 광고 등록
-    @GetMapping("/adinsert")
-    public String productAdd() {
-        return "user/adinsert";
-    }
-
-    // 광고 등록처리
-    // @PostMapping(value="/addinsert")
- 
 }
