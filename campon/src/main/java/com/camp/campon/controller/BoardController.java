@@ -96,6 +96,8 @@ public class BoardController {
     }
     @PostMapping(value="/crupdate")
     public String crupdatePro(@ModelAttribute Board board) throws Exception {
+
+        log.info("page : " + board.getPage());
         int result = boardService.crupdate(board);
         int reviewNo = board.getReviewNo();
         if(result == 0) return "board/crupdate?reviewNo=" + reviewNo;
