@@ -177,4 +177,9 @@ SELECT r.*, u.user_id, p.product_name FROM productreview r JOIN `user` u ON  r.u
     LIMIT 3;
 </select>
 
+<select id="reservedProduct" resultType="Product">
+SELECT o.user_no, sum(order_cnt) sum, p.* FROM `order` o JOIN product p ON p.product_no = o.product_no 
+WHERE user_no = #{userNo} GROUP BY o.product_no
+</select>
+
 </mapper>

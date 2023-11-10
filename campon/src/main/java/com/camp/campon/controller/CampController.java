@@ -1,5 +1,6 @@
 package com.camp.campon.controller;
 
+import java.security.Principal;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -20,9 +21,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.camp.campon.dto.Board;
 import com.camp.campon.dto.Camp;
+import com.camp.campon.dto.Product;
 import com.camp.campon.dto.Users;
 import com.camp.campon.service.BoardService;
 import com.camp.campon.service.CampService;
+import com.camp.campon.service.ProductService;
 import com.camp.campon.service.UserService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -37,12 +40,12 @@ public class CampController {
 
     @Autowired
     private CampService campService;
-
     @Autowired
     private BoardService boardService;
-
     @Autowired
     private UserService userService;
+    @Autowired
+    private ProductService productService;
 
     @Autowired
     private AuthenticationManager authenticationManager;
@@ -162,6 +165,7 @@ public class CampController {
         List<Camp> productsproductlist = campService.productsproductlist(campNo);
         
         model.addAttribute("productsimg", productsimg);
+        log.info("productsproducts : " + productsproducts);
         model.addAttribute("productsproducts", productsproducts);
         model.addAttribute("productsreserve", productsreserve);
         model.addAttribute("productsseller", productsseller);
@@ -175,26 +179,20 @@ public class CampController {
     }
     
     @GetMapping(value="/reservation")
-    public String campReservation(Model model, Integer userNo) throws Exception {
-
-        log.info("예약 조회페이지 진입...");
-        
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-
-        // List<Users> user = (List<Users>) auth.getPrincipal();
-
-        // log.info("user : " + user);
-
-        // int userNo = user.get(0).getUserNo();
-        // log.info("name : " + userId);
-
-        // 임시값
-        userNo = 2;
-
+    public String campReservation(Model model, Principal principal) throws Exception {
+        int userNo = 0;
+        if (principal == null){ userNo = 1000;}
+        else {
+            String userId = principal.getName();
+            Users users = userService.selectById(userId);
+            userNo = users.getUserNo();
+            log.info(userNo + "");
+        }
+        List<Product> productList = productService.reservedProduct(userNo);
         List<Camp> reservationList = campService.reservation(userNo);
         log.info("reservationList : " + reservationList);
         model.addAttribute("reservationList", reservationList);
-
+        model.addAttribute("productList", productList);
         return "camp/reservation";
     }
 
@@ -264,6 +262,8 @@ public class CampController {
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String userId = auth.getName();
+        if(userId.equals("anonymousUser")) return "redirect:/user/login";
+        // log.info(userId);
         // 임시값
         // String userId = "user";
         Users user = userService.selectById(userId);
@@ -273,6 +273,7 @@ public class CampController {
         model.addAttribute("user", user);
         return "camp/reservate";
     }
+    
     @PostMapping(value="/reservate")
     public String campReservatePay(Model model, Camp camp) throws Exception {
         

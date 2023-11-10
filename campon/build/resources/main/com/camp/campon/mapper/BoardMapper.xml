@@ -86,4 +86,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <delete id="prdelete">
         delete from productreview where pr_no=#{prNo}
     </delete>
+
+
+    <!-- 캠핑리뷰 목록-->
+    <select id="crlistpage" resultType="Board">
+        select * from review r join user u on r.user_no = u.user_no order by r.review_no desc limit #{start}, #{end}
+    </select>
+    <select id="crlistcount" resultType="int">
+        select ifnull(count(*), 0) from review r join user u on r.user_no = u.user_no
+    </select>
 </mapper>

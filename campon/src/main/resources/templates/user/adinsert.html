@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{/UI/user/layout/user_layout}">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>광고등록</title>
+</head>
+
+<body layout:fragment="content">
+    <div>
+        <h5>광고정보를 입력해주세요</h5>
+    </div>
+    <form action="/user/adinsertpro" method="post" enctype="multipart/form-data">
+        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+
+        <!-- 광고이미지 업로드 -->
+        <div class="input-group mb-3 row border-bottom" style="margin-top: 40px;">
+            <label class="col-md-4 col-form-label" for="">광고이미지</label>
+            <input type="file" class="form-control" name="productThmFile" id="productThumnail">
+            <p>파일형식 .PNG, .JPG / 가로세로 비율 1000*1500px / 용량 20MB</p>
+        </div>
+
+        <div>
+            <input type="radio" id="mid" name="position" value="mid">
+            <label for="mid"><span></span>중간</label>
+            <input type="radio" id="row" name="position" value="row">
+            <label for="row"><span></span>하단</label>
+        </div>
+
+        <div class="form-floating">
+            <input type="date" class="form-control" id="campOpen" name="campOpen">
+            <label for="campOpen">시작일자</label>
+        </div>
+        <div class="form-floating">
+            <input type="date" class="form-control" id="campClose" name="campClose">
+            <label for="campClose">종료일자</label>
+        </div>
+        <div>
+            <input type="submit" value="광고등록 요청" class="btn btn-warning btn-lg w-100 my-3 py-3">
+        </div>
+    </form>
+</body>
+
+</html>

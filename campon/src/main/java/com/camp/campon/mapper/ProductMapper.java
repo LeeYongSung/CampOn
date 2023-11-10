@@ -61,5 +61,8 @@ public interface ProductMapper {
     public int reviewCount(int productNo) throws Exception;
     // 추천상품 리스트
     public List<Product> hotList() throws Exception;
+
+    //유저번호에 따른 대여된 상품들
+    public List<Product> reservedProduct(int userNo) throws Exception;
     
 }
