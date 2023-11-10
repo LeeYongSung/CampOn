@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -294,7 +295,8 @@ public class AdminController {
     
         // 광고 등록
         @GetMapping("/adinsert")
-        public String adinsert(Model model, int ) {
+        public String adinsert(Model model, int campNo) {
+            model.addAttribute("campNo", campNo);
             return "admin/adinsert";
         }
     
@@ -329,4 +331,10 @@ public class AdminController {
     
     
     
+        @PostMapping(value="/addinsertpro")
+        public String adinsertpro(@ModelAttribute Ad ad){
+            
+
+            return "redirect:admin/adlistseller";
+        }
 }
