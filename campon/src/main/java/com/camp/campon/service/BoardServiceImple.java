@@ -190,5 +190,23 @@ public class BoardServiceImple implements BoardService {
         return prlistcount;
     }
 
+    @Override
+    public List<Board> usercrlist(int userNo) throws Exception {
+        List<Board> usercrlist = boardMapper.usercrlist(userNo);
+        return usercrlist;
+    }
+
+    @Override
+    public List<Board> userprlist(int userNo) throws Exception {
+        List<Board> userprlist = boardMapper.userprlist(userNo);
+        return userprlist;
+    }
+
+    @Override
+    public List<Board> campreviewlist(int userNo) throws Exception {
+        List<Board> campreviewlist = boardMapper.campreviewlist(userNo);
+        return campreviewlist;
+    }
+
     
 }

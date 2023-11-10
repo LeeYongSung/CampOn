@@ -40,10 +40,17 @@ public interface BoardService {
     public int prupdate(Board board) throws Exception;
     public int prdelete(int prNo) throws Exception;
 
-    // 캠핑 리뷰 목록
+    // 캠핑 리뷰 목록(페이징)
     public List<Board> crlistpage(Board board) throws Exception;
     public int crlistcount() throws Exception;
-    //상품리뷰목록
+    //상품리뷰목록(페이징)
     public List<Board> prlistpage(Board board) throws Exception;
     public int prlistcount() throws Exception;
+
+    //유저 리뷰 리스트
+    public List<Board> usercrlist(int userNo) throws Exception;
+    public List<Board> userprlist(int userNo) throws Exception;
+
+    //판매자 리뷰 리스트
+    public List<Board> campreviewlist(int userNo) throws Exception;
 }

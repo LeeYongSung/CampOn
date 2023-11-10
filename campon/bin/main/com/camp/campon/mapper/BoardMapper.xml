@@ -88,18 +88,38 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </delete>
 
 
-    <!-- 캠핑리뷰 목록-->
+    <!-- 캠핑리뷰 목록(페이징용)-->
     <select id="crlistpage" resultType="Board">
         select * from review r join user u on r.user_no = u.user_no order by r.review_no desc limit #{start}, #{end}
     </select>
     <select id="crlistcount" resultType="int">
         select ifnull(count(*), 0) from review r join user u on r.user_no = u.user_no
     </select>
-    <!--상품리뷰 목록-->
+    <!--상품리뷰 목록(페이징용)-->
     <select id="prlistpage" resultType="Board">
         select * from productreview pr join user u on pr.user_no = u.user_no order by pr.pr_no desc limit #{start}, #{end}
     </select>
     <select id="prlistcount" resultType="int">
         select ifnull(count(*), 0) from productreview
     </select>
+
+
+    <!-- 캠핑리뷰 목록 (유저)-->
+    <select id="usercrlist" resultType="Board">
+        select * from review r join user u on r.user_no = u.user_no where r.user_no=#{userNo} order by r.review_no desc
+    </select>
+    <!-- 상품 리뷰 목록 (유저)-->
+    <select id="userprlist" resultType="Board">
+        select * from productreview pr join user u on pr.user_no = u.user_no where pr.user_no=#{userNo} order by pr.pr_no desc
+    </select>
+    
+    <!-- 캠핑리뷰 목록 (판매자)-->
+    <select id="campreviewlist" resultType="Board">
+        select * from review r join user u on r.user_no = u.user_no
+        join campproduct c on r.camp_no = c.camp_no
+        where c.user_no=#{userNo}
+        order by r.review_no desc
+    </select>
+
+    
 </mapper>
