@@ -21,28 +21,6 @@
         <th:block th:each="product : ${cartList}">
             <input type="hidden" th:value="${product.productNo}" name="productNos">
             <div style="border: 1px solid black;">
-<div>
-                <button class="decrease" type="button">-</button>
-                <span class="quantity" th:text="${cart.cartCnt}"></span>
-                <button class="increase" type="button">+</button>
-            </div><br><br><br>
-
-        </div>
-
-        <!-- 배송지 선택 -->
-        <div>
-            <h5>배송받을 캠핑장을 선택해주세요 </h5>
-            <div th:each="reservation : ${reservationList}">
-                <input type="radio" name="selectedReservation" th:value="${reservation.reservationNo}">
-                <label><span></span></label>
-                <img th:src="${reservation.cpiUrl}" alt=""><br>
-                <span th:text="${reservation.campName}"></span><br>
-                <span th:text="${reservation.cpdtName}"></span><br>
-                <span th:text="|캠핑날짜 ${reservation.reservationStart} ~ ${reservation.reservationEnd}|"></span><br>
-                <span th:text="|예약번호 ${reservation.reservationNo}|"></span><br><br><br>
-                <img th:src="|/img?file=${product.productThumnail}|" alt="상품썸네일">
-            </div>
-            <div>
                 <div>
                     <img th:src="${product.productThumnail}" alt="상품썸네일">
                 </div>
