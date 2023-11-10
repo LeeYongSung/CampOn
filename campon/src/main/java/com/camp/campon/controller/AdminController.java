@@ -280,7 +280,7 @@ public class AdminController {
     
         // 광고 등록
         @GetMapping("/adinsert")
-        public String adinsert() {
+        public String adinsert(Model model, int ) {
             return "admin/adinsert";
         }
     
