@@ -293,6 +293,19 @@ input[type="checkbox"] {
 .ads_boxPrice {width: 20%;}
 .ads_boxArrow {width: 10%;}
 
+/* 상품 카테고리 */
+.category_btn {width: 100%; height: auto; overflow-x: scroll}
+.category_btn a {width: 120px; font-size: 0.9em;}
+
+
+/* 대여 상품 목록 */
+.productListImg {height: 250px; background-color: #aaa;}
+.productList_Con>div:nth-of-type(3)>span {font-size: 0.6em;}
+
+
+/* 대여상품 상세 */
+.productdetailInfo {height: 600px; overflow: hidden;}
+
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
   -webkit-appearance: none;
