@@ -13,10 +13,11 @@
     <div>
         <h5>광고정보를 입력해주세요</h5>
     </div>
-    
+
     <form action="/admin/adinsertpro" method="post" enctype="multipart/form-data">
         <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
 
+        <input type="number" th:value="${}">
         <!-- 광고이미지 업로드 -->
         <div class="input-group mb-3 row border-bottom" style="margin-top: 40px;">
             <label class="col-md-4 col-form-label" for="">광고이미지</label>
