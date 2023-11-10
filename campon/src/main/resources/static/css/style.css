@@ -144,12 +144,14 @@ footer{ width: 100%; height: 550px; background-color: rgba(243, 243, 243, 0.9);}
 
 /* 리뷰 */
 .review {border-top: 1px solid #f2f2f2;}
-.review img {width: 150px; height: 100px;}
-.review_imgbox {width: 25%; border-radius: 10px; overflow: hidden;}
-.review_conbox {width: 75%;}
-.review_conbox>ul>li:nth-of-type(1){font-size: 0.8em;}
-.review_conbox>ul>li:nth-of-type(2){font-size: 0.6em;}
-.review_conbox>ul>li:nth-of-type(3){font-size: 0.9em; font-weight: bold;}
+.review img {width: 120px; height: 120px; object-fit: cover;}
+.review_imgbox {width: 30%; border-radius: 10px; overflow: hidden;}
+.review_conbox {width: 70%;}
+.review_conbox p {margin-bottom: 0!important;}
+.review_conbox>div>div:nth-of-type(1){font-size: 0.9em;}
+.review_conbox>div>div:nth-of-type(2){font-size: 0.8em;}
+.review_conbox>div>div:nth-of-type(3){font-size: 0.9em; font-weight: bold;}
+.review_conbox>div>div:nth-of-type(4){font-size: 0.6em;}
 input[type="checkbox"] {
     display:none;
 }
@@ -174,9 +176,11 @@ input[type="checkbox"] {
 
 /* 캠핑상품목록 */
 .campdetail {height: 200px; overflow: hidden; transition: height 0.3s ease-out;}
-.campdetail_box {background-color: #FFDC70; border-radius: 10px;}
+.campdetail_box {background-color: #f2f2f2;}
 .campdetail_product>div:nth-of-type(1) {width: 30%;}
 .campdetail_product>div:nth-of-type(2) {width: 70%;}
+.detail_date span {font-size: 0.6em;}
+.detail_btn a {font-size: 0.7em;}
 .review_img {width: 100px; height: 100px; object-fit: cover; overflow: hidden;}
 .review_box {border-radius: 15px;}
 .review_box ul {padding-left: 0!important;}
@@ -236,7 +240,58 @@ input[type="checkbox"] {
 .campProductCon {width: 70%;}
 .campproduct_close {position: absolute; top: 5px; right: 10px;}
 
+/* 오픈일정 */
+.schdule_txt {font-size: 0.7em; color: #888888;}
+.schdule_date{background-color: #f2f2f2;}
+.openscheduleImg {width: 100%; height: 200px; overflow: hidden; border-radius: 15px 15px 0 0;}
+.openscheduleImg>img {width: 100%; height: 200px; object-fit: cover;}
+.openscheduleCon p, h5 {margin-bottom: 0!important;}
+.openscheduleCon_campName>h5 {font-weight: bold;}
+.openscheduleCon_campType, .openscheduleConAddress {font-size: 0.8em;}
 
+
+/* 찜 */
+.favorites_icon {border-radius: 50px; background-color: #f2f2f2; width: 60px;  height: 60px;}
+.favorites_con {width: 80%; font-size: 0.7em;}
+.favorites_con h6 {margin-bottom: 0!important;}
+
+
+/* 관리자 캠핑장 목록 */
+.campproductListImg {width: 30%; overflow: hidden;}
+.campproductListImg>img {width: 120px; height: 120px; object-fit: cover; border-radius: 15px;}
+.campproductListCon {width: 70%;}
+.campproductListCon h5 {font-weight: bold;}
+.campproductListCon_txt {font-size: 0.7em;}
+.campproductListCon_txt p {margin-bottom: 0!important;}
+.campproductListBtn_bn a {font-size: 0.7em!important;}
+.campdetailImg {width: 30%;}
+.campdetailImg>img {width: 100px; height: 100px; object-fit: cover; border-radius: 15px;}
+.campdetailCon {width: 70%;}
+.campdetailCon h6 {font-weight: bold; margin-bottom: 0!important;}
+.campdetailCon span {font-size: 0.8em;}
+
+/* 관리자 캠핑장 상품 등록 */
+.campdetailProductInsertTitle h6 {font-size: 0.7em;}
+.campdetailProductInsertCon textarea {height: 400px!important;}
+
+.campdetailProductUpdateTitle h6 {font-size: 0.7em;}
+.campdetailProductUpdateCon textarea {height: 400px!important;}
+
+/* 상품 메인 */
+.product_menu>div {width: 60px; height: 60px;}
+.product_menu span {font-size: 0.8em;}
+
+.product_suggestion {width: 150px; height: 140px; overflow: hidden; border-radius: 15px; border: 1px solid #f2f2f2;}
+.product_suggestionImg {width: 100%; height: 80px;}
+.product_suggestionImg>img {width: 100%; object-fit: cover;}
+.product_suggestionCon {font-size: 0.7em;}
+
+
+.middle_ads>div {width: 150px; height: 150px; border: 1px solid #f2f2f2; border-radius: 15px;}
+.ads_boxImg {width: 20%;}
+.ads_boxCon {width: 50%;}
+.ads_boxPrice {width: 20%;}
+.ads_boxArrow {width: 10%;}
 
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
@@ -294,3 +349,5 @@ input[type="radio"]:checked + label span {
 
 .none {display: none;}
 .active {display: block;}
+.font08em {font-size: 0.8em;}
+.fontbold {font-weight: bold;}

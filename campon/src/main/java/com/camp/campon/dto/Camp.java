@@ -36,7 +36,9 @@ public class Camp {
     private String cpdtIntroduction;
     private int cpdtNop;
     private String cpdtSize;
-    private int cpdtPrice;
+    private Integer cpdtPrice;
+    private String cpdtPriceStr;
+
 
     // 캠핑종류
     private int campTypeNo;

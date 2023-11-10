@@ -166,7 +166,8 @@ WHERE p.product_no = #{productNo} ORDER BY r.reg_date DESC LIMIT 5;
 
 <!-- 추천상품 리스트 -->
 <select id="hotList" resultType="Product">
-    SELECT 썸네일테이블.productimg_url, 썸네일테이블.product_No
+    <!-- SELECT 썸네일테이블.productimg_url, 썸네일테이블.product_No -->
+    SELECT *
     FROM product AS 상품테이블
     JOIN (
         SELECT product_no, MIN(productimg_no) AS 최소썸네일번호

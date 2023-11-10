@@ -250,10 +250,18 @@ public class AdminController {
     //캠핑상품 수정처리
     @PostMapping(value="/campdetailupdate")
     public String campdetailupdatePro(Camp camp) throws Exception{
-        int filedelete = campService.cpdidelete(camp.getCpdtNo());
-        int result = campService.detailupdate(camp);
-        int cpdtNo = camp.getCpdtNo();
-        if(result == 0) return "redirect:/admin/campdetailupdate?cpdtNo" + cpdtNo;
+        log.info("cpdtPriceStr : " + camp.getCpdtPriceStr());
+        log.info("cpdtPrice : " + camp.getCpdtPrice());
+
+        log.info(camp.getCpdtPrice() + "");
+        // String cpdtPriceStr = camp.getCpdtPriceStr();
+        // Integer cpdtPrice = cpdtPriceStr == null ? 0 : Integer.parseInt(cpdtPriceStr);
+        // camp.setCpdtPrice( cpdtPrice );
+
+        // int filedelete = campService.cpdidelete(camp.getCpdtNo());
+        // int result = campService.detailupdate(camp);
+        // int cpdtNo = camp.getCpdtNo();
+        // if(result == 0) return "redirect:/admin/campdetailupdate?cpdtNo" + cpdtNo;
 
         return "redirect:/admin/campproductlist";
     }
