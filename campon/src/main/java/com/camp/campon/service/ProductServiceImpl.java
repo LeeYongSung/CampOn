@@ -216,6 +216,11 @@ public class ProductServiceImpl implements ProductService {
         List<Productreview> getreviewlistbyno = productMapper.getReviewListByNo(productNo);
         return getreviewlistbyno;
     }
+    @Override
+    public List<Productreview> getReviewListByNoLim(int productNo)  throws Exception {
+        List<Productreview> getReviewListByNoLim = productMapper.getReviewListByNoLim(productNo);
+        return getReviewListByNoLim;
+    }
 
     @Override
     public int reviewCount(int productNo)  throws Exception {
@@ -266,6 +271,12 @@ public class ProductServiceImpl implements ProductService {
     public List<Product> reservedProduct(int userNo) throws Exception {
         List<Product> productList = productMapper.reservedProduct(userNo);
         return productList;
+    }
+
+    @Override
+    public List<Productreview> getReviewListLimit() throws Exception {
+        List<Productreview> productreviewList = productMapper.getReviewListLimit();
+        return productreviewList;
     }
 
     

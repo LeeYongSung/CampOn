@@ -31,6 +31,9 @@ public interface ProductService {
   // 상품의 모든 후기 불러오기
   public List<Productreview> getReviewList() throws Exception;
 
+  //상품후기들을 5개만 가져오기 (최신순으로)
+  public List<Productreview> getReviewListLimit() throws Exception;
+
   // 찜 목록
   public List<Product> wishList(int userNo) throws Exception;
   //찜 등록
@@ -52,6 +55,8 @@ public interface ProductService {
 
   // 상품번호에 따른 후기 불러오기
   public List<Productreview> getReviewListByNo(int productNo) throws Exception;
+  // 상품번호에 따른 후기 불러오기 (5개 제한)
+  public List<Productreview> getReviewListByNoLim(int productNo) throws Exception;
 
   // 리뷰 수
   public int reviewCount(int productNo) throws Exception;

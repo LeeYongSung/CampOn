@@ -56,8 +56,8 @@ public class ProductController {
     @GetMapping("/index")
     public String productMain(Model model) throws Exception {
         //상품 후기 불러오기
-        List<Productreview> proReviewList =  productService.getReviewList();
-        log.info("후기목록의 사이즈 : "+proReviewList.size());
+        //List<Productreview> proReviewList =  productService.getReviewList();
+        List<Productreview> proReviewList =  productService.getReviewListLimit();
         // 추천상품 리스트
         List<Product> productHotList = productService.hotList();
         
@@ -85,7 +85,7 @@ public class ProductController {
     @GetMapping(value="/productdetail") 
     public String productDetail(Model model, Integer productNo) throws Exception {
         Product product = productService.select(productNo);
-        List<Productreview> proReviewList = productService.getReviewListByNo(productNo);
+        List<Productreview> proReviewList = productService.getReviewListByNoLim(productNo);
         int reviewCount = productService.reviewCount(productNo);
         model.addAttribute("product", product);
         model.addAttribute("proReviewList", proReviewList);

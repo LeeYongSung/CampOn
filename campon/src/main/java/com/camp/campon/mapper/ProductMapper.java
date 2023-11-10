@@ -33,7 +33,9 @@ public interface ProductMapper {
     public int deleteProduct(int productNo) throws Exception;
       //상품의 모든 후기 불러오기
     public List<Productreview> getReviewList() throws Exception;
-    
+     //상품후기들을 5개만 가져오기 (최신순으로)
+  public List<Productreview> getReviewListLimit() throws Exception;
+
     //상품번호 최댓값
     public int maxPk() throws Exception;
 
@@ -57,6 +59,8 @@ public interface ProductMapper {
     public List<Product> productimg(Integer productNo) throws Exception;
     // 상품번호에 따른 후기 불러오기
     public List<Productreview> getReviewListByNo(int productNo) throws Exception;
+    // 상품번호에 따른 후기 불러오기 (5개 제한)
+    public List<Productreview> getReviewListByNoLim(int productNo) throws Exception;
     // 리뷰 수
     public int reviewCount(int productNo) throws Exception;
     // 추천상품 리스트
