@@ -38,6 +38,13 @@ public class AdServiceImple implements AdService {
         return adlistseller;
     }
 
+    // 광고 등록
+    @Override
+    public int adinsert(Ad ad) throws Exception {
+        
+        return adinsert;
+    }
+
 
     
 }
