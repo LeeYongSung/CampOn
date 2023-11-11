@@ -30,7 +30,7 @@
         <div>
             <img id="preview">
         </div>
-        
+
         <!-- 광고위치 -->
         <!-- 컬럼추가, 캠프장 상단, 중단, 숍 상단,중단 -->
         <div>
@@ -60,15 +60,13 @@
         function campImg(event) {
             // FileReader 객체 생성
             var reader = new FileReader();
-
             // FileReader이 onload(실행완료)된 후 실행될 함수 선언
             reader.onload = function () {
                 // preview태크를 output으로 선언
                 var output = document.getElementById('preview');
                 // FileReader의 result값을 output에 저장
-                 output.src = reader.result;
+                output.src = reader.result;
             };
-
             // 업로드한 파일을 문자열로 인코딩 후 result로 저장
             reader.readAsDataURL(event.target.files[0]);
         }
