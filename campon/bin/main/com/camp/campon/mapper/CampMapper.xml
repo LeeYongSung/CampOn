@@ -215,8 +215,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <select id="reservecomplete" resultType="Camp">
         select ci.cpi_url, c.camp_name, cd.cp_dt_name, r.reservation_no, 
                u.user_name, r.reservation_nop, r.reservation_date, 
-               date_format(r.reservation_start, "%Y.%m.%d") reservation_start, 
-               date_format(r.reservation_end, "%Y.%m.%d") reservation_end, 
+               r.reservation_start, 
+               r.reservation_end, 
                r.camp_paymenttype, u.user_no
         from reservation r
         left join user u on r.user_no = u.user_no

@@ -320,6 +320,24 @@ input[type="checkbox"] {
 .cartTotal {width: 500px; bottom:70px; }
 
 
+/* 대여상품 결제화면 */
+.paymentImg {width: 30%; height: 100px; overflow: none;object-fit: cover;}
+.paymentCon {width: 50%;}
+.paymentCount {width: 20%;;}
+.paymentImg>img {height: 100px;}
+.paymentCon span {font-size: 0.8em;}
+.paymentCon>div:nth-of-type(1) {width: 70%;}
+.paymentCon>div:nth-of-type(2) {width: 30%;}
+.countDown, .countUp, .cartCnt {
+    padding-top: 0.625rem!important; 
+    padding-bottom: 0.625rem!important;
+    height: calc(2.5rem + calc(var(--bs-border-width) * 2))!important;
+    min-height: calc(1.5rem + calc(var(--bs-border-width) * 2))!important;
+}
+.paymentBtn {background-color: #FA9D4B; color: white;}
+.paymentBtn:hover {background-color: #FFC700;}
+
+
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
   -webkit-appearance: none;
