@@ -36,6 +36,7 @@ import com.camp.campon.service.CampService;
 import com.camp.campon.service.ProductService;
 import com.camp.campon.service.UserService;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -43,10 +44,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 @Slf4j
 @Controller
 @RequestMapping("/admin")
+@RequiredArgsConstructor
 public class AdminController {
     
-    @Autowired
-    private UserService userService;
+    private final UserService userService;
+    // @Autowired
+    // private UserService userService;
 
     @Autowired
     private CampService campService;

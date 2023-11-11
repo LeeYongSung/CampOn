@@ -21,29 +21,33 @@
             </div>
             <div>
                 <th:block th:each="product : ${cartList}">
-                    <div class="border">
+                    <div class="border my-2">
                         <input type="hidden" th:value="${product.productNo}" name="productNos">
-                        <div class="d-flex justify-content-between">
-                            <div>
-                                <img th:src="${product.productThumnail}" alt="상품썸네일">
+                        <div class="d-flex justify-content-between py-2 paymentBox">
+                            <div class="paymentImg ps-2">
+                                <img th:src="${product.productThumnail}" alt="상품썸네일" class="w-100">
                             </div>
-                            <div class="d-flex justify-content-between">
-                                <div>
+                            <div class="d-flex justify-content-center paymentCon">
+                                <div class="pt-2">
                                     <div>
-                                        <p> <span th:text="${product.productCategory}"></span></p>
+                                        <span th:text="${product.productCategory}"></span>
+                                    </div>
+                                    <div class="pt-3">
+                                        <h5 th:text="${product.productName}"></h5>
                                     </div>
                                     <div>
-                                        <h5><span th:text="${product.productName}"></span></h5>
-                                    </div>
-                                    <div>
-                                        <p><span th:text="${product.productIntro}"></span></p>
+                                        <span th:text="${product.productIntro}"></span>
                                     </div>
                                 </div>
-                                <div>
-                                    <p>가격 : <span th:text="${product.productPrice}" id="productPrice"></span></p>
-                                    <label for="cartCnt">수량 입력 : <span></span></label>
-                                    <input type="text" name="cartCnts" th:value="${product.cartCnt}" id="cartCnt" class="cartCnt">
-                                </div>
+                            </div>
+                            <div class="py-2 paymentCount me-5">
+                                <h6 th:text="|${product.productPrice}원|" id="productPrice"></h6>
+                                <label for="cartCnt"><span></span></label>
+                                <div class="reservationNop_box d-flex form-floating ms-2">
+                                    <button class="countDown form-control">-</button>
+                                    <input type="text" name="cartCnts" id="cartCnt" th:value="${product.cartCnt}"  class="cartCnt form-control" min="1" max="999">
+                                    <button class="countUp form-control">+</button>
+                                    </div>
                             </div>
                         </div>
                     </div>
@@ -52,48 +56,62 @@
         </div>
 
 
-        <h2>배송받을 캠핑장을 선택해주세요 </h2>
-        <div th:each="camp, status : ${reservationList}" style="border: 1px solid black;"> 
-            <ul>
-                <li>
-                    <img th:src="|/img?file=${camp.cpdiUrl}|" alt="캠핑상품 이미지" />
-                </li>
-                <li>
-                    <ul>
-                        <li>캠핑장명 : <span th:text="${camp.campName}"></span></li>
-                        <li>캠핑상품명 : <span th:text="${camp.cpdtName}"></span></li>
-                        <li>예약시작날짜 : <span th:text="${camp.reservationStart}"></span></li>
-                        <li>예약끝날짜 : <span th:text="${camp.reservationEnd}"></span></li>
-                        <li>예약일수 : <span th:text="${camp.reservationDate}"></span></li>
-                        <li>예약번호 : <span th:text="${camp.reservationNo}"></span></li>
-                    </ul>
-                </li>
-            </ul> 
-            <input type="radio" th:id="|selectCamp-${status.index}|" th:value="${camp.reservationNo}" th:data-res="${camp.reservationDate}" name="reservationNo" class="selectCamp">
-            <label th:for="|selectCamp-${status.index}|"><span></span>캠핑장 선택</label>
+        <div class="pt-4 pb-2 ps-2 w-100 border-top">
+            <h5>배송받을 캠핑장을 선택해주세요 </h5>
         </div>
+        <th:block th:each="camp, status : ${reservationList}">
+            <div class="container"> 
+                <div class="w-100 d-flex justify-content-between border py-5 rounded position-relative my-2">
+                    <div>
+                        <img th:src="|/img?file=${camp.cpdiUrl}|" alt="캠핑상품 이미지" />
+                    </div>
+                    <div>
+                        <div>
+                            <div><h5 th:text="${camp.campName}"></h5></div>
+                            <div> <span th:text="${camp.cpdtName}"></span></div>
+                            <div><span th:text="|${#dates.format(camp.reservationStart, 'yyyy-MM-dd')} ~ ${#dates.format(camp.reservationEnd, 'yyyy-MM-dd')}|"></span></div>
+                            <div><span th:text="|${camp.reservationDate}일|"></span></div>
+                            <div class="d-flex justify-content-between">
+                                <div><span>예약번호</span></div>
+                                <div>
+                                    <span th:text="${camp.reservationNo}"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="position-absolute bottom-0 end-0 pe-2 pb-1">
+                        <input type="radio" th:id="|selectCamp-${status.index}|" th:value="${camp.reservationNo}" th:data-res="${camp.reservationDate}" name="reservationNo" class="selectCamp">
+                        <label th:for="|selectCamp-${status.index}|"><span></span>캠핑장 선택</label>
+                    </div> 
+                </div>
+            </div>
+        </th:block>
 
         <!-- 결제방법 선택 -->
-        <div>
+        <div class="w-100 py-5 border-top border-bottom">
             <div><p>결제 방법 선택</p></div>
-            <div>
-                <input type="radio" id="card" value="카드" name="pmType" class="pmType">
-                <label for="card"><span></span>카드 결제</label>
-                <input type="radio" id="bankPay" value="무통장입금" name="pmType" class="pmType">
-                <label for="bankPay"><span></span>무통장 입금</label>
+            <div class="w-100 text-center bg-body-secondary py-3 d-flex justify-content-center">
+                <div class="px-2">
+                    <input type="radio" id="card" value="카드" name="pmType" class="pmType">
+                    <label for="card"><span></span>카드 결제</label>
+                </div>
+                <div class="px-2">
+                    <input type="radio" id="bankPay" value="무통장입금" name="pmType" class="pmType">
+                    <label for="bankPay"><span></span>무통장 입금</label>
+                </div>
             </div>
         </div>
 
 
         <!--총 렌트 금액 (수정 필요)-->
-        <div>
+        <div class="w-100 text-end pe-2 py-3">
             <h4>총 렌트 금액 : <span>???</span>원</h4>
             <h4>총 금액 (임시) : <span id="totalPrice"></span></h4>
         </div>
 
 
         <!--결제하기 버튼-->
-        <button type="submit">결제하기</button>   
+        <button type="submit" class="btn btn-lg paymentBtn w-100 py-3 rounded-0">결제하기</button>   
 
     </form>
 
@@ -228,6 +246,33 @@ $(document).ready(function () {
         return false
     }
     </script>
+    <script>
 
+        $('.countDown').each(function() {
+            $(this).click(function(e) {
+                e.preventDefault();
+                var input = $(this).next(".cartCnt");
+                if (input.val() < input.attr('max')) {
+                    input.val(parseInt(input.val()) - 1);
+                }
+                if(input.val() <= 1) {
+                    input.val(1);
+                }
+            });
+        })
+
+        $('.countUp').each(function() {
+            $(this).click(function(e) {
+                e.preventDefault();
+                var input = $(this).prev(".cartCnt");
+                if (input.val() >= input.attr('min')) {
+                    input.val(parseInt(input.val()) + 1);
+                }
+                if(input.val() <= 1) {
+                    input.val(1);
+                }
+            });
+        })
+    </script>
 </body>
 </html>

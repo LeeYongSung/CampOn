@@ -73,8 +73,10 @@ public class Camp {
     // 유저
     private int reservationNo;
     private int reservationNop;
-    private String reservationStart;
-    private String reservationEnd;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date reservationStart;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date reservationEnd;
     private int reservationDate;
     private int userNo;
     private String userName;
