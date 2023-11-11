@@ -12,4 +12,5 @@ public interface AdService {
    public int adcheck(int adNo) throws Exception;
    // 광고리스트 (seller)
    public List<Ad> adlistseller(int userNo) throws Exception;
+
 }

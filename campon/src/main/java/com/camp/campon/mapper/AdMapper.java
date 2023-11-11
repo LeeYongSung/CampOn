@@ -19,4 +19,5 @@ public interface AdMapper {
    public List<Ad> adlistseller(int userNo) throws Exception;
 
 
+   public int adinsert(Ad ad) throws Exception;
 }

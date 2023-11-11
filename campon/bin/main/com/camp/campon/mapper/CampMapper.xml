@@ -281,13 +281,4 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         </if>
         ORDER BY c.camp_no DESC;
     </select>
-
-    <!-- 광고 신청 -->
-    <!-- INSERT INTO ad (
-        camp_no, ad_img, ad_start, ad_end
-    )
-    VALUES (
-        $
-    ) -->
-
 </mapper>

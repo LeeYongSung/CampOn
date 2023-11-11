@@ -18,5 +18,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <select id="adlistseller" resultType="Ad">
         select * from ad ad join campproduct c on ad.camp_no = c.camp_no where c.user_no = #{userNo} order by ad.reg_date desc
     </select>
+    <!-- 광고 신청 -->
+    <insert id="adinsert">
+    INSERT INTO ad (
+        camp_no, ad_img, ad_start, ad_end
+    )
+    VALUES (
+        #{campNo}, #{adImg}, #{adStart}, #{adEnd}
+    )
+    </insert>
+
+
     
 </mapper>

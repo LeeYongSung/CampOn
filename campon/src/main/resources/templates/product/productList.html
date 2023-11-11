@@ -17,17 +17,109 @@
 </head>
 <body layout:fragment="content">
     <div class="container">
-        <!-- 일단 a태그 사용-->
-        <a href="/product?category=텐트" data-category="텐트" class="btn-category" > <button class="btn-category" >텐트</button> </a>
-        <a href="/product?category=테이블" data-category="테이블" class="btn-category"> <button class="btn-category" >테이블</button> </a>
-        <a href="/product?category=체어" data-category="체어" class="btn-category"> <button class="btn-category" >체어</button> </a>
-        <a href="/product?category=매트" data-category="매트" class="btn-category"> <button class="btn-category" >매트</button> </a>
-        <a href="/product?category=조명" data-category="조명" class="btn-category"> <button class="btn-category" >조명</button> </a>
-        <a href="/product?category=화로대" data-category="화로대" class="btn-category"> <button class="btn-category" >화로대</button> </a>
-        <a href="/product?category=타프" data-category="타프" class="btn-category"> <button class="btn-category" >타프</button> </a>
-        <a href="/product?category=수납" data-category="수납" class="btn-category"> <button class="btn-category" >수납</button> </a>
-        <a href="/product?category=캠핑가전" data-category="캠핑가전" class="btn-category"> <button class="btn-category" >캠핑가전</button> </a>
-        <a href="/product?category=주방용품" data-category="주방용품" class="btn-category"> <button class="btn-category" >주방용품</button> </a>
+        <div class="category_btn py-4 d-flex">
+            <!-- 일단 a태그 사용-->
+            <div>
+                <a href="/product?category=텐트" data-category="텐트" class="btn-category btn btn-lg" >
+                    <div>
+                        <img src="/img/product/product1.png" alt="상품아이콘">
+                    </div>
+                    <div>
+                        <span>텐트</span>
+                    </div>
+                </a>
+            </div>
+            <div>
+                <a href="/product?category=테이블" data-category="테이블" class="btn-category btn btn-lg">
+                    <div>
+                        <img src="/img/product/product2.png" alt="상품아이콘">
+                    </div>
+                    <div>
+                        <span>테이블</span>
+                    </div>
+                </a>
+            </div>
+            <div>
+                <a href="/product?category=체어" data-category="체어" class="btn-category btn btn-lg">
+                    <div>
+                        <img src="/img/product/product3.png" alt="상품아이콘">
+                    </div>
+                    <div>
+                        <span>체어</span>
+                    </div>
+                </a>
+            </div>
+            <div>
+                <a href="/product?category=매트" data-category="매트" class="btn-category btn btn-lg">
+                    <div>
+                        <img src="/img/product/product4.png" alt="상품아이콘">
+                    </div>
+                    <div>
+                        <span>매트</span>
+                    </div>
+                </a>
+            </div>
+            <div>
+                <a href="/product?category=조명" data-category="조명" class="btn-category btn btn-lg">
+                    <div>
+                        <img src="/img/product/product5.png" alt="상품아이콘">
+                    </div>
+                    <div>
+                        <span>조명</span>
+                    </div>
+                </a>
+            </div>
+            <div>
+                <a href="/product?category=화로대" data-category="화로대" class="btn-category btn btn-lg">
+                    <div>
+                        <img src="/img/product/product6.png" alt="상품아이콘">
+                    </div>
+                    <div>
+                        <span>화로대</span>
+                    </div>
+                </a>
+            </div>
+            <div>
+                <a href="/product?category=타프" data-category="타프" class="btn-category btn btn-lg">
+                    <div>
+                        <img src="/img/product/product7.png" alt="상품아이콘">
+                    </div>
+                    <div>
+                        <span>타프</span>
+                    </div>
+                </a>
+            </div>
+            <div>
+                <a href="/product?category=수납" data-category="수납" class="btn-category btn btn-lg">
+                    <div>
+                        <img src="/img/product/product8.png" alt="상품아이콘">
+                    </div>
+                    <div>
+                        <span>수납</span>
+                    </div>
+                </a>
+            </div>
+            <div>
+                <a href="/product?category=캠핑가전" data-category="캠핑가전" class="btn-category btn btn-lg">
+                    <div>
+                        <img src="/img/product/product9.png" alt="상품아이콘">
+                    </div>
+                    <div>
+                        <span>캠핑가전</span>
+                    </div>
+                </a>
+            </div>
+            <div>
+                <a href="/product?category=주방용품" data-category="주방용품" class="btn-category btn btn-lg">
+                    <div>
+                        <img src="/img/product/product10.png" alt="상품아이콘">
+                    </div>
+                    <div>
+                        <span>주방용품</span>
+                    </div>
+                </a>
+            </div>
+        </div>
 
         <!-- ajax 사용할거면 버튼사용-->
        <!-- <button oncbuttonck="getbuttonst()" class="btn-category" data-category="텐트">텐트</button>
@@ -43,36 +135,66 @@
     </div>
 
     <!--추천 상품 -->
-
-    <!-- 상품 목록 출력-->
-    <th:block th:each="product : ${productList}">
-        <div style="border: 1px solid black;">
-            <div>
-                <img th:src="|img?file=${product.productThumnail}|" alt="상품썸네일">
-            </div>
-            <div>
-                <div>
-                    <h3>카테고리 : <span th:text="${product.productCategory}"></span></h3>
-                    <h2>상품이름 : <span th:text="${product.productName}"></span></h2>
-                    <p>상품기본내용 : <span th:text="${product.productIntro}"></span></p>
-                </div>
-                <div>
-                    <h2>가격 : <span th:text="${product.productPrice}"></span></h2>
-                    <div>
-                        <a th:href="|/product/productdetail?productNo=${product.productNo}|">상세 정보</a>
-                         <!-- 비 로그인 시 (나중에 비회원장바구니 구현시 수정필요)-->
-                        <th:block sec:authorize="isAnonymous()">
-                            <a th:href="|/product/addcart?productNo=${product.productNo}&userNo=1000|">장바구니 담기(비회원은 현재 안됨)</a>
-                        </th:block>
-                        <!-- 로그인 시 -->
-                        <th:block sec:authorize="isAuthenticated()">
-                            <a th:href="|/product/addcart?productNo=${product.productNo}&userNo=${#authentication.principal.users.userNo}|">장바구니 담기</a>
-                        </th:block>
-                    </div>
-                </div>
+    <div class="w-100 border-bottom">
+        <div class="w-100 border-bottom">
+            <div class="container">
+                <h6>추천 상품</h6>
             </div>
         </div>
-    </th:block>
+        <div class="container d-flex justify-content-between py-4">
+            <th:block th:each="product : ${productHotList}">
+                <div class="product_suggestion">
+                    <div class="product_suggestionImg border-bottom">
+                        <img th:src="|/img?file=${product.productimgUrl}|">
+                    </div>
+                    <div class="product_suggestionCon px-3">
+                        <div><span th:text="${product.productName}"></span></div>
+                        <div><span th:text="${product.productCategory}"></span></div>
+                        <div><span th:text="${product.productPrice}"></span></div>
+                    </div>
+                </div>
+            </th:block>
+        </div>
+    </div>
+    <!-- 상품 목록 출력-->
+    <div class="container">
+        <th:block th:each="product : ${productList}">
+            <div class="border rounded position-relative mb-3 pb-4 mt-2">
+                <div class="productListImg">
+                    <img th:src="|img?file=${product.productThumnail}|" alt="상품썸네일">
+                </div>
+                <div class="d-flex justify-content-between">
+                    <div class="productList_Con ps-2 pt-3">
+                        <div>
+                            <span th:text="${product.productCategory}"></span>
+                        </div>
+                        <div>
+                            <h4 th:text="${product.productName}"></h4>
+                        </div>
+                        <div>
+                            <span th:text="${product.productIntro}"></span>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="pt-3 pe-2">
+                            <h5 th:text="|${product.productPrice}원|"></h5>
+                        </div>
+                    </div>
+                </div>
+                <div class="position-absolute bottom-0 end-0 me-2 mb-1">
+                    <a th:href="|/product/productdetail?productNo=${product.productNo}|" class="btn btn-outline-secondary">상세 정보</a>
+                     <!-- 비 로그인 시 (나중에 비회원장바구니 구현시 수정필요)-->
+                    <th:block sec:authorize="isAnonymous()">
+                        <a th:href="|/product/addcart?productNo=${product.productNo}&userNo=1000|">장바구니 담기(비회원은 현재 안됨)</a>
+                    </th:block>
+                    <!-- 로그인 시 -->
+                    <th:block sec:authorize="isAuthenticated()">
+                        <a th:href="|/product/addcart?productNo=${product.productNo}&userNo=${#authentication.principal.users.userNo}|" class="btn btn-outline-primary">장바구니 담기</a>
+                    </th:block>
+                </div>
+            </div>
+        </th:block>
+    </div>
 
 
     <script>
@@ -85,7 +207,10 @@
             console.log(dataNo)
             if (dataNo == category) {
              //   $(this).addClass("active-category");
-             $(this).children().addClass("active-category");
+             $(this).addClass("active-category");
+
+             // 클릭된 버튼이 뷰포트 내로 스크롤되도록 변경
+            this.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'start' });
             }
         });
         //클릭한 버튼 활성화시키기
