@@ -58,7 +58,7 @@
                         <h6>숙박기간 : </h6>
                     </div>
                     <div>
-                        <span th:text="${reservecomplete.reservationStart}"></span> ~ <span th:text="${reservecomplete.reservationEnd}"></span>
+                        <span th:text="${#dates.format(reservecomplete.reservationStart, 'yyyy-MM-dd')}"></span> ~ <span th:text="${#dates.format(reservecomplete.reservationEnd, 'yyyy-MM-dd')}"></span>
                     </div>
                 </div>
                 <div class="w-100 d-flex justify-content-between border-bottom py-2">
