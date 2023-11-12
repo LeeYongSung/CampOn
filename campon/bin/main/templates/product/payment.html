@@ -159,7 +159,7 @@
                     fullTotal = total
                 });
                 console.log('total : ' + total);
-                $('#totalPrice').text('총 가격: ' + total.toFixed(2) + '원');
+                $('#totalPrice').text('총 가격: ' + total + '원');
             } //updateTotalPrice()
 
         });
@@ -229,9 +229,9 @@
                     // 결제 성공
                     console.log(rsp);
                     // 결제 완료 페이지로 이동
-                    location.href = 'success?result=ok&proudctId=' + ("IMP" + makeMerchantUid)
-                    //let form = $('#payForm')
-                    //form.submit
+                    //location.href = 'success?result=ok&proudctId=' + ("IMP" + makeMerchantUid)
+                    let form = $('#payForm')
+                    form.submit()
                     //return true
                     // 또는 ajax 요청 처리 후 이동
                 } else {

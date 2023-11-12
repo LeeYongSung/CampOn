@@ -41,8 +41,9 @@ public class AdServiceImple implements AdService {
     // 광고 등록
     @Override
     public int adinsert(Ad ad) throws Exception {
+        return 0;
         
-        return adinsert;
+        //return adinsert;
     }
 
 
