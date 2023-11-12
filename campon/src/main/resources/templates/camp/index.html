@@ -110,28 +110,30 @@
             </th:block>
         </div>
     </div>
-    <div class="review mb-5">
-        <h5 class="mt-3">실시간리뷰</h5>
-        <ul th:each="board : ${newReviewList}">
+    <div class="review mb-5 container-sm">
+        <div>
+            <h5 class="mt-3">실시간리뷰</h5>
+        </div>
+        <div th:each="board : ${newReviewList}" class="w-100 border rounded py-2 my-2">
             <a th:href="|/board/crread?reviewNo=${board.reviewNo}|" class="d-flex justify-content-between">
-                <li class="review_imgbox">
+                <div class="review_imgbox px-2 py-2">
                     <img th:src="${board.reviewImg}">
-                </li>
-                <li class="review_conbox">
-                    <ul>
-                        <li>
+                </div>
+                <div class="review_conbox py-2">
+                    <div>
+                        <div>
                             <p th:text="${board.reviewTitle}"></p>
-                        </li>
-                        <li>
+                        </div>
+                        <div>
                             <span th:text="${ #dates.format( board.regDate, 'yyyy-MM-dd') }"></span>
-                        </li>
-                        <li>
+                        </div>
+                        <div>
                             <span th:text="${board.campName}"></span>
-                        </li>
-                    </ul>
-                </li>
+                        </div>
+                    </div>
+                </div>
             </a>
-        </ul>
+        </div>
     </div>
     <div class="regionBox none position-fixed">
         <div>

@@ -318,13 +318,25 @@ input[type="checkbox"] {
 .cartCon h5 {margin-bottom: 0!important;}
 .cartCon span {font-size: 0.8em;}
 .cartTotal {width: 500px; bottom:70px; }
+.delbtn {font-size: 0.8em;}
 
-
+/* 회원리스트 */
+.tab_btn {width: 200px; height: 50px; border: 1px solid #f2f2f2;}
+.tab_btn>a {width: 100%; height: auto; display: block; padding-top: 0.8rem; padding-bottom: 0.8rem;}
+.memberlist_more_box a {font-size: 0.8em;}
+.memberlist_more_box span {font-size: 1.5em;}
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
+
+/* 관리자 상품 목록 */
+.AdminProduct span {font-size: 0.8em;}
+.AdminProductImg {height: 200px; overflow: hidden; object-fit: cover;}
+.AdminProduct a {font-size: 0.8em;}
+
+
 /* Firefox */
 .minus input[type=number], .plus input[type=number] {
   -moz-appearance: textfield;
