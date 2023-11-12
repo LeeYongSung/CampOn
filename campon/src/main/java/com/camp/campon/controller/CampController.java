@@ -260,6 +260,7 @@ public class CampController {
 
         Camp camp = campService.reservate(cpdtNo);
 
+        log.info("camp : " + camp);
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String userId = auth.getName();
         if(userId.equals("anonymousUser")) return "redirect:/user/login";
@@ -267,6 +268,7 @@ public class CampController {
         // 임시값
         // String userId = "user";
         Users user = userService.selectById(userId);
+        log.info("user : " + user);
         // log.info("camp" + camp);
         // log.info("user" + user);
         model.addAttribute("camp", camp);
