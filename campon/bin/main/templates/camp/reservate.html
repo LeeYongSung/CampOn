@@ -11,17 +11,24 @@
     <title>CampOn(캠프온) 예약조회</title>
 </head>
 <body layout:fragment="content">
-    <h3>캠핑장 예약 현황</h3>
+    <div class="w-100 text-center py-4">
+        <h5>캠핑장 예약 현황</h5>
+    </div>
     <div>
-        <form action="/camp/reservate" method="post">
+        <form action="/camp/reservate" method="post" id="reservate_form">
             <div class="container w-100">
                 <!-- csrf -->
                 <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
                 <input type="hidden" id="campNo" name="campNo" th:value="${camp.campNo}">
+                <input type="hidden" id="campName" name="campName" th:value="${camp.campName}">
                 <input type="hidden" id="cpdtNo" name="cpdtNo" th:value="${camp.cpdtNo}">
+                <input type="hidden" id="cpdtName" name="cpdtName" th:value="${camp.cpdtName}">
+                <input type="hidden" id="cpdtPrice" name="cpdtPrice" th:value="${camp.cpdtPrice}">
                 <input type="hidden" id="userNo" name="userNo" th:value="${user.userNo}">
                 <input type="hidden" id="userName" name="userName" th:value="${user.userName}">
                 <input type="hidden" id="userTel" name="userTel" th:value="${user.userTel}">
+                <input type="hidden" id="userEmail" name="userEmail" th:value="${user.userEmail}">
+                <input type="hidden" id="userAddress" name="userAddress" th:value="${user.userAddress}">
 
                 <div class="container-sm reservate_box d-flex justify-content-between">
                     <div><img th:src="${camp.cpdiUrl}" alt="캠핑상품이미지"></div>
@@ -92,7 +99,11 @@
                         <label for="bank"><span></span>무통장입금</label>
                     </div>
                 </div>
-                <li><input type="submit" value="결제하기" class="btn btn-warning btn-lg w-100 py-3 my-3"></li>
+                <div class="w-100 text-end">
+                    <span>결제금액 : </span><span id="TotalPrice"></span>
+                </div>
+                <!-- <li><input type="submit" value="결제하기" class="btn btn-warning btn-lg w-100 py-3 my-3"></li> -->
+                <li><button type="button" onclick="requestPay()" class="btn btn-warning btn-lg w-100 py-3 my-3">결제하기</button></li>
             </div>
         </form>
     </div>
@@ -101,6 +112,8 @@
             
             let today = new Date();
             let today_date = new Date(today.getTime() + 3240*10000); // 일자를 더하고 싶은 경우, 밀리세컨드 단위로 변환해야 합니다.
+            let price = "[[${camp.cpdtPrice}]]";
+            console.log(price)
 
             function formatDate(date) {
                 var d = new Date(date),
@@ -158,8 +171,61 @@
                 $('#reservationEnd').val(enddate);
                 $('.startDayofWeek').text('(' + startDay + ')');
                 $('.endDayofWeek').text('(' + endDay + ')');
+                $('#TotalPrice').text(price*(days+1));
+                $('#cpdtPrice').val(price*(days+1));
             });
         });
+     </script>
+
+     <script src="https://cdn.iamport.kr/v1/iamport.js"></script>
+     <script>
+        // let form = document.getElimentById('reservate_form');
+
+        var IMP = window.IMP;
+        IMP.init('imp48458232')
+
+        var today = new Date();
+        var hours = today.getHours();
+        var minutes = today.getMinutes();
+        var seconds = today.getSeconds();
+        var milliseconds = today.getMilliseconds();
+        var makeMerchantUid = hours + minutes + seconds + milliseconds;
+
+        function requestPay() {
+
+            let productName = document.getElementById('cpdtName').value;
+            let price = document.getElementById('cpdtPrice').value;
+            let name = document.getElementById('userName').value;
+            let tel = document.getElementById('userTel').value;
+            let email = document.getElementById('userEmail').value;
+            let address = document.getElementById('userAddress').value;
+
+            IMP.request_pay({
+                pg : 'kcp',
+                pay_method : 'card',
+                merchant_uid : "IMP"+makeMerchantUid,
+                name : productName,
+                amount : price,
+                buyer_email : email,
+                buyer_name : name,
+                buyer_tel : tel,
+                buyer_addr : address,
+            }, function(rsp) {
+                if(rsp.success) {
+                    // 결제 성공
+                    console.log(rsp);
+                    // 결제 성공 후 폼 전송
+                    var form = document.getElementById('reservate_form');
+                    form.submit();
+                    // location.href = 'complete';
+                } else {
+                    console.log(rsp);
+                }
+            });
+            
+        }
+
+        
      </script>
 </body>
 </html>

@@ -7,11 +7,9 @@ import java.util.Random;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.camp.campon.dto.Camp;
 import com.camp.campon.dto.Order;
@@ -21,8 +19,8 @@ import com.camp.campon.service.CampService;
 import com.camp.campon.service.OrderService;
 import com.camp.campon.service.ProductService;
 import com.camp.campon.service.UserService;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+
+import lombok.extern.slf4j.Slf4j;
 
 
 
@@ -61,6 +59,7 @@ public class OrderController {
     //결제하기 버튼 누르면 폼 제출
     @PostMapping(value="/paymentpro")
     public String paymentpro(Order order, Principal principal) throws Exception {
+
         int userNo = 0;
         if (principal == null){ userNo = 1000;}
         else {
@@ -110,7 +109,9 @@ public class OrderController {
     // 테스트 : http://localhost:8081/order/depositcomp?orderNumber=...
     @GetMapping(value="/depositcomp")
     public String depositcomp(String orderNumber, Model model) throws Exception {
+        
         Order order = orderService.selectOrder(orderNumber);
+        log.info("order : " + order);
         Order orderpay = orderService.paymentsByOrNo(orderNumber);
         String pmType = orderpay.getPmType();
         String paytotal = orderpay.getPmPrice();
