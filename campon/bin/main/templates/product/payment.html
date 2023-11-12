@@ -127,57 +127,44 @@
 
     <script src="https://cdn.iamport.kr/v1/iamport.js"></script>
     <script>
-         $(document).ready(function () {
+        let fullTotal = 0;
+        $(document).ready(function () {
             // var selectedReservationDate = 0;
             // var productTotal = 0;
             // var total = 0
             var selectedReservationDate = 0;
-
-            let fullTotal = 0;
-
-           
-
             // 페이지 로딩 시 초기 총 가격 계산
             updateTotalPrice();
 
             $('input[name="reservationNo"]').on('change', function () {
-                // 선택된 라디오 버튼의 data 값 가져오기
                 selectedReservationDate = $('input[name="reservationNo"]:checked').data('res');
-                // 이제 선택된 라디오 버튼의 reservationDate 값을 사용할 수 있습니다.
                 console.log('Selected Reservation Date:', selectedReservationDate);
-
                 updateTotalPrice()
             });
-
             // 수량이 변경될 때마다 총 가격 업데이트
             $('.cartCnt').on('input', updateTotalPrice);
 
             function updateTotalPrice() {
-
                 var productTotal = 0;
                 var total = 0
-
                 $('.cartCnt').each(function () {
                     console.log('cartCnt 수량 :' + $(this).val())
-
                     let cnt = parseInt($(this).val(), 10) || 0; // 수량 입력값, 없으면 0으로 처리
                     console.log('cnt : ' + cnt);
                     let price = parseFloat($(this).closest('.paymentCount').find('#productPrice').text().replace(/[^0-9.-]+/g, "")) || 0; // 상품 가격, 없으면 0으로 처리
                     console.log('price : ' + price);
-
                     productTotal += (cnt * price);
                     console.log('productTotal : ' + productTotal);
-
                     total = productTotal * selectedReservationDate
                     fullTotal = total
                 });
-
-                // 총 가격을 화면에 업데이트
                 console.log('total : ' + total);
                 $('#totalPrice').text('총 가격: ' + total.toFixed(2) + '원');
-            }
+            } //updateTotalPrice()
 
         });
+
+
         var IMP = window.IMP;
                 IMP.init("imp48458232");
                 var today = new Date();
@@ -204,7 +191,6 @@
             if ($('.pmType:checked').val() == '카드') {
                 console.log("카드결제로 들어옴")
                 //결제 모듈 실행
-                
                 requestPay();
             }
             //무통장 입금
@@ -254,7 +240,7 @@
                     return false
                 }
             });
-        }
+        } // requestPay() 
     </script>
     <script>
 
