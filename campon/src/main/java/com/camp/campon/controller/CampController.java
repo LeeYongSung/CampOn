@@ -1,11 +1,13 @@
 package com.camp.campon.controller;
 
 import java.security.Principal;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -13,11 +15,14 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+
 
 import com.camp.campon.dto.Board;
 import com.camp.campon.dto.Camp;
@@ -26,6 +31,7 @@ import com.camp.campon.dto.Users;
 import com.camp.campon.service.BoardService;
 import com.camp.campon.service.CampService;
 import com.camp.campon.service.ProductService;
+import com.camp.campon.service.SMSService;
 import com.camp.campon.service.UserService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -46,6 +52,8 @@ public class CampController {
     private UserService userService;
     @Autowired
     private ProductService productService;
+    @Autowired
+    private SMSService smsService;
 
     @Autowired
     private AuthenticationManager authenticationManager;
@@ -278,12 +286,46 @@ public class CampController {
     
     @PostMapping(value="/reservate")
     public String campReservatePay(Model model, Camp camp) throws Exception {
-        
         int result = campService.reservateInsert(camp);
+        //캠핑장 판매자한테 문자보내기
         int cpdtNo = camp.getCpdtNo();
+        String cpdtName = camp.getCpdtName();
+        String sellerTel = userService.sellerTel(cpdtNo);
+        SimpleDateFormat sdf = new SimpleDateFormat("yy년 MM월 dd일"); 
+        Date reservationStart = camp.getReservationStart();
+        String rsStart = sdf.format(reservationStart);
+        Date reservationEnd = camp.getReservationEnd();
+        String rsEnd = sdf.format(reservationEnd);
+        String msg = "안녕하세요 캠핑장 판매자님 캠프온입니다.\n"+cpdtName +"에 "+rsStart +"~"+rsEnd+" 예약되었습니다. 홈페이지에서 확인하세요.";
+        MultiValueMap<String, String> param =  new LinkedMultiValueMap<String, String>(); 
+        param.add("msg", msg);
+        param.add("receiver", sellerTel);
+        param.add("rdate", "");
+        param.add("rtime", "");
+        param.add("testmode_yn", "N");
+        // 문자 전송 요청
+        Map<String, Object> resultMap = smsService.send(param);
+        Object resultCode = resultMap.get("result_code");
+        Integer result_code = Integer.valueOf( resultCode != null ? resultCode.toString() : "-1" );
+        String message = (String) resultMap.get("message");
         
+        //캠핑장 예약한 사람한테 문자보내기
+        String userTel = camp.getUserTel();
+        String msgg = "안녕하세요 캠프온입니다.\n"+cpdtName +"에 "+rsStart +"~"+rsEnd+" 예약되었습니다. \n홈페이지에서 캠핑장에 필요한 상품도 대여해보세요. \n 즐거운 여행 되세요!"; 
+        MultiValueMap<String, String> param2 =  new LinkedMultiValueMap<String, String>(); 
+        param.add("msg", msgg);
+        param.add("receiver", userTel);
+        param.add("rdate", "");
+        param.add("rtime", "");
+        param.add("testmode_yn", "N");
+        // 문자 전송 요청
+        Map<String, Object> resultMap2 = smsService.send(param2);
+        Object resultCode2 = resultMap.get("result_code");
+        Integer result_code2 = Integer.valueOf( resultCode2 != null ? resultCode2.toString() : "-1" );
+        String message2 = (String) resultMap2.get("message");
+
+
         if(result == 0) return "camp/reservate?cpdtNo=" + cpdtNo;
-        
         return "redirect:/camp/complete";
     }
     

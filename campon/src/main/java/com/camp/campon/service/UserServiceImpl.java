@@ -121,5 +121,11 @@ public class UserServiceImpl implements UserService {
         List<String> userIdList = userMapper.userIds();
         return userIdList;
     }
+
+    @Override
+    public String sellerTel(int cpdtNo) throws Exception {
+        String userTel = userMapper.sellerTel(cpdtNo);
+        return userTel;
+    }
     
 }

@@ -84,5 +84,12 @@ INSERT INTO payments (order_number, pm_type, pm_price) VALUES (#{orderNumber}, #
 INSERT INTO delivery (order_no) (SELECT order_no FROM `order` WHERE order_number = #{orderNumber})
 </insert>
 
+<!--이용자에게 대여내역 문자보내기-->
+<select id="toUserMsg" resultType="Order">
+SELECT p.*, o.*, d.cp_dt_name FROM `order` o JOIN product p ON p.product_no = o.product_no
+JOIN campdetail d ON d.cp_dt_no = o.cp_dt_no
+WHERE o.order_number = #{orderNumber}
+</select>
+
 
 </mapper>

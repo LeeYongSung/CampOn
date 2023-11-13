@@ -1,12 +1,14 @@
 package com.camp.campon.dto;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
 import lombok.Data;
 
+//만약 문제생기면 implements Serializable 빼기 
 @Data
-public class Users {
+public class Users implements Serializable {
     // 사용자
     private int userNo;
     private String userId; //아이디

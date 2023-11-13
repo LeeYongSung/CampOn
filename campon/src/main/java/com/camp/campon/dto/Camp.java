@@ -81,6 +81,7 @@ public class Camp {
     private int userNo;
     private String userName;
     private String campPaymentType;
+    private String userTel; 
 
     private List<MultipartFile> cpdiFiles;
     

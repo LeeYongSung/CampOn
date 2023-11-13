@@ -40,5 +40,8 @@ public interface UserMapper {
 
     // 캠핑업체셀러정보조회
     public Users productsseller(int campNo) throws Exception;
+
+    //캠핑업체 전화번호
+    public String sellerTel(int cpdtNo) throws Exception;
     
 }

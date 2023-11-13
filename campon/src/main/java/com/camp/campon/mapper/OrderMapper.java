@@ -1,4 +1,6 @@
 package com.camp.campon.mapper;
+import java.util.List;
+
 import org.apache.ibatis.annotations.Mapper;
 
 import com.camp.campon.dto.Order;
@@ -17,4 +19,6 @@ public interface OrderMapper {
     public int addPayments(Order order) throws Exception;
     //Delivery 테이블에 넣기
     public int addDelivery(String orderNumber) throws Exception;
+    //이용자에게 대여내역 문자보내기
+    public List<Order> toUserMsg(String orderNumber) throws Exception;
 }
