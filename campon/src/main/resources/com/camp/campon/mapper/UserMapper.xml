@@ -125,4 +125,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <select id="productsseller" resultType="Users">
         select * from user where user_no = (select user_no from campproduct where camp_no = #{campNo})
     </select>
+    <!--캠핑업체 판매자의 전화번호-->
+    <select id="sellerTel" resultType="String">
+        SELECT u.user_tel
+        FROM campdetail cd JOIN user u ON cd.user_no = u.user_no
+        WHERE cp_dt_no = 1
+    </select>
 </mapper>

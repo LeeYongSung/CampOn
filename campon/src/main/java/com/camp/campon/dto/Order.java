@@ -18,9 +18,12 @@ public class Order {
     private Date orderDate;
 
     private int cpDtNo;
+    //캠핑상품 이름
+    private String cpDtName;
 
     // 상품
     private int productNo;
+    private String productName;
     //상품 갯수
     private int cartCnt;
     

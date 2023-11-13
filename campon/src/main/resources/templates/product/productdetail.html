@@ -122,6 +122,15 @@
         </d>
     </div>
 
+    <!--장바구니 버튼-->
+    <div>
+        <div class="cartTotal position-fixed">
+            <th:block sec:authorize="isAuthenticated()">
+                <a th:href="|/product/addcart?productNo=${product.productNo}&userNo=${#authentication.principal.users.userNo}|" class="w-100 d-block btn btn-warning rounded-0 py-3">장바구니에 담기</a>
+            </th:block>
+        </div>
+    </div>
+
 
     <script>
         function addProductsave(){

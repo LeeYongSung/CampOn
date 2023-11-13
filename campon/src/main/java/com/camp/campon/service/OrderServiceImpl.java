@@ -3,6 +3,7 @@ package com.camp.campon.service;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -60,5 +61,12 @@ public class OrderServiceImpl implements OrderService {
         int result = orderMapper.addDelivery(orderNumber);
         return result;
     }
+
+    @Override
+    public List<Order> toUserMsg(String orderNumber) throws Exception {
+        List<Order> orderList = orderMapper.toUserMsg(orderNumber);
+        return orderList;
+    }
+
     
 }
