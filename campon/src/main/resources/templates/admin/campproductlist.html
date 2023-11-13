@@ -28,8 +28,8 @@
                                 <p class="pt-1">수정일자</p>
                             </div>
                             <div>
-                                <div class="campproductListCon_txt"><span th:text="${camp.regDate}"></span></div>
-                                <div class="campproductListCon_txt pt-1"><span th:text="${camp.updDate}"></span></div>
+                                <div class="campproductListCon_txt"><span th:text="${#dates.format(camp.regDate, 'yyyy-MM-dd')}"></span></div>
+                                <div class="campproductListCon_txt pt-1"><span th:text="${#dates.format(camp.updDate, 'yyyy-MM-dd')}"></span></div>
                             </div>
                         </div>
                         <!-- <th:block th:each="${campDetail : ${camp.detailList}"></th:block> -->
@@ -68,8 +68,8 @@
                             </div>
                         </div>
                         <div class="position-absolute top-0 end-0 detail_date">
-                            <div class="pt-2"><span th:text="${detail.regDate}"></span></div>
-                            <div><span th:text="${detail.updDate}"></span></div>
+                            <div class="pt-2"><span th:text="${#dates.format(detail.regDate, 'yyyy-MM-dd')}"></span></div>
+                            <div><span th:text="${#dates.format(detail.updDate, 'yyyy-MM-dd')}"></span></div>
                         </div>
                         <div class="position-absolute bottom-0 end-0 d-flex detail_btn me-2 mb-1">
                             <div><a class="btn btn-warning" th:href="|/admin/campdetailupdate?cpdtNo=${detail.cpdtNo}|">상품수정</a></div>
