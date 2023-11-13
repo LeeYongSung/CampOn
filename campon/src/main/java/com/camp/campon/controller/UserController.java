@@ -1,6 +1,7 @@
 package com.camp.campon.controller;
 
 import java.security.Principal;
+import java.util.List;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -67,7 +68,9 @@ public class UserController {
 
     // 회원 가입 화면
     @GetMapping(value = "/join")
-    public String join() {
+    public String join(Model model) throws Exception {
+        List<String> userIdList = userService.userIds();
+        model.addAttribute("userIdList", userIdList);
         return "user/join";
     }
 
@@ -75,10 +78,12 @@ public class UserController {
     @PostMapping(value = "/join")
     public String joinPro(Users user, HttpServletRequest request) throws Exception {
         int result = userService.insert(user);
-        log.info(result + "");
+        log.info(result + "회원가입성공");
         // 회원 가입 성공 시, 바로 로그인
         if (result > 0) {
             userService.login(user, request);
+            log.info("회원가입 성공 시 바로 로그인 되었나?");
+            
         }
         return "redirect:/";
     }
