@@ -88,7 +88,7 @@
         </div>
     </div>
 
-    <script>
+    <script th:inline="javascript">
           $(document).ready(function() {
             $(".typeBtn").click(function() {
                 $("#joinForm").fadeIn(); 
@@ -120,6 +120,15 @@
         if (!/^[a-zA-Z0-9]+$/.test(id)) {
             alert("아이디는 영문과 숫자 조합만 가능합니다.");
             return false;
+        }
+        //아이디 중복 검사
+        let userIdList = /*[[${userIdList}]]*/ [];
+        for (let i = 0; i < userIdList.length; i++) {
+            userId = userIdList[i]
+            if (id == userId){
+                alert("아이디 중복. 다른 아이디를 입력해주세요")
+                return false
+            }
         }
         // 이름 유효성 검사
         if (!/^[가-힣]{1,5}$/.test(name)) {

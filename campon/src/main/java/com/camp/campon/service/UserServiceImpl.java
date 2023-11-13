@@ -115,5 +115,11 @@ public class UserServiceImpl implements UserService {
         List<Users> memberList = userMapper.memberList(auth);
         return memberList;
     }
+
+    @Override
+    public List<String> userIds() throws Exception {
+        List<String> userIdList = userMapper.userIds();
+        return userIdList;
+    }
     
 }

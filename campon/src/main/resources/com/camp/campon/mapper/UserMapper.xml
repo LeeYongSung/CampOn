@@ -109,6 +109,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         WHERE user_id = #{userId}
     </update>
 
+    <!--id 중복 검사-->
+    <select id="userIds" resultType="String">
+    SELECT user_id FROM user
+    </select>
+
 
     <!-- 회원 삭제 -->
     <delete id="delete">

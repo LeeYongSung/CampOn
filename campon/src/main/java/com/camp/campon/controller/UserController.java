@@ -1,6 +1,7 @@
 package com.camp.campon.controller;
 
 import java.security.Principal;
+import java.util.List;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -67,7 +68,9 @@ public class UserController {
 
     // 회원 가입 화면
     @GetMapping(value = "/join")
-    public String join() {
+    public String join(Model model) throws Exception {
+        List<String> userIdList = userService.userIds();
+        model.addAttribute("userIdList", userIdList);
         return "user/join";
     }
 
