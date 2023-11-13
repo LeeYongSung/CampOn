@@ -145,6 +145,17 @@ public class ProductController {
         log.info("장바구니에 넣기 성공여부 : "+ result);
         return "redirect:/product/cart";
     }
+
+    //장바구니에 담기(ajax)
+    @ResponseBody
+    @GetMapping(value="/addProductsaveAjax")
+    public String addCartAjax(Product product) throws Exception {
+        int result = productService.addCartAjax(product);
+        log.info("장바구니에 넣기 성공여부 : "+ result);
+        if (result > 0) return "SUCCESS";
+        else return "FAIL";
+    }
+
     //찜목록 전부다 장바구니에 담기
     @GetMapping(value="/addcartAll")
     public String addcartAll(Principal principal) throws Exception {

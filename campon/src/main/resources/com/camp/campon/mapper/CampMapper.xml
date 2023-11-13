@@ -146,7 +146,20 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         WHERE re.user_no = #{userNo}
         ORDER BY re.reservation_no DESC;
     </select>
-    
+    <!--현재 날짜 이후의 예약일정 가져오기-->
+    <select id="reservationNow" resultType="Camp">
+    <![CDATA[
+    SELECT * 
+    FROM reservation re
+    JOIN campproduct c ON re.camp_no = c.camp_no
+    JOIN campimg img ON c.camp_no = img.camp_no 
+    JOIN (SELECT min(cpi_no) no FROM campimg GROUP BY camp_no) imgno ON img.cpi_no = imgno.no
+    JOIN campdetail cd ON c.camp_no = cd.camp_no
+    JOIN `user` as u ON u.user_no = re.user_no
+    WHERE re.user_no = 2 AND re.reservation_start > now()
+    ORDER BY c.camp_no DESC;
+    ]]>
+    </select>
     <!-- 찜 상품 목록 -->
     <select id="favoritesList" resultType="Camp">
         SELECT * FROM favorites f join campproduct c on f.camp_no = c.camp_no ORDER BY favorites_no DESC

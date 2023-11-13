@@ -111,7 +111,7 @@ public class SecuriryConfig extends WebSecurityConfigurerAdapter {
             // .logoutSuccessUrl("/login")    // 로그아웃 성공 시, URL : "/login?logout"(기본값)
             // .logoutUrl("/logout")                 // 로그아웃 요청 처리 경로 지정 (default:logout)
             // 쿠키 삭제
-            .deleteCookies("remember-id", "remember-me", "JSESSIONID")
+            //.deleteCookies("remember-id", "remember-me", "JSESSIONID")
             .invalidateHttpSession(true)    // 세션 무효화
             .permitAll()
         );

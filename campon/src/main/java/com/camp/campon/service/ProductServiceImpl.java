@@ -235,6 +235,21 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    public int addCartAjax(Product product)  throws Exception {
+        List<Product> oldcartList = productMapper.cartList(product.getUserNo());
+        int result = 0;
+        for (Product product2 : oldcartList) {
+            if ( product2.getProductNo() == product.getProductNo() ){
+                return result = 0;
+            }
+        }
+        result = productMapper.addCart(product);
+        return result;
+    }
+
+
+
+    @Override
     public int addcartAll(int userNo) throws Exception {
         int result = productMapper.addcartAll(userNo);
         return result;

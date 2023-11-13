@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org"
     xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
-    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{/UI/user/layout/main_layout}">
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
+    layout:decorate="~{/UI/user/layout/store_layout}">
 
 <head>
     <meta charset="UTF-8">
@@ -123,10 +124,18 @@
     </div>
 
     <!--장바구니 버튼-->
-    <div>
+    <!-- <div>
         <div class="cartTotal position-fixed">
             <th:block sec:authorize="isAuthenticated()">
                 <a th:href="|/product/addcart?productNo=${product.productNo}&userNo=${#authentication.principal.users.userNo}|" class="w-100 d-block btn btn-warning rounded-0 py-3">장바구니에 담기</a>
+            </th:block>
+        </div>
+    </div> -->
+    <!--장바구니 버튼 ajax-->
+    <div>
+        <div class="cartTotal position-fixed">
+            <th:block sec:authorize="isAuthenticated()">
+                <button onclick="addcart()" class="w-100 d-block btn btn-warning rounded-0 py-3">장바구니에 담기</button>
             </th:block>
         </div>
     </div>
@@ -153,6 +162,28 @@
                 },
                 error           : function(request, status, error){
                     alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+                }
+            })
+        }
+
+        function addcart(){
+            // |/product/addcart?productNo=${product.productNo}&
+            // userNo=${#authentication.principal.users.userNo}|"
+            let productNo = "[[${product.productNo}]]"
+            let userNo = "[[${#authentication.principal.users.userNo}]]"
+            let url3 = "/product/addProductsaveAjax?productNo="+ productNo + "&userNo="+userNo
+            $.ajax({
+                url : url3,
+                type : 'GET',
+                success : function(response){
+                    if (response == 'SUCCESS'){
+                        alert('장바구니에 등록되었습니다')
+                    } else {
+                        alert('이미 장바구니에 등록된 상품입니다')
+                    }
+                }, 
+                error : function(request, status, error){
+                    alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error)
                 }
             })
         }

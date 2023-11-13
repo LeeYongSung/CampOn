@@ -362,6 +362,11 @@ public class CampServiceImpl implements CampService{
     public int cpdeletecdi(int campNo) throws Exception {
         int result = campMapper.cpdeletecdi(campNo);
         return result;
+
+    @Override
+    public List<Camp> reservationNow(Integer userNo) throws Exception {
+         List<Camp> reservationList = campMapper.reservationNow(userNo);
+        return reservationList;
     }
 
     

@@ -91,5 +91,9 @@ JOIN campdetail d ON d.cp_dt_no = o.cp_dt_no
 WHERE o.order_number = #{orderNumber}
 </select>
 
+<!--찜과 장바구니에 있는 거 삭제 by userNo-->
+<!-- <delete>
+
+</delete> -->
 
 </mapper>

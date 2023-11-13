@@ -32,6 +32,7 @@ public interface CampService {
     
     // 예약
     public List<Camp> reservation(Integer userNo) throws Exception;
+    public List<Camp> reservationNow(Integer userNo) throws Exception;
     public Camp reservate(int cpdtNo) throws Exception;
     
     // 오픈 일정
