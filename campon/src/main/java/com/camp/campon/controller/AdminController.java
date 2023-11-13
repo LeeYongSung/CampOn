@@ -27,6 +27,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.camp.campon.dto.Ad;
 import com.camp.campon.dto.Camp;
+import com.camp.campon.dto.CustomUser;
 import com.camp.campon.dto.Product;
 import com.camp.campon.dto.Productreview;
 import com.camp.campon.dto.Users;
@@ -152,8 +153,16 @@ public class AdminController {
 
     /**********************************************
      * 캠핑장 시작
+     * @throws Exception
      ***********************************************/
 
+    @GetMapping(value="/campproductlistadmin")
+    public String camplistadmin(Model model) throws Exception {
+        List<Camp> camp = campService.campproductadmin();
+        model.addAttribute("campList", camp);
+        return "admin/campproductlistadmin";
+    }
+     
     @GetMapping(value = "/campproductlist")
     public String campList(Model model, Authentication auth) throws Exception {
         String name = "";
@@ -190,7 +199,13 @@ public class AdminController {
                 // if(campdetailList != null) campdetailList.addAll(campdetailList);
                 // }
                 // model.addAttribute("campdetailList", campdetailList);
+                CustomUser customuser = (CustomUser) auth.getPrincipal();
+                Users user1 = customuser.getUsers();
+                String role = user1.getAuth();
+                model.addAttribute("auth", role);
                 model.addAttribute("campList", camp);
+                List<Camp> camp1 = campService.campproductadmin();
+                model.addAttribute("campListadmin", camp1);
                 return "admin/campproductlist";
             }
             return "redirect:/user/login";
@@ -301,6 +316,7 @@ public class AdminController {
     public String campdetaildelete(int cpdtNo) throws Exception {
         log.info("숫자 : " + cpdtNo);
         int filedelete = campService.cpdidelete(cpdtNo);
+        int result1 = boardService.crdeletecpdtNo(cpdtNo);
         int result = campService.detaildelete(cpdtNo);
         if (result == 0)
             return "redirect:/admin/campdetailupdate?cpdtNo=" + cpdtNo;
@@ -311,11 +327,25 @@ public class AdminController {
     public String campdetaildeletepro(int cpdtNo) throws Exception {
         log.info("숫자 : " + cpdtNo);
         int filedelete = campService.cpdidelete(cpdtNo);
+        int result1 = boardService.crdeletecpdtNo(cpdtNo);
         int result = campService.detaildelete(cpdtNo);
         if (result == 0)
             return "redirect:/admin/campdetailupdate?cpdtNo=" + cpdtNo;
         return "redirect:/admin/campproductlist";
     }
+
+    //캠핑장 삭제
+    @GetMapping(value="/campdelete")
+    public String campdelete(int campNo) throws Exception {
+        int result1 = campService.cpdeletecdi(campNo);
+        int result2 = campService.cpdeletecpdt(campNo);
+        int result3 = campService.cpdeletecpi(campNo);
+        int result4 = campService.cpdelete(campNo);
+        int result5 = boardService.crdeletecampNo(campNo);
+        return "redirect:/admin/campproductlist";
+    }
+    
+
 
     /**********************************************
      * 캠핑장 끝

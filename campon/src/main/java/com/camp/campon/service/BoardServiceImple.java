@@ -208,5 +208,23 @@ public class BoardServiceImple implements BoardService {
         return campreviewlist;
     }
 
+    @Override
+    public int crdeletelist(int reservationNo) throws Exception {
+        int result = boardMapper.crdeletelist(reservationNo);
+        return result;
+    }
+
+    @Override
+    public int crdeletecampNo(int campNo) throws Exception {
+        int result = boardMapper.crdeletecampNo(campNo);
+        return result;
+    }
+
+    @Override
+    public int crdeletecpdtNo(int cpdtNo) throws Exception {
+        int result = boardMapper.crdeletecpdtNo(cpdtNo);
+        return result;
+    }
+
     
 }

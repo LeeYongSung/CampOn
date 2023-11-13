@@ -78,6 +78,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <delete id="crdelete">
         delete from review where review_no=#{reviewNo}
     </delete>
+    <delete id="crdeletelist">
+        delete from review where reservation_no = #{reservationNo}
+    </delete>
+    <delete id="crdeletecampNo">
+        delete from review where camp_no = #{campNo}
+    </delete>
+    <delete id="crdeletecpdtNo">
+        delete from review where cp_dt_no = #{cpdtNo}
+    </delete>
     <!--대여상품 리뷰 수정 -->
     <update id="prupdate">
         update productreview set pr_title=#{prTitle}, pr_img=#{prImg}, pr_con=#{prCon} where pr_no=#{prNo}

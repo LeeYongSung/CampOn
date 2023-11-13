@@ -35,8 +35,9 @@
                             <p th:text="${reservation.reservationNo}" class="pe-5"></p>
                         </div>
                     </div>
+                    <div><a th:href="|/board/crinsert?reservationNo=${reservation.reservationNo}|">리뷰쓰러가기</a></div>
                 </div>
-                <div class="reservation_cancle"><a href="javascript:;"><span class="material-symbols-outlined">close</span></a></div>
+                <div class="reservation_cancle"><a th:href="|/camp/reservationdelete?reservationNo=${reservation.reservationNo}|" onclick="confirm('목록에서 삭제하시겠습니까? 작성된 리뷰가 모두 사라집니다.')"><span class="material-symbols-outlined">close</span></a></div>
                 <div class="reservation_more"><a href="javascript:;" class="reservation_more_btn">상세보기<span class="material-symbols-outlined">expand_more</span></a></div>
             </div>
             <div class="w-100 container-sm pb-5 pt-3 border-bottom position-relative mb-3 reservation_detail_box none">
@@ -96,6 +97,7 @@
                                 <p><span th:text="${product.sum}"></span>개</p>
                             </div>
                         </div>
+                        <div><a href="">리뷰쓰러가기</a></div>
                     </div>
                     <div class="campproduct_close"><a href="javascript:;" class="campproduct_close_btn"><span class="material-symbols-outlined">close</span></a></div>
                 </div>

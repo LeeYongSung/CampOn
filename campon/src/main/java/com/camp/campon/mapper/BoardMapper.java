@@ -40,6 +40,9 @@ public interface BoardMapper {
     //캠핑 리뷰 수정 / 삭제
     public int crupdate(Board board) throws Exception;
     public int crdelete(int reviewNo) throws Exception;
+    public int crdeletelist(int reservationNo) throws Exception;
+    public int crdeletecampNo(int campNo) throws Exception;
+    public int crdeletecpdtNo(int cpdtNo) throws Exception;
     //상품 리뷰 수정 / 삭제
     public int prupdate(Board board) throws Exception;
     public int prdelete(int prNo) throws Exception;
