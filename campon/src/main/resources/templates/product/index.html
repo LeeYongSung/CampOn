@@ -3,7 +3,7 @@
       xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{/UI/user/layout/main_layout}"
+      layout:decorate="~{/UI/user/layout/store_layout}"
       >
 <head>
     <meta charset="UTF-8">
@@ -141,16 +141,19 @@
         </div>
         <div class="container d-flex justify-content-between py-4">
             <th:block th:each="product : ${productHotList}">
-                <div class="product_suggestion">
-                    <div class="product_suggestionImg border-bottom">
-                        <img th:src="|/img?file=${product.productimgUrl}|">
+                <!--만약 이상하면 a 태그에 class속성 추가하기 class="d-flex justify-content-between" -->
+                <a th:href="|/product/productdetail?productNo=${product.productNo}|">
+                    <div class="product_suggestion">
+                        <div class="product_suggestionImg border-bottom">
+                            <img th:src="|/img?file=${product.productimgUrl}|">
+                        </div>
+                        <div class="product_suggestionCon px-3">
+                            <div><span th:text="${product.productName}"></span></div>
+                            <div><span th:text="${product.productCategory}"></span></div>
+                            <div><span th:text="${product.productPrice}"></span></div>
+                        </div>
                     </div>
-                    <div class="product_suggestionCon px-3">
-                        <div><span th:text="${product.productName}"></span></div>
-                        <div><span th:text="${product.productCategory}"></span></div>
-                        <div><span th:text="${product.productPrice}"></span></div>
-                    </div>
-                </div>
+                </a>
             </th:block>
         </div>
     </div>

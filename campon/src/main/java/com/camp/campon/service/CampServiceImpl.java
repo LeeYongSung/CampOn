@@ -323,5 +323,11 @@ public class CampServiceImpl implements CampService{
         return searchCamps;
     }
 
+    @Override
+    public List<Camp> reservationNow(Integer userNo) throws Exception {
+         List<Camp> reservationList = campMapper.reservationNow(userNo);
+        return reservationList;
+    }
+
     
 }

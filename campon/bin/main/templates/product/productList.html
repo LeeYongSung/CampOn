@@ -3,7 +3,7 @@
       xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{/UI/user/layout/main_layout}"
+      layout:decorate="~{/UI/user/layout/store_layout}"
       >
 <head>
     <meta charset="UTF-8">
@@ -189,7 +189,8 @@
                     </th:block>
                     <!-- 로그인 시 -->
                     <th:block sec:authorize="isAuthenticated()">
-                        <a th:href="|/product/addcart?productNo=${product.productNo}&userNo=${#authentication.principal.users.userNo}|" class="btn btn-outline-primary">장바구니 담기</a>
+                        <!-- <a th:href="|/product/addcart?productNo=${product.productNo}&userNo=${#authentication.principal.users.userNo}|" class="btn btn-outline-primary">장바구니 담기</a> -->
+                        <button th:onclick="|addcart(${product.productNo})|" class="btn btn-outline-primary">장바구니 담기</button>
                     </th:block>
                 </div>
             </div>
@@ -222,29 +223,24 @@
            $(this).children().addClass('active-category'); // 현재 클릭한 버튼에 'active-category' 클래스 추가
         });
 
-        //버튼 클릭 시 getList()
-        // function getList(){
-        //     let category = $(this).data('category');
-        //     console.log("/product?category=" + category);
-        //     return "/product?category=" + category
-        // }
-       
-
-
-        // 상품리스트 가져오기 - 에이젝스로 하고싶었으나 실패
-        // function getbuttonst() {
-        //     const url = 'http://localhost:8080/product/getList'
-        //     $.ajax({
-        //         url     :   url,
-        //         type    :   'GET',
-        //         success : function(response) {
-        //             let productList = response
-        //         },
-        //         error           : function(request, status, error){
-        //             alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-        //         }
-        //     })
-        // }
+        function addcart(productNo){
+            let userNo = "[[${#authentication.principal.users.userNo}]]"
+            let url3 = "/product/addProductsaveAjax?productNo="+ productNo + "&userNo="+userNo
+            $.ajax({
+                url : url3,
+                type : 'GET',
+                success : function(response){
+                    if (response == 'SUCCESS'){
+                        alert('장바구니에 등록되었습니다')
+                    } else {
+                        alert('이미 장바구니에 등록된 상품입니다')
+                    }
+                }, 
+                error : function(request, status, error){
+                    alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error)
+                }
+            })
+        }
     </script>
 </body>
 </html>

@@ -58,7 +58,7 @@ public class OrderController {
             userNo = users.getUserNo();
         }
         List<Product> cartList = productService.cartList(userNo);
-        List<Camp> reservationList = campService.reservation(userNo);
+        List<Camp> reservationList = campService.reservationNow(userNo);
         model.addAttribute("cartList", cartList);
         model.addAttribute("reservationList", reservationList);
         return "product/payment";
@@ -148,6 +148,10 @@ public class OrderController {
         Object resultCode = resultMap.get("result_code");
         Integer result_code = Integer.valueOf( resultCode != null ? resultCode.toString() : "-1" );
         String message = (String) resultMap.get("message");
+
+
+        //장바구니와 찜에 있는 상품들 모두 삭제
+        
 
 
         return "redirect:/order/depositcomp?orderNumber=" + orderNumber;
