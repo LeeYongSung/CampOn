@@ -154,6 +154,8 @@ public class AdminController {
      * 캠핑장 시작
      ***********************************************/
 
+
+     //판매자
     @GetMapping(value = "/campproductlist")
     public String campList(Model model, Authentication auth) throws Exception {
         String name = "";
@@ -197,6 +199,7 @@ public class AdminController {
         }
     }
 
+    //판매자
     /**
      * 캠핑장 등록
      * 
@@ -236,6 +239,7 @@ public class AdminController {
         return "redirect:/admin/campproductlist";
     }
 
+    //판매자
     /**
      * 캠핑장 수정
      * 
@@ -324,6 +328,7 @@ public class AdminController {
      * 광고 시작
      ***********************************************/
 
+     //판매자
     // 광고 등록 페이지
     @GetMapping("/adinsert")
     public String adinsert(Model model, int campNo) {

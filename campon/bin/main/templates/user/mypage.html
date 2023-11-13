@@ -16,7 +16,15 @@
         <div class="mypage_banner_back"></div>
         <div class="mypage_banner_con">
             <ul class="w-100 text-center">
-                <li><img src="/img/user/test_user.png" alt=""></li>
+                <th:block th:if="${auth == 'ROLE_USER'}">
+                    <li><img src="/img/user/test_user.png" alt="프로필이미지"></li>
+                </th:block>
+                <th:block th:if="${auth == 'ROLE_SELL'}">
+                    <li><img src="/img/user/test_sell.png" alt="프로필이미지"></li>
+                </th:block>
+                <th:block th:if="${auth == 'ROLE_ADMIN'}">
+                    <li><img src="/img/user/test_admin.png" alt="프로필이미지"></li>
+                </th:block>
                 <li>
                     <!-- <h4>아이디 : <span th:text="${#authentication.principal.users.userId}"></span></h4> -->
                     <h4>아이디 : <span sec:authentication="principal.username"></span></h4>
@@ -69,7 +77,6 @@
                     </li>
                     <li>
                         <a href="/admin/adlistseller">광고 신청 목록</a>
-                        <a href="#">광고 관리</a>
                     </li>
                     <li>
                         <a href="/admin/campproductlist">캠핑장 관리</a>
@@ -104,7 +111,7 @@
                 </ul>
                 <ul class="d-flex justify-content-around w-100">
                     <li>
-                        <a href="#">캠핑장 예약 관리(x)</a>
+                        <a href="">캠핑장 예약 관리(x)</a>
                     </li>
                     <li>
                         <a href="/admin/productlist">스토어상품 관리</a>

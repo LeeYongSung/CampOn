@@ -1,29 +1,29 @@
 <!-- user - footer -->
 <!-- ~UI/user/fragment/footer -->
-<th:block th:fragment="admin_footer">
+<th:block th:fragment="seller_footer">
   <div class="menu">
     <ul class="main_menu">
       <li>
-        <a href="/admin/memberList">
-          <ul class="sub_menu">
-            <li><i class="material-symbols-outlined">person</i></li>
-            <li>유저관리</li>
-          </ul>
-        </a>
-      </li>
-      <li>
-        <a href="/admin/adlist">
-          <ul class="sub_menu">
-            <li><i class="material-symbols-outlined">payment</i></li>
-            <li>광고관리</li>
-          </ul>
-        </a>
-      </li>
-      <li>
         <a href="/admin/campproductlist">
           <ul class="sub_menu">
-            <li><i class="material-symbols-outlined">home</i></li>
-            <li>캠핑장관리</li>
+            <li><i class="material-symbols-outlined">camping</i></li>
+            <li>캠핑장 관리</li>
+          </ul>
+        </a>
+      </li>
+      <li>
+        <a href="/board/boardlist">
+          <ul class="sub_menu">
+            <li><i class="material-symbols-outlined">rate_review</i></li>
+            <li>캠핑장 후기</li>
+          </ul>
+        </a>
+      </li>
+      <li>
+        <a href="/admin/adlistseller">
+          <ul class="sub_menu">
+            <li><i class="material-symbols-outlined">ad_group</i></li>
+            <li>광고 관리</li>
           </ul>
         </a>
       </li>
@@ -37,6 +37,8 @@
       </li>
     </ul>
   </div>
+
+
     <footer>
         <p class="footer_logo"><a href="#"><img src="/img/footer_logo.png" alt="하단로고"></a></p>
         <div class="footer_company_box">

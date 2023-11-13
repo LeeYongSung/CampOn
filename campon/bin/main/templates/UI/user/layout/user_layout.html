@@ -19,7 +19,15 @@
     <th:block layout:fragment="content"></th:block>
     
     <!-- footer -->
-    <th:block th:replace="~{UI/user/fragment/footer::footer}"></th:block>
+    <th:block sec:authorize="!hasAnyRole('ROLE_SELL', 'ROLE_ADMIN')">
+        <th:block th:replace="~{UI/user/fragment/footer::footer}"></th:block>
+    </th:block>
+    <th:block sec:authorize="hasRole('ROLE_SELL')">
+        <th:block th:replace="~{UI/admin/fragment/seller_footer::seller_footer}"></th:block>
+    </th:block>
+    <th:block sec:authorize="hasRole('ROLE_ADMIN')">
+        <th:block th:replace="~{UI/admin/fragment/admin_footer::admin_footer}"></th:block>
+    </th:block>
 
     </div>
     
