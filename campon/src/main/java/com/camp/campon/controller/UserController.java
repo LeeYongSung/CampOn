@@ -75,10 +75,12 @@ public class UserController {
     @PostMapping(value = "/join")
     public String joinPro(Users user, HttpServletRequest request) throws Exception {
         int result = userService.insert(user);
-        log.info(result + "");
+        log.info(result + "회원가입성공");
         // 회원 가입 성공 시, 바로 로그인
         if (result > 0) {
             userService.login(user, request);
+            log.info("회원가입 성공 시 바로 로그인 되었나?");
+            
         }
         return "redirect:/";
     }
