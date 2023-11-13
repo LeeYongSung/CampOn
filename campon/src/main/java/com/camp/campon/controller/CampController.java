@@ -413,4 +413,12 @@ public class CampController {
         return "UI/component/camp/list";
     }
 
+    @GetMapping(value="/reservationdelete")
+    public String reservationdelete(int reservationNo) throws Exception {
+        int result = campService.reservationdelete(reservationNo);
+        int result1 = boardService.crdeletelist(reservationNo);
+        return "redirect:/camp/reservation";
+    }
+    
+
 }

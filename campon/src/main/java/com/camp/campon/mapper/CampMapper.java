@@ -60,6 +60,7 @@ public interface CampMapper {
     
     // 상품 등록 유저 확인
     public List<Camp> campproductUser(Integer userNo) throws Exception;
+    public List<Camp> campproductadmin() throws Exception;
     public List<Camp> campdetailUser(Integer campNo) throws Exception;
 
     //캠핑상품 수정
@@ -88,4 +89,14 @@ public interface CampMapper {
 
     // 상품 검색
     public List<Camp> campSearch(Camp camp) throws Exception;
+
+    //예약 목록 삭제
+    public int reservationdelete(int reservationNo) throws Exception;
+
+    //캠핑장 삭제
+    public int cpdelete(int campNo) throws Exception;
+    public int cpdeletecpi(int campNo) throws Exception;
+    public int cpdeletecpdt(int campNo) throws Exception;
+    public int cpdeletecdi(int campNo) throws Exception;
+
 }

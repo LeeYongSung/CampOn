@@ -323,5 +323,46 @@ public class CampServiceImpl implements CampService{
         return searchCamps;
     }
 
+    @Override
+    public int reservationdelete(int reservationNo) throws Exception {
+        int result = campMapper.reservationdelete(reservationNo);
+        return result;
+    }
+
+    @Override
+    public List<Camp> campproductadmin() throws Exception {
+        List<Camp> productadmin = campMapper.campproductadmin();
+
+        for (Camp camp : productadmin) {
+            camp.setDetailsList(campMapper.campdetailUser(camp.getCampNo()));
+        }
+        
+        return productadmin;
+    }
+
+    @Override
+    public int cpdelete(int campNo) throws Exception {
+        int result = campMapper.cpdelete(campNo);
+        return result;
+    }
+
+    @Override
+    public int cpdeletecpi(int campNo) throws Exception {
+        int result = campMapper.cpdeletecpi(campNo);
+        return result;
+    }
+
+    @Override
+    public int cpdeletecpdt(int campNo) throws Exception {
+        int result = campMapper.cpdeletecpdt(campNo);
+        return result;
+    }
+
+    @Override
+    public int cpdeletecdi(int campNo) throws Exception {
+        int result = campMapper.cpdeletecdi(campNo);
+        return result;
+    }
+
     
 }
