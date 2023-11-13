@@ -59,7 +59,7 @@
                 </div>
                 <div class="w-100 d-flex justify-content-between reservationCon my-2 border-bottom">
                     <div><h6>숙박기간</h6></div>
-                    <div><span th:text="|${reservation.reservationStart} ~ ${reservation.reservationEnd}|"></span></div>
+                    <div><span th:text="|${#dates.format(reservation.reservationStart, 'yyyy-MM-dd')} ~ ${#dates.format(reservation.reservationEnd, 'yyyy-MM-dd')}|"></span></div>
                 </div>
                 <div class="w-100 d-flex justify-content-between reservationCon my-2 border-bottom">
                     <div><h6>캠핑장연락처</h6></div>
