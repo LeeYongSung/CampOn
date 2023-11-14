@@ -252,11 +252,27 @@ public class AdminController {
      * 캠핑장 수정
      * 
      * @return
+     * @throws Exception
      */
     @GetMapping(value = "/campproductupdate")
-    public String campUpdate() {
+    public String campUpdate(Model model, int campNo) throws Exception {
+        Camp camp = campService.productsproducts(campNo);
+        List<Camp> campfacility = campService.productsfacility(campNo);
+        model.addAttribute("camp", camp);
+        model.addAttribute("campfacility", campfacility);
         return "admin/campproductupdate";
     }
+    @PostMapping(value="/campproductupdatePro")
+    public String campUpdatePro(@ModelAttribute Camp camp, @RequestParam List<String> facilityTypeNo) throws Exception {
+        int campNo = camp.getCampNo();
+        int result1 = campService.campFacilityDelete(campNo);
+        int result2 = campService.campEnvironmentDelete(campNo);
+        int result3 = campService.campImgDelete(campNo);
+        int result4 = campService.campUpdate(camp, facilityTypeNo);
+
+        return "redirect:/admin/campproductlist";
+    }
+    
 
     // 캠핑상품 등록
     @GetMapping(value = "/campdetailinsert")
