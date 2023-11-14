@@ -12,10 +12,15 @@
 </head>
 <body layout:fragment="content">
     <div>
-        <h1>캠핑장 목록</h1>
-        <a href="/admin/campproductadd" th:if="${auth == 'ROLE_SELL'}">캠핑장 등록</a>
-    </div>
-    <div>
+        <div class="position-relative">
+            <div class="position-absolute top-0 end-0 pt-2 pe-2">
+                <a href="/admin/campproductadd" th:if="${auth == 'ROLE_SELL'}">캠핑장 등록</a>
+            </div>
+            <div class="w-100 text-center pt-5 ">
+                <div><h5>캠핑장목록</h5></div>
+                <div><span>보유한 캠핑장 목록</span></div>
+            </div>
+        </div>
         <th:block th:each="camp : ${campList}" th:if="${auth == 'ROLE_SELL'}">
             <div class="campproductList w-100 d-flex justify-content-between position-relative py-5 mt-3 border-bottom border-top">
                 <input type="hidden" class="campNo" id="campNo" name="campNo" th:value="${camp.campNo}">
@@ -40,7 +45,7 @@
                     </div>
                 </div>
                 <div class="campproductListBtn position-absolute top-0 end-0 d-flex pt-2">
-                    <div><a th:href="|/admin/adinsert?campNo=${camp.campNo}|" class="btn btn-success">광고신청</a></div>
+                    <div><a th:href="|/admin/adinsert?campNo=${camp.campNo}|" class="btn btn-primary me-1">광고신청</a></div>
                     <div><a th:href="|/admin/campdetailinsert?campNo=${camp.campNo}&userNo=${camp.userNo}|" class="btn btn-success">상품등록</a></div>
                     <div><a th:href="|/admin/campproductupdate?campNo=${camp.campNo}|" class="btn btn-warning mx-1">캠핑장수정</a></div>
                     <div><a th:href="|/admin/campdelete?campNo=${camp.campNo}|" class="btn btn-danger mx-1">캠핑장삭제</a></div>
