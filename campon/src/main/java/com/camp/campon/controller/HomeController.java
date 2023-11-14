@@ -44,6 +44,12 @@ public class HomeController {
     private AuthenticationManager authenticationManager;
 
     @GetMapping(value="/")
+    public String tempIndex() {
+        return "camp/index";
+    }
+    
+
+    @GetMapping(value="/index2")
     public String mainIndex(Model model) throws Exception {
 
         List<Camp> camptypeList = campService.camptype();
@@ -57,7 +63,7 @@ public class HomeController {
         model.addAttribute("campHotList", campHotList);
         model.addAttribute("newReviewList", newReviewList);
 
-        return "camp/index";
+        return "camp/index2";
     }
 
 
