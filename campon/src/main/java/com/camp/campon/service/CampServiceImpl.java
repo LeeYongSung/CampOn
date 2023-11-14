@@ -370,5 +370,90 @@ public class CampServiceImpl implements CampService{
         return reservationList;
     }
 
+    @Override
+    public int campUpdate(@RequestBody Camp camp, @RequestParam List<String> facilityTypeNo) throws Exception {
+        // String parentTable = "board";
+        // log.info("camp : " + camp);
+        MultipartFile campLayout = camp.getLayoutFile();
+        int environNo = camp.getEnvironmentTypeNo();
+        // log.info("environNo : " + environNo);
+        // log.info("campLayout : " + campLayout);
+        String newPath = "/img/camp";
+        String layoutOriginName = campLayout.getOriginalFilename();
+        String layoutFileName = UUID.randomUUID().toString() + "_" + layoutOriginName;
+        String layoutFilePath = newPath + "/" + layoutFileName;
+        byte[] layoutFileData = campLayout.getBytes();
+        
+        File layoutUploadFile = new File(uploadPath, layoutFileName);
+        FileCopyUtils.copy(layoutFileData, layoutUploadFile);           // 파일 업로드 기능 구현
+
+        camp.setCampLayout(layoutFilePath);
+
+        int result = campMapper.campUpdate(camp);
+        int parentNo = camp.getCampNo();
+        // log.info("parentNo : " + parentNo);
+
+
+        // log.info("오리진 네임 : " + layoutOriginName);
+        // 파일 업로드
+        List<MultipartFile> fileList = camp.getFile();
+
+        if( !fileList.isEmpty() ) {
+            for (MultipartFile file : fileList) {
+
+                if( file.isEmpty() ) continue;
+
+                // 파일 정보 : 원본 파일명, 파일 용량, 파일데이터
+                String originName = file.getOriginalFilename();
+                byte[] fileData = file.getBytes();
+
+                String fileName = UUID.randomUUID().toString() + "_" + originName;
+
+                // c:/upload/UID_강아지  .png
+                String filePath = newPath + "/" + fileName; // 이곳에 "/" 안쓰려면 프로퍼티 업로드패스 마지막에 "/" 넣어주면 됨
+
+                // 파일업로드
+                // - 서버 측, 파일 시스템에 파일 복사
+                // - DB에 파일 정보 등록
+                File uploadFile = new File(uploadPath, fileName);
+                FileCopyUtils.copy(fileData, uploadFile);           // 파일 업로드 기능 구현
+
+                Camp campList = new Camp();
+                campList.setCampNo(parentNo);
+                campList.setCpiUrl(filePath);
+                campMapper.campImgInsert(campList);
+            }
+                camp.setCampNo(parentNo);
+                for (String s : facilityTypeNo) {
+                    // log.info("s : " + s);
+                    camp.setFacilitytypeNo(Integer.parseInt(s));
+                    campMapper.campFacilityInsert(camp);
+                    // int facilNo = camp.getFacilitytypeNo();
+                }
+                camp.setEnvironmentTypeNo(environNo);
+                campMapper.campEnvironmentInsert(camp);
+        }
+        
+        return result;
+    }
+
+    @Override
+    public int campFacilityDelete(int campNo) throws Exception {
+        int result = campMapper.campFacilityDelete(campNo);
+        return result;
+    }
+
+    @Override
+    public int campImgDelete(int campNo) throws Exception {
+        int result = campMapper.campImgDelete(campNo);
+        return result;
+    }
+
+    @Override
+    public int campEnvironmentDelete(int campNo) throws Exception {
+        int result = campMapper.campEnvironmentDelete(campNo);
+        return result;
+    }
+
     
 }

@@ -91,6 +91,23 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         VALUES ( #{campNo}, #{environmentTypeNo} )
     </insert>
 
+    <!-- 캠핑장 수정-->
+    <update id="campUpdate">
+        update campproduct set region_no = #{regionNo}, camp_name = #{campName}, camp_address = #{campAddress}, camp_tel = #{campTel}
+                            , camp_location = #{campLocation}, camp_layout = #{campLayout}, camp_open = #{campOpen}, camp_close = #{campClose}
+                            , camp_introduction = #{campIntroduction}, camp_caution = #{campCaution}, camp_latitude = #{campLatitude}, camp_longitude = #{campLongitude}
+        where camp_no = #{campNo}
+    </update>
+    <!-- 캠핑장 이미지, 환경, 시설 삭제-->
+    <delete id="campImgDelete">
+        delete from campimg where camp_no = #{campNo}
+    </delete>
+    <delete id="campFacilityDelete">
+        delete from facility where camp_no = #{campNo}
+    </delete>
+    <delete id="campEnvironmentDelete">
+        delete from environment where camp_no = #{campNo}
+    </delete>
     <!-- 캠핑장목록(판매자) -->
     <select id="campproductUser" resultType="Camp">
         SELECT *
@@ -174,7 +191,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         select * from campimg where camp_no = #{campNo}
     </select>
     <select id="productsproducts" resultType="Camp">
-        select * from campproduct where camp_no = #{campNo}
+        select * from campproduct c join environment e on c.camp_no = e.camp_no where c.camp_no = #{campNo}
     </select>
     <select id="productsreserve">
         select count(*) from reservation where camp_no = #{campNo}

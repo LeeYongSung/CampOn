@@ -100,4 +100,10 @@ public interface CampMapper {
     public int cpdeletecpdt(int campNo) throws Exception;
     public int cpdeletecdi(int campNo) throws Exception;
 
+    //캠핑장 수정
+    public int campUpdate(Camp camp) throws Exception;
+    public int campFacilityDelete(int campNo) throws Exception;
+    public int campImgDelete(int campNo) throws Exception;
+    public int campEnvironmentDelete(int campNo) throws Exception;
+
 }
