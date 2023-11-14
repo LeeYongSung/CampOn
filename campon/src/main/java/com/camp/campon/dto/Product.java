@@ -48,6 +48,8 @@ public class Product {
     //대여된 상품갯수
     private String sum;
 
+    private int orderNo;
+
 
 
     

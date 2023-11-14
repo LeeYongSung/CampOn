@@ -94,10 +94,10 @@
                                 <p><span th:text="${product.productPrice}"></span>원</p>
                             </div>
                             <div class="pe-2">
-                                <p><span th:text="${product.sum}"></span>개</p>
+                                <p><span th:text="${product.orderCnt}"></span>개</p>
                             </div>
                         </div>
-                        <div><a href="">리뷰쓰러가기</a></div>
+                        <div><a th:href="|/board/prinsert?orderNo=${product.orderNo}|">리뷰쓰러가기</a></div>
                     </div>
                     <div class="campproduct_close"><a href="javascript:;" class="campproduct_close_btn"><span class="material-symbols-outlined">close</span></a></div>
                 </div>

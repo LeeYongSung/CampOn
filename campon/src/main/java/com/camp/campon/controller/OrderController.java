@@ -151,9 +151,8 @@ public class OrderController {
 
 
         //장바구니와 찜에 있는 상품들 모두 삭제
-        
-
-
+        int result5 = orderService.saveCartDel(userNo);
+        log.info("장바구니와 찜에 있는 목록들 삭제여부 : "+result5);
         return "redirect:/order/depositcomp?orderNumber=" + orderNumber;
     }
     

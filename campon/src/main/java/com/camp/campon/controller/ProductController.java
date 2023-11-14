@@ -86,6 +86,9 @@ public class ProductController {
     public String productDetail(Model model, Integer productNo) throws Exception {
         Product product = productService.select(productNo);
         List<Productreview> proReviewList = productService.getReviewListByNoLim(productNo);
+        for (Productreview productreview : proReviewList) {
+            log.info(productreview.getPrNo() +"리뷰넘버"); 
+        }
         int reviewCount = productService.reviewCount(productNo);
         model.addAttribute("product", product);
         model.addAttribute("proReviewList", proReviewList);

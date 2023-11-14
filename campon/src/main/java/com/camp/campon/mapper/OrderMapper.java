@@ -21,4 +21,6 @@ public interface OrderMapper {
     public int addDelivery(String orderNumber) throws Exception;
     //이용자에게 대여내역 문자보내기
     public List<Order> toUserMsg(String orderNumber) throws Exception;
+    //찜, 카트에 있는거 삭제
+    public int saveCartDel(int userNo) throws Exception;
 }

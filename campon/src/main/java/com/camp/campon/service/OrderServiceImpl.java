@@ -68,5 +68,11 @@ public class OrderServiceImpl implements OrderService {
         return orderList;
     }
 
+    @Override
+    public int saveCartDel(int userNo) throws Exception {
+        int result = orderMapper.saveCartDel(userNo);
+        return result;
+        }
+
     
 }

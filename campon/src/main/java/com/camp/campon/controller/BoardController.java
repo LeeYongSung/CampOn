@@ -61,6 +61,7 @@ public class BoardController {
     @GetMapping(value="/prread")
     public String prread(Model model, int prNo) throws Exception {
         Board prread = boardService.prread(prNo);
+        log.info(prread.toString()+"보드정보");
         model.addAttribute("prread", prread);
         return "board/prread";
     }

@@ -61,31 +61,34 @@
                 <h5>상품리뷰</h5>
             </div>
             <th:block th:each="review : ${proReviewList}">
-                <div class="d-flex justify-content-between border py-4">
-                    <div class="review_imgbox border mx-2">
-                        <img th:src="|/img?file=${review.prImg}|">
-                    </div>
-                    <div class="review_conbox">
-                        <div>
+                <!--a태그 수정 가능성 있음-->
+                <a th:href="|/board/prread?prNo=${review.prNo}|">
+                    <div class="d-flex justify-content-between border py-4">
+                        <div class="review_imgbox border mx-2">
+                            <img th:src="|/img?file=${review.prImg}|">
+                        </div>
+                        <div class="review_conbox">
                             <div>
-                                <span th:text="${review.productName}"></span>
-                            </div>
-                            <div>
-                                <span th:text="${review.prTitle}"></span>
-                            </div>
-                            <div>
-                                <span th:text="${review.prCon}"></span>
-                            </div>
-                            <div>
-                                <span th:text="${ #dates.format( review.regDate, 'yyyy-MM-dd') }"></span>
-                            </div>
-                            <!--글쓴이 프로필사진 넣을거면 넣어야 함-->
-                            <div>
-                                <span th:text="${review.userId}"></span>
+                                <div>
+                                    <span th:text="${review.productName}"></span>
+                                </div>
+                                <div>
+                                    <span th:text="${review.prTitle}"></span>
+                                </div>
+                                <div>
+                                    <span th:text="${review.prCon}"></span>
+                                </div>
+                                <div>
+                                    <span th:text="${ #dates.format( review.regDate, 'yyyy-MM-dd') }"></span>
+                                </div>
+                                <!--글쓴이 프로필사진 넣을거면 넣어야 함-->
+                                <div>
+                                    <span th:text="${review.userId}"></span>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                </a>
             </th:block>
         </div>
         <div>

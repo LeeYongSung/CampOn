@@ -92,8 +92,9 @@ WHERE o.order_number = #{orderNumber}
 </select>
 
 <!--찜과 장바구니에 있는 거 삭제 by userNo-->
-<!-- <delete>
-
-</delete> -->
+<delete id="saveCartDel">
+DELETE ps, c FROM productsave ps INNER JOIN cart c WHERE ps.user_no = c.user_no
+AND ps.user_no = #{userNo}
+</delete>
 
 </mapper>
