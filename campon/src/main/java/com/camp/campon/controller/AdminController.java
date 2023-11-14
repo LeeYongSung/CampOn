@@ -353,6 +353,8 @@ public class AdminController {
         int result1 = campService.cpdeletecdi(campNo);
         int result2 = campService.cpdeletecpdt(campNo);
         int result3 = campService.cpdeletecpi(campNo);
+        int result6 = campService.campFacilityDelete(campNo);
+        int result7 = campService.campEnvironmentDelete(campNo);
         int result4 = campService.cpdelete(campNo);
         int result5 = boardService.crdeletecampNo(campNo);
         return "redirect:/admin/campproductlist";
@@ -376,25 +378,25 @@ public class AdminController {
     }
 
     // 광고 등록 실행
-    @PostMapping(value = "/addinsertpro")
+    @PostMapping(value = "/adinsertpro")
     public String adinsertpro(@ModelAttribute Ad ad) throws Exception {
         int result = adService.adinsert(ad);
-        return "redirect:admin/adlistseller";
+        return "redirect:/admin/adlistseller";
     }
-
+    // admin 광고리스트
     @GetMapping(value = "/adlist")
     public String adlist(Model model) throws Exception {
         List<Ad> adlist = adService.adlist();
         model.addAttribute("adlist", adlist);
         return "admin/adlist";
     }
-
+    // 승인처리
     @GetMapping(value = "/adcheck")
     public String adcheck(int adNo) throws Exception {
         int result = adService.adcheck(adNo);
         return "redirect:/admin/adlist";
     }
-
+    // seller 광고리스트
     @GetMapping(value = "/adlistseller")
     public String adlistseller(Model model, Principal principal) throws Exception {
         int userNo = 0;
@@ -409,5 +411,21 @@ public class AdminController {
         model.addAttribute("adlistseller", adlistseller);
         return "admin/adlistseller";
     }
+
+    // 광고수정
+    @GetMapping(value="/adupdate")
+    public String adupdate(Model model, int adNo) throws Exception {
+        Ad ad = adService.adview(adNo);
+        model.addAttribute("ad", ad);
+        return "admin/adupdate";
+    }
+    @PostMapping(value="/adupdatepro")
+    public String adupdatepro(Ad ad) throws Exception {
+        int result = adService.adupdate(ad);
+        if(result == 0) return "admin/adupdate";
+        return "redirect:/admin/adlistseller";
+    }
+    
+    
 
 }
