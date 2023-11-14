@@ -31,6 +31,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         )
     </insert>
 
+    <!--광고 조회-->
+    <select id="adview">
+        select * from ad where ad_no = #{adNo}
+    </select>
+
+    <!--광고 수정-->
+    <update id="adupdate">
+        update ad set ad_img = #{adImg}, ad_start=#{adStart}, ad_end = #{adEnd} where ad_no = #{adNo}
+    </update>
+
 
     
 </mapper>

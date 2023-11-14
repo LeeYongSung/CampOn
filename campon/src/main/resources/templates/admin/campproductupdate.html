@@ -132,7 +132,7 @@
                 <label for="campIntroduction">캠핑장 소개</label>
             </div>
             <div>
-                <input type="submit" value="캠핑장등록" class="btn btn-warning btn-lg w-100 my-3 py-3">
+                <input type="submit" value="캠핑장수정" class="btn btn-warning btn-lg w-100 my-3 py-3">
             </div>
         </form>
     </div>
@@ -197,29 +197,18 @@
     }
 
     </script>
-    <script>
-        let facilityTypelist = "[[${campfacility}]]";
-        
-        console.log(facilityTypelist.length)
+    <script th:inline="javascript">
+        let facilityTypelist = [[${campfacility}]];
         
         for (let i = 0; i < facilityTypelist.length; i++) {
-            camp = facilityTypelist[i];
-            console.log(camp);
-            let val = camp.getFacilityTypeNo();
-            console.log(val)
+            let no = facilityTypelist[i].facilitytypeNo
             
+            $('input:checkbox[name="facilityTypeNo"]').each(function() {
+                if(this.value == no){
+                    this.checked = true;
+                }            
+            });
         }
-        $('input:checkbox[name="facilityTypeNo"]').each(function() {
-
-            // $(facilityTypelist).each(function(){
-                
-
-            //     if(this.value == val){
-            //         this.checked = true; 
-            //     }
-            // })
-        });
-
     </script>
 </body>
 </html>
