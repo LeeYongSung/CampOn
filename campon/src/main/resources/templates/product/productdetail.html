@@ -21,7 +21,7 @@
         <!-- Swiper -->
         <div class="swiper mySwiper">
             <div class="swiper-wrapper">
-                <div class="swiper-slide"><img th:src="|/img?file=${product.productThumnail}" alt="썸네일이미지"></div>
+                <div class="swiper-slide" style="left: 0!important;"><img th:src="${product.productThumnail}" alt="썸네일이미지"></div>
             </div>
             <div class="swiper-button-next"></div>
             <div class="swiper-button-prev"></div>
@@ -47,10 +47,10 @@
             </div>
             <div class="position-relative productdetailInfo border-bottom">
                 <div class="py-2 w-100 productdetailImg">
-                    <img th:src="|/img?file=${product.productCon}" alt="상세설명이미지" class="w-100">
+                    <img th:src="${product.productCon}" alt="상세설명이미지" class="w-100">
                 </div>
                 <div class="position-absolute bottom-0 w-100 text-center bg-white py-2">
-                    <a href="javascript:;">더보기<span class="material-symbols-outlined">expand_more</span></a>
+                    <a href="javascript:;" class="product_more">더보기<span class="material-symbols-outlined">expand_more</span></a>
                 </div>
             </div>
         </div>
@@ -65,7 +65,7 @@
                 <a th:href="|/board/prread?prNo=${review.prNo}|">
                     <div class="d-flex justify-content-between border py-4">
                         <div class="review_imgbox border mx-2">
-                            <img th:src="|/img?file=${review.prImg}|">
+                            <img th:src="${review.prImg}">
                         </div>
                         <div class="review_conbox">
                             <div>
@@ -142,8 +142,6 @@
             </th:block>
         </div>
     </div>
-
-
     <script>
         function addProductsave(){
             let productNo = "[[${product.productNo}]]"
@@ -190,6 +188,36 @@
                 }
             })
         }
+    </script>
+
+    <!-- Swiper JS -->
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+
+    <!-- Initialize Swiper -->
+    <script>
+    var swiper = new Swiper(".mySwiper", {
+            spaceBetween: 0,
+            centeredSlides: true,
+            autoplay: {
+            delay: 3000,
+            disableOnInteraction: false,
+        },
+            pagination: {
+            el: ".swiper-pagination",
+            clickable: true,
+        },
+            navigation: {
+            nextEl: ".swiper-button-next",
+            prevEl: ".swiper-button-prev",
+        },
+    });
+
+    </script>
+
+    <script>
+        $('.product_more').click(function() {
+            $('.productdetailInfo').css('height', 'auto')
+        })
     </script>
 </body>
 

@@ -77,29 +77,31 @@
              <h5>렌탈상품 대여 현황</h5>
          </div>
         <th:block th:each="product : ${productList}">
-            <div class="container">
-                <div class="container-sm d-flex justify-content-between py-3 border my-2 position-relative">
-                    <div class="campProductImg">
-                        <img th:src="|/img?file=${product.productThumnail}|" alt="상품썸네일" class="py-2 px-2">
+            <div class="container border">
+                <div class="border position-relative">
+                    <div class="campProductImg w-100">
+                        <img th:src="${product.productThumnail}" alt="상품썸네일" class="py-2 px-2 w-100">
                     </div>
-                    <div class="campProductCon">
-                        <div>
-                            <h5><span th:text="${product.productName}"></span></h5>
-                        </div>
-                        <div class="d-flex justify-content-between">
+                    <div class="container-sm py-3  my-2">
+                        <div class="campProductCon">
                             <div>
-                                <p><span th:text="${product.productIntro}"></span></p>
+                                <h5><span th:text="${product.productName}"></span></h5>
                             </div>
-                            <div class="ps-5">
-                                <p><span th:text="${product.productPrice}"></span>원</p>
+                            <div class="">
+                                <div>
+                                    <p><span th:text="${product.productIntro}"></span></p>
+                                </div>
+                                <div class="">
+                                    <p><h5 th:text="|${product.productPrice}원|"></h5></p>
+                                </div>
+                                <div class="pe-2">
+                                    <p><span th:text="${product.orderCnt}"></span>개</p>
+                                </div>
                             </div>
-                            <div class="pe-2">
-                                <p><span th:text="${product.orderCnt}"></span>개</p>
-                            </div>
+                            <div class="text-end"><a th:href="|/board/prinsert?orderNo=${product.orderNo}|" class="btn btn-primary">리뷰쓰러가기</a></div>
                         </div>
-                        <div><a th:href="|/board/prinsert?orderNo=${product.orderNo}|">리뷰쓰러가기</a></div>
+                        <div class="campproduct_close pt-3 pe-3"><a href="javascript:;" class="campproduct_close_btn"><span class="material-symbols-outlined">close</span></a></div>
                     </div>
-                    <div class="campproduct_close"><a href="javascript:;" class="campproduct_close_btn"><span class="material-symbols-outlined">close</span></a></div>
                 </div>
             </div>
         </th:block> 

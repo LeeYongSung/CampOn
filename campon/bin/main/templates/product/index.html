@@ -145,7 +145,7 @@
                 <a th:href="|/product/productdetail?productNo=${product.productNo}|">
                     <div class="product_suggestion">
                         <div class="product_suggestionImg border-bottom">
-                            <img th:src="|/img?file=${product.productimgUrl}|">
+                            <img th:src="${product.productThumnail}">
                         </div>
                         <div class="product_suggestionCon px-3">
                             <div><span th:text="${product.productName}"></span></div>

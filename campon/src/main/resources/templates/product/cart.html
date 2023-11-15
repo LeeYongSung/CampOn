@@ -19,7 +19,7 @@
             <div class="border rounded position-relative pb-4">
                 <!-- 썸네일 -->
                 <div class="cartImg border-bottom w-100">
-                    <img th:src="|/img?file=${cart.productThumnail}|" class="w-100">
+                    <img th:src="${cart.productThumnail}" class="w-100">
                 </div>
                 <div class="w-100 d-flex justify-content-between cartCon">
                     <div class="ps-2 pt-2">
