@@ -12,25 +12,35 @@
 </head>
 <body layout:fragment="content">
     <div class="container">
-       <h1>대여 신청 완료</h1>
+        <div class="w-100 text-center py-4">
+            <h5>대여 신청 완료</h5>
+        </div>
 
-       <hr>
-
-       <h2>결제 확인</h2>
+        <div>
+            <h4>결제 확인</h4>
+        </div>
          <!-- 상품 목록 출력-->
      <th:block th:each="product : ${order.productList}">
-        <div style="border: 1px solid black;">
+        <div class="border px-1 rounded">
             <div>
-                <img th:src="|/img?file=${product.productThumnail}|" alt="상품썸네일">
+                <img th:src="${product.productThumnail}" alt="상품썸네일" class="w-100 rounded-top">
             </div>
             <div>
                 <div>
-                    <h2>상품이름 : <span th:text="${product.productName}"></span></h2>
-                   <p>상품기본내용 : <span th:text="${product.productIntro}"></span></p>
+                    <div class="py-2">
+                        <h4 th:text="${product.productName}"></h4>
+                    </div>
+                    <div>
+                        <span th:text="${product.productIntro}"></span>
+                    </div>
                 </div>
-                <div>
-                    <h2>가격 : <span th:text="${product.productPrice}"></span></h2>
-                    <h3>주문갯수: <span th:text="${product.orderCnt}"></span>개</h3>
+                <div class="d-flex justify-content-between py-2">
+                    <div class="ps-2">
+                        <h5 th:text="|${product.productPrice}원|"></h5>
+                    </div>
+                    <div class="pe-2">
+                        <h5 th:text="|${product.orderCnt}개|"></h5>
+                    </div>
                 </div>
             </div>
         </div>
@@ -39,33 +49,53 @@
     <hr>
     
     <!--배송받을 캠핑장 정보 완료-->
-    <h2>배송받을 캠핑장</h2>
-    <ul>
-        <li>
-            <img th:src="|/img?file=${order.camp.cpdiUrl}|" alt="캠핑상품 이미지" />
-        </li>
-        <li>
-            <ul>
-                <li>캠핑장명 : <span th:text="${order.camp.campName}"></span></li>
-                <li>캠핑상품명 : <span th:text="${order.camp.cpdtName}"></span></li>
-                <li>예약날짜 : <span th:text="|${ #dates.format(order.startDate,'yyyy-MM-dd')} ~ ${ #dates.format(order.endDate, 'yyyy-MM-dd')}|"></span></li>
-                <li>예약번호 : <span th:text="${order.reservationNo}"></span></li>
-            </ul>
-        </li>
-    </ul> 
+    <div class="container">
+        <div class="w-100 text-start pt-4 pb-2">
+            <h5>배송받을 캠핑장</h5>
+        </div>
+        <div class="w-100 border rounded">
+            <div>
+                <div>
+                    <img th:src="${order.camp.cpdiUrl}" alt="캠핑상품 이미지" class="w-100 rounded-top" />
+                </div>
+                <div>
+                    <div class="pt-3">
+                        <div class="py-1 ps-2"><h4 th:text="${order.camp.campName}"></h4></div>
+                        <div class="py-1 ps-2"><span th:text="${order.camp.cpdtName}"></span></div>
+                        <div class="d-flex justify-content-between py-1">
+                            <div class="ps-2">
+                                <span>예약날짜</span>
+                            </div>
+                            <div class="pe-2">
+                                <span th:text="|${ #dates.format(order.startDate,'yyyy-MM-dd')} ~ ${ #dates.format(order.endDate, 'yyyy-MM-dd')}|"></span>
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-between">
+                            <div class="ps-2">
+                                <span>예약번호</span>
+                            </div>
+                            <div class="pe-2">
+                                <span th:text="${order.reservationNo}"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <hr>
 
     <th:block th:if="${pmType=='무통장입금'}">
         <!-- * 무통장입금 시 -->
-        <h4>아직 입금이 확인되지 않았어요. <span th:text="${ #dates.format(order.depositDeadLine, 'yyyy-MM-dd')}"></span>오후 12시 57분까지 입금을 완료할 경우 예약이 최종 확정됩니다.</h4>
+        <h4>아직 입금이 확인되지 않았어요. <br> <span th:text="${ #dates.format(order.depositDeadLine, 'yyyy-MM-dd')}"></span>오후 12시 57분까지 입금을 완료할 경우 예약이 최종 확정됩니다.</h4>
         <hr>
         <!--입금 정보(일단 하드코딩~)-->
         <div>
             <h5>입금 정보</h5>
             <p>입금자명: <span th:text="${userName}"></span></p> 
             <p>은행(예금주): <strong>농협(캠핑온) 3031030200000000</strong></p> 
-            <p>총 입금 금액 : <span th:text="${paytotal}"></span></p>
+            <p>총 입금 금액 : <span th:text="|${paytotal}원|"></span></p>
         </div>
     </th:block>
     <th:block th:if="${pmType=='카드'}">
@@ -84,9 +114,9 @@
        </div>
 
        <!--버튼-->
-       <div>
-        <a href="/camp/reservation">내 예약으로</a>
-        <a href="/">홈으로</a>
+       <div class="d-flex justify-content-center py-4">
+            <a href="/camp/reservation" class="btn btn-success me-1">내 예약으로</a>
+            <a href="/" class="btn btn-warning ms-1">홈으로</a>
        </div>
     </div>
 </body>

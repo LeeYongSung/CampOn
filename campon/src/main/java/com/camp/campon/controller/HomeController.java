@@ -44,7 +44,9 @@ public class HomeController {
     private AuthenticationManager authenticationManager;
 
     @GetMapping(value="/")
+
     public String tempIndex() {
+
         return "camp/index";
     }
     

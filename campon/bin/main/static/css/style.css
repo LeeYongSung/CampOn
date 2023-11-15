@@ -235,9 +235,9 @@ input[type="checkbox"] {
 .campproduct_home_btn {background-color: #FA9D4B; transition: all 0.5s;}
 .campproduct_home_btn:hover {background-color: white; border: 1px solid #686868;}
 
-.campProductImg {width: 30%;}
-.campProductImg img {width: 120px; height: 50px; object-fit: cover;}
-.campProductCon {width: 70%;}
+/* .campProductImg {width: 30%;} */
+/* .campProductImg img {width: 120px; height: 50px; object-fit: cover;} */
+/* .campProductCon {width: 70%;} */
 .campproduct_close {position: absolute; top: 5px; right: 10px;}
 
 /* 오픈일정 */
@@ -281,11 +281,17 @@ input[type="checkbox"] {
 .product_menu>div {width: 60px; height: 60px;}
 .product_menu span {font-size: 0.8em;}
 
+/* .productdetailImg {height: 200px; overflow: hidden;} */
+
 .product_suggestion {width: 150px; height: 140px; overflow: hidden; border-radius: 15px; border: 1px solid #f2f2f2;}
-.product_suggestionImg {width: 100%; height: 80px;}
+.product_suggestionImg {width: 100%; height: 80px; overflow: hidden;}
 .product_suggestionImg>img {width: 100%; object-fit: cover;}
 .product_suggestionCon {font-size: 0.7em;}
 
+/* 대여 상품 결제 */
+.reservationListImg {width: 30%; height: auto; object-fit: cover; overflow: hidden;}
+.reservationListImg>img {width: 120px; height: 120px;}
+.reservationListCon {width: 70%;}
 
 .middle_ads>div {width: 150px; height: 150px; border: 1px solid #f2f2f2; border-radius: 15px;}
 .ads_boxImg {width: 20%;}
@@ -299,12 +305,13 @@ input[type="checkbox"] {
 
 
 /* 대여 상품 목록 */
-.productListImg {height: 250px; background-color: #aaa;}
+.productListImg {height: 250px; background-color: #aaa; overflow: hidden; object-fit: cover;}
+.productListImg {height: 250px;}
 .productList_Con>div:nth-of-type(3)>span {font-size: 0.6em;}
 
 
 /* 대여상품 상세 */
-.productdetailInfo {height: 600px; overflow: hidden;}
+.productdetailInfo {height: 300px; overflow: hidden;}
 
 /* 찜 */
 .wishlistImg {height: 200px; overflow: hidden;}
@@ -314,7 +321,7 @@ input[type="checkbox"] {
 .wishlistTotal span {font-size: 0.8em; }
 
 /* 장바구니 */
-.cartImg {height: 200px;}
+.cartImg {height: 200px; overflow: hidden; object-fit: cover;}
 .cartCon h5 {margin-bottom: 0!important;}
 .cartCon span {font-size: 0.8em;}
 .cartTotal {width: 500px; bottom:70px; }

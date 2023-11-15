@@ -59,6 +59,7 @@ public class OrderController {
         }
         List<Product> cartList = productService.cartList(userNo);
         List<Camp> reservationList = campService.reservationNow(userNo);
+        log.info("reservationList : " + reservationList);
         model.addAttribute("cartList", cartList);
         model.addAttribute("reservationList", reservationList);
         return "product/payment";

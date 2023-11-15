@@ -24,10 +24,10 @@
                 <th:block th:each="product : ${cartList}">
                     <div class="border my-2">
                         <input type="hidden" th:value="${product.productNo}" name="productNos">
+                        <div class="paymentImg ps-2">
+                            <img th:src="${product.productThumnail}" alt="상품썸네일" class="w-100">
+                        </div>
                         <div class="d-flex justify-content-between py-2 paymentBox">
-                            <div class="paymentImg ps-2">
-                                <img th:src="${product.productThumnail}" alt="상품썸네일" class="w-100">
-                            </div>
                             <div class="d-flex justify-content-center paymentCon">
                                 <div class="pt-2">
                                     <div>
@@ -63,11 +63,11 @@
         </div>
         <th:block th:each="camp, status : ${reservationList}">
             <div class="container">
-                <div class="w-100 d-flex justify-content-between border py-5 rounded position-relative my-2">
-                    <div>
-                        <img th:src="|/img?file=${camp.cpdiUrl}|" alt="캠핑상품 이미지" />
+                <div class="w-100 d-flex justify-content-between border py-5 rounded position-relative my-2 reservationListBox">
+                    <div class="reservationListImg">
+                        <img th:src="${camp.cpiUrl}" alt="캠핑상품 이미지" class="w-100" />
                     </div>
-                    <div class="pe-2">
+                    <div class="pe-2 reservationListCon ps-3">
                         <div>
                             <div>
                                 <h5 th:text="${camp.campName}"></h5>
@@ -119,7 +119,7 @@
 
 
         <!--결제하기 버튼-->
-        <button type="button" onclick="requestPays()" class="btn btn-lg paymentBtn w-100 py-3 rounded-0">결제하기</button>
+        <button type="button" onclick="requestPays()" class="btn btn-lg btn-warning paymentBtn w-100 py-3 rounded-0">결제하기</button>
         <!-- <button type="button"  onclick="" class="btn btn-lg paymentBtn w-100 py-3 rounded-0">결제하기</button> -->
 
     </form>
