@@ -198,27 +198,27 @@
 
     </script>
     <script>
-        let facilityTypelist = "[[${campfacility}]]";
+        let facilityTypelist = ["[[${campfacility}]]"];
         
         console.log(facilityTypelist.length)
+        console.log(facilityTypelist)
+        let camp = facilityTypelist[0].facilitytypeNo;
+        console.log(camp);
         
         for (let i = 0; i < facilityTypelist.length; i++) {
-            camp = facilityTypelist[i];
-            console.log(camp);
-            let val = camp.getFacilityTypeNo();
-            console.log(val)
+            // let val = camp.getFacilityTypeNo();
+            // console.log(val)
+            $('input:checkbox[name="facilityTypeNo"]').each(function() {
+    
+                // $(facilityTypelist).each(function(){
+    
+                //     if(this.value == val){
+                //         this.checked = true; 
+                //     }
+                // })
+            });
             
         }
-        $('input:checkbox[name="facilityTypeNo"]').each(function() {
-
-            // $(facilityTypelist).each(function(){
-                
-
-            //     if(this.value == val){
-            //         this.checked = true; 
-            //     }
-            // })
-        });
 
     </script>
 </body>

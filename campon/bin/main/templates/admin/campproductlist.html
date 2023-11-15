@@ -14,7 +14,7 @@
     <div>
         <div class="position-relative">
             <div class="position-absolute top-0 end-0 pt-2 pe-2">
-                <a href="/admin/campproductadd" th:if="${auth == 'ROLE_SELL'}">캠핑장 등록</a>
+                <a href="/admin/campproductadd" th:if="${auth == 'ROLE_SELL'}" class="btn btn-success">캠핑장 등록</a>
             </div>
             <div class="w-100 text-center pt-5 ">
                 <div><h5>캠핑장목록</h5></div>
@@ -36,7 +36,7 @@
                                 <p>등록일자</p>
                                 <p class="pt-1">수정일자</p>
                             </div>
-                            <div>
+                            <div class="pe-2">
                                 <div class="campproductListCon_txt"><span th:text="${#dates.format(camp.regDate, 'yyyy-MM-dd')}"></span></div>
                                 <div class="campproductListCon_txt pt-1"><span th:text="${#dates.format(camp.updDate, 'yyyy-MM-dd')}"></span></div>
                             </div>
