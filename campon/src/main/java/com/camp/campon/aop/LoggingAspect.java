@@ -41,7 +41,7 @@ public class LoggingAspect {
 	 * - 메소드
 	 * - 인수
 	 */
-	@Before("execution(* com.joeun.campon.service.*Service*.*(..))")
+	@Before("execution(* com.camp.campon.service.*Service*.*(..))")
 	public void before(JoinPoint jp) {
 		// jp.getSignature() 	: 타겟 메소드의 시그처 정보(반환타입 패키지.클래스.메소드) 반환
 		// jp.getArgs() 		: 타겟 메소드의 매개변수를 반환
@@ -57,7 +57,7 @@ public class LoggingAspect {
 	}
 	
 	
-	@After("execution(* com.joeun.campon.service.*Service*.*(..))")
+	@After("execution(* com.camp.campon.service.*Service*.*(..))")
 	public void after(JoinPoint jp) {
 		log.info("===================================================================");
 		log.info("[@After] ##########################################################");
@@ -76,7 +76,7 @@ public class LoggingAspect {
 	 * ProceedingJoinPoint : 어드바이스에서 대상 메서드의 실행을 제어하고 호출하는 객체
 	 * - proceed() 			: 대상 메소드 호출
 	 */
-	@Around("execution(* com.joeun.campon.service.*Service*.*(..))")
+	@Around("execution(* com.camp.campon.service.*Service*.*(..))")
 	public Object around(ProceedingJoinPoint jp) {
 		log.info("===================================================================");
 		log.info("[@Around] #########################################################");
@@ -106,7 +106,7 @@ public class LoggingAspect {
 	
 	// pointcut 	: 포인트컷 표현식
 	// returning 	: 타겟 메소드의 반환값을 저장하는 매개변수명 지정
-	@AfterReturning(pointcut = "execution(* com.joeun.campon.service.*ServiceImpl.*(..))", returning = "result")
+	@AfterReturning(pointcut = "execution(* com.camp.campon.service.*ServiceImpl.*(..))", returning = "result")
 	public Object afterReturning(JoinPoint jp, Object result) {
 		log.info("===================================================================");
 		log.info("[@AfterReturning] #################################################");
@@ -125,7 +125,7 @@ public class LoggingAspect {
 	}
 	
 	
-	@AfterThrowing(pointcut = "execution(* com.joeun.campon.service.*Service*.*(..))", throwing ="exception")
+	@AfterThrowing(pointcut = "execution(* com.camp.campon.service.*Service*.*(..))", throwing ="exception")
 	public void afterThrowing(JoinPoint jp, Exception exception) {
 		log.info("===================================================================");
 		log.info("[@AfterThrowing] ##################################################");
