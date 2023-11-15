@@ -9,24 +9,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CampOn(캠프온)</title>
-
-    <style>
-        .point {background:orange; }
-      </style>
-
 </head>
 <body layout:fragment="content">
-
-
-    <div class="tabnav d-flex justify-content-center py-3 text-center border-bottom">
-        <div class="tab_btn"><a href="javascript:;" class="campbtn">캠핑</a></div>
-        <div class="tab_btn"><a href="javascript:;" class="storebtn">스토어</a></div>
+    <div class="w-100 text-center d-flex justify-content-center py-4">
+        <div>
+            <button class="campbtn">캠핑</button>
+        </div>
+        <div>
+            <button class="storebtn">스토어</button>
+        </div>
     </div>
 
     <div class="camp">
         <div>
             <div class="review mb-5">
-                <h5 class="m-3">실시간 캠핑 리뷰</h5>
+                <h5 class="mt-3">실시간 캠핑 리뷰</h5>
                 <th:block th:each="board : ${newReviewList}">
                     <div class="container my-2">
                         <a th:href="|/board/crread?reviewNo=${board.reviewNo}|" class="d-flex justify-content-between border-bottom">
@@ -56,15 +53,15 @@
         </div>
         <div class="border-top pt-2">
             <div>
-                <h5 class="m-3">캠핑 리뷰 리스트</h5>
+                <h5>캠핑 리뷰 리스트</h5>
             </div>
-            <table class="crlist text-center boardd">
+            <table class="crlist text-center">
                 <thead>
-                    <tr class="theadd">
-                        <td class="num tdd" width="60">번호</th>
-                        <td class="title tdd" width="300">제목</th>
-                        <td class="writer tdd" width="100">작성자</th>
-                        <td class="date tdd" width="200">작성일</th>
+                    <tr>
+                        <td class="num" width="50">번호</th>
+                        <td class="title" width="300">제목</th>
+                        <td class="writer" width="100">작성자</th>
+                        <td class="date" width="200">작성일</th>
                     </tr>
                 </thead>
                 <tbody id="cr-data">
@@ -92,7 +89,7 @@
 
         <div>
             <div class="review mb-5">
-                <h5 class="m-3">실시간 상품 리뷰</h5>
+                <h5 class="mt-3">실시간 상품 리뷰</h5>
                 <ul th:each="board : ${newprlist}">
                     <a th:href="|/board/prread?prNo=${board.prNo}|" class="d-flex justify-content-between">
                         <li class="review_imgbox">
@@ -119,15 +116,15 @@
             </div>
         </div>
         <div>
-            <h5 class="m-3">상품 리뷰 리스트</h5>
-            <table class="text-center boardd">
+            <span>상품 리뷰 리스트</span>
+            <table>
                 <thead>
 
-                    <tr class="theadd">
-                        <th class="tdd" width="60">번호</th>
-                        <th class="tdd" width="300">제목</th>
-                        <th class="tdd" width="100">작성자</th>
-                        <th class="tdd" width="200">작성일</th>
+                    <tr>
+                        <th width="50">번호</th>
+                        <th width="300">제목</th>
+                        <th width="100">작성자</th>
+                        <th width="200">작성일</th>
                     </tr>
                 </thead>
                 <tbody id="pr-data">
@@ -165,16 +162,6 @@
     <script>
         
         $(document).ready(function(){
-
-            $('.tabcontent > div').hide();
-        $('.tabnav a').click(function () {
-          $('.tabcontent > div').hide().filter(this.hash).fadeIn();
-          $('.tab_btn').removeClass('point');
-          $(this).parent().addClass('point');
-          return false;
-        }).filter(':eq(0)').click();
-
-
             $('.camp').show();
             $('.store').hide();
         })
@@ -346,12 +333,11 @@
                 const regDate = date.toISOString().split("T")[0]
 
 
-                let tr = `
-                    <tr class='hoverr'>
-                            <td class='num tdd'>${boardList[i].reviewNo}</td>
-                            <td class='title tdd'>${title}</td>
-                            <td class='writer tdd'>${boardList[i].userId}</td>
-                            <td class='date tdd'>${regDate}</td>
+                let tr = `<tr>
+                            <td class='num'>${boardList[i].reviewNo}</td>
+                            <td class='title'>${title}</td>
+                            <td class='writer'>${boardList[i].userId}</td>
+                            <td class='date'>${regDate}</td>
                             </tr>
                             `
                 boardData += tr
@@ -489,11 +475,11 @@
             const regDate = date.toISOString().split("T")[0]
 
 
-            let tr = `<tr class='hoverr'>
-                        <td class='num tdd'>${boardList[i].prNo}</td>
-                        <td class='title tdd'>${title}</td>
-                        <td class='writer tdd'>${boardList[i].userId}</td>
-                        <td class='date tdd'>${regDate}</td>
+            let tr = `<tr>
+                        <td class='num'>${boardList[i].prNo}</td>
+                        <td class='title'>${title}</td>
+                        <td class='writer'>${boardList[i].userId}</td>
+                        <td class='date'>${regDate}</td>
                         </tr>
                         `
             boardData += tr
