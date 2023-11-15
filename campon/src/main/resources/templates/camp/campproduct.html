@@ -101,8 +101,8 @@
             <div class="campdetail_box w-100 mb-3 py-5">
                 <a th:href="|/camp/campdetail?cpdtNo=${productsproductlist.cpdtNo}|"> 
                     <div class="campdetail_product d-flex justify-content-between">
-                        <div>
-                            <img th:src="${productsproductlist.cpdiUrl}">
+                        <div class="rounded px-2">
+                            <img th:src="${productsproductlist.cpdiUrl}" class="w-100">
                         </div>
                         <div>
                             <div><span th:text="${productsproductlist.campTypeName}"></span></div>
