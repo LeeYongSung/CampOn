@@ -167,7 +167,7 @@ public class AdminController {
 
 
      //판매자
-    @PreAuthorize("hasRole('ROLE_SELL')")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_SELL')")
     @GetMapping(value = "/campproductlist")
     public String campList(Model model, Authentication auth) throws Exception {
         String name = "";
