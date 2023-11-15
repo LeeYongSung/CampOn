@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -72,6 +73,7 @@ public class AdminController {
      * 상품 시작
      ***********************************************/
     // (관리자) 상품 관리 페이지
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping(value = "/productlist")
     public String productList(Model model) throws Exception {
         List<Product> productList = productService.getProductList();
@@ -81,12 +83,14 @@ public class AdminController {
     }
 
     // 상품등록 페이지
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("/productadd")
     public String productAdd() {
         return "admin/productadd";
     }
 
     // 상품등록 실행
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping("/productInsert")
     public String productInsert(Product product) throws Exception {
         int result = productService.productInsert(product);
@@ -95,6 +99,7 @@ public class AdminController {
     }
 
     // 상품 수정 페이지
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping(value = "/productupdate", params = "productNo")
     public String productUpdate(@RequestParam String productNo, Model model) throws Exception {
         Product product = productService.selectUpd(Integer.parseInt(productNo));
@@ -103,6 +108,7 @@ public class AdminController {
     }
 
     // 상품 수정 pro
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping(value = "/productUpdate")
     public String productUpdate(Product product) throws Exception {
         log.info("썸네일 있냐?" + product.getProductThmFile().size());
@@ -124,6 +130,7 @@ public class AdminController {
     }
 
     // 상품 삭제 pro
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping(value = "/delete", params = "productNo")
     public String productDelete(@RequestParam String productNo) throws NumberFormatException, Exception {
         int result = productService.deleteProduct(Integer.parseInt(productNo));
@@ -131,6 +138,7 @@ public class AdminController {
     }
 
     // 멤버 관리 페이지
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping(value = "/memberList")
     public String memberList(Model model) throws Exception {
         List<Users> userList = userService.memberList("ROLE_USER");
@@ -140,6 +148,7 @@ public class AdminController {
         return "admin/memberList";
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping(value = "/memberDelete")
     public String memberDelete(String userId) throws Exception {
         int result = userService.delete(userId);
@@ -158,6 +167,7 @@ public class AdminController {
 
 
      //판매자
+    @PreAuthorize("hasRole('ROLE_SELL')")
     @GetMapping(value = "/campproductlist")
     public String campList(Model model, Authentication auth) throws Exception {
         String name = "";
@@ -215,6 +225,7 @@ public class AdminController {
      * @return
      * @throws Exception
      */
+    @PreAuthorize("hasRole('ROLE_SELL')")
     @GetMapping(value = "/campproductadd")
     public String campInsert(@ModelAttribute Camp camp) throws Exception {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -236,6 +247,7 @@ public class AdminController {
      * @return
      * @throws Exception
      */
+    @PreAuthorize("hasRole('ROLE_SELL')")
     @PostMapping(value = "/campproductadd")
     public String campInsertPro(@ModelAttribute Camp camp, @RequestParam List<String> facilityTypeNo) throws Exception {
 
@@ -254,6 +266,7 @@ public class AdminController {
      * @return
      * @throws Exception
      */
+    @PreAuthorize("hasRole('ROLE_SELL')")
     @GetMapping(value = "/campproductupdate")
     public String campUpdate(Model model, int campNo) throws Exception {
         Camp camp = campService.productsproducts(campNo);
@@ -262,6 +275,7 @@ public class AdminController {
         model.addAttribute("campfacility", campfacility);
         return "admin/campproductupdate";
     }
+    @PreAuthorize("hasRole('ROLE_SELL')")
     @PostMapping(value="/campproductupdatePro")
     public String campUpdatePro(@ModelAttribute Camp camp, @RequestParam List<String> facilityTypeNo) throws Exception {
         int campNo = camp.getCampNo();
@@ -275,6 +289,7 @@ public class AdminController {
     
 
     // 캠핑상품 등록
+    @PreAuthorize("hasRole('ROLE_SELL')")
     @GetMapping(value = "/campdetailinsert")
     public String campdetailinsert(Model model, Integer campNo, Integer userNo, @ModelAttribute Camp camp)
             throws Exception {
@@ -284,6 +299,7 @@ public class AdminController {
     }
 
     // 캠핑상품 등록처리
+    @PreAuthorize("hasRole('ROLE_SELL')")
     @PostMapping(value = "/campdetailinsert")
     public String campdetailinsertPro(@ModelAttribute Camp camp) throws Exception {
         int result = campService.detailinsert(camp);
@@ -297,6 +313,7 @@ public class AdminController {
     }
 
     // 캠핑상품 수정
+    @PreAuthorize("hasRole('ROLE_SELL')")
     @GetMapping(value = "/campdetailupdate")
     public String campdetailupdate(Model model, int cpdtNo) throws Exception {
         Camp camp = campService.productintro(cpdtNo);
@@ -305,6 +322,7 @@ public class AdminController {
     }
 
     // 캠핑상품 수정처리
+    @PreAuthorize("hasRole('ROLE_SELL')")
     @PostMapping(value = "/campdetailupdate")
     public String campdetailupdatePro(Camp camp) throws Exception {
         log.info("cpdtPriceStr : " + camp.getCpdtPriceStr());
@@ -325,6 +343,7 @@ public class AdminController {
     }
 
     // 캠핑상품 삭제처리
+    @PreAuthorize("hasRole('ROLE_SELL')")
     @PostMapping(value = "/campdetaildelete")
     public String campdetaildelete(int cpdtNo) throws Exception {
         log.info("숫자 : " + cpdtNo);
@@ -336,6 +355,7 @@ public class AdminController {
         return "redirect:/admin/campproductlist";
     }
 
+    @PreAuthorize("hasRole('ROLE_SELL')")
     @GetMapping(value = "/campdetaildelete")
     public String campdetaildeletepro(int cpdtNo) throws Exception {
         log.info("숫자 : " + cpdtNo);
@@ -348,6 +368,7 @@ public class AdminController {
     }
 
     //캠핑장 삭제
+    @PreAuthorize("hasRole('ROLE_SELL')")
     @GetMapping(value="/campdelete")
     public String campdelete(int campNo) throws Exception {
         int result1 = campService.cpdeletecdi(campNo);
@@ -371,6 +392,7 @@ public class AdminController {
 
      //판매자
     // 광고 등록 페이지
+    @PreAuthorize("hasRole('ROLE_SELL')")
     @GetMapping("/adinsert")
     public String adinsert(Model model, int campNo) {
         model.addAttribute("campNo", campNo);
@@ -378,12 +400,14 @@ public class AdminController {
     }
 
     // 광고 등록 실행
+    @PreAuthorize("hasRole('ROLE_SELL')")
     @PostMapping(value = "/adinsertpro")
     public String adinsertpro(@ModelAttribute Ad ad) throws Exception {
         int result = adService.adinsert(ad);
         return "redirect:/admin/adlistseller";
     }
     // admin 광고리스트
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping(value = "/adlist")
     public String adlist(Model model) throws Exception {
         List<Ad> adlist = adService.adlist();
@@ -391,12 +415,14 @@ public class AdminController {
         return "admin/adlist";
     }
     // 승인처리
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping(value = "/adcheck")
     public String adcheck(int adNo) throws Exception {
         int result = adService.adcheck(adNo);
         return "redirect:/admin/adlist";
     }
     // seller 광고리스트
+    @PreAuthorize("hasRole('ROLE_SELL')")
     @GetMapping(value = "/adlistseller")
     public String adlistseller(Model model, Principal principal) throws Exception {
         int userNo = 0;
@@ -413,12 +439,14 @@ public class AdminController {
     }
 
     // 광고수정
+    @PreAuthorize("hasRole('ROLE_SELL')")
     @GetMapping(value="/adupdate")
     public String adupdate(Model model, int adNo) throws Exception {
         Ad ad = adService.adview(adNo);
         model.addAttribute("ad", ad);
         return "admin/adupdate";
     }
+    @PreAuthorize("hasRole('ROLE_SELL')")
     @PostMapping(value="/adupdatepro")
     public String adupdatepro(Ad ad) throws Exception {
         int result = adService.adupdate(ad);

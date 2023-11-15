@@ -71,9 +71,11 @@ public class SecuriryConfig extends WebSecurityConfigurerAdapter {
                                 // permitAll()                              - 모든 사용자 허용
                                 // hasAnyRole()                             - 여러 권한에 대한 허용
                                 // hasRole()                                - 단일 권한에 대한 허용
-                                .antMatchers("/**").permitAll()                        
+                                // static 밑에 경로
                                 .antMatchers("/css/**","/js/**","/img/**").permitAll()          // static/~ 정적자원 인가 처리                      
-                               // .antMatchers("/user/**").hasAnyRole("USER", "ADMIN")
+                                //url 경로
+                             //   .antMatchers("/admin/**").hasAnyRole("ADMIN", "SELL")
+                               // .antMatchers("/**").permitAll()                        
                                 // .antMatchers("/user/order").permitAll()
                                 // .antMatchers("/admin/**").hasRole("ADMIN")
                                 // anyRequest()         : 모든 요청을 지정
@@ -125,11 +127,12 @@ public class SecuriryConfig extends WebSecurityConfigurerAdapter {
             .tokenValiditySeconds( 60 * 60 * 24 * 7 )
         );
 
+        //주석처리함. 
         // 인증 예외 처리
-        http.exceptionHandling((exception) -> exception
-            // .accessDeniedPage("/exception")
-            .accessDeniedHandler( accessDeniedHandler() )
-        );
+        // http.exceptionHandling((exception) -> exception
+        //     // .accessDeniedPage("/exception")
+        //     .accessDeniedHandler( accessDeniedHandler() )
+        // );
 
 
         // CSRF 방지 기능 비활성화 설정

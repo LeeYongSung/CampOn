@@ -185,17 +185,20 @@
                     <a th:href="|/product/productdetail?productNo=${product.productNo}|" class="btn btn-outline-secondary">상세 정보</a>
                      <!-- 비 로그인 시 (나중에 비회원장바구니 구현시 수정필요)-->
                     <th:block sec:authorize="isAnonymous()">
-                        <a th:href="|/product/addcart?productNo=${product.productNo}&userNo=1000|">장바구니 담기(비회원은 현재 안됨)</a>
+                        <a href="/user/join" class="btn btn-outline-primary">회원가입 후 장바구니 담기</a>
                     </th:block>
                     <!-- 로그인 시 -->
                     <th:block sec:authorize="isAuthenticated()">
-                        <!-- <a th:href="|/product/addcart?productNo=${product.productNo}&userNo=${#authentication.principal.users.userNo}|" class="btn btn-outline-primary">장바구니 담기</a> -->
                         <button th:onclick="|addcart(${product.productNo})|" class="btn btn-outline-primary">장바구니 담기</button>
                     </th:block>
                 </div>
             </div>
         </th:block>
     </div>
+
+    <th:block sec:authorize="isAuthenticated()">
+        <input type="hidden" name="userNo" id="userNo" th:value="${#authentication.principal.users.userNo}">
+    </th:block>
 
 
     <script>
@@ -224,7 +227,7 @@
         });
 
         function addcart(productNo){
-            let userNo = "[[${#authentication.principal.users.userNo}]]"
+            let userNo = $(`#userNo`).val() == null ? 'GUEST' : $(`#userNo`).val()
             let url3 = "/product/addProductsaveAjax?productNo="+ productNo + "&userNo="+userNo
             $.ajax({
                 url : url3,

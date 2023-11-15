@@ -12,13 +12,13 @@ import lombok.extern.slf4j.Slf4j;
 public class CommonExceptionHandler {
 
     // 지정한 예외 타입에 대한 처리를 하는 메소드로 지정
-    @ExceptionHandler(Exception.class)
-    public String exception(Exception e, HttpServletResponse response) {
+    // @ExceptionHandler(Exception.class)
+    // public String exception(Exception e, HttpServletResponse response) {
 
-        log.info(e.toString());
+    //     log.info(e.toString());
 
-        log.info("status : " + response.getStatus());
-        return "error/exception";
-    }
+    //     log.info("status : " + response.getStatus());
+    //     return "error/exception";
+    // }
     
 }

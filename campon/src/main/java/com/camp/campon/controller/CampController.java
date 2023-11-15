@@ -85,10 +85,10 @@ public class CampController {
      * 상품 등록 페이지
      * @return
      */
-    @GetMapping(value="/insertProduct")
-    public String insertProduct() {
-        return "camp/insertProduct";
-    }
+    // @GetMapping(value="/insertProduct")
+    // public String insertProduct() {
+    //     return "camp/insertProduct";
+    // }
 
     /**
      * 즐겨찾기 페이지
