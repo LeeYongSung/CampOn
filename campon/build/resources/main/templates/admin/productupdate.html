@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org"
     xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
-    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{/UI/user/layout/main_layout}">
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
+    layout:decorate="~{/UI/admin/layout/admin_layout}">
 
 <head>
     <meta charset="UTF-8">
@@ -11,7 +12,9 @@
 
 <body layout:fragment="content">
 
-        <h1>렌탈샵 상품 수정/삭제</h1>
+    <div class="w-100 text-center py-4">
+        <h5>렌탈샵 상품 수정/삭제</h5>
+    </div>
 
     
     <!-- 상품 수정 화면 -->
@@ -22,17 +25,19 @@
             <!--상품 번호-->
             <input type="hidden" th:field="*{productNo}">
             <!-- 상품이름 -->
-            <div class="input-group mb-3 r ow border-bottom">
-                <label class="col-md-4 col-form-label" for="">상품 이름</label>
-                <input type="text" class="form-control" th:field="*{productName}" >
+            <div class="form-floating my-2">
+                <input type="text" class="form-control" th:field="*{productName}" id="productName" >
+                <label class="col-md-4 col-form-label" for="productName">상품 이름</label>
             </div>
 
 
             <!-- 썸네일 업로드 -->
-            <div class="input-group mb-3 row border-bottom" style="margin-top: 40px;">
-                <label class="col-md-4 col-form-label" for="">상품 썸네일</label>
+            <div class="form-floating my-2">
                 <input type="file" class="form-control" th:field="*{productThmFile}" >
-                <img th:src=" '/admin/img?file=' + *{productThumnail} " alt="썸네일이미지">
+                <label class="col-md-4 col-form-label" for="">상품 썸네일</label>
+            </div>
+            <div class="w-100">
+                <img th:src=" '/admin/img?file=' + *{productThumnail} " alt="썸네일이미지" class="w-100">
             </div>
 
 
@@ -85,46 +90,49 @@
 
 
             <!-- 1일 대여금액 -->
-            <div class="input-group mb-3 row border-bottom" style="margin-top: 40px;">
-                <label class="col-md-4 col-form-label" for="">1일 대여금액</label>
-                <input type="text" class="form-control" style="background-color:#F9F9F9; border-width: 0;"
-                    name="productPrice" id="productPrice" th:field="*{productPrice}">
+            <div class="form-floating">
+                <input type="text" class="form-control" name="productPrice" id="productPrice" th:field="*{productPrice}">
+                <label class="col-md-4 col-form-label" for="productPrice">1일 대여금액</label>
             </div>
 
 
             <!-- 상품 기본내용 -->
-            <div class="input-group mb-3 row border-bottom" style="margin-top: 40px;">
-                <label class="col-md-4 col-form-label" for="">상품 기본내용</label>
-                <input type="text" class="form-control" style="background-color:#F9F9F9; border-width: 0;" th:field="*{productIntro}">
+            <div class="form-floating my-2">
+                <input type="text" class="form-control" th:field="*{productIntro}" id="productName">
+                <label class="col-md-4 col-form-label" for="productName">상품 기본내용</label>
             </div>
           
             <!-- 상품 상세내용(이미지) -->
-            <div class="input-group mb-3 row border-bottom" style="margin-top: 40px;">
-                <label class="col-md-4 col-form-label" for="">상품 상세설명(이미지)</label>
+            <div class="form-floating">
                 <input type="file" class="form-control" name="productConFile" id="productConFile">
+                <label class="col-md-4 col-form-label" for="productConFile">상품 상세설명(이미지)</label>
+            </div>
+            <div>
                 <img th:src=" '/admin/img?file=' + *{productCon} " alt="상세설명">
-
             </div>
 
             <!-- 여러이미지 업로드 -->
-            <div class="input-group mb-3 row border-bottom" style="margin-top: 40px;">
-                <label class="col-md-4 col-form-label" for="">상품 이미지(여러장)</label>
+            <div class="form-floating">
                 <input type="file" class="form-control" name="productImgs" id="productImgs"  multiple>
-                <div th:each="productImgsUrl : *{productImgsUrlList}">
+                <label class="col-md-4 col-form-label" for="">상품 이미지(여러장)</label>
+            </div>
+            <div th:each="productImgsUrl : *{productImgsUrlList}">
                 <img th:src=" '/admin/img?file=' + ${productImgsUrl} " alt="상세이미지(여러장)">
+            </div>
+
+            <!-- 상품수정 -->
+            <div class="w-100 d-flex justify-content-between border-top mt-3 py-3">
+                <div>
+                    <input type="submit" class="btn btn-warning px-3" value="상품수정" />
                 </div>
-            </div>
-
-              <!-- 상품수정 -->
-              <div class="d-flex justify-content-center mt-5 mb-5">
-                <input type="submit" class="btn btn-lg btn btn-dark" value="상품수정" style="width:80%; height:70px;" />
-            </div>
-
-
+            
         </form>
 
         <!-- 상품 삭제-->
-        <a th:href="|/admin/delete?productNo=${product.productNo}|">상품 삭제</a>
+                <div>
+                    <a th:href="|/adm in/delete?productNo=${product.productNo}|" class="btn btn-danger px-3">상품 삭제</a>
+                </div>
+        </div>
     </div>
 
 

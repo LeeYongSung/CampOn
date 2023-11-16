@@ -60,10 +60,10 @@ SELECT * FROM product WHERE product_no = #{productNo}
 
 <!--상품 수정-->
 <update id="productUpdate">
-UPDATE product SET
-product_name=#{productName}, product_thumnail=#{productThumnail}, product_category=#{productCategory}, product_price=#{productPrice},
-product_intro=#{productIntro}, product_con=#{productCon}, upd_date=now()
-WHERE product_no = #{productNo}
+    UPDATE product SET
+    product_name=#{productName}, product_thumnail=#{productThumnail}, product_category=#{productCategory}, product_price=#{productPrice},
+    product_intro=#{productIntro}, product_con=#{productCon}, upd_date=now()
+    WHERE product_no = #{productNo}
 </update>
 <delete id="deleteProduct">
 DELETE FROM product WHERE product_no = #{product_no}
@@ -166,7 +166,8 @@ WHERE p.product_no = #{productNo} ORDER BY r.reg_date DESC LIMIT 5;
 
 <!-- 추천상품 리스트 -->
 <select id="hotList" resultType="Product">
-    SELECT 썸네일테이블.productimg_url, 썸네일테이블.product_No
+    <!-- SELECT 썸네일테이블.productimg_url, 썸네일테이블.product_No -->
+    SELECT *
     FROM product AS 상품테이블
     JOIN (
         SELECT product_no, MIN(productimg_no) AS 최소썸네일번호
@@ -187,8 +188,8 @@ WHERE p.product_no = #{productNo} ORDER BY r.reg_date DESC LIMIT 5;
 </select>
 
 <select id="reservedProduct" resultType="Product">
-SELECT o.user_no, sum(order_cnt) sum, p.* FROM `order` o JOIN product p ON p.product_no = o.product_no 
-WHERE user_no = #{userNo} GROUP BY o.product_no
+SELECT o.order_no, o.user_no, o.order_cnt, p.* FROM `order` o JOIN product p ON p.product_no = o.product_no 
+WHERE user_no = #{userNo}
 </select>
 
 </mapper>

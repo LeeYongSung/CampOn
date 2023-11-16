@@ -46,13 +46,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <result property="cpdtName" column="cp_dt_name" />
 </resultMap>
 <select id="selectOrder" resultMap="orderMap">
-SELECT o.*, p.*, c.*, d.*, cdi.cpdi_url
-FROM `order` o  JOIN product p ON o.product_no = p.product_no
-JOIN campproduct c ON c.camp_no = o.camp_no
-JOIN campdetail d ON d.cp_dt_no = o.cp_dt_no
-JOIN campdetailimg cdi ON d.cp_dt_no = cdi.cp_dt_no
-JOIN (SELECT min(cpdi_no) no FROM campdetailimg GROUP BY cp_dt_no) imgno ON cdi.cpdi_no = imgno.no
-WHERE o.order_number = #{orderNumber}
+    SELECT o.*, p.*, c.*, d.*, cdi.cpdi_url
+    FROM `order` o  JOIN product p ON o.product_no = p.product_no
+    JOIN campproduct c ON c.camp_no = o.camp_no
+    JOIN campdetail d ON d.cp_dt_no = o.cp_dt_no
+    JOIN campdetailimg cdi ON d.cp_dt_no = cdi.cp_dt_no
+    JOIN (SELECT min(cpdi_no) no FROM campdetailimg GROUP BY cp_dt_no) imgno ON cdi.cpdi_no = imgno.no
+    WHERE o.order_number = #{orderNumber}
 </select>
 
 <select id="paymentsByOrNo" resultType="Order">
@@ -84,5 +84,17 @@ INSERT INTO payments (order_number, pm_type, pm_price) VALUES (#{orderNumber}, #
 INSERT INTO delivery (order_no) (SELECT order_no FROM `order` WHERE order_number = #{orderNumber})
 </insert>
 
+<!--이용자에게 대여내역 문자보내기-->
+<select id="toUserMsg" resultType="Order">
+SELECT p.*, o.*, d.cp_dt_name FROM `order` o JOIN product p ON p.product_no = o.product_no
+JOIN campdetail d ON d.cp_dt_no = o.cp_dt_no
+WHERE o.order_number = #{orderNumber}
+</select>
+
+<!--찜과 장바구니에 있는 거 삭제 by userNo-->
+<delete id="saveCartDel">
+DELETE ps, c FROM productsave ps INNER JOIN cart c WHERE ps.user_no = c.user_no
+AND ps.user_no = #{userNo}
+</delete>
 
 </mapper>

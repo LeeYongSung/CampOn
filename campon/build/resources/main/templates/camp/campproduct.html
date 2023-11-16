@@ -87,13 +87,13 @@
 
         <input type="hidden" id="latitude" th:value="${productsproducts.campLatitude}">
         <input type="hidden" id="longitude" th:value="${productsproducts.campLongitude}">
-        <div id="map" style="width:100%; height:600px;">
+        <div id="map" style="width:100%; height:400px;">
             <!-- api 지도 출력 부분 -->
         </div>
     </div>
     <div class="container-sm w-100 py-2 border-bottom">
         <div><h5>캠핑장배치도</h5></div>
-        <div><img th:src="${productsproducts.campLayout}"></div>
+        <div><img th:src="${productsproducts.campLayout}" class="w-100"></div>
     </div>
     <div class="campdetail container-sm w-100 py-2 position-relative mb-2">
         <div><h5>캠핑상품</h5></div>
@@ -101,8 +101,8 @@
             <div class="campdetail_box w-100 mb-3 py-5">
                 <a th:href="|/camp/campdetail?cpdtNo=${productsproductlist.cpdtNo}|"> 
                     <div class="campdetail_product d-flex justify-content-between">
-                        <div>
-                            <img th:src="${productsproductlist.cpdiUrl}">
+                        <div class="rounded px-2">
+                            <img th:src="${productsproductlist.cpdiUrl}" class="w-100">
                         </div>
                         <div>
                             <div><span th:text="${productsproductlist.campTypeName}"></span></div>
@@ -215,7 +215,9 @@
         })
      </script>
 
+    <!-- <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=66c31d7d2fe00c73f61774f2c881769e&​libraries=services"></script> -->
     <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=66c31d7d2fe00c73f61774f2c881769e&​libraries=services"></script>
+
     <script>
         let latitude = $('#latitude').val();
         let longitude = $('#longitude').val();

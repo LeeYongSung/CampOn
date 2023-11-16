@@ -16,7 +16,15 @@
         <div class="mypage_banner_back"></div>
         <div class="mypage_banner_con">
             <ul class="w-100 text-center">
-                <li><img src="/img/user/test_user.png" alt=""></li>
+                <th:block th:if="${auth == 'ROLE_USER'}">
+                    <li><img src="/img/user/test_user.png" alt="프로필이미지"></li>
+                </th:block>
+                <th:block th:if="${auth == 'ROLE_SELL'}">
+                    <li><img src="/img/user/test_sell.png" alt="프로필이미지"></li>
+                </th:block>
+                <th:block th:if="${auth == 'ROLE_ADMIN'}">
+                    <li><img src="/img/user/test_admin.png" alt="프로필이미지"></li>
+                </th:block>
                 <li>
                     <!-- <h4>아이디 : <span th:text="${#authentication.principal.users.userId}"></span></h4> -->
                     <h4>아이디 : <span sec:authentication="principal.username"></span></h4>
@@ -39,7 +47,7 @@
                         <a href="/camp/reservation">내 예약 현황</a>
                     </li>
                     <li>
-                        <a href="#">구매 후기(x)</a>
+                        <a href="/board/boardlist">구매 후기</a>
                     </li>
                 </ul>
                 <ul class="d-flex justify-content-around w-100">
@@ -49,9 +57,9 @@
                     <li>
                         <a href="/product/wishlist">찜한 상품</a>
                     </li>
-                    <li>
+                    <!-- <li>
                         <a href="#">문의 내역(x)</a>
-                    </li>
+                    </li> -->
                     <li>
                         <a href="/product/cart">장바구니</a>
                     </li>
@@ -68,17 +76,17 @@
                         <a href="/user/update">내정보 관리</a>
                     </li>
                     <li>
-                        <a href="#">광고 등록(x)</a>
+                        <a href="/admin/adlistseller">광고 신청 목록</a>
                     </li>
                     <li>
                         <a href="/admin/campproductlist">캠핑장 관리</a>
                     </li>
                     <li>
-                        <a href="#">우리 캠핑장 후기(x)</a>
+                        <a href="/board/boardlist">내 캠핑장 후기</a>
                     </li>
-                    <li>
+                    <!-- <li>
                         <a href="#">문의 관리(x)</a>
-                    </li>
+                    </li> -->
                 </ul>
             </div>
         </th:block>
@@ -95,25 +103,25 @@
                         <a href="/admin/campproductlist">캠핑장 관리</a>
                     </li>
                     <li>
-                        <a href="#">광고 관리(x)</a>
+                        <a href="/admin/adlist">광고 관리</a>
                     </li>
                     <li>
-                        <a href="#">후기 관리(x)</a>
+                        <a href="/board/boardlist">후기 관리</a>
                     </li>
                 </ul>
                 <ul class="d-flex justify-content-around w-100">
-                    <li>
-                        <a href="#">캠핑장 예약 관리(x)</a>
-                    </li>
+                    <!-- <li>
+                        <a href="">캠핑장 예약 관리(x)</a>
+                    </li> -->
                     <li>
                         <a href="/admin/productlist">스토어상품 관리</a>
                     </li>
-                    <li>
+                    <!-- <li>
                         <a href="#">대여 내역(x)</a>
                     </li>
                     <li>
                         <a href="#">문의 관리(x)</a>
-                    </li>
+                    </li> -->
                 </ul>
             </div>
         </th:block>
