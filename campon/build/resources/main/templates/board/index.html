@@ -11,42 +11,51 @@
     <title>CampOn(캠프온)</title>
 </head>
 <body layout:fragment="content">
-    <button class="campbtn">캠핑</button>
-    <button class="storebtn">스토어</button>
+    <div class="w-100 text-center d-flex justify-content-center py-4">
+        <div>
+            <button class="campbtn">캠핑</button>
+        </div>
+        <div>
+            <button class="storebtn">스토어</button>
+        </div>
+    </div>
 
     <div class="camp">
-
         <div>
             <div class="review mb-5">
                 <h5 class="mt-3">실시간 캠핑 리뷰</h5>
-                <ul th:each="board : ${newReviewList}">
-                <a th:href="|/board/crread?reviewNo=${board.reviewNo}|" class="d-flex justify-content-between">
-                    <li class="review_imgbox">
-                        <img th:src="${board.reviewImg}">
-                    </li>
-                    <li class="review_conbox">
-                        <ul>
-                            <li>
-                                <p th:text="${board.reviewTitle}"></p>
-                            </li>
-                            <li>
-                                <span th:text="${ #dates.format( board.regDate, 'yyyy-MM-dd') }"></span>
-                            </li>
-                            <li>
-                                <span th:text="${board.cpdtName}"></span>
-                            </li>
-                            <li>
-                                <span th:text="${board.campName}"></span>
-                            </li>
-                        </ul>
-                    </li>
-                </a>
-                </ul>
+                <th:block th:each="board : ${newReviewList}">
+                    <div class="container my-2">
+                        <a th:href="|/board/crread?reviewNo=${board.reviewNo}|" class="d-flex justify-content-between border-bottom">
+                            <div class="review_imgbox py-2 px-2">
+                                <img th:src="${board.reviewImg}" class="rounded">
+                            </div>
+                            <div class="review_conbox pt-2">
+                                <div>
+                                    <div>
+                                        <p th:text="${board.reviewTitle}"></p>
+                                    </div>
+                                    <div>
+                                        <span th:text="${ #dates.format( board.regDate, 'yyyy-MM-dd') }"></span>
+                                    </div>
+                                    <div>
+                                        <span th:text="${board.cpdtName}"></span>
+                                    </div>
+                                    <div>
+                                        <span th:text="${board.campName}"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </th:block>
             </div>
         </div>
-        <div>
-            <span>캠핑 리뷰 리스트</span>
-            <table class="crlist">
+        <div class="border-top pt-2">
+            <div>
+                <h5>캠핑 리뷰 리스트</h5>
+            </div>
+            <table class="crlist text-center">
                 <thead>
                     <tr>
                         <td class="num" width="50">번호</th>
@@ -59,20 +68,10 @@
                     <tr>
                         <td colspan="4">작성된 리뷰가 없습니다.</td>
                     </tr>
-                    <!-- <tr th:each="crlist : ${crlist}">
-                        <td th:text="${crlist.reviewNo}"></td>
-                        <td>
-                            <a th:href="|/board/crread?reviewNo=${crlist.reviewNo}|" th:text="${crlist.reviewTitle}"></a>
-                        </td>
-                        <td th:text="${crlist.userId}"></td>
-                        <td>
-                            <span th:text="${ #dates.format( crlist.regDate, 'yyyy-MM-dd') }"></span>
-                        </td>
-                    </tr> -->
                 </tbody>
             </table>
             
-            <div class="pagination">
+            <div class="pagination d-flex justify-content-center">
                 <a href="javascript:;" class="page-arrow" id="first">&laquo;</a>
                 <a href="javascript:;" class="page-arrow" id="prev">&lsaquo;</a>
                 
@@ -144,7 +143,7 @@
                     </tr> -->
                 </tbody>
             </table>
-            <div class="pagination">
+            <div class="pagination d-flex justify-content-center">
                 <a href="javascript:;" class="page-arrow1" id="first1">&laquo;</a>
                 <a href="javascript:;" class="page-arrow1" id="prev1">&lsaquo;</a>
                 

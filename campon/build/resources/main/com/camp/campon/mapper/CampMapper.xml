@@ -91,6 +91,23 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         VALUES ( #{campNo}, #{environmentTypeNo} )
     </insert>
 
+    <!-- 캠핑장 수정-->
+    <update id="campUpdate">
+        update campproduct set region_no = #{regionNo}, camp_name = #{campName}, camp_address = #{campAddress}, camp_tel = #{campTel}
+                            , camp_location = #{campLocation}, camp_layout = #{campLayout}, camp_open = #{campOpen}, camp_close = #{campClose}
+                            , camp_introduction = #{campIntroduction}, camp_caution = #{campCaution}, camp_latitude = #{campLatitude}, camp_longitude = #{campLongitude}
+        where camp_no = #{campNo}
+    </update>
+    <!-- 캠핑장 이미지, 환경, 시설 삭제-->
+    <delete id="campImgDelete">
+        delete from campimg where camp_no = #{campNo}
+    </delete>
+    <delete id="campFacilityDelete">
+        delete from facility where camp_no = #{campNo}
+    </delete>
+    <delete id="campEnvironmentDelete">
+        delete from environment where camp_no = #{campNo}
+    </delete>
     <!-- 캠핑장목록(판매자) -->
     <select id="campproductUser" resultType="Camp">
         SELECT *
@@ -100,7 +117,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         WHERE c.user_no = #{userNo}
         ORDER BY c.camp_no DESC
     </select>
-
+    <select id="campproductadmin" resultType="Camp">
+        SELECT *
+        FROM campproduct c
+        JOIN campimg img ON c.camp_no = img.camp_no 
+        JOIN (SELECT min(cpi_no) no FROM campimg GROUP BY camp_no) imgno ON img.cpi_no = imgno.no
+        ORDER BY c.camp_no DESC
+    </select>
     <select id="campdetailUser" resultType="Camp">
         SELECT
         cd.cp_dt_no AS cpdtNo,
@@ -116,16 +139,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         WHERE cd.camp_no = #{campNo}
         ORDER BY cd.camp_no DESC
     </select>
-
-    <!-- 캠프상품 등록 -->
-
-    <!-- 캠핑장 수정 -->
-
-    <!-- 캠프상품 수정 -->
-
-    <!-- 캠핑장 삭제 -->
-
-    <!-- 캠프상품 삭제-->
 
     <!-- 오픈일정 가져오기 -->
     <select id="schedule" resultType="Camp">
@@ -145,12 +158,25 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         JOIN campproduct c ON re.camp_no = c.camp_no
         JOIN campimg img ON c.camp_no = img.camp_no 
         JOIN (SELECT min(cpi_no) no FROM campimg GROUP BY camp_no) imgno ON img.cpi_no = imgno.no
-        JOIN campdetail cd ON c.camp_no = cd.camp_no
+        JOIN campdetail cd ON re.cp_dt_no = cd.cp_dt_no
         JOIN `user` as u ON u.user_no = re.user_no
         WHERE re.user_no = #{userNo}
-        ORDER BY c.camp_no DESC;
+        ORDER BY re.reservation_no DESC;
     </select>
-    
+    <!--현재 날짜 이후의 예약일정 가져오기-->
+    <select id="reservationNow" resultType="Camp">
+    <![CDATA[
+    SELECT * 
+    FROM reservation re
+    JOIN campproduct c ON re.camp_no = c.camp_no
+    JOIN campimg img ON c.camp_no = img.camp_no 
+    JOIN (SELECT min(cpi_no) no FROM campimg GROUP BY camp_no) imgno ON img.cpi_no = imgno.no
+    JOIN campdetail cd ON c.camp_no = cd.camp_no
+    JOIN `user` as u ON u.user_no = re.user_no
+    WHERE re.user_no = 2 AND re.reservation_start > now()
+    ORDER BY c.camp_no DESC;
+    ]]>
+    </select>
     <!-- 찜 상품 목록 -->
     <select id="favoritesList" resultType="Camp">
         SELECT * FROM favorites f join campproduct c on f.camp_no = c.camp_no ORDER BY favorites_no DESC
@@ -165,7 +191,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         select * from campimg where camp_no = #{campNo}
     </select>
     <select id="productsproducts" resultType="Camp">
-        select * from campproduct where camp_no = #{campNo}
+        select * from campproduct c join environment e on c.camp_no = e.camp_no where c.camp_no = #{campNo}
     </select>
     <select id="productsreserve">
         select count(*) from reservation where camp_no = #{campNo}
@@ -215,8 +241,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <select id="reservecomplete" resultType="Camp">
         select ci.cpi_url, c.camp_name, cd.cp_dt_name, r.reservation_no, 
                u.user_name, r.reservation_nop, r.reservation_date, 
-               date_format(r.reservation_start, "%Y.%m.%d") reservation_start, 
-               date_format(r.reservation_end, "%Y.%m.%d") reservation_end, 
+               r.reservation_start, 
+               r.reservation_end, 
                r.camp_paymenttype, u.user_no
         from reservation r
         left join user u on r.user_no = u.user_no
@@ -281,4 +307,22 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         </if>
         ORDER BY c.camp_no DESC;
     </select>
+
+    <delete id ="reservationdelete">
+        delete from reservation where reservation_no = #{reservationNo}
+    </delete>
+
+    <!-- 캠핑장 삭제 -->
+    <delete id="cpdelete">
+        delete from campproduct where camp_no = #{campNo}
+    </delete>
+    <delete id="cpdeletecpi">
+        delete from campimg where camp_no = #{campNo}
+    </delete>
+    <delete id="cpdeletecpdt">
+        delete from campdetail where camp_no = #{campNo}
+    </delete>
+    <delete id="cpdeletecdi">
+        delete from campdetailimg where camp_no = #{campNo}
+    </delete>
 </mapper>

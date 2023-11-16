@@ -88,7 +88,7 @@
         </div>
     </div>
 
-    <script>
+    <script th:inline="javascript">
           $(document).ready(function() {
             $(".typeBtn").click(function() {
                 $("#joinForm").fadeIn(); 
@@ -121,6 +121,15 @@
             alert("아이디는 영문과 숫자 조합만 가능합니다.");
             return false;
         }
+        //아이디 중복 검사
+        let userIdList = /*[[${userIdList}]]*/ [];
+        for (let i = 0; i < userIdList.length; i++) {
+            userId = userIdList[i]
+            if (id == userId){
+                alert("아이디 중복. 다른 아이디를 입력해주세요")
+                return false
+            }
+        }
         // 이름 유효성 검사
         if (!/^[가-힣]{1,5}$/.test(name)) {
             alert("이름은 1자에서 5자까지의 한글로 입력해주세요.");
@@ -134,8 +143,8 @@
         }
 
         // 핸드폰 번호 유효성 검사
-        if (!/^\d{3}-\d{4}-\d{4}$/.test(phone)) {
-            alert("핸드폰 번호는 010-1234-1234 형식으로 입력해주세요.");
+        if (!/^01[016789]\d{7,8}$/.test(phone)) {
+            alert("핸드폰 번호는 01012341234 형식으로 입력해주세요.");
             return false;
         }
 

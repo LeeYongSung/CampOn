@@ -58,7 +58,7 @@
                         <h6>숙박기간 : </h6>
                     </div>
                     <div>
-                        <span th:text="${reservecomplete.reservationStart}"></span> ~ <span th:text="${reservecomplete.reservationEnd}"></span>
+                        <span th:text="${#dates.format(reservecomplete.reservationStart, 'yyyy-MM-dd')}"></span> ~ <span th:text="${#dates.format(reservecomplete.reservationEnd, 'yyyy-MM-dd')}"></span>
                     </div>
                 </div>
                 <div class="w-100 d-flex justify-content-between border-bottom py-2">
@@ -69,11 +69,23 @@
                         <p th:text="${reservecomplete.campPaymentType}"></p>
                     </div>
                 </div>
+                <div class="w-100 text-center py-4">
+                    <h5 class="payType_end"></h5>
+                </div>
             </div>
         </div>
         <div class="w-100 d-flex justify-content-center py-3 reservecomplete_btnBox">
             <a href="/camp/index" class="btn btn-warning btn-lg me-2">홈으로</a>
             <a th:href="|/camp/reservation?userNo=${reservecomplete.userNo}|" class="btn btn-success btn-lg ms-2">예약조회</a>
         </div>
+
+
+        <script>
+            let payType = "[[${reservecomplete.campPaymentType}]]"
+            let txt = '(신한)110-328-214257 예금주:이용성'
+            if(payType == 'bankbook') {
+                $('.payType_end').text(txt)
+            }
+        </script>
 </body>
 </html>

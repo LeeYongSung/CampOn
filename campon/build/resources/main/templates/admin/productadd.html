@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org"
     xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
-    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{/UI/user/layout/main_layout}">
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{/UI/admin/layout/admin_layout}">
 
 <head>
     <meta charset="UTF-8">
@@ -11,28 +11,27 @@
 
 <body layout:fragment="content">
 
-    <div class="d-flex justify-content-left mt-4 mb-3">
-        <h3>렌탈샵 상품 등록</h3>
+    <div class="w-100 text-center py-4 border-bottom">
+        <h5>렌탈샵 상품 등록</h5>
     </div>
-
     
     <!-- 상품 등록 화면 -->
-    <div class="container">
+    <div class="container pt-2">
         <form name="product" action="/admin/productInsert" method="post" enctype="multipart/form-data">
             <!-- csrf -->
             <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
 
             <!-- 상품이름 -->
-            <div class="input-group mb-3 r ow border-bottom">
-                <label class="col-md-4 col-form-label" for="">상품 이름</label>
-                <input type="text" class="form-control" name="productName" id="productName">
+            <div class="form-floating my-2">
+                <input type="text" class="form-control" name="productName" id="productName" placeholder="상품 이름">
+                <label class="col-md-4 col-form-label" for="productName">상품 이름</label>
             </div>
 
 
             <!-- 썸네일 업로드 -->
-            <div class="input-group mb-3 row border-bottom" style="margin-top: 40px;">
-                <label class="col-md-4 col-form-label" for="">상품 썸네일</label>
-                <input type="file" class="form-control" name="productThmFile" id="productThumnail">
+            <div class="form-floating">
+                <input type="file" class="form-control" name="productThmFile" id="productThumnail" placeholder="상품 썸네일">
+                <label class="col-md-4 col-form-label" for="productThumnail">상품 썸네일</label>
             </div>
 
 
@@ -87,37 +86,34 @@
 
 
             <!-- 1일 대여금액 -->
-            <div class="input-group mb-3 row border-bottom" style="margin-top: 40px;">
-                <label class="col-md-4 col-form-label" for="">1일 대여금액</label>
-                <input type="text" class="form-control" style="background-color:#F9F9F9; border-width: 0;"
-                    name="productPrice" id="productPrice">
+            <div class="form-floating">
+                <input type="text" class="form-control" name="productPrice" id="productPrice" placeholder="1일 대여금액">
+                <label class="col-md-4 col-form-label" for="productPrice">1일 대여금액</label>
             </div>
 
 
             <!-- 상품 기본내용 -->
-            <div class="input-group mb-3 row border-bottom" style="margin-top: 40px;">
+            <div class="form-floating my-2">
+                <input type="text" class="form-control" name="productIntro" id="productIntro" placeholder="상품 기본 내용">
                 <label class="col-md-4 col-form-label" for="">상품 기본내용</label>
-                <input type="text" class="form-control" style="background-color:#F9F9F9; border-width: 0;"
-                    name="productIntro" id="productIntro">
             </div>
 
             <!-- 상품 상세내용(이미지) -->
-            <div class="input-group mb-3 row border-bottom" style="margin-top: 40px;">
-                <label class="col-md-4 col-form-label" for="">상품 상세설명(이미지)</label>
+            <div class="form-floating my-2">
                 <input type="file" class="form-control" name="productConFile" id="productConFile">
+                <label class="col-md-4 col-form-label" for="productConFile">상품 상세설명(이미지)</label>
             </div>
 
             <!-- 여러이미지 업로드 -->
-            <div class="input-group mb-3 row border-bottom" style="margin-top: 40px;">
-                <label class="col-md-4 col-form-label" for="">상품 이미지(여러장)</label>
+            <div class="form-floating">
                 <input type="file" class="form-control" name="productImgs" id="productImgs"  multiple>
+                <label class="col-md-4 col-form-label" for="productImgs">상품 이미지(여러장)</label>
             </div>
 
 
             <!-- 상품등록 -->
-            <div class="d-flex justify-content-center mt-5 mb-5">
-                <input type="submit" class="btn btn-lg btn btn-dark" onclick="return checkProduct()" value="상품등록"
-                    style="width:80%; height:70px;" />
+            <div class="d-flex justify-content-center mt-1 mb-5">
+                <input type="submit" class="btn btn-lg btn-dark w-100 py-3" onclick="return checkProduct()" value="상품등록"/>
             </div>
         </form>
     </div>

@@ -1,0 +1,9 @@
+Manifest-Version: 1.0
+Spring-Boot-Classpath-Index: WEB-INF/classpath.idx
+Spring-Boot-Layers-Index: WEB-INF/layers.idx
+Start-Class: com.camp.campon.CamponApplication
+Spring-Boot-Classes: WEB-INF/classes/
+Spring-Boot-Lib: WEB-INF/lib/
+Spring-Boot-Version: 2.7.17
+Main-Class: org.springframework.boot.loader.WarLauncher
+
