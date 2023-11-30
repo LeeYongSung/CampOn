@@ -145,7 +145,7 @@
             <th:block th:each="product : ${productHotList}">
                 <div class="product_suggestion">
                     <div class="product_suggestionImg border-bottom">
-                        <img th:src="${product.productimgUrl}">
+                        <img th:src="|/img?file=${product.productimgUrl}|">
                     </div>
                     <div class="product_suggestionCon px-3">
                         <div><span th:text="${product.productName}"></span></div>
@@ -161,7 +161,7 @@
         <th:block th:each="product : ${productList}">
             <div class="border rounded position-relative mb-3 pb-4 mt-2">
                 <div class="productListImg">
-                    <img th:src="${product.productThumnail}" alt="상품썸네일" class="w-100">
+                    <img th:src="|/img?file=${product.productThumnail}|" alt="상품썸네일" class="w-100">
                 </div>
                 <div class="">
                     <div class="productList_Con ps-2 pt-3">

@@ -25,7 +25,7 @@
             <div class="campproductList w-100 d-flex justify-content-between position-relative py-5 mt-3 border-bottom border-top">
                 <input type="hidden" class="campNo" id="campNo" name="campNo" th:value="${camp.campNo}">
                 <div class="campproductListImg ps-2">
-                    <img th:src="${camp.cpiUrl}" alt="캠핑장 이미지">
+                    <img th:src="|/img?file=${camp.cpiUrl}|" alt="캠핑장 이미지">
                 </div>
                 <div class="campproductListCon">
                     <div class="pt-3">

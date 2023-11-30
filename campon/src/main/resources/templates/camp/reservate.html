@@ -32,7 +32,7 @@
 
                 <div class="container-sm reservate_box d-flex justify-content-between">
                     <div class="rounded">
-                        <img th:src="${camp.cpdiUrl}" alt="캠핑상품이미지" class="w-100 px-2 rounded">
+                        <img th:src="|/img?file=${camp.cpdiUrl}|" alt="캠핑상품이미지" class="w-100 px-2 rounded">
                     </div>
                     <div>
                         <p th:text="${camp.campName}"></p>

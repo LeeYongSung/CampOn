@@ -15,7 +15,7 @@
         <!-- Swiper -->
         <div class="swiper mySwiper">
             <div class="swiper-wrapper">
-            <div class="swiper-slide" th:each="img : ${productimg}"><img th:src="${img.cpdiUrl}"></div>
+            <div class="swiper-slide" th:each="img : ${productimg}"><img th:src="|/img?file=${img.cpdiUrl}|"></div>
             </div>
             <div class="swiper-button-next"></div>
             <div class="swiper-button-prev"></div>

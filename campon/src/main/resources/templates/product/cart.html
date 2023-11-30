@@ -19,7 +19,7 @@
             <div class="border rounded position-relative pb-4">
                 <!-- 썸네일 -->
                 <div class="cartImg border-bottom w-100">
-                    <img th:src="${cart.productThumnail}" class="w-100">
+                    <img th:src="|/img?file=${cart.productThumnail}|" class="w-100">
                 </div>
                 <div class="w-100 d-flex justify-content-between cartCon">
                     <div class="ps-2 pt-2">
@@ -66,7 +66,9 @@
 
     <div>
         <h3>확인사항</h3>
-        렌탈 서비스는 캠핑장을 예약하신 회원에 한해 이용 가능한  "캠핑온"만의 특화된 서비스 입니다. 
+        <p>
+            렌탈 서비스는 캠핑장을 예약하신 회원에 한해 이용 가능한  "캠핑온"만의 특화된 서비스 입니다. 
+        </p>
     </div>
 </body>
 

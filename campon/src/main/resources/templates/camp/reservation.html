@@ -22,7 +22,7 @@
         <th:block th:each="reservation : ${reservationList}">
             <div class="reservation_box w-100 d-flex justify-content-between position-relative py-3 mt-3">
                 <div class="reservationImg">
-                    <img th:src="${reservation.cpiUrl}" alt="예약이미지" class="py-2 ms-3 px-2">
+                    <img th:src="|/img?file=${reservation.cpiUrl}|" alt="예약이미지" class="py-2 ms-3 px-2">
                 </div>
                 <div class="reservationTitle">
                     <div class="mt-4"><h5 th:text="${reservation.campName}"></h5></div>
@@ -80,7 +80,7 @@
             <div class="container border">
                 <div class="border position-relative">
                     <div class="campProductImg w-100">
-                        <img th:src="${product.productThumnail}" alt="상품썸네일" class="py-2 px-2 w-100">
+                        <img th:src="|/img?file=${product.productThumnail}|" alt="상품썸네일" class="py-2 px-2 w-100">
                     </div>
                     <div class="container-sm py-3  my-2">
                         <div class="campProductCon">
