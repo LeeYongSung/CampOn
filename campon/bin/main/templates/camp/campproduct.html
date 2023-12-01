@@ -14,7 +14,7 @@
     <!-- Swiper -->
     <div class="swiper mySwiper">
         <div class="swiper-wrapper">
-          <div class="swiper-slide" th:each="img : ${productsimg}"><img th:src="${img.cpiUrl}"></div>
+          <div class="swiper-slide" th:each="img : ${productsimg}"><img th:src="|/img?file=${img.cpiUrl}|"></div>
         </div>
         <div class="swiper-button-next"></div>
         <div class="swiper-button-prev"></div>
@@ -93,7 +93,7 @@
     </div>
     <div class="container-sm w-100 py-2 border-bottom">
         <div><h5>캠핑장배치도</h5></div>
-        <div><img th:src="${productsproducts.campLayout}" class="w-100"></div>
+        <div><img th:src="|/img?file=${productsproducts.campLayout}|" class="w-100"></div>
     </div>
     <div class="campdetail container-sm w-100 py-2 position-relative mb-2">
         <div><h5>캠핑상품</h5></div>
@@ -102,7 +102,7 @@
                 <a th:href="|/camp/campdetail?cpdtNo=${productsproductlist.cpdtNo}|"> 
                     <div class="campdetail_product d-flex justify-content-between">
                         <div class="rounded px-2">
-                            <img th:src="${productsproductlist.cpdiUrl}" class="w-100">
+                            <img th:src="|/img?file=${productsproductlist.cpdiUrl}|" class="w-100">
                         </div>
                         <div>
                             <div><span th:text="${productsproductlist.campTypeName}"></span></div>
@@ -137,7 +137,7 @@
                                 </li>
                                 <li class="pe-3">
                                     <div class="review_img">
-                                        <img th:src="${productsreview.reviewImg}">
+                                        <img th:src="|/img?file=${productsreview.reviewImg}|">
                                     </div>
                                 </li>
                             </ul>

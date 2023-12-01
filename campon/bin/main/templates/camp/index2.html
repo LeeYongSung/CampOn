@@ -90,7 +90,7 @@
             <th:block th:each="camp : ${campnewList}">
                 <div class="col-4">
                     <a th:href="|/camp/campproduct?campNo=${camp.campNo}|">
-                        <li class="mx-1"><img th:src="${camp.cpiUrl}"></li>
+                        <li class="mx-1"><img th:src="|/img?file=${camp.cpiUrl}|"></li>
                         <li class="w-100 text-center"><span th:text="${camp.campName}"></span></li>
                     </a>
                 </div>
@@ -103,7 +103,7 @@
             <th:block th:each="camp : ${campHotList}">
                 <div class="col-4">
                     <a th:href="|/camp/campproduct?campNo=${camp.campNo}|">
-                        <li class="mx-1"><img th:src="${camp.cpiUrl}"></li>
+                        <li class="mx-1"><img th:src="|/img?file=${camp.cpiUrl}|"></li>
                         <li class="w-100 text-center"><span th:text="${camp.campName}"></span></li>
                     </a>
                 </div>
@@ -117,7 +117,7 @@
         <div th:each="board : ${newReviewList}" class="w-100 border rounded py-2 my-2">
             <a th:href="|/board/crread?reviewNo=${board.reviewNo}|" class="d-flex justify-content-between">
                 <div class="review_imgbox px-2 py-2">
-                    <img th:src="${board.reviewImg}">
+                    <img th:src="|/img?file=${board.reviewImg}">
                 </div>
                 <div class="review_conbox py-2">
                     <div>

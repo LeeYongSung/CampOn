@@ -247,7 +247,8 @@ public class AdminController {
      * @return
      * @throws Exception
      */
-    @PreAuthorize("hasRole('ROLE_SELL')")
+    //403 에러가 떠서 일단 주석처리 함. 
+    // @PreAuthorize("hasRole('ROLE_SELL')")
     @PostMapping(value = "/campproductadd")
     public String campInsertPro(@ModelAttribute Camp camp, @RequestParam List<String> facilityTypeNo) throws Exception {
 

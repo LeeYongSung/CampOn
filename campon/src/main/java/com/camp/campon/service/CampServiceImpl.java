@@ -246,10 +246,10 @@ public class CampServiceImpl implements CampService{
         int environNo = camp.getEnvironmentTypeNo();
         // log.info("environNo : " + environNo);
         // log.info("campLayout : " + campLayout);
-        String newPath = "/img/camp";
+        // String newPath = "/img/camp";
         String layoutOriginName = campLayout.getOriginalFilename();
         String layoutFileName = UUID.randomUUID().toString() + "_" + layoutOriginName;
-        String layoutFilePath = newPath + "/" + layoutFileName;
+        String layoutFilePath = uploadPath + "/" + layoutFileName;
         byte[] layoutFileData = campLayout.getBytes();
         
         File layoutUploadFile = new File(uploadPath, layoutFileName);
@@ -278,7 +278,7 @@ public class CampServiceImpl implements CampService{
                 String fileName = UUID.randomUUID().toString() + "_" + originName;
 
                 // c:/upload/UID_강아지  .png
-                String filePath = newPath + "/" + fileName; // 이곳에 "/" 안쓰려면 프로퍼티 업로드패스 마지막에 "/" 넣어주면 됨
+                String filePath = uploadPath + "/" + fileName; // 이곳에 "/" 안쓰려면 프로퍼티 업로드패스 마지막에 "/" 넣어주면 됨
 
                 // 파일업로드
                 // - 서버 측, 파일 시스템에 파일 복사
@@ -378,10 +378,10 @@ public class CampServiceImpl implements CampService{
         int environNo = camp.getEnvironmentTypeNo();
         // log.info("environNo : " + environNo);
         // log.info("campLayout : " + campLayout);
-        String newPath = "/img/camp";
+        // String newPath = "/img/camp";
         String layoutOriginName = campLayout.getOriginalFilename();
         String layoutFileName = UUID.randomUUID().toString() + "_" + layoutOriginName;
-        String layoutFilePath = newPath + "/" + layoutFileName;
+        String layoutFilePath = uploadPath + "/" + layoutFileName;
         byte[] layoutFileData = campLayout.getBytes();
         
         File layoutUploadFile = new File(uploadPath, layoutFileName);
@@ -410,7 +410,7 @@ public class CampServiceImpl implements CampService{
                 String fileName = UUID.randomUUID().toString() + "_" + originName;
 
                 // c:/upload/UID_강아지  .png
-                String filePath = newPath + "/" + fileName; // 이곳에 "/" 안쓰려면 프로퍼티 업로드패스 마지막에 "/" 넣어주면 됨
+                String filePath = uploadPath + "/" + fileName; // 이곳에 "/" 안쓰려면 프로퍼티 업로드패스 마지막에 "/" 넣어주면 됨
 
                 // 파일업로드
                 // - 서버 측, 파일 시스템에 파일 복사

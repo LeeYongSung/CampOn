@@ -31,7 +31,7 @@
                     <div class="container my-2">
                         <a th:href="|/board/crread?reviewNo=${board.reviewNo}|" class="d-flex justify-content-between border-bottom">
                             <div class="review_imgbox py-2 px-2">
-                                <img th:src="${board.reviewImg}" class="rounded">
+                                <img th:src="|/img?file=${board.reviewImg}|" class="rounded">
                             </div>
                             <div class="review_conbox pt-2">
                                 <div>
@@ -96,7 +96,7 @@
                 <ul th:each="board : ${newprlist}">
                     <a th:href="|/board/prread?prNo=${board.prNo}|" class="d-flex justify-content-between">
                         <li class="review_imgbox">
-                            <img th:src="${board.prImg}">
+                            <img th:src="|/img?file=${board.prImg}|">
                         </li>
                         <li class="review_conbox">
                             <ul>

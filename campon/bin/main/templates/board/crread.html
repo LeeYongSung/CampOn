@@ -53,7 +53,7 @@
             <span th:text="${crread.reviewCon}"></span>
         </div>
         <div>
-            <img th:src="${crread.reviewImg}" class="w-100">
+            <img th:src="|/img?file=${crread.reviewImg}|" class="w-100">
         </div>
     </div>
     

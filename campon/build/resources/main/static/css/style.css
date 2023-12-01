@@ -446,3 +446,11 @@ input[type="radio"]:checked + label span {
 .active {display: block;}
 .font08em {font-size: 0.8em;}
 .fontbold {font-weight: bold;}
+
+
+
+/* Board Page */
+.boardd {border-top : 1px solid #444444; border-bottom : 1px solid #444444; }
+.tdd {border-bottom : 1px solid #444444; padding: 8px 6px;}
+.theadd {font-weight: bold; border-bottom : 1px solid #444444;}
+.hoverr:hover { background-color: #FFDF6C;}
