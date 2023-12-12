@@ -407,6 +407,7 @@ public class CampController {
 
         camp.setSearchDate(new Date());
         List<Camp> campList = campService.campSearch(camp);
+        log.info("campList : " + campList);
 
         model.addAttribute("campselect", campList);
         // return "camp/campproducts";
