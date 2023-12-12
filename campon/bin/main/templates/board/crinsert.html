@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/UI/user/layout/main_layout}"
+      >
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CampOn(캠프온)</title>
+</head>
+<body layout:fragment="content">
+    <h1>캠핑장 리뷰 등록</h1>
+    <h4>캠핑장 리뷰을 등록하기 위한 페이지입니다.</h4>
+    <form action="/board/crinsert" method="POST" id="form" enctype="multipart/form-data">
+        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+        <input type="hidden" name="reservationNo" th:value="${reservation.reservationNo}">
+        <input type="hidden" name="campNo" th:value="${reservation.campNo}">
+        <input type="hidden" name="cpdtNo" th:value="${reservation.cpdtNo}">
+        <input type="hidden" name="userNo" th:value="${reservation.userNo}">
+        <hr>
+        <div>
+            <p th:text="${reservation.campName}"></p>
+            <p th:text="${reservation.cpdtName}"></p>
+        </div>
+        <hr>
+        <table>
+            <tr>
+                <td>제목</td>
+                <td>
+                    <input type="text" name="reviewTitle">
+                </td>
+            </tr>
+            <tr>
+                <td>파일</td>
+                <td>
+                    <input type="file" name="reviewImgfile">
+                </td>
+            </tr>
+            <tr>
+                <td>내용</td>
+                <td>
+                    <textarea name="reviewCon" cols="40" rows="5" placeholder="내용"></textarea>
+                </td>
+            </tr>
+        </table>
+        
+        <div>
+            <button type="button" onclick="history.back(-1)">목록</button>
+            <button type="button" onclick="actionInsert()">등록</button>
+        </div>
+    </form>
+    <script>
+        let form = document.getElementById('form')
+        
+        function actionInsert(){ form.submit() }
+    </script>
+</body>
+</html>

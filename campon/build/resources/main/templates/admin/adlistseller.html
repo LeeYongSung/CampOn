@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/UI/admin/layout/seller_layout}"
+      >
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CampOn(캠프온)</title>
+
+</head>
+<body layout:fragment="content">
+    <div>
+    <h1>광고 리스트</h1>
+        <th:block th:each="ad : ${adlistseller}">
+            <ul>
+                <li>
+                    <img th:src="${ad.adImg}" alt="캠핑장 이미지">
+                </li>
+                <li>
+                    <ul>
+                        <li><span th:text="${ad.campNo}"></span> / <span th:text="${ad.campName}"></span></li>
+                        <li>광고기간 : <span th:text="${#dates.format(ad.adStart, 'yyyy-MM-dd')}"></span> ~ <span th:text="${#dates.format(ad.adEnd, 'yyyy-MM-dd')}"></span></li>
+                        <li>상태 : <span th:if="${ad.adCheck == 0}" th:text="|미승인|"></span><span th:if="${ad.adCheck == 1}" th:text="|승인|"></span></li>
+                        <li>등록일자 : <span th:text="${#dates.format(ad.regDate, 'yyyy-MM-dd')}"></span> 수정일자 : <span th:text="${#dates.format(ad.updDate, 'yyyy-MM-dd')}"></span></li>
+                    </ul>
+                </li>
+                <li>
+                    <div><a href="#">수정</a></div>
+                </li>
+            </ul>
+        </th:block>
+    </div>
+
+</body>
+</html>

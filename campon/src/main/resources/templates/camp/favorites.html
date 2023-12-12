@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/UI/user/layout/main_layout}"
+      >
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CampOn(캠프온)</title>
+</head>
+<body layout:fragment="content">
+    <div class="text-center w-100 py-3">
+        <h4>찜한 캠핑장</h4>
+    </div>
+
+    <th:block th:each="camp : ${favoritesList}">
+        <div>
+            <div class="d-flex justify-content-between ms-2 my-3 py-2 border-bottom">
+                <a th:href="|/camp/campproduct?campNo=${camp.campNo}|" class="d-flex justify-content-between">
+                    <div class="favorites_icon text-center">
+                        <img src="/img/camp/campicon1.png" alt="캠핑아이콘" class="pt-1">
+                    </div>
+                    <div class="favorites_con pt-2 ms-2">
+                        <div><h6 th:text="${camp.campName}"></h6></div>
+                        <div>
+                            <span th:text="${camp.campAddress}"></span>
+                            <span> / </span>
+                            <span th:text="${camp.campOpen}"></span>
+                        </div>
+                    </div>
+                </a>
+                <div class="pe-3">
+                    <a class="btn btn-lg btn-danger" th:href="|/camp/favoriteDelete?favoritesNo=${camp.favoritesNo}|" onclick="return actionDelete()">삭제</a>
+                </div>
+            </div>
+        </div>
+    </th:block>
+
+    <script>
+        function actionDelete(){
+            let check = confirm('찜 목록에서 삭제하시겠습니까?')
+            let form = document.getElementsByName('form')
+            if(check) form.submit()
+        }
+    </script>
+</body>
+</html>

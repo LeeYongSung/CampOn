@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/UI/user/layout/user_layout}"
+      >
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>회원가입</title>
+
+</head>
+<body layout:fragment="content">
+    <div class="container" id="typeBtn">
+        <div class="w-100 text-center py-5">
+            <h3>회원가입</h3>
+        </div>
+        <div class="w-100 text-left">
+            <span class="text-body-tertiary">회원유형을 선택해 주세요</span>
+        </div>
+        <button class="typeBtn btn btn-outline-secondary w-100 py-5 my-2" id="userBtn">일반 회원</button>
+        <button class="typeBtn btn btn-outline-secondary w-100 py-5 my-2" id="sellBtn">기업 회원</button>
+        <div class="text-body-tertiary mb-5">
+            <span class="company_join_info">※ 기업 회원의 경우 별도의 승인이 필요하여 원활한 승인을 위해 가입 신청 후 CampOn 이메일로 사업자 등록증을 송부하여 주시기 바랍니다. </span>
+        </div>
+    </div>
+
+    <div class="container-sm">
+        <div id="joinForm" class="none">
+            <div class="text-end w-100 mt-2">
+                <button class="btn btn-danger join_close">닫기</button>
+            </div>
+            <div class="text-center w-100 my-5">
+                <h4>회원정보를 입력해주세요.</h4>
+            </div>
+            <form name="joinForm" action="/user/join" method="POST" onsubmit="return checkjoin()">
+                <!-- csrf -->
+                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+                <!--일반회원의 경우-->
+                <input type="hidden" id="authUser" name="auth" value="ROLE_USER">
+                <!--기업회원의 경우-->
+                <input type="hidden" id="authSell" name="auth" value="ROLE_SELL">
+
+                <div class="form-floating">
+                    <input type="text" id="id" name="userId" placeholder="" class="form-control my-3">
+                    <label for="id">아이디는 영문과 숫자 조합만 가능합니다.</label>
+                </div>
+                <div class="form-floating">
+                    <input type="text" id="name" name="userName" placeholder="이름" class="form-control my-3">
+                    <label for="name">이름</label>
+                </div>
+                <div class="form-floating">
+                    <input type="text" id="userEmail" name="userEmail" placeholder="이메일" class="form-control my-3">
+                    <label for="userEmail">이메일</label>
+                </div>
+                <div class="form-floating">
+                    <input type="text" id="userTel" name="userTel" placeholder="010-1234-1234 형식으로 입력해주세요." class="form-control my-3">
+                    <label for="userTel">핸드폰번호</label>
+                </div>
+                <div class="form-floating">
+                    <input type="text" id="userAddress" name="userAddress" placeholder="주소" class="form-control my-3">
+                    <label for="address">주소</label>
+                </div>
+                <div class="form-floating">
+                    <input type="password" id="password" name="userPw" placeholder="8자 이상, 숫자와 영문 필수 포함" class="form-control my-3">
+                    <label for="password">비밀번호</label>
+                </div>
+                <div class="form-floating">
+                    <input type="password" id="passwordCheck" name="userPwCheck" placeholder="비밀번호를 동일하게 입력해주세요" class="form-control my-3">
+                    <label for="passwordCheck">비밀번호 확인</label>
+                </div>
+
+                <!--기업회원일 경우 추가로 필요한 정보-->
+                <div id="company">
+                    <p>기업 정보를 입력하세요.</p>
+                    <div class="form-floating">
+                        <!--companyName이넘어갈 때 null인지 빈문자열인지 확인해봐야 함.  -->
+                        <input type="text" id="companyName" name="companyName" placeholder="업체명" class="form-control my-3">
+                        <label for="companyName">업체명</label>
+                    </div>
+                    <div class="form-floating">
+                        <input type="text" id="companyNumber" name="companyNumber" placeholder="-없이 숫자로만 입력해주세요" value="0" class="form-control my-3">
+                        <label for="companyNumber">사업자번호</label>
+                    </div>
+                </div>
+                <input type="submit" class="btn btn-warning w-100 py-3 my-2" value="회원가입">
+            </form>
+        </div>
+    </div>
+
+    <script th:inline="javascript">
+          $(document).ready(function() {
+            $(".typeBtn").click(function() {
+                $("#joinForm").fadeIn(); 
+                $("#typeBtn").hide();
+                if ($(this).attr("id") === "userBtn"){
+                    $("#authSell").prop("disabled", true);
+                    $("#company").hide();
+                } else {
+                    $("#authUser").prop("disabled", true);
+                }
+            })
+            $('.join_close').click(function() {
+                $("#joinForm").hide();
+                $("#typeBtn").show();
+            })
+        });
+
+        // 회원가입 유효성 검사
+        function checkjoin() {
+        let form = document.joinForm;
+        let id = form.userId.value;
+        let name = form.userName.value;
+        let email = form.userEmail.value;
+        let phone = form.userTel.value;
+        let password = form.userPw.value;
+        let passwordCheck = form.userPwCheck.value;
+
+        // 아이디 유효성 검사
+        if (!/^[a-zA-Z0-9]+$/.test(id)) {
+            alert("아이디는 영문과 숫자 조합만 가능합니다.");
+            return false;
+        }
+        //아이디 중복 검사
+        let userIdList = /*[[${userIdList}]]*/ [];
+        for (let i = 0; i < userIdList.length; i++) {
+            userId = userIdList[i]
+            if (id == userId){
+                alert("아이디 중복. 다른 아이디를 입력해주세요")
+                return false
+            }
+        }
+        // 이름 유효성 검사
+        if (!/^[가-힣]{1,5}$/.test(name)) {
+            alert("이름은 1자에서 5자까지의 한글로 입력해주세요.");
+            return false;
+        }
+
+        // 이메일 주소 유효성 검사
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+            alert("올바른 이메일 주소를 입력해주세요.");
+            return false;
+        }
+
+        // 핸드폰 번호 유효성 검사
+        if (!/^01[016789]\d{7,8}$/.test(phone)) {
+            alert("핸드폰 번호는 01012341234 형식으로 입력해주세요.");
+            return false;
+        }
+
+        // 비밀번호 유효성 검사
+        if (password.length < 8 || !/^(?=.*[0-9])(?=.*[a-zA-Z])/.test(password)) {
+            alert("비밀번호는 8자 이상이어야 하며, 숫자와 영문자를 포함해야 합니다.");
+            return false;
+        }
+
+        // 비밀번호 확인
+        if (password !== passwordCheck) {
+            alert("비밀번호 확인이 일치하지 않습니다.");
+            return false;
+        }
+
+        // 기업회원 버튼이 클릭되었을 경우 추가 유효성 검사
+        if ($("#sellBtn").hasClass("activee")) {
+            let companyName = form.companyName.value;
+            let companyNumber = form.companyNumber.value;
+
+            if (!companyName) {
+                alert("업체명을 입력하세요.");
+                return false;
+            }
+
+            if (!/^\d+$/.test(companyNumber)) {
+                alert("사업자번호는 숫자로만 입력해야 합니다.");
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    $(document).ready(function() {
+        // 기업회원 버튼 클릭 이벤트 처리
+        $("#sellBtn").click(function() {
+            // 기업회원 버튼이 클릭되면 토글 클래스를 추가하여 상태를 변경
+            $(this).toggleClass("activee");
+        });
+    });
+    </script>
+</body>
+</html>

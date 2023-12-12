@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+    xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{/UI/user/layout/store_layout}">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CampOn(캠프온)</title>
+</head>
+
+<body layout:fragment="content">
+    <div class="w-100 text-center py-4">
+        <h5>결제하기</h5>
+    </div>
+    <form action="/order/paymentpro" method="post" id="payForm">
+        <!-- onsubmit="return requestPays();" -->
+        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+        <div class="container">
+            <div>
+                <h6>주문상품</h6>
+            </div>
+            <div>
+                <th:block th:each="product : ${cartList}">
+                    <div class="border my-2">
+                        <input type="hidden" th:value="${product.productNo}" name="productNos">
+                        <div class="paymentImg ps-2">
+                            <img th:src="|/img?file=${product.productThumnail}|" alt="상품썸네일" class="w-100">
+                        </div>
+                        <div class="d-flex justify-content-between py-2 paymentBox">
+                            <div class="d-flex justify-content-center paymentCon">
+                                <div class="pt-2">
+                                    <div>
+                                        <span th:text="${product.productCategory}"></span>
+                                    </div>
+                                    <div class="pt-3">
+                                        <h5 th:text="${product.productName}"></h5>
+                                    </div>
+                                    <div>
+                                        <span th:text="${product.productIntro}"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="py-2 paymentCount me-5">
+                                <h6 th:text="|${product.productPrice}원|" id="productPrice"></h6>
+                                <label for="cartCnt"><span></span></label>
+                                <div class="reservationNop_box d-flex form-floating ms-2">
+                                    <button class="countDown form-control">-</button>
+                                    <input type="text" name="cartCnts" id="cartCnt" th:value="${product.cartCnt}"
+                                        class="cartCnt form-control" min="1" max="999">
+                                    <button class="countUp form-control">+</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </th:block>
+            </div>
+        </div>
+
+
+        <div class="pt-4 pb-2 ps-2 w-100 border-top">
+            <h5>배송받을 캠핑장을 선택해주세요 </h5>
+        </div>
+        <th:block th:each="camp, status : ${reservationList}">
+            <div class="container">
+                <div class="w-100 d-flex justify-content-between border py-5 rounded position-relative my-2 reservationListBox">
+                    <div class="reservationListImg">
+                        <img th:src="|/img?file=${camp.cpiUrl}|" alt="캠핑상품 이미지" class="w-100" />
+                    </div>
+                    <div class="pe-2 reservationListCon ps-3">
+                        <div>
+                            <div>
+                                <h5 th:text="${camp.campName}"></h5>
+                            </div>
+                            <div> <span th:text="${camp.cpdtName}"></span></div>
+                            <div><span
+                                    th:text="|${#dates.format(camp.reservationStart, 'yyyy-MM-dd')} ~ ${#dates.format(camp.reservationEnd, 'yyyy-MM-dd')}|"></span>
+                            </div>
+                            <div><span th:text="|${camp.reservationDate}일|"></span></div>
+                            <div class="d-flex justify-content-between">
+                                <div><span>예약번호</span></div>
+                                <div>
+                                    <span th:text="${camp.reservationNo}"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="position-absolute bottom-0 end-0 pe-2 pb-1">
+                        <input type="radio" th:id="|selectCamp-${status.index}|" th:value="${camp.reservationNo}"
+                            th:data-res="${camp.reservationDate}" name="reservationNo" class="selectCamp">
+                        <label th:for="|selectCamp-${status.index}|"><span></span>캠핑장 선택</label>
+                    </div>
+                </div>
+            </div>
+        </th:block>
+
+        <!-- 결제방법 선택 -->
+        <div class="w-100 py-5 border-top border-bottom">
+            <div>
+                <p>결제 방법 선택</p>
+            </div>
+            <div class="w-100 text-center bg-body-secondary py-3 d-flex justify-content-center">
+                <div class="px-2">
+                    <input type="radio" id="card" value="카드" name="pmType" class="pmType">
+                    <label for="card"><span></span>카드 결제</label>
+                </div>
+                <div class="px-2">
+                    <input type="radio" id="bankPay" value="무통장입금" name="pmType" class="pmType">
+                    <label for="bankPay"><span></span>무통장 입금</label>
+                </div>
+            </div>
+        </div>
+
+
+        <!--총 렌트 금액 (수정 필요)-->
+        <div class="w-100 text-end pe-2 py-3">
+            <h4>총 렌트 금액 : <span id="totalPrice"></span></h4>
+        </div>
+
+
+        <!--결제하기 버튼-->
+        <button type="button" onclick="requestPays()" class="btn btn-lg btn-warning paymentBtn w-100 py-3 rounded-0">결제하기</button>
+        <!-- <button type="button"  onclick="" class="btn btn-lg paymentBtn w-100 py-3 rounded-0">결제하기</button> -->
+
+    </form>
+
+    <script src="https://cdn.iamport.kr/v1/iamport.js"></script>
+    <script>
+        let fullTotal = 0;
+        $(document).ready(function () {
+            // var selectedReservationDate = 0;
+            // var productTotal = 0;
+            // var total = 0
+            var selectedReservationDate = 0;
+            // 페이지 로딩 시 초기 총 가격 계산
+            updateTotalPrice();
+
+            $('input[name="reservationNo"]').on('change', function () {
+                selectedReservationDate = $('input[name="reservationNo"]:checked').data('res');
+                console.log('Selected Reservation Date:', selectedReservationDate);
+                updateTotalPrice()
+            });
+            // 수량이 변경될 때마다 총 가격 업데이트
+            $('.cartCnt').on('input', updateTotalPrice);
+
+            function updateTotalPrice() {
+                var productTotal = 0;
+                var total = 0
+                $('.cartCnt').each(function () {
+                    console.log('cartCnt 수량 :' + $(this).val())
+                    let cnt = parseInt($(this).val(), 10) || 0; // 수량 입력값, 없으면 0으로 처리
+                    console.log('cnt : ' + cnt);
+                    let price = parseFloat($(this).closest('.paymentCount').find('#productPrice').text().replace(/[^0-9.-]+/g, "")) || 0; // 상품 가격, 없으면 0으로 처리
+                    console.log('price : ' + price);
+                    productTotal += (cnt * price);
+                    console.log('productTotal : ' + productTotal);
+                    total = productTotal * selectedReservationDate
+                    fullTotal = total
+                });
+                console.log('total : ' + total);
+                $('#totalPrice').text(total + '원');
+            } //updateTotalPrice()
+
+        });
+
+
+        var IMP = window.IMP;
+                IMP.init("imp48458232");
+                var today = new Date();
+                var hours = today.getHours(); // 시
+                var minutes = today.getMinutes();  // 분
+                var seconds = today.getSeconds();  // 초
+                var milliseconds = today.getMilliseconds();
+                var makeMerchantUid = hours + minutes + seconds + milliseconds;
+
+        // 결제하기 클릭
+        function requestPays() {
+            //유효성 검사 - 폼 제출 전
+            var selectedCamp = $('.selectCamp:checked').length;
+            console.log("selectedCamp : " + selectedCamp)
+            if (selectedCamp === 0) {
+                alert('예약하신 캠핑장을 선택해주세요.')
+            }
+            var selectedRadioCount = $('.pmType:checked').length;
+            console.log("selectedRadioCount : " + selectedRadioCount)
+            if (selectedRadioCount === 0) {
+                alert('결제 수단을 선택해주세요.');
+            }
+            //카드결제 시 
+            if ($('.pmType:checked').val() == '카드') {
+                console.log("카드결제로 들어옴")
+                //결제 모듈 실행
+                requestPay();
+            }
+            //무통장 입금
+            if ($('.pmType:checked').val() == '무통장입금') {
+                    console.log("무통장입금으로 들어옴")
+                    let form = $('#payForm')
+                    form.submit()
+            }
+
+
+        }
+
+
+        // 3️⃣ 결제 요청하기
+        function requestPay() {
+            // 결제 정보 가져오기
+            //let productName = document.getElementById('productName').value
+            //let price = document.getElementById('price').value
+            //let name = document.getElementById('name').value
+            //let tel = document.getElementById('tel').value
+            //let email = document.getElementById('email').value
+            IMP.request_pay({
+                pg: 'kcp',                                 // PG사
+                pay_method: 'card',                        // 결제방식
+                merchant_uid: "IMP" + makeMerchantUid,        // 주문번호(상품ID)
+                //name : productName,                         // 상품명
+                amount: fullTotal,                              // 결제금액
+                //buyer_email : email,                        // 결제자 이메일
+                //buyer_name : name,                          // 결제자 이름
+                //buyer_tel : tel,                            // 결제자 전화번호
+                //buyer_addr : address,                       // 결제자 주소
+                //buyer_postcode : postcode,                   // 결제자 우편번호
+                // m_redirect_url : "success"          //  "리디렉션 URL", (리디렉션 방식의 경우 callback은 실행되지 않습니다.)
+            }, function (rsp) { // callback
+                if (rsp.success) {
+                    // 결제 성공
+                    console.log(rsp);
+                    // 결제 완료 페이지로 이동
+                    //location.href = 'success?result=ok&proudctId=' + ("IMP" + makeMerchantUid)
+                    let form = $('#payForm')
+                    form.submit()
+                    //return true
+                    // 또는 ajax 요청 처리 후 이동
+                } else {
+                    // 결제 실패
+                    console.log(rsp);
+                    return false
+                }
+            });
+        } // requestPay() 
+    </script>
+    <script>
+
+        $('.countDown').each(function () {
+            $(this).click(function (e) {
+                e.preventDefault();
+                var input = $(this).next(".cartCnt");
+                if (input.val() < input.attr('max')) {
+                    input.val(parseInt(input.val()) - 1);
+                }
+                if (input.val() <= 1) {
+                    input.val(1);
+                }
+            });
+        })
+
+        $('.countUp').each(function () {
+            $(this).click(function (e) {
+                e.preventDefault();
+                var input = $(this).prev(".cartCnt");
+                if (input.val() >= input.attr('min')) {
+                    input.val(parseInt(input.val()) + 1);
+                }
+                if (input.val() <= 1) {
+                    input.val(1);
+                }
+            });
+        })
+    </script>
+</body>
+
+</html>

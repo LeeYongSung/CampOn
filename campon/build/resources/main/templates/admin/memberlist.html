@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/UI/admin/layout/admin_layout}"
+      >
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>관리자 페이지</title>
+
+    <style>
+      .point {background:orange; }
+    </style>
+</head> 
+<body layout:fragment="content">
+  <div class="w-100 text-center py-4 border-bottom">
+    <h5>회원 리스트</h5>
+  </div>
+    <div class="container">
+        <div class="tab">
+            <div class="tabnav d-flex justify-content-center py-3 text-center border-bottom">
+              <div class="tab_btn"><a href="#tab01">일반 회원</a></div>
+              <div class="tab_btn"><a href="#tab02">기업 회원</a></div>
+            </div>
+            <div class="tabcontent">
+              <div id="tab01">
+                <div class="py-3">
+                  <h5>일반 회원 리스트</h5>
+                </div>
+                <th:block th:each="member : ${userList}">
+                  <div class="border rounded-top py-4 position-relative mt-2">
+                    <div>
+                      <div class="d-flex justify-content-between py-2 mt-4">
+                        <div class="ps-3">
+                          <span>아이디</span>
+                        </div>
+                        <div class="pe-3">
+                          <span th:text="${member.userId}"></span>
+                        </div>
+                      </div>
+                      <div class="d-flex justify-content-between py-2 ">
+                        <div class="ps-3">
+                          <span>이메일</span>
+                        </div>
+                        <div class="pe-3">
+                          <span th:text="${member.userEmail}"></span>
+                        </div>
+                      </div>
+                      <div class="d-flex justify-content-between py-2 mb-3">
+                        <div class="ps-3">
+                          <span>가입일자</span>
+                        </div>
+                        <div class="pe-3">
+                          <span th:text="${ #dates.format(member.regDate, 'yyyy-MM-dd')}"></span>
+                        </div>
+                      </div>
+                      <div class="position-absolute top-0 end-0 pe-1 pt-1">
+                        <a class="delbtn btn btn-outline-danger" th:href="|/admin/memberDelete?userId=${member.userId}|">회원 삭제</a>
+                      </div>
+                      <div class="position-absolute bottom-0 end-0 pe-1 memberlist_more_box">
+                        <a href="javascript:;" class="memberlist_more">더보기<span class="material-symbols-outlined">expand_more</span></a>
+                        <a href="javascript:;" class="memberlist_less none">접기<span class="material-symbols-outlined">expand_less</span></a>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="w-100 border-bottom border-start border-end rounded-bottom mb-2 memberlist_detail none">
+                    <div class="py-3">
+                      <div class="d-flex justify-content-between py-1">
+                        <div class="ps-2">
+                          <span>회원유형</span>
+                        </div>
+                        <div class="pe-2">
+                          <span>일반 회원</span>
+                        </div>
+                      </div>
+                      <div class="d-flex justify-content-between py-1">
+                        <div class="ps-2">
+                          <span>연락처</span>
+                        </div>
+                        <div class="pe-2">
+                          <span th:text="${member.userTel}"></span>
+                        </div>
+                      </div>
+                      <div class="d-flex justify-content-between py-1">
+                        <div class="ps-2">
+                          <span>수정일자</span>
+                        </div>
+                        <div class="pe-2">
+                          <span th:text="${ #dates.format(member.updDate, 'yyyy-MM-dd')}"></span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </th:block>
+              </div>
+              <div id="tab02">
+                <div>
+                  <h5>기업 회원 리스트</h5>
+                </div>
+                <th:block th:each="member : ${sellList}">
+                  <div class="container">
+                    <div class="border rounded-top py-4 position-relative">
+                      <div class="d-flex justify-content-between py-1 mt-4">
+                        <div class="ps-2">
+                          <span>아이디</span>
+                        </div>
+                        <div class="pe-2">
+                          <span th:text="${member.userId}"></span>
+                        </div>
+                      </div>
+                      <div class="d-flex justify-content-between py-1">
+                        <div class="ps-2">
+                          <span>이메일</span>
+                        </div>
+                        <div class="pe-2">
+                          <span th:text="${member.userEmail}"></span>
+                        </div>
+                      </div>
+                      <div class="d-flex justify-content-between py-1">
+                        <div class="ps-2">
+                          <span>가입일자</span>
+                        </div>
+                        <div class="pe-2">
+                          <span th:text="${ #dates.format(member.regDate, 'yyyy-MM-dd')}"></span>
+                        </div>
+                      </div>
+                      <div class="position-absolute top-0 end-0 pe-1 pt-1">
+                        <a class="delbtn btn btn-outline-danger" th:href="|/admin/memberDelete?userId=${member.userId}|">회원 삭제</a>
+                      </div>
+                      <div class="position-absolute bottom-0 end-0 pe-1 memberlist_more_box">
+                        <a href="javascript:;" class="commemberlist_more">더보기<span class="material-symbols-outlined">expand_more</span></a>
+                        <a href="javascript:;" class="commemberlist_less none">접기<span class="material-symbols-outlined">expand_less</span></a>
+                      </div>
+                    </div>
+                    <div class="w-100 border-bottom border-start border-end rounded-bottom mb-2 commemberlist_detail none">
+                      <div class="py-3">
+                        <div class="d-flex justify-content-between py-1">
+                          <div class="ps-2">
+                            <span>회원유형</span>
+                          </div>
+                          <div class="pe-2">
+                            <span>기업 회원</span>
+                          </div>
+                        </div>
+                        <div class="d-flex justify-content-between py-1">
+                          <div class="ps-2">
+                            <span>연락처</span>
+                          </div>
+                          <div class="pe-2">
+                            <span th:text="${member.userTel}"></span>
+                          </div>
+                        </div>
+                        <div class="d-flex justify-content-between py-1">
+                          <div class="ps-2">
+                            <span>수정일자</span>
+                          </div>
+                          <div class="pe-2">
+                            <span th:text="${ #dates.format(member.updDate, 'yyyy-MM-dd')}"></span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </th:block>
+              </div>
+            </div>
+          </div>
+    </div>
+
+    <script>
+
+      $(function(){
+        //탭을 클릭하면 회원 목록이 보이도록~
+        $('.tabcontent > div').hide();
+        $('.tabnav a').click(function () {
+          $('.tabcontent > div').hide().filter(this.hash).fadeIn();
+          $('.tab_btn').removeClass('point');
+          $(this).parent().addClass('point');
+          return false;
+        }).filter(':eq(0)').click();
+
+        //삭제하시겠습니까?
+        $('.delbtn').click(function(){
+          alert('회원을 삭제하시겠습니까?')
+        })
+
+        $('.memberlist_more').each(function() {
+          $(this).on('click', function() {
+            $(this).parent().parent().parent().next('.memberlist_detail').slideDown();
+            $(this).hide();
+            $(this).next('.memberlist_less').show();
+          });
+        })
+
+        $('.memberlist_less').each(function() {
+          $(this).on('click', function() {
+            $(this).parent().parent().parent().next('.memberlist_detail').slideUp();
+            $(this).hide();
+            $(this).prev('.memberlist_more').show();
+          })
+        })
+
+        $('.commemberlist_more').each(function() {
+          $(this).on('click', function() {
+            $(this).closest('.container').find('.commemberlist_detail').slideDown();
+            $(this).hide();
+            $(this).next('.commemberlist_less').show();
+          });
+        })
+
+        $('.commemberlist_less').each(function() {
+          $(this).on('click', function() {
+            $(this).closest('.container').find('.commemberlist_detail').slideUp();
+            $(this).hide();
+            $(this).prev('.commemberlist_more').show();
+          })
+        })
+
+      });
+
+    </script>
+</body>
+</html>

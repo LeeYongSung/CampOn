@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>Document</title>
+</head>
+<body>
+    
+    <th:block sec:authorize="isAuthenticated()">
+    <input type="hidden" name="auth" th:value="${#authentication.principal.users.auth}" id="auth">
+    </th:block>
+
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+    <script>
+
+    let auth = $(`#auth`).val() == null ? `guest` : $(`#auth`).val()
+
+    if(auth == `guest` || auth==`ROLE_USER`){
+        moveGuestIndex()
+    }else{
+        moveBuIndex()
+    }
+
+    function moveGuestIndex(){
+        location.href = "/index2"
+    }
+
+    function moveBuIndex(){
+        location.href = "/user/mypage"
+    }
+
+    </script>
+</body>
+</html>

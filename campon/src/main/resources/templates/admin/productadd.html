@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+    xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{/UI/admin/layout/admin_layout}">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CampOn(캠프온)</title>
+</head>
+
+<body layout:fragment="content">
+
+    <div class="w-100 text-center py-4 border-bottom">
+        <h5>렌탈샵 상품 등록</h5>
+    </div>
+    
+    <!-- 상품 등록 화면 -->
+    <div class="container pt-2">
+        <form name="product" action="/admin/productInsert" method="post" enctype="multipart/form-data">
+            <!-- csrf -->
+            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+
+            <!-- 상품이름 -->
+            <div class="form-floating my-2">
+                <input type="text" class="form-control" name="productName" id="productName" placeholder="상품 이름">
+                <label class="col-md-4 col-form-label" for="productName">상품 이름</label>
+            </div>
+
+
+            <!-- 썸네일 업로드 -->
+            <div class="form-floating">
+                <input type="file" class="form-control" name="productThmFile" id="productThumnail" placeholder="상품 썸네일">
+                <label class="col-md-4 col-form-label" for="productThumnail">상품 썸네일</label>
+            </div>
+
+
+            <!-- 카테고리 -->
+            <div class="input-group mb-3 row border-bottom" style="margin-top: 40px;">
+                <label class="col-md-4 col-form-label" for="">카테고리</label>
+                <div class="col-md-8">
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="productCategory" id="tent" value="텐트">
+                        <label class="form-check-label" for="tent"><span></span>텐트</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="productCategory" id="table" value="테이블">
+                        <label class="form-check-label" for="table"><span></span>테이블</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="productCategory" id="chair" value="체어">
+                        <label class="form-check-label" for="chair"><span></span>체어</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="productCategory" id="mat" value="매트">
+                        <label class="form-check-label" for="mat"><span></span>매트</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="productCategory" id="lighting" value="조명">
+                        <label class="form-check-label" for="lighting"><span></span>조명</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="productCategory" id="brazier" value="화로대">
+                        <label class="form-check-label" for="brazier"><span></span>화로대</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="productCategory" id="tarp" value="타프">
+                        <label class="form-check-label" for="tarp"><span></span>타프</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="productCategory" id="storage" value="수납">
+                        <label class="form-check-label" for="storage"><span></span>수납</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="productCategory" id="appliances"
+                            value="캠핑가전">
+                        <label class="form-check-label" for="appliances"><span></span>캠핑가전</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="productCategory" id="Kitchenware"
+                            value="주방용품">
+                        <label class="form-check-label" for="Kitchenware"><span></span>주방용품</label>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- 1일 대여금액 -->
+            <div class="form-floating">
+                <input type="text" class="form-control" name="productPrice" id="productPrice" placeholder="1일 대여금액">
+                <label class="col-md-4 col-form-label" for="productPrice">1일 대여금액</label>
+            </div>
+
+
+            <!-- 상품 기본내용 -->
+            <div class="form-floating my-2">
+                <input type="text" class="form-control" name="productIntro" id="productIntro" placeholder="상품 기본 내용">
+                <label class="col-md-4 col-form-label" for="">상품 기본내용</label>
+            </div>
+
+            <!-- 상품 상세내용(이미지) -->
+            <div class="form-floating my-2">
+                <input type="file" class="form-control" name="productConFile" id="productConFile">
+                <label class="col-md-4 col-form-label" for="productConFile">상품 상세설명(이미지)</label>
+            </div>
+
+            <!-- 여러이미지 업로드 -->
+            <div class="form-floating">
+                <input type="file" class="form-control" name="productImgs" id="productImgs"  multiple>
+                <label class="col-md-4 col-form-label" for="productImgs">상품 이미지(여러장)</label>
+            </div>
+
+
+            <!-- 상품등록 -->
+            <div class="d-flex justify-content-center mt-1 mb-5">
+                <input type="submit" class="btn btn-lg btn-dark w-100 py-3" onclick="return checkProduct()" value="상품등록"/>
+            </div>
+        </form>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+    xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{/UI/user/layout/store_layout}">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CampOn(캠프온)</title>
+</head>
+    
+<body layout:fragment="content">
+    <div class="text-center w-100 py-4">
+        <h5>장바구니</h5>
+    </div>
+    <!-- 반복문 시작 --> 
+    <th:block th:each="cart : ${cartList}">
+        <div class="container mb-3">
+            <div class="border rounded position-relative pb-4">
+                <!-- 썸네일 -->
+                <div class="cartImg border-bottom w-100">
+                    <img th:src="|/img?file=${cart.productThumnail}|" class="w-100">
+                </div>
+                <div class="w-100 d-flex justify-content-between cartCon">
+                    <div class="ps-2 pt-2">
+                        <div>
+                            <!-- 카테고리 -->
+                            <span th:text="|${cart.productCategory}|"></span>
+                        </div>
+                        <div>
+                            <!-- 상품명 -->
+                            <h5 th:text="${cart.productName}"></h5>
+                        </div>
+                        <div class="pt-2">
+                            <!-- 상품기본내용 -->
+                            <span th:text="${cart.productIntro}"></span>
+                        </div>
+                    </div>
+                    <div class="pe-2 pt-4">
+                        <!-- 금액 -->
+                        <h5 th:text="${cart.productPrice + '원'}"></h5>
+                    </div>
+                </div>
+                <div class="position-absolute bottom-0 end-0 d-flex mb-1 me-1">
+                    <div>
+                        <!-- 상세설명 -->
+                        <a th:href="|/product/productdetail?productNo=${cart.productNo}|" class="btn btn-success font08em">상세정보</a>
+                    </div>
+                    <div class="ms-2">
+                        <!-- 장바구니 삭제 -->
+                        <form action="/product/cartDelete" method="post">
+                            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+                            <input type="hidden" th:value="${cart.cartNo}" name="cartNo">
+                            <button type="submit" onclick="confirm('장바구니에서 삭제하시겠습니까?')" class="btn btn-danger font08em">삭제</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </th:block>
+    <div>
+        <div class="cartTotal position-fixed">
+            <a href="/order/payment" class="w-100 d-block btn btn-warning rounded-0 py-3">대여하기</a>
+        </div>
+    </div>
+
+    <div>
+        <h3>확인사항</h3>
+        <p>
+            렌탈 서비스는 캠핑장을 예약하신 회원에 한해 이용 가능한  "캠핑온"만의 특화된 서비스 입니다. 
+        </p>
+    </div>
+</body>
+
+</html>

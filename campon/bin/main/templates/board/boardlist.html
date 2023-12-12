@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/UI/user/layout/user_layout}"
+      >
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CampOn(캠프온)</title>
+    <style>
+        .point {background:orange; }
+      </style>
+</head>
+<body layout:fragment="content">
+    <th:block th:if="${auth != 'ROLE_SELL'}">
+        <div class="tabnav d-flex justify-content-center py-3 text-center border-bottom">
+            <div class="tab_btn campbtn"><a href="#camp">캠핑</a></div>
+            <div class="tab_btn storebtn"><a href="#store">스토어</a></div>
+        </div>
+    </th:block>
+
+
+
+    <div class="tabcontent">
+
+        <div class="camp" id="camp">
+            <h5 class="m-3">캠핑 리뷰 리스트</h5>
+            <table class="crlist boardd">
+                <thead>
+                    <tr class="theadd">
+                        <td class="num tdd" width="60">번호</th>
+                        <td class="title tdd" width="300">제목</th>
+                        <td class="writer tdd" width="100">작성자</th>
+                        <td class="date tdd" width="200">작성일</th>
+                        <td class="etc tdd" width="120">비고</th>
+                    </tr>
+                </thead>
+                <th:block th:if="${auth == 'ROLE_USER'}">
+                    <tbody id="cr-data">
+                        <tr class="hoverr" th:each="crlist : ${usercrlist}">
+                            <td class="tdd" th:text="${crlist.reviewNo}"></td>
+                            <td class="tdd">
+                                <a th:href="|/board/crread?reviewNo=${crlist.reviewNo}|" th:text="${crlist.reviewTitle}"></a>
+                            </td>
+                            <td class="tdd" th:text="${crlist.userId}"></td>
+                            <td class="tdd">
+                                <span th:text="${ #dates.format( crlist.regDate, 'yyyy-MM-dd') }"></span>
+                            </td>
+                            <td class="tdd">
+                                <a th:href="|/board/crupdate?reviewNo=${crlist.reviewNo}">수정</a>
+                                <a th:href="|/board/crdelete?reviewNo=${crlist.reviewNo}" onclick="return confirm('게시글을 삭제하시겠습니까?');">삭제</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </th:block>
+                <th:block th:if="${auth == 'ROLE_SELL'}">
+                    <tbody id="cr-data">
+                        <tr class="hoverr" th:each="crlist : ${campreviewlist}">
+                            <td class="tdd" th:text="${crlist.reviewNo}"></td>
+                            <td class="tdd">
+                                <a th:href="|/board/crread?reviewNo=${crlist.reviewNo}|" th:text="${crlist.reviewTitle}"></a>
+                            </td>
+                            <td class="tdd" th:text="${crlist.userId}"></td>
+                            <td class="tdd">
+                                <span th:text="${ #dates.format( crlist.regDate, 'yyyy-MM-dd') }"></span>
+                            </td>
+                            <td class="tdd"><a th:href="|/board/crdelete?reviewNo=${crlist.reviewNo}" onclick="return confirm('게시글을 삭제하시겠습니까?');">삭제</a></td>
+                        </tr>
+                    </tbody>
+                </th:block>
+                <th:block th:if="${auth == 'ROLE_ADMIN'}">
+                    <tbody id="cr-data">
+                        <tr class="hoverr"  th:each="crlist : ${crlist}">
+                            <td class="tdd" th:text="${crlist.reviewNo}"></td>
+                            <td class="tdd">
+                                <a th:href="|/board/crread?reviewNo=${crlist.reviewNo}|" th:text="${crlist.reviewTitle}"></a>
+                            </td>
+                            <td class="tdd" th:text="${crlist.userId}"></td>
+                            <td class="tdd">
+                                <span th:text="${ #dates.format( crlist.regDate, 'yyyy-MM-dd') }"></span>
+                            </td>
+                            <td class="tdd"><a th:href="|/board/crdelete?reviewNo=${crlist.reviewNo}" onclick="return confirm('게시글을 삭제하시겠습니까?');">삭제</a></td>
+                        </tr>
+                    </tbody>
+                </th:block>
+            </table>
+    </div>
+    
+    <div class="store" id="store">
+            <h5 class="m-3">상품 리뷰 리스트</h5>
+            <table class="boardd">
+                <thead class="theadd">
+
+                    <tr>
+                        <th class="tdd" width="60">번호</th>
+                        <th class="tdd" width="300">제목</th>
+                        <th class="tdd" width="100">작성자</th>
+                        <th class="tdd" width="200">작성일</th>
+                        <td class="tdd" width="120">비고</th>
+                    </tr>
+                </thead>
+                <th:block th:if="${auth == 'ROLE_USER'}">
+                    <tbody id="pr-data">
+                        <tr class="hoverr" th:each="prlist : ${userprlist}">
+                            <td class="tdd" th:text="${prlist.prNo}"></td>
+                            <td class="tdd">
+                                <a th:href="|/board/prread?prNo=${prlist.prNo}|" th:text="${prlist.prTitle}"></a>
+                            </td>
+                            <td class="tdd" th:text="${prlist.userId}"></td>
+                            <td class="tdd">
+                                <span th:text="${ #dates.format( prlist.regDate, 'yyyy-MM-dd') }"></span>
+                            </td>
+                            <td class="tdd">
+                                <a th:href="|/board/prupdate?prNo=${prlist.prNo}">수정</a>
+                                <a th:href="|/board/prdelete?prNo=${prlist.prNo}" onclick="return confirm('게시글을 삭제하시겠습니까?');">삭제</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </th:block>
+                <th:block th:if="${auth == 'ROLE_ADMIN'}">
+                    <tbody id="pr-data">
+                        <tr class="hoverr" th:each="prlist : ${prlist}">
+                            <td class="tdd" th:text="${prlist.prNo}"></td>
+                            <td class="tdd">
+                                <a th:href="|/board/prread?prNo=${prlist.prNo}|" th:text="${prlist.prTitle}"></a>
+                            </td>
+                            <td class="tdd" th:text="${prlist.userId}"></td>
+                            <td class="tdd">
+                                <span th:text="${ #dates.format( prlist.regDate, 'yyyy-MM-dd') }"></span>
+                            </td>
+                            <td class="tdd"><a th:href="|/board/prdelete?prNo=${prlist.prNo}" onclick="return confirm('게시글을 삭제하시겠습니까?');">삭제</a></td>
+                        </tr>
+                    </tbody>
+                </th:block>
+            </table>
+    </div>
+
+
+
+    </div>
+
+    
+    <script>
+
+        $(function(){
+        $('.tabcontent > div').hide();
+        $('.tabnav a').click(function () {
+          $('.tabcontent > div').hide().filter(this.hash).fadeIn();
+          $('.tab_btn').removeClass('point');
+          $(this).parent().addClass('point');
+          return false;
+        }).filter(':eq(0)').click();
+        })
+        
+        // $(document).ready(function(){
+        //     $('.camp').show();
+        //     $('.store').hide();
+        // })
+        // $('.campbtn').click(function(){
+        //     $('.camp').show();
+        //     $('.store').hide();            
+        // })
+        // $('.storebtn').click(function(){
+        //     $('.camp').hide();
+        //     $('.store').show();            
+            
+        // })
+    </script>
+</body>
+</html>

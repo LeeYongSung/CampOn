@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/UI/user/layout/store_layout}"
+      >
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CampOn(캠프온)</title>
+
+    <style>
+        .active-category { background-color: orange;}
+    </style>
+
+</head>
+<body layout:fragment="content">
+    <div class="container">
+        <div class="category_btn py-4 d-flex">
+            <!-- 일단 a태그 사용-->
+            <div>
+                <a href="/product?category=텐트" data-category="텐트" class="btn-category btn btn-lg" >
+                    <div>
+                        <img src="/img/product/product1.png" alt="상품아이콘">
+                    </div>
+                    <div>
+                        <span>텐트</span>
+                    </div>
+                </a>
+            </div>
+            <div>
+                <a href="/product?category=테이블" data-category="테이블" class="btn-category btn btn-lg">
+                    <div>
+                        <img src="/img/product/product2.png" alt="상품아이콘">
+                    </div>
+                    <div>
+                        <span>테이블</span>
+                    </div>
+                </a>
+            </div>
+            <div>
+                <a href="/product?category=체어" data-category="체어" class="btn-category btn btn-lg">
+                    <div>
+                        <img src="/img/product/product3.png" alt="상품아이콘">
+                    </div>
+                    <div>
+                        <span>체어</span>
+                    </div>
+                </a>
+            </div>
+            <div>
+                <a href="/product?category=매트" data-category="매트" class="btn-category btn btn-lg">
+                    <div>
+                        <img src="/img/product/product4.png" alt="상품아이콘">
+                    </div>
+                    <div>
+                        <span>매트</span>
+                    </div>
+                </a>
+            </div>
+            <div>
+                <a href="/product?category=조명" data-category="조명" class="btn-category btn btn-lg">
+                    <div>
+                        <img src="/img/product/product5.png" alt="상품아이콘">
+                    </div>
+                    <div>
+                        <span>조명</span>
+                    </div>
+                </a>
+            </div>
+            <div>
+                <a href="/product?category=화로대" data-category="화로대" class="btn-category btn btn-lg">
+                    <div>
+                        <img src="/img/product/product6.png" alt="상품아이콘">
+                    </div>
+                    <div>
+                        <span>화로대</span>
+                    </div>
+                </a>
+            </div>
+            <div>
+                <a href="/product?category=타프" data-category="타프" class="btn-category btn btn-lg">
+                    <div>
+                        <img src="/img/product/product7.png" alt="상품아이콘">
+                    </div>
+                    <div>
+                        <span>타프</span>
+                    </div>
+                </a>
+            </div>
+            <div>
+                <a href="/product?category=수납" data-category="수납" class="btn-category btn btn-lg">
+                    <div>
+                        <img src="/img/product/product8.png" alt="상품아이콘">
+                    </div>
+                    <div>
+                        <span>수납</span>
+                    </div>
+                </a>
+            </div>
+            <div>
+                <a href="/product?category=캠핑가전" data-category="캠핑가전" class="btn-category btn btn-lg">
+                    <div>
+                        <img src="/img/product/product9.png" alt="상품아이콘">
+                    </div>
+                    <div>
+                        <span>캠핑가전</span>
+                    </div>
+                </a>
+            </div>
+            <div>
+                <a href="/product?category=주방용품" data-category="주방용품" class="btn-category btn btn-lg">
+                    <div>
+                        <img src="/img/product/product10.png" alt="상품아이콘">
+                    </div>
+                    <div>
+                        <span>주방용품</span>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        <!-- ajax 사용할거면 버튼사용-->
+       <!-- <button oncbuttonck="getbuttonst()" class="btn-category" data-category="텐트">텐트</button>
+       <button oncbuttonck="getbuttonst()" class="btn-category" data-category="테이블">테이블</button>
+       <button oncbuttonck="getbuttonst()" class="btn-category" data-category="체어">체어</button>
+       <button oncbuttonck="getbuttonst()" class="btn-category" data-category="조명">조명</button>
+       <button oncbuttonck="getbuttonst()" class="btn-category" data-category="매트">매트</button>
+       <button oncbuttonck="getbuttonst()" class="btn-category" data-category="화로대">화로대</button>
+       <button oncbuttonck="getbuttonst()" class="btn-category" data-category="타프">타프</button>
+       <button oncbuttonck="getbuttonst()" class="btn-category" data-category="수납">수납</button>
+       <button oncbuttonck="getbuttonst()" class="btn-category" data-category="캠핑가전">캠핑가전</button>
+       <button oncbuttonck="getbuttonst()" class="btn-category" data-category="주방용품">주방용품</button> -->
+    </div>
+
+    <!--추천 상품 -->
+    <div class="w-100 border-bottom">
+        <div class="w-100 border-bottom">
+            <div class="container">
+                <h6>추천 상품</h6>
+            </div>
+        </div>
+        <div class="container d-flex justify-content-between py-4">
+            <th:block th:each="product : ${productHotList}">
+                <div class="product_suggestion">
+                    <div class="product_suggestionImg border-bottom">
+                        <img th:src="|/img?file=${product.productimgUrl}|">
+                    </div>
+                    <div class="product_suggestionCon px-3">
+                        <div><span th:text="${product.productName}"></span></div>
+                        <div><span th:text="${product.productCategory}"></span></div>
+                        <div><span th:text="${product.productPrice}"></span></div>
+                    </div>
+                </div>
+            </th:block>
+        </div>
+    </div>
+    <!-- 상품 목록 출력-->
+    <div class="container">
+        <th:block th:each="product : ${productList}">
+            <div class="border rounded position-relative mb-3 pb-4 mt-2">
+                <div class="productListImg">
+                    <img th:src="|/img?file=${product.productThumnail}|" alt="상품썸네일" class="w-100">
+                </div>
+                <div class="">
+                    <div class="productList_Con ps-2 pt-3">
+                        <div>
+                            <span th:text="${product.productCategory}"></span>
+                        </div>
+                        <div>
+                            <h4 th:text="${product.productName}"></h4>
+                        </div>
+                        <div>
+                            <span th:text="${product.productIntro}"></span>
+                        </div>
+                    </div>
+                    <div class="ps-3">
+                        <div class="pt-3 pe-2">
+                            <h5 th:text="|${product.productPrice}원|"></h5>
+                        </div>
+                    </div>
+                </div>
+                <div class="position-absolute bottom-0 end-0 me-2 mb-1">
+                    <a th:href="|/product/productdetail?productNo=${product.productNo}|" class="btn btn-outline-secondary">상세 정보</a>
+                     <!-- 비 로그인 시 (나중에 비회원장바구니 구현시 수정필요)-->
+                    <th:block sec:authorize="isAnonymous()">
+                        <a href="/user/join" class="btn btn-outline-primary">회원가입 후 장바구니 담기</a>
+                    </th:block>
+                    <!-- 로그인 시 -->
+                    <th:block sec:authorize="isAuthenticated()">
+                        <button th:onclick="|addcart(${product.productNo})|" class="btn btn-outline-primary">장바구니 담기</button>
+                    </th:block>
+                </div>
+            </div>
+        </th:block>
+    </div>
+
+    <th:block sec:authorize="isAuthenticated()">
+        <input type="hidden" name="userNo" id="userNo" th:value="${#authentication.principal.users.userNo}">
+    </th:block>
+
+
+    <script>
+        // 처음 클릭된 버튼 활성화
+        const urlParams = new URL(location.href).searchParams;
+        const category = urlParams.get('category');
+        console.log(category)
+        $('.btn-category').each(function () {
+            let dataNo = $(this).data('category');
+            console.log(dataNo)
+            if (dataNo == category) {
+             //   $(this).addClass("active-category");
+             $(this).addClass("active-category");
+
+             // 클릭된 버튼이 뷰포트 내로 스크롤되도록 변경
+            this.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'start' });
+            }
+        });
+        //클릭한 버튼 활성화시키기
+        $('.btn-category').on('click', function () {
+            console.log(this)
+           // $('.btn-category').removeClass('active-category'); // 모든 버튼에서 'active-category' 클래스 삭제
+           // $(this).addClass('active-category'); // 현재 클릭한 버튼에 'active-category' 클래스 추가
+           $('.btn-category').children().removeClass('active-category'); // 모든 버튼에서 'active-category' 클래스 삭제
+           $(this).children().addClass('active-category'); // 현재 클릭한 버튼에 'active-category' 클래스 추가
+        });
+
+        function addcart(productNo){
+            let userNo = $(`#userNo`).val() == null ? 'GUEST' : $(`#userNo`).val()
+            let url3 = "/product/addProductsaveAjax?productNo="+ productNo + "&userNo="+userNo
+            $.ajax({
+                url : url3,
+                type : 'GET',
+                success : function(response){
+                    if (response == 'SUCCESS'){
+                        alert('장바구니에 등록되었습니다')
+                    } else {
+                        alert('이미 장바구니에 등록된 상품입니다')
+                    }
+                }, 
+                error : function(request, status, error){
+                    alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error)
+                }
+            })
+        }
+    </script>
+</body>
+</html>

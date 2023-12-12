@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/UI/user/layout/main_layout}"
+      >
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CampOn(캠프온)</title>
+</head>
+<body layout:fragment="content">
+    <div class="container-sm w-100 border-bottom">
+            <div class="form-floating my-2">
+                <input type="text" id="keyword" name="keyword" class="form-control" placeholder="검색명">
+                <label for="keyword">검색명</label>
+            </div>
+            <div class="w-100 d-flex justify-content-between">
+                <div class="form-floating w-100 me-1">
+                    <input type="date" class="form-control" id="searchDate" name="searchDate">
+                </div>
+                <div class="form-floating w-100 ms-1">
+                    <input type="hidden" id="regionNo" name="regionNo" value="">
+                    <input type="button" class="form-control" id="region" value="지역">
+                </div>
+            </div>
+            <div class="w-100 d-flex justify-content-between my-4">
+                <span>캠핑종류</span>
+                <input type="checkbox" id="autocamping" name="campTypeName" class="form-control">
+                <label for="autocamping"><span></span>오토캠핑</label>
+
+                <input type="checkbox" id="glamping" name="campTypeName" class="form-control">
+                <label for="glamping"><span></span>글램핑</label>
+
+                <input type="checkbox" id="caravan" name="campTypeName" class="form-control">
+                <label for="caravan"><span></span>카라반</label>
+
+                <input type="checkbox" id="pension" name="campTypeName" class="form-control">
+                <label for="pension"><span></span>펜션</label>
+
+                <input type="checkbox" id="campnik" name="campTypeName" class="form-control">
+                <label for="campnik"><span></span>캠프닉</label>
+            </div>
+            <div class="form-floating mb-3">
+                <a href="javascript:;" class="btn btn-outline-secondary btn-lg w-100 py-3 rounded-0" id="search_keyword">검색</a>
+            </div>
+    </div>
+    <div class="w-100 my-3">
+        <img src="/img/camp/wide_banner.jpg" alt="와이드배너" class="w-100">
+    </div>
+    <div id="camplist">
+        <th:block th:each="camp : ${campselect}">
+            <div class="camp_box pb-3"> 
+                <a th:href="|/camp/campproduct?campNo=${camp.campNo}|">
+                    <div>
+                        <img th:src="|/img?file=${camp.cpiUrl}|" class="w-100">
+                    </div>
+                    <div class="py-2">
+                        <h3 th:text="${camp.campName}" class="ps-2"></h3>
+                    </div>
+                    <div class="d-flex justify-content-between px-3">
+                        <div>
+                            <p th:text="${camp.campTypeName}"></p>
+                            <p th:text="${camp.campAddress}"></p>
+                        </div>
+                        <div>
+                            <h4 th:text="|${camp.cpdtPrice}원|"></h4>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </th:block>
+    </div>
+    <div class="regionBox none position-fixed">
+        <div>
+            <a href="javascript:;" class="reginon_close w-100 d-block text-center px-3 py-1 bg-danger">닫기</a>
+        </div>
+        <div>
+            <a href="javascript:;" class="w-100 region_btn w-100 py-3 text-center d-block border my-2">
+                <input type="hidden"  value="서울">
+                서울
+            </a>
+        </div>
+        <div>
+            <a href="javascript:;" class="w-100 region_btn w-100 py-3 text-center d-block border my-2">
+                <input type="hidden" value="인천">
+                인천
+            </a>
+        </div>
+        <div>
+            <a href="javascript:;" class="w-100 region_btn w-100 py-3 text-center d-block border my-2">
+                <input type="hidden" value="경기도">
+                경기도
+            </a>
+        </div>
+        <div>
+            <a href="javascript:;" class="w-100 region_btn w-100 py-3 text-center d-block border my-2">
+                <input type="hidden" value="강원도">
+                강원도
+            </a>
+        </div>
+        <div>
+            <a href="javascript:;" class="w-100 region_btn w-100 py-3 text-center d-block border my-2">
+                <input type="hidden" value="전라도">
+                전라도
+            </a>
+        </div>
+        <div>
+            <a href="javascript:;" class="w-100 region_btn w-100 py-3 text-center d-block border my-2">
+                <input type="hidden" value="충청도">
+                충청도
+            </a>
+        </div>
+        <div>
+            <a href="javascript:;" class="w-100 region_btn w-100 py-3 text-center d-block border my-2">
+                <input type="hidden" value="경상도">
+                경상도
+            </a>
+        </div>
+        <div>
+            <a href="javascript:;" class="w-100 region_btn w-100 py-3 text-center d-block">
+                <input type="hidden" value="제주도">
+                제주도
+            </a>
+        </div>
+    </div>
+    <script>
+        let keyword = '';           // 검색명
+        let campData = '';          // 캠프 목록
+        let regionName = '';        // 지역 이름
+        let regionNo = 0;           // 지역 번호
+        let checkedValues = [];     // 캠핑 종류
+        let campTypeNo = 0;         // 캠핑 종류 번호
+
+        $('#search_keyword').on('click', function() {
+            search();
+        });
+
+        function search() {
+            keyword = $('#keyword').val();
+            searchDate = $('#searchDate').val();
+            checkedValues= [];
+
+            $('input[name="campTypeName"]:checked').each(function() {
+                let checkboxLabel = $(this).next('label').text();
+
+                switch (checkboxLabel) {
+                    case '오토캠핑': campTypeNo = 1; break;
+                    case '글램핑': campTypeNo = 2; break;
+                    case '카라반': campTypeNo = 3; break;
+                    case '펜션': campTypeNo = 4; break;
+                    case '캠프닉': campTypeNo = 5; break;
+                }
+                checkedValues.push(campTypeNo);
+            });
+            console.log(checkedValues)
+            
+            let data = {
+                'keyword'       : keyword,
+                'searchDate'    : searchDate,
+                'regionNo'      : regionNo,
+                'checkBoxList'  : checkedValues
+            }
+
+            const url = 'campSearch2'
+
+            $.ajax({
+                url     : url,
+                data    : data,
+                success : function (response) {
+                    console.log(response);      // 서버로부터 받은 데이터를 콘솔에 출력
+                    let campList = response
+
+                    $('#camplist').html(campList)
+                    // campOutput(campList)
+                }
+            })
+        }
+
+        function campOutput(campList) {
+            campData = '';  // campData 초기화
+            if(campList.length == 0) {
+                let msg = '검색된 캠핑장이 없습니다.'
+                console.log(msg)
+
+                let div = `<div>
+                            <p>${msg}</p>
+                          </div>
+                         `
+                campData += div
+            }
+            
+            for(let i = 0; i < campList.length; i++) {
+                let camp = campList[i];
+        
+                let div = `
+                            <ul> 
+                                <a href="/camp/campproduct?campNo=${camp.campNo}">
+                                    <li><img src="${camp.cpiUrl}"></li>
+                                    <li>${camp.campTypeName}</li>
+                                    <li>${camp.campName}</li>
+                                    <li>${camp.campAddress}</li>
+                                    <li></li>
+                                </a>
+                            </ul>
+                        `
+                campData += div
+            }
+            
+            $('#camplist').html(campData)
+        }
+
+        $('#region').click(function() {
+            $('.regionBox').fadeIn();
+        })
+
+        $('.reginon_close').click(function() {
+            $('.regionBox').fadeOut();
+        })
+
+        $('.region_btn').on('click', function() {
+            regionName = $(this).find('input').val();
+
+            
+            $('#regionNo').val(regionName);
+            $('#region').val(regionName);
+
+            switch (regionName) {
+            case '서울'     : regionNo = 1; break;
+            case '인천'     : regionNo = 2; break;
+            case '경기도'   : regionNo = 3; break;
+            case '강원도'   : regionNo = 4; break;
+            case '전라도'   : regionNo = 5; break;
+            case '충청도'   : regionNo = 6; break;
+            case '경상도'   : regionNo = 7; break;
+            case '제주도'   : regionNo = 8; break;
+        }
+
+            $('#regionNo').val(regionNo);
+            $('.regionBox').fadeOut();
+
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- namespace="매퍼 인터페이스 경로" -->
+<mapper namespace="com.camp.campon.mapper.BoardMapper">
+
+    <!-- 캠핑 리뷰 최신목록 -->
+    <select id="newReviewList" resultType="Board">
+        SELECT * FROM review r join campproduct c on r.camp_no = c.camp_no join campdetail cd on r.cp_dt_no = cd.cp_dt_no ORDER BY r.reg_date DESC LIMIT 3
+    </select>
+    <!-- 해당 캠핑장 리뷰-->
+    <select id="productsreview" resultType="Board">
+        SELECT * FROM review r join campproduct c on r.camp_no = c.camp_no join user u on r.user_no = u.user_no where r.camp_no = #{campNo} ORDER BY r.reg_date DESC LIMIT 1
+    </select>
+    <!-- 캠핑리뷰 목록-->
+    <select id="crlist" resultType="Board">
+        select * from review r join user u on r.user_no = u.user_no order by r.review_no desc
+    </select>
+    <!--캠핑리뷰 조회-->
+    <select id="crread" resultType="Board">
+        SELECT * FROM review r
+        join campproduct c on r.camp_no = c.camp_no
+        join campdetail cd on r.cp_dt_no = cd.cp_dt_no
+        join user u on r.user_no = u.user_no
+        join reservation v on r.reservation_no = v.reservation_no
+        where r.review_no = #{reviewNo}
+    </select>
+
+    <!-- 상품 리뷰 최신목록 -->
+    <select id="newprlist" resultType="Board">
+        select * from productreview cr join product p on cr.product_no = p.product_no join user u on cr.user_no = u.user_no order by cr.reg_date desc limit 3
+    </select>
+    <!-- 상품 리뷰 목록-->
+    <select id="prlist" resultType="Board">
+        select * from productreview pr join user u on pr.user_no = u.user_no order by pr.pr_no desc
+    </select>
+    <!-- 상품 리뷰 조회-->
+    <select id="prread" resultType="Board">
+        select * from productreview cr
+        join product p on cr.product_no = p.product_no
+        join user u on cr.user_no = u.user_no
+        join `order` o on cr.order_no = o.order_no
+        where cr.pr_no = #{prNo}
+    </select>
+
+    <!-- 예약정보 가져오기 -->
+    <select id="reservation" resultType="Camp">
+        select * from reservation r
+        join campproduct c on r.camp_no=c.camp_no
+        join campdetail cd on r.cp_dt_no = cd.cp_dt_no
+        where reservation_no = #{reservationNo}
+    </select>
+    <!-- 대여정보 가져오기 -->
+    <select id="order"  resultType="Board">
+        select * from `order` o
+        join product p on o.product_no=p.product_no
+        where order_no = #{orderNo}
+    </select>
+
+    <!-- 캠핑리뷰 등록-->
+    <insert id="crinsert">
+        insert into review( user_no, camp_no, cp_dt_no, reservation_no, review_title, review_img, review_con)
+        values (#{userNo}, #{campNo}, #{cpdtNo}, #{reservationNo}, #{reviewTitle}, #{reviewImg}, #{reviewCon})
+    </insert>
+    <!-- 대여상품 리뷰 등록-->
+    <insert id="prinsert">
+        insert into productreview( order_no, user_no, product_no, pr_title, pr_img, pr_con)
+        values (#{orderNo}, #{userNo}, #{productNo}, #{prTitle}, #{prImg}, #{prCon})
+    </insert>
+
+    <!--캠핑리뷰 수정 -->
+    <update id="crupdate">
+        update review set review_title=#{reviewTitle}, review_img=#{reviewImg}, review_con=#{reviewCon} where review_no=#{reviewNo}
+    </update>
+    <!--캠핑리뷰 삭제-->
+    <delete id="crdelete">
+        delete from review where review_no=#{reviewNo}
+    </delete>
+    <delete id="crdeletelist">
+        delete from review where reservation_no = #{reservationNo}
+    </delete>
+    <delete id="crdeletecampNo">
+        delete from review where camp_no = #{campNo}
+    </delete>
+    <delete id="crdeletecpdtNo">
+        delete from review where cp_dt_no = #{cpdtNo}
+    </delete>
+    <!--대여상품 리뷰 수정 -->
+    <update id="prupdate">
+        update productreview set pr_title=#{prTitle}, pr_img=#{prImg}, pr_con=#{prCon} where pr_no=#{prNo}
+    </update>
+    <!--대여상품 리뷰 삭제-->
+    <delete id="prdelete">
+        delete from productreview where pr_no=#{prNo}
+    </delete>
+
+
+    <!-- 캠핑리뷰 목록(페이징용)-->
+    <select id="crlistpage" resultType="Board">
+        select * from review r join user u on r.user_no = u.user_no order by r.review_no desc limit #{start}, #{end}
+    </select>
+    <select id="crlistcount" resultType="int">
+        select ifnull(count(*), 0) from review r join user u on r.user_no = u.user_no
+    </select>
+    <!--상품리뷰 목록(페이징용)-->
+    <select id="prlistpage" resultType="Board">
+        select * from productreview pr join user u on pr.user_no = u.user_no order by pr.pr_no desc limit #{start}, #{end}
+    </select>
+    <select id="prlistcount" resultType="int">
+        select ifnull(count(*), 0) from productreview
+    </select>
+
+
+    <!-- 캠핑리뷰 목록 (유저)-->
+    <select id="usercrlist" resultType="Board">
+        select * from review r join user u on r.user_no = u.user_no where r.user_no=#{userNo} order by r.review_no desc
+    </select>
+    <!-- 상품 리뷰 목록 (유저)-->
+    <select id="userprlist" resultType="Board">
+        select * from productreview pr join user u on pr.user_no = u.user_no where pr.user_no=#{userNo} order by pr.pr_no desc
+    </select>
+    
+    <!-- 캠핑리뷰 목록 (판매자)-->
+    <select id="campreviewlist" resultType="Board">
+        select * from review r join user u on r.user_no = u.user_no
+        join campproduct c on r.camp_no = c.camp_no
+        where c.user_no=#{userNo}
+        order by r.review_no desc
+    </select>
+
+    
+</mapper>

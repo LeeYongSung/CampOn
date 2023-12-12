@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- namespace="매퍼 인터페이스 경로" -->
+<mapper namespace="com.camp.campon.mapper.ProductMapper">
+
+<!-- 상품수정시 상품 불러오기 productMap-->
+<resultMap type="Product" id="productMap">
+    <id property="productNo" column="product_no" />
+    <result property="productNo" column="product_no" />
+    <result property="productName" column="product_name" />
+    <result property="productThumnail" column="product_thumnail" />
+    <result property="productCon" column="product_con" />
+    <result property="productIntro" column="product_intro" />
+    <result property="productCategory" column="product_category" />
+    <result property="productPrice" column="product_price" />
+    <result property="regDate" column="reg_date" />
+    <result property="updDate" column="upd_date" />
+    <collection property="productImgsUrlList" resultMap="imgsMap"></collection>
+</resultMap>
+<resultMap type="String" id="imgsMap">
+    <result property="productimgUrl" column="productimg_url" />
+</resultMap>
+<select id="selectUpd" resultMap="productMap">
+SELECT p.* 
+      ,i.productimg_url
+FROM product p LEFT OUTER JOIN productimg i ON p.product_no = i.product_no
+WHERE p.product_no = #{productNo};
+</select>
+<!-- 전체 상품 조회-->
+<select id="getProductList" resultType="Product">
+SELECT * FROM product
+</select>
+
+<!--상품 하나 선택-->
+<select id="select" resultType="Product">
+SELECT * FROM product WHERE product_no = #{productNo}
+</select>
+
+<!-- 상품등록 -->
+<insert id="productInsert">
+    INSERT INTO product (
+        product_name, product_thumnail, product_category, product_price,
+        product_intro, product_con
+    )
+    VALUES (
+        #{productName}, #{productThumnail}, #{productCategory}, 
+        #{productPrice}, #{productIntro}, #{productCon}
+    )
+</insert>
+
+<insert id="insertImgs">
+    INSERT INTO `productimg`
+    (`product_no`, `productimg_url`)
+    VALUES
+    (#{productNo}, #{productimgUrl})
+</insert>
+
+<!--상품 수정-->
+<update id="productUpdate">
+    UPDATE product SET
+    product_name=#{productName}, product_thumnail=#{productThumnail}, product_category=#{productCategory}, product_price=#{productPrice},
+    product_intro=#{productIntro}, product_con=#{productCon}, upd_date=now()
+    WHERE product_no = #{productNo}
+</update>
+<delete id="deleteProduct">
+DELETE FROM product WHERE product_no = #{product_no}
+</delete>
+
+<delete id="deleteImgs" >
+DELETE FROM productimg WHERE product_no = #{productNo};
+</delete>
+
+<!--상품 번호 최댓값 -->
+<select id="maxPk" resultType="int">
+    SELECT MAX(product_no)
+    FROM product
+</select>
+<!-- 상품후기 모든목록 불러오기-->
+<select id="getReviewList" resultType="Productreview">
+SELECT r.*, u.user_id, p.product_name FROM productreview r JOIN `user` u ON  r.user_no = u.user_no JOIN product p ON r.product_no = p.product_no
+</select>
+<!-- 상품후기 5개만 불러오기-->
+<select id="getReviewListLimit" resultType="Productreview">
+SELECT r.*, u.user_id, p.product_name FROM productreview r JOIN `user` u ON  r.user_no = u.user_no JOIN product p ON r.product_no = p.product_no ORDER BY r.reg_date DESC LIMIT 5
+</select>
+
+<select id="getCategoryList" resultType="Product">
+    SELECT * FROM product WHERE product_category = #{category}
+</select>
+
+<!-- 찜 목록 -->
+<select id="wishList" resultType="Product">
+    SELECT *
+    FROM productsave s
+    JOIN product p ON s.product_no = p.product_no
+    WHERE s.user_no = #{userNo}
+</select>
+
+<!--찜 등록-->
+<insert id="addProductsave">
+INSERT INTO productsave (product_no, user_no) VALUES (#{productNo}, #{userNo})
+</insert>
+
+<!-- 찜 삭제 -->
+<delete id="wishListDelete">
+    DELETE FROM productsave
+    WHERE productsave_no = #{wishlistNo}
+</delete>   
+
+<!-- 장바구니 목록 -->
+<select id="cartList" resultType="Product">
+    SELECT *
+    FROM cart c
+    JOIN product p ON c.product_no = p.product_no
+    WHERE c.user_no = #{userNo}
+</select>
+<!--장바구니에서 수량 업뎃-->
+<update id="cartUpdate">
+UPDATE cart SET cart_cnt = #{cartCnt} WHERE product_no = #{productNo} AND user_no = #{userNo}
+</update>
+<!-- 장바구니 삭제 -->
+<delete id="cartListDelete">
+    DELETE FROM cart
+    WHERE cart_no = #{cartListNo}
+</delete>   
+
+<!-- 상품 상세페이지 -->
+ <select id="productimg" resultType="Product">
+    SELECT *
+    FROM productimg
+    WHERE product_no = #{productNo}
+ </select>
+
+ <!-- 상품번호에 따른 후기 불러오기-->
+<select id="getReviewListByNo" resultType="Productreview">
+SELECT r.*, u.user_id, p.product_name FROM productreview r JOIN `user` u ON  r.user_no = u.user_no JOIN product p ON r.product_no = p.product_no WHERE p.product_no = #{productNo}
+</select>
+<!--상품번호에 따른 후기 불러오기 (5개 제한)-->
+<select id="getReviewListByNoLim" resultType="Productreview">
+SELECT r.*, u.user_id, p.product_name FROM productreview r JOIN `user` u ON  r.user_no = u.user_no JOIN product p ON r.product_no = p.product_no 
+WHERE p.product_no = #{productNo} ORDER BY r.reg_date DESC LIMIT 5;
+</select>
+
+<!-- 리뷰 수 -->
+<select id="reviewCount" resultType="int">
+    SELECT count(*) FROM productreview WHERE product_no = #{productNo}
+</select>
+
+<!-- 장바구니에 담기-->
+<insert id="addCart">
+    INSERT INTO
+    cart ( product_no, user_no, cart_date, cart_cnt ) 
+    VALUES ( #{productNo}, #{userNo}, now(), 1)
+</insert>
+
+<!--찜목록 전부다 장바구니에 담기-->
+<insert id="addcartAll">
+    INSERT INTO cart (cart_cnt,product_no,user_no) (SELECT 1, ps.product_no, ps.user_no
+    FROM productsave ps LEFT OUTER JOIN cart c ON ps.user_no = c.user_no AND ps.product_no = c.product_no
+    WHERE ps.product_no NOT IN (SELECT product_no FROM cart) 
+    AND ps.user_no = #{userNo}) 
+</insert>
+
+<!-- 추천상품 리스트 -->
+<select id="hotList" resultType="Product">
+    <!-- SELECT 썸네일테이블.productimg_url, 썸네일테이블.product_No -->
+    SELECT *
+    FROM product AS 상품테이블
+    JOIN (
+        SELECT product_no, MIN(productimg_no) AS 최소썸네일번호
+        FROM productimg
+        GROUP BY product_no
+        ) AS 이미지번호 
+        ON 상품테이블.product_no = 이미지번호.product_no
+    JOIN productimg AS 썸네일테이블 
+        ON 이미지번호.최소썸네일번호 = 썸네일테이블.productimg_no
+    JOIN (
+        SELECT product_no, COUNT(*) AS 구매횟수 
+        FROM `order`
+        GROUP BY product_no
+        ) AS 구매횟수결과 
+        ON 상품테이블.product_no = 구매횟수결과.product_no
+    ORDER BY 구매횟수결과.구매횟수 DESC
+    LIMIT 3;
+</select>
+
+<select id="reservedProduct" resultType="Product">
+SELECT o.order_no, o.user_no, o.order_cnt, p.* FROM `order` o JOIN product p ON p.product_no = o.product_no 
+WHERE user_no = #{userNo}
+</select>
+
+</mapper>

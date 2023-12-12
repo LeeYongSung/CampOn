@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/UI/user/layout/main_layout}"
+      >
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CampOn(캠프온) 예약조회</title>
+</head>
+<body layout:fragment="content">
+    <div class="w-100">
+        <img src="/img/camp/wide_banner.jpg" alt="와이드배너" class="w-100">
+    </div>
+    <div class="w-100 text-center py-3">
+        <h4>캠핑장 예약 현황</h4>
+    </div>
+    <div>
+        <!-- 캠핑장 -->
+        <th:block th:each="reservation : ${reservationList}">
+            <div class="reservation_box w-100 d-flex justify-content-between position-relative py-3 mt-3">
+                <div class="reservationImg">
+                    <img th:src="|/img?file=${reservation.cpiUrl}|" alt="예약이미지" class="py-2 ms-3 px-2">
+                </div>
+                <div class="reservationTitle">
+                    <div class="mt-4"><h5 th:text="${reservation.campName}"></h5></div>
+                    <div><p th:text="${reservation.cpdtName}"></p></div>
+                    <div class="d-flex justify-content-between pt-3">
+                        <div>
+                            <h6>예약번호</h6>
+                        </div>
+                        <div>
+                            <p th:text="${reservation.reservationNo}" class="pe-5"></p>
+                        </div>
+                    </div>
+                    <div><a th:href="|/board/crinsert?reservationNo=${reservation.reservationNo}|">리뷰쓰러가기</a></div>
+                </div>
+                <div class="reservation_cancle"><a th:href="|/camp/reservationdelete?reservationNo=${reservation.reservationNo}|" onclick="confirm('목록에서 삭제하시겠습니까? 작성된 리뷰가 모두 사라집니다.')"><span class="material-symbols-outlined">close</span></a></div>
+                <div class="reservation_more"><a href="javascript:;" class="reservation_more_btn">상세보기<span class="material-symbols-outlined">expand_more</span></a></div>
+            </div>
+            <div class="w-100 container-sm pb-5 pt-3 border-bottom position-relative mb-3 reservation_detail_box none">
+                <div><h5>예약자정보</h5></div>
+                <div class="w-100 d-flex justify-content-between reservationCon my-2 border-bottom">
+                    <div><h6>예약번호</h6></div>
+                    <div><span th:text="${reservation.reservationNo}"></span></div>
+                </div>
+                <div class="w-100 d-flex justify-content-between reservationCon my-2 border-bottom">
+                    <div><h6>예약자명</h6></div>
+                    <div><span th:text="${reservation.userName}"></span></div>
+                </div>
+                <div class="w-100 d-flex justify-content-between reservationCon my-2 border-bottom">
+                    <div><h6>예약인원</h6></div>
+                    <div><span th:text="${reservation.reservationNop}"></span></div>
+                </div>
+                <div class="w-100 d-flex justify-content-between reservationCon my-2 border-bottom">
+                    <div><h6>숙박일수</h6></div>
+                    <div><span th:text="${reservation.reservationDate}"></span></div>
+                </div>
+                <div class="w-100 d-flex justify-content-between reservationCon my-2 border-bottom">
+                    <div><h6>숙박기간</h6></div>
+                    <div><span th:text="|${#dates.format(reservation.reservationStart, 'yyyy-MM-dd')} ~ ${#dates.format(reservation.reservationEnd, 'yyyy-MM-dd')}|"></span></div>
+                </div>
+                <div class="w-100 d-flex justify-content-between reservationCon my-2 border-bottom">
+                    <div><h6>캠핑장연락처</h6></div>
+                    <div><span th:text="${reservation.campTel}"></span><a href="#" class="border ms-2 bg-secondary">바로걸기</a></div>
+                </div>
+                <div class="reservation_less none">
+                    <a href="javascript:;" class="reservation_less_btn">접기<span class="material-symbols-outlined">expand_less</span></a>
+                </div>
+            </div>
+        </th:block>
+
+         <!-- 상품 -->
+         <div class="text-center w-100 py-3 border-bottom border-top mt-3">
+             <h5>렌탈상품 대여 현황</h5>
+         </div>
+        <th:block th:each="product : ${productList}">
+            <div class="container border">
+                <div class="border position-relative">
+                    <div class="campProductImg w-100">
+                        <img th:src="|/img?file=${product.productThumnail}|" alt="상품썸네일" class="py-2 px-2 w-100">
+                    </div>
+                    <div class="container-sm py-3  my-2">
+                        <div class="campProductCon">
+                            <div>
+                                <h5><span th:text="${product.productName}"></span></h5>
+                            </div>
+                            <div class="">
+                                <div>
+                                    <p><span th:text="${product.productIntro}"></span></p>
+                                </div>
+                                <div class="">
+                                    <p><h5 th:text="|${product.productPrice}원|"></h5></p>
+                                </div>
+                                <div class="pe-2">
+                                    <p><span th:text="${product.orderCnt}"></span>개</p>
+                                </div>
+                            </div>
+                            <div class="text-end"><a th:href="|/board/prinsert?orderNo=${product.orderNo}|" class="btn btn-primary">리뷰쓰러가기</a></div>
+                        </div>
+                        <div class="campproduct_close pt-3 pe-3"><a href="javascript:;" class="campproduct_close_btn"><span class="material-symbols-outlined">close</span></a></div>
+                    </div>
+                </div>
+            </div>
+        </th:block> 
+
+        <div class="w-100 text-center py-4">
+            <a href="/" class="btn btn-lg campproduct_home_btn px-4">홈으로</a>
+        </div>
+        <div class="w-100">
+            <img src="/img/camp/wide_banner.jpg" alt="와이드배너" class="w-100">
+        </div>
+    </div>
+
+    <script>
+        $('.reservation_more_btn').each(function() {
+            $(this).on('click', function(e) {
+                e.preventDefault();
+                $(this).closest('.reservation_box').next('.reservation_detail_box').slideDown(1000);
+
+                $(this).closest('.reservation_box').next('.reservation_detail_box').find('.reservation_less').show(1500);
+            });
+        });
+
+        $('.reservation_less_btn').each(function() {
+            $(this).on('click', function(e) {
+                e.preventDefault();
+                $(this).closest('.reservation_detail_box').slideUp(1000);
+
+                $(this).closest('.reservation_detail_box').find('.reservation_less').hide(1500);
+            });
+        });
+    </script>
+     
+</body>
+</html>

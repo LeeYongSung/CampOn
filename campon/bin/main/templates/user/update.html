@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/UI/user/layout/user_layout}"
+      >
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>내 정보 수정</title>
+
+</head>
+<body layout:fragment="content">
+    <h1>내 정보 수정</h1>
+
+
+    <div class="container-sm">
+        <div id="joinForm">
+            <h3>회원정보를 수정해주세요.</h3>
+    
+            <form action="/user/update" method="POST" name="updateForm" onsubmit="return checkUpdate()">
+                 <!-- csrf -->
+                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+    
+                <div class="form-floating">
+                    <input type="text" id="id" name="userId" th:value="${user.userId}" class="form-control my-2" readonly>
+                    <label for="id">아이디</label>
+                </div>
+                <div class="form-floating">
+                    <input type="text" id="name" name="userName"  th:value="${user.userName}" class="form-control my-2">
+                    <label for="name">이름</label>
+                </div>
+                <div class="form-floating">
+                    <input type="text" id="userEmail" name="userEmail" th:value="${user.userEmail}" class="form-control my-2">
+                    <label for="userEmail">이메일</label>
+                </div>
+                <div class="form-floating">
+                    <input type="text" id="userTel" name="userTel" th:value="${user.userTel}" class="form-control my-2">
+                    <label for="userTel">핸드폰번호</label>
+                </div>
+                <div class="form-floating">
+                    <input type="text" id="userAddress" name="userAddress" th:value="${user.userAddress}" class="form-control my-2">
+                    <label for="address">주소</label>
+                </div>
+                <div class="form-floating">
+                    <input type="password" id="password" name="userPw" class="form-control my-2">
+                    <label for="password">비밀번호</label>
+                </div>
+                <div class="form-floating">
+                    <input type="password" id="passwordCheck" name="userPwCheck" class="form-control my-2">
+                    <label for="passwordCheck">비밀번호 확인</label>
+                </div>
+
+                <th:block th:if="${user.auth.equals('ROLE_SELL')}">
+                    <div id="company">
+                        <p>기업 정보를 수정하세요.</p>
+                        <div class="form-floating">
+                            <input type="text" id="companyName" name="companyName" th:value="${user.companyName}" class="form-control my-2">
+                            <label for="companyName">업체명</label>
+                        </div>
+                        <div class="form-floating">
+                            <input type="text" id="companyNumber" name="companyNumber" th:value="${user.companyNumber}" class="form-control my-2">
+                            <label for="companyNumber">사업자번호</label>
+                        </div>
+                    </div>
+                </th:block>
+                <input type="submit" value="회원정보 수정" class="btn btn-warning btn-lg w-100 my-3">
+            </form>
+
+            <a th:href="|/user/delete?userId=${user.userId}|" class="btn btn-danger btn-lg w-100 my-2">탈퇴하기</a>
+        </div>
+    </div>
+
+
+    <script>
+    // 회원 정보 수정 유효성 검사
+    function checkUpdate() {
+        let form = document.updateForm;
+        let id = form.userId.value;
+        let name = form.userName.value;
+        let email = form.userEmail.value;
+        let phone = form.userTel.value;
+        let address = form.userAddress.value;
+        let password = form.userPw.value;
+        let passwordCheck = form.userPwCheck.value;
+        let companyName = form.companyName.value;
+        let companyNumber = form.companyNumber.value;
+
+        // 아이디 유효성 검사
+        if (!/^[a-zA-Z0-9]+$/.test(id)) {
+            alert("아이디는 영문과 숫자 조합만 가능합니다.");
+            return false;
+        }
+
+        // 이름 유효성 검사
+        if (!/^[가-힣]{1,5}$/.test(name)) {
+            alert("이름은 1자에서 5자까지의 한글로 입력해주세요.");
+            return false;
+        }
+
+        // 이메일 주소 유효성 검사
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+            alert("올바른 이메일 주소를 입력해주세요.");
+            return false;
+        }
+
+        // 핸드폰 번호 유효성 검사
+        if (!/^\d{3}-\d{4}-\d{4}$/.test(phone)) {
+            alert("핸드폰 번호는 010-1234-1234 형식으로 입력해주세요.");
+            return false;
+        }
+
+        // 비밀번호가 입력되었을 때 비밀번호 유효성 검사
+        if (password.length < 8 || !/^(?=.*[0-9])(?=.*[a-zA-Z])/.test(password)) {
+            alert("비밀번호는 8자 이상이어야 하며, 숫자와 영문자를 포함해야 합니다.");
+            return false;
+        }
+
+        // 비밀번호 확인
+        if (password !== passwordCheck) {
+            alert("비밀번호 확인이 일치하지 않습니다.");
+            return false;
+        }
+
+        let auth = "[[${user.auth}]]" //ROLE_SELL
+
+        if (auth == 'ROLE_SELL'){
+            // 업체명 유효성 검사
+            if (!companyName) {
+                alert("업체명을 입력하세요.");
+                return false;
+            }
+    
+            // 사업자번호 유효성 검사
+            if (!/^\d+$/.test(companyNumber)) {
+                alert("사업자번호는 숫자로만 입력해야 합니다.");
+                return false;
+            }
+        }
+
+        return true;
+    }
+    </script>
+   
+</body>
+</html>

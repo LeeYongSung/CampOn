@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/UI/user/layout/user_layout}"
+      >
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>마이 페이지</title>
+
+</head>
+<body layout:fragment="content">
+    <div class="mypage_banner">
+        <div class="mypage_banner_header"><h4>마이페이지</h4></div>
+        <div class="mypage_banner_back"></div>
+        <div class="mypage_banner_con">
+            <ul class="w-100 text-center">
+                <th:block th:if="${auth == 'ROLE_USER'}">
+                    <li><img src="/img/user/test_user.png" alt="프로필이미지"></li>
+                </th:block>
+                <th:block th:if="${auth == 'ROLE_SELL'}">
+                    <li><img src="/img/user/test_sell.png" alt="프로필이미지"></li>
+                </th:block>
+                <th:block th:if="${auth == 'ROLE_ADMIN'}">
+                    <li><img src="/img/user/test_admin.png" alt="프로필이미지"></li>
+                </th:block>
+                <li>
+                    <!-- <h4>아이디 : <span th:text="${#authentication.principal.users.userId}"></span></h4> -->
+                    <h4>아이디 : <span sec:authentication="principal.username"></span></h4>
+                </li>
+            </ul>
+        </div>
+
+    </div>
+    <div class="container">
+        <!--중단 -->
+        <!-- 일반 유저인 경우-->
+        <!-- <th:block sec:authorize="hasRole('ROLE_USER')"> -->
+        <th:block th:if="${auth == 'ROLE_USER'}">
+            <div class="w-100 text-center mypage_user">
+                <ul class="d-flex justify-content-around w-100">
+                    <li>
+                        <a href="/user/update">내정보 관리</a>
+                    </li>
+                    <li>
+                        <a href="/camp/reservation">내 예약 현황</a>
+                    </li>
+                    <li>
+                        <a href="/board/boardlist">구매 후기</a>
+                    </li>
+                </ul>
+                <ul class="d-flex justify-content-around w-100">
+                    <li>
+                        <a href="/camp/favorites">찜한 캠핑장</a>
+                    </li>
+                    <li>
+                        <a href="/product/wishlist">찜한 상품</a>
+                    </li>
+                    <!-- <li>
+                        <a href="#">문의 내역(x)</a>
+                    </li> -->
+                    <li>
+                        <a href="/product/cart">장바구니</a>
+                    </li>
+                </ul>
+            </div>
+        </th:block>
+
+        <!--판매자인 경우-->
+        <!-- <th:block sec:authorize="hasRole('ROLE_SELL')"> -->
+        <th:block th:if="${auth == 'ROLE_SELL'}">
+            <div class="w-100 text-center mypage_sell">
+                <ul class="d-flex justify-content-around w-100">
+                    <li>
+                        <a href="/user/update">내정보 관리</a>
+                    </li>
+                    <li>
+                        <a href="/admin/adlistseller">광고 신청 목록</a>
+                    </li>
+                    <li>
+                        <a href="/admin/campproductlist">캠핑장 관리</a>
+                    </li>
+                    <li>
+                        <a href="/board/boardlist">내 캠핑장 후기</a>
+                    </li>
+                    <!-- <li>
+                        <a href="#">문의 관리(x)</a>
+                    </li> -->
+                </ul>
+            </div>
+        </th:block>
+
+        <!-- 관리자인 경우-->
+        <!-- <th:block sec:authorize="hasRole('ROLE_ADMIN')"> -->
+        <th:block th:if="${auth == 'ROLE_ADMIN'}">
+            <div class="w-100 text-center mypage_admin">
+                <ul class="d-flex justify-content-around w-100">
+                    <li>
+                        <a href="/admin/memberList">회원 관리</a>
+                    </li>
+                    <li>
+                        <a href="/admin/campproductlist">캠핑장 관리</a>
+                    </li>
+                    <li>
+                        <a href="/admin/adlist">광고 관리</a>
+                    </li>
+                    <li>
+                        <a href="/board/boardlist">후기 관리</a>
+                    </li>
+                </ul>
+                <ul class="d-flex justify-content-around w-100">
+                    <!-- <li>
+                        <a href="">캠핑장 예약 관리(x)</a>
+                    </li> -->
+                    <li>
+                        <a href="/admin/productlist">스토어상품 관리</a>
+                    </li>
+                    <!-- <li>
+                        <a href="#">대여 내역(x)</a>
+                    </li>
+                    <li>
+                        <a href="#">문의 관리(x)</a>
+                    </li> -->
+                </ul>
+            </div>
+        </th:block>
+    </div>
+    <!--하단-->
+    <form action="/logout" method="post">
+        <!-- csrf token -->
+        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+        <button type="submit" class="btn btn-warning btn-lg w-100 mypage_logout_btn">로그아웃</button>
+    </form>
+    
+</body>
+</html>

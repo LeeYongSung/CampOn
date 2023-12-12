@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+    xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
+    layout:decorate="~{/UI/user/layout/store_layout}">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CampOn(캠프온)</title>
+</head>
+
+<body layout:fragment="content">
+    
+    <!--찜 버튼-->
+    <button type="button" onclick="addProductsave()">찜</button>
+    <!-- <a th:href="|/product/addProductsave?productNo=${product.productNo}|" onclick="return false;">찜</a> -->
+    
+    <!--상품상세-->
+    <div>
+        <!-- Swiper -->
+        <div class="swiper mySwiper">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide" style="left: 0!important;"><img th:src="|/img?file=${product.productThumnail}|" alt="썸네일이미지"></div>
+            </div>
+            <div class="swiper-button-next"></div>
+            <div class="swiper-button-prev"></div>
+            <div class="swiper-pagination"></div>
+        </div>
+        <div class="container">
+            <div class="w-100 border-bottom py-3">
+                <div>
+                    <span th:text="${product.productCategory}"></span>
+                </div>
+                <div>
+                    <h5 th:text="${product.productName}"></h5>
+                </div>
+            </div>
+            <div class="pb-4 border-bottom">
+                <div class="py-4 ps-2">
+                    <span>리뷰수 </span><span th:text="${reviewCount}"></span>
+                </div>
+                <div class="ps-2">
+                    <span th:text="${product.productPrice}"></span><span>원</span>
+
+                </div>
+            </div>
+            <div class="position-relative productdetailInfo border-bottom">
+                <div class="py-2 w-100 productdetailImg">
+                    <img th:src="|/img?file=${product.productCon}|" alt="상세설명이미지" class="w-100">
+                </div>
+                <div class="position-absolute bottom-0 w-100 text-center bg-white py-2">
+                    <a href="javascript:;" class="product_more">더보기<span class="material-symbols-outlined">expand_more</span></a>
+                </div>
+            </div>
+        </div>
+
+        <!--리뷰목록-->
+        <div class="container">
+            <div class="py-3">
+                <h5>상품리뷰</h5>
+            </div>
+            <th:block th:each="review : ${proReviewList}">
+                <!--a태그 수정 가능성 있음-->
+                <a th:href="|/board/prread?prNo=${review.prNo}|">
+                    <div class="d-flex justify-content-between border py-4">
+                        <div class="review_imgbox border mx-2">
+                            <img th:src="|/img?file=${review.prImg}|">
+                        </div>
+                        <div class="review_conbox">
+                            <div>
+                                <div>
+                                    <span th:text="${review.productName}"></span>
+                                </div>
+                                <div>
+                                    <span th:text="${review.prTitle}"></span>
+                                </div>
+                                <div>
+                                    <span th:text="${review.prCon}"></span>
+                                </div>
+                                <div>
+                                    <span th:text="${ #dates.format( review.regDate, 'yyyy-MM-dd') }"></span>
+                                </div>
+                                <!--글쓴이 프로필사진 넣을거면 넣어야 함-->
+                                <div>
+                                    <span th:text="${review.userId}"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </th:block>
+        </div>
+        <div>
+            <div class="d-flex justify-content-between py-4 my-3 border-top border-bottom">
+                <div class="ps-2">대여안내</div>
+                <div class="pe-2"><span class="material-symbols-outlined">chevron_right</span></div>
+            </div>
+            <div class="d-flex justify-content-between py-4 my-3 border-top border-bottom">
+                <div class="ps-2">상품 정보 공시</div>
+                <div class="pe-2"><span class="material-symbols-outlined">chevron_right</span></div>
+            </div>
+        </div>
+
+
+
+        <!-- 대여안내 -->
+        <div class="none">
+            대여서비스는 "캠핑온"을 통해 캠핑장을 예약한 당사의 고객만 이용가능합니다.
+            1. 캠핑장을 예약하셔야 정상적인 서비스 이용이 가능합니다.
+            2. 렌탈기간은 예약하신 캠핑이용 기간과 동일하게 이용가능합니다.
+            3. 분실 및 파손, 회수 지연시 아래 위약금이 청구됩니다.
+                분실 : (1일 렌탈비 * 365일)
+                파손 : (1일 렌탈비 * 180일)
+                지연 : (1일 렌탈비 * 지연일)
+        </div>
+
+        <!-- 상품 정보 고시 -->
+        <div class="none">
+            상품명: 상세페이지 참조
+            제조국: 상세페이지 참조
+            인증번호: 상세페이지 참조
+
+            상품의 분쟁 발생시 관련 법령 또는 "소비자분쟁해결기준"
+            (공정거래위원회 고시 제2022-25호, 2022. 12. 28. 발령·시행)에 따라 해결할 수 있습니다.
+        </d>
+    </div>
+
+    <!--장바구니 버튼-->
+    <!-- <div>
+        <div class="cartTotal position-fixed">
+            <th:block sec:authorize="isAuthenticated()">
+                <a th:href="|/product/addcart?productNo=${product.productNo}&userNo=${#authentication.principal.users.userNo}|" class="w-100 d-block btn btn-warning rounded-0 py-3">장바구니에 담기</a>
+            </th:block>
+        </div>
+    </div> -->
+    <!--장바구니 버튼 ajax-->
+    <div>
+        <div class="cartTotal position-fixed">
+            <th:block sec:authorize="isAuthenticated()">
+                <button onclick="addcart()" class="w-100 d-block btn btn-warning rounded-0 py-3">장바구니에 담기</button>
+            </th:block>
+        </div>
+    </div>
+    <script>
+        function addProductsave(){
+            let productNo = "[[${product.productNo}]]"
+          //  location.href = "/product/addProductsave?productNo=" + productNo
+          const url = '/product/addProductsave?productNo='
+          let urll = url + productNo 
+
+            $.ajax({
+                url     :   urll,
+                type    :   'GET',
+                success : function(response) {
+                    let responsee = response
+                    console.log(responsee)
+                    if (responsee == 'SUCCESS'){
+                        alert('찜에 등록되었습니다')
+                    } else {
+                        alert('이미 찜에 등록된 상품입니다')
+                    }
+                },
+                error           : function(request, status, error){
+                    alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+                }
+            })
+        }
+
+        function addcart(){
+            // |/product/addcart?productNo=${product.productNo}&
+            // userNo=${#authentication.principal.users.userNo}|"
+            let productNo = "[[${product.productNo}]]"
+            let userNo = "[[${#authentication.principal.users.userNo}]]"
+            let url3 = "/product/addProductsaveAjax?productNo="+ productNo + "&userNo="+userNo
+            $.ajax({
+                url : url3,
+                type : 'GET',
+                success : function(response){
+                    if (response == 'SUCCESS'){
+                        alert('장바구니에 등록되었습니다')
+                    } else {
+                        alert('이미 장바구니에 등록된 상품입니다')
+                    }
+                }, 
+                error : function(request, status, error){
+                    alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error)
+                }
+            })
+        }
+    </script>
+
+    <!-- Swiper JS -->
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+
+    <!-- Initialize Swiper -->
+    <script>
+    var swiper = new Swiper(".mySwiper", {
+            spaceBetween: 0,
+            centeredSlides: true,
+            autoplay: {
+            delay: 3000,
+            disableOnInteraction: false,
+        },
+            pagination: {
+            el: ".swiper-pagination",
+            clickable: true,
+        },
+            navigation: {
+            nextEl: ".swiper-button-next",
+            prevEl: ".swiper-button-prev",
+        },
+    });
+
+    </script>
+
+    <script>
+        $('.product_more').click(function() {
+            $('.productdetailInfo').css('height', 'auto')
+        })
+    </script>
+</body>
+
+</html>

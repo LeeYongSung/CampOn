@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/UI/admin/layout/seller_layout}"
+      >
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CampOn(캠프온)</title>
+</head>
+<body layout:fragment="content">
+    <div>
+        <div class="position-relative">
+            <div class="position-absolute top-0 end-0 pt-2 pe-2">
+                <a href="/admin/campproductadd" th:if="${auth == 'ROLE_SELL'}" class="btn btn-success">캠핑장 등록</a>
+            </div>
+            <div class="w-100 text-center pt-5 ">
+                <div><h5>캠핑장목록</h5></div>
+                <div><span>보유한 캠핑장 목록</span></div>
+            </div>
+        </div>
+        <th:block th:each="camp : ${campList}" th:if="${auth == 'ROLE_SELL'}">
+            <div class="campproductList w-100 d-flex justify-content-between position-relative py-5 mt-3 border-bottom border-top">
+                <input type="hidden" class="campNo" id="campNo" name="campNo" th:value="${camp.campNo}">
+                <div class="campproductListImg ps-2">
+                    <img th:src="|/img?file=${camp.cpiUrl}|" alt="캠핑장 이미지">
+                </div>
+                <div class="campproductListCon">
+                    <div class="pt-3">
+                        <div><h5 th:text="${camp.campName}"></h5></div>
+                        <div class="campproductListCon_txt"><span th:text="${camp.campAddress}"></span></div>
+                        <div class="w-100 d-flex justify-content-between pt-3">
+                            <div class="campproductListCon_txt">
+                                <p>등록일자</p>
+                                <p class="pt-1">수정일자</p>
+                            </div>
+                            <div class="pe-2">
+                                <div class="campproductListCon_txt"><span th:text="${#dates.format(camp.regDate, 'yyyy-MM-dd')}"></span></div>
+                                <div class="campproductListCon_txt pt-1"><span th:text="${#dates.format(camp.updDate, 'yyyy-MM-dd')}"></span></div>
+                            </div>
+                        </div>
+                        <!-- <th:block th:each="${campDetail : ${camp.detailList}"></th:block> -->
+                    </div>
+                </div>
+                <div class="campproductListBtn position-absolute top-0 end-0 d-flex pt-2">
+                    <div><a th:href="|/admin/adinsert?campNo=${camp.campNo}|" class="btn btn-primary me-1">광고신청</a></div>
+                    <div><a th:href="|/admin/campdetailinsert?campNo=${camp.campNo}&userNo=${camp.userNo}|" class="btn btn-success">상품등록</a></div>
+                    <div><a th:href="|/admin/campproductupdate?campNo=${camp.campNo}|" class="btn btn-warning mx-1">캠핑장수정</a></div>
+                    <div><a th:href="|/admin/campdelete?campNo=${camp.campNo}|" class="btn btn-danger mx-1">캠핑장삭제</a></div>
+                </div>
+                <div class="position-absolute bottom-0 end-0 me-2 pb-2">
+                    <a href="javascript:;" class="down" th:value="${camp.campNo}">
+                        상세보기
+                        <span class="material-symbols-outlined">
+                            expand_more
+                        </span>
+                    </a>
+                    <a href="javascript:;" class="up none" th:value="${camp.campNo}">
+                        접기
+                        <span class="material-symbols-outlined">
+                            expand_less
+                        </span>
+                    </a>
+                </div>
+            </div>
+            <div class="none campdetail_active">
+                <th:block th:if="${camp.detailsList!=null&&!camp.detailsList.isEmpty()}" th:each="detail : ${camp.detailsList}">
+                    <div class="campdetail_box position-relative d-flex py-5 border-bottom">
+                        <div class="campdetailImg ps-2">
+                            <img th:src="${detail.cpdiUrl}" alt="상품이미지">
+                        </div>
+                        <div class="campdetailCon">
+                            <div>
+                                <div><h6 th:text="${detail.cpdtName}" ></span></div>
+                                <div><span th:text="${detail.campTypeName}"></span></div>
+                            </div>
+                        </div>
+                        <div class="position-absolute top-0 end-0 detail_date">
+                            <div class="pt-2"><span th:text="${#dates.format(detail.regDate, 'yyyy-MM-dd')}"></span></div>
+                            <div><span th:text="${#dates.format(detail.updDate, 'yyyy-MM-dd')}"></span></div>
+                        </div>
+                        <div class="position-absolute bottom-0 end-0 d-flex detail_btn me-2 mb-1">
+                            <div><a class="btn btn-warning" th:href="|/admin/campdetailupdate?cpdtNo=${detail.cpdtNo}|">상품수정</a></div>
+                            <div><a class="btn btn-danger ms-1" th:href="|/admin/campdetaildelete?cpdtNo=${detail.cpdtNo}|" onclick="return confirm('캠핑상품을 삭제하시겠습니까?')">상품삭제</a></div>
+                        </div>
+                    </div>
+                </th:block>
+            </div>
+        </th:block>
+        <th:block th:each="camp : ${campListadmin}" th:if="${auth == 'ROLE_ADMIN'}">
+            <div class="campproductList w-100 d-flex justify-content-between position-relative py-5 mt-3 border-bottom border-top">
+                <input type="hidden" class="campNo" id="campNo" name="campNo" th:value="${camp.campNo}">
+                <div class="campproductListImg ps-2">
+                    <img th:src="${camp.cpiUrl}" alt="캠핑장 이미지">
+                </div>
+                <div class="campproductListCon">
+                    <div class="pt-3">
+                        <div><h5 th:text="${camp.campName}"></h5></div>
+                        <div class="campproductListCon_txt"><span th:text="${camp.campAddress}"></span></div>
+                        <div class="w-100 d-flex justify-content-between pt-3">
+                            <div class="campproductListCon_txt">
+                                <p>등록일자</p>
+                                <p class="pt-1">수정일자</p>
+                            </div>
+                            <div>
+                                <div class="campproductListCon_txt"><span th:text="${#dates.format(camp.regDate, 'yyyy-MM-dd')}"></span></div>
+                                <div class="campproductListCon_txt pt-1"><span th:text="${#dates.format(camp.updDate, 'yyyy-MM-dd')}"></span></div>
+                            </div>
+                        </div>
+                        <!-- <th:block th:each="${campDetail : ${camp.detailList}"></th:block> -->
+                    </div>
+                </div>
+                <div class="campproductListBtn position-absolute top-0 end-0 d-flex pt-2">
+                    <div><a th:href="|/admin/campdelete?campNo=${camp.campNo}|" class="btn btn-danger mx-1">캠핑장삭제</a></div>
+                </div>
+                <div class="position-absolute bottom-0 end-0 me-2 pb-2">
+                    <a href="javascript:;" class="down" th:value="${camp.campNo}">
+                        상세보기
+                        <span class="material-symbols-outlined">
+                            expand_more
+                        </span>
+                    </a>
+                    <a href="javascript:;" class="up none" th:value="${camp.campNo}">
+                        접기
+                        <span class="material-symbols-outlined">
+                            expand_less
+                        </span>
+                    </a>
+                </div>
+            </div>
+            <div class="none campdetail_active">
+                <th:block th:if="${camp.detailsList!=null&&!camp.detailsList.isEmpty()}" th:each="detail : ${camp.detailsList}">
+                    <div class="campdetail_box position-relative d-flex py-5 border-bottom">
+                        <div class="campdetailImg ps-2">
+                            <img th:src="${detail.cpdiUrl}" alt="상품이미지">
+                        </div>
+                        <div class="campdetailCon">
+                            <div>
+                                <div><h6 th:text="${detail.cpdtName}" ></span></div>
+                                <div><span th:text="${detail.campTypeName}"></span></div>
+                            </div>
+                        </div>
+                        <div class="position-absolute top-0 end-0 detail_date">
+                            <div class="pt-2"><span th:text="${#dates.format(detail.regDate, 'yyyy-MM-dd')}"></span></div>
+                            <div><span th:text="${#dates.format(detail.updDate, 'yyyy-MM-dd')}"></span></div>
+                        </div>
+                        <div class="position-absolute bottom-0 end-0 d-flex detail_btn me-2 mb-1">
+                            <div><a class="btn btn-warning" th:href="|/admin/campdetailupdate?cpdtNo=${detail.cpdtNo}|">상품수정</a></div>
+                            <div><a class="btn btn-danger ms-1" th:href="|/admin/campdetaildelete?cpdtNo=${detail.cpdtNo}|" onclick="return confirm('캠핑상품을 삭제하시겠습니까?')">상품삭제</a></div>
+                        </div>
+                    </div>
+                </th:block>
+            </div>
+        </th:block>
+    </div>
+
+    <script>
+        $(document).ready(function() {
+            $('.down').each(function() {
+                $(this).on('click', function(e) {
+                    e.preventDefault();
+                    $(this).closest('.campproductList').next('.campdetail_active').slideDown(1000);
+                    $(this).hide();
+                    $(this).siblings('.up').show();
+                });
+            });
+        })
+
+        $('.up').each(function() {
+            $(this).on('click', function(e) {
+                e.preventDefault();
+                $(this).closest('.campproductList').next('.campdetail_active').slideUp(1000);
+                $(this).hide();
+                $(this).siblings('.down').show();
+            });
+        });
+    </script>
+</body>
+</html>

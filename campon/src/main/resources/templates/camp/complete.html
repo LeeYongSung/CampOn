@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/UI/user/layout/main_layout}"
+      >
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CampOn(캠프온)</title>
+</head>
+<body layout:fragment="content">
+        <div class="container border-bottom reservate_cmp">
+            <div class="container-sm d-flex justify-content-between">
+                <div class="reservateComImg pt-4">
+                    <img th:src="|/img?file=${reservecomplete.cpiUrl}|" class="py-2 px-2">
+                </div>
+                <div class="reservateCampName pt-5">
+                    <div class="mt-1 pt-2 ps-1">
+                        <h4 th:text="${reservecomplete.campName}"></h4>
+                    </div>
+                    <div class="ps-1">
+                        <p th:text="${reservecomplete.cpdtName}"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="container-sm">
+                <div class="pt-2"><h5>예약자정보</h5></div>
+                <div class="w-100 d-flex justify-content-between border-bottom py-2">
+                    <div>
+                        <h6>예약번호 : </h6>
+                    </div>
+                    <div>
+                        <p th:text="${reservecomplete.reservationNo}"></p>
+                    </div>
+                </div>
+                <div class="w-100 d-flex justify-content-between border-bottom py-2">
+                    <div>
+                        <h6>예약자명 : </h6>
+                    </div>
+                    <div>
+                        <p th:text="${reservecomplete.userName}"></p>
+                    </div>
+                </div>
+                <div class="w-100 d-flex justify-content-between border-bottom py-2">
+                    <div>
+                        <h6>숙박일수 : </h6>
+                    </div>
+                    <div>
+                        <p th:text="${reservecomplete.reservationDate}"></p>
+                    </div>
+                </div>
+                <div class="w-100 d-flex justify-content-between border-bottom py-2">
+                    <div>
+                        <h6>숙박기간 : </h6>
+                    </div>
+                    <div>
+                        <span th:text="${#dates.format(reservecomplete.reservationStart, 'yyyy-MM-dd')}"></span> ~ <span th:text="${#dates.format(reservecomplete.reservationEnd, 'yyyy-MM-dd')}"></span>
+                    </div>
+                </div>
+                <div class="w-100 d-flex justify-content-between border-bottom py-2">
+                    <div>
+                        <h6>결제방법 : </h6>
+                    </div>
+                    <div>
+                        <p th:text="${reservecomplete.campPaymentType}"></p>
+                    </div>
+                </div>
+                <div class="w-100 text-center py-4">
+                    <h5 class="payType_end"></h5>
+                </div>
+            </div>
+        </div>
+        <div class="w-100 d-flex justify-content-center py-3 reservecomplete_btnBox">
+            <a href="/camp/index" class="btn btn-warning btn-lg me-2">홈으로</a>
+            <a th:href="|/camp/reservation?userNo=${reservecomplete.userNo}|" class="btn btn-success btn-lg ms-2">예약조회</a>
+        </div>
+
+
+        <script>
+            let payType = "[[${reservecomplete.campPaymentType}]]"
+            let txt = '(신한)110-328-214257 예금주:이용성'
+            if(payType == 'bankbook') {
+                $('.payType_end').text(txt)
+            }
+        </script>
+</body>
+</html>

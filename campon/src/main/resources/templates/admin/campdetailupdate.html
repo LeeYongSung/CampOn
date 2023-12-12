@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/UI/admin/layout/seller_layout}"
+      >
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CampOn(캠프온)</title>
+</head>
+<body layout:fragment="content">
+    <div class="campdetailProductUpdateTitle text-center py-3">
+        <div>
+            <h4>캠핑장 상품 수정</h4>
+        </div>
+        <div>
+            <h6>캠핑장 상품을 수정하기 위한 페이지입니다.</h6>
+        </div>
+    </div>
+    
+    <div class="w-100 container">
+        <!-- <form th:action="|/admin/campdetailupdate?${_csrf.parameterName}=${_csrf.token}|" method="POST" id="form" enctype="multipart/form-data"> -->
+        <form th:action="|/admin/campdetailupdate|" method="POST" id="form" enctype="multipart/form-data">
+            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+            <input type="hidden" name="cpdtNo" th:value="${camp.cpdtNo}">
+            <input type="hidden" name="campNo" th:value="${camp.campNo}">
+            <input type="hidden" name="userNo" th:value="${camp.userNo}">
+            <div class="form-floating py-3">
+                <input type="text" id="cpdtName" name="cpdtName" th:value="${camp.cpdtName}" placeholder="상품 이름" class="form-control">
+                <label for="cpdtName">캠핑장 상품 이름</label>
+            </div>
+            <div class="form-floating py-3">
+                <input type="file" id="cpdiFiles" name="cpdiFiles" multiple class="form-control">
+                <label for="cpdiFiles">파일</label>
+            </div>
+            <div class="form-floating py-3">
+                <input type="number" id="cpdtNop" name="cpdtNop" th:value="${camp.cpdtNop}" placeholder="인원" min="1" class="form-control">
+                <label for="cpdtNop">수용 가능 인원 수</label>
+            </div>
+            <div class="form-floating py-3">
+                <input type="text" id="cpdtSize" name="cpdtSize" th:value="${camp.cpdtSize}" placeholder="면적" class="form-control">
+                <label for="cpdtSize">면적</label>
+            </div>
+            <div class="form-floating py-3">
+                <input type="number" id="cpdtPrice" name="cpdtPrice" th:value="${camp.cpdtPrice}" placeholder="금액" min="1" class="form-control">
+                <label for="cpdtPrice">금액</label>
+            </div>
+            <div class="w-100 py-3">
+                <div>
+                    <p>캠핑종류</p>
+                </div>
+                <div>
+                    <input type="radio" name="campTypeNo" th:attr="checked=${camp.campTypeNo == 1 ? 'ture' : 'false'}" id="1" value="1" />
+                    <label for="1"><span></span>오토캠핑</label>
+                    <input type="radio" name="campTypeNo" th:attr="checked=${camp.campTypeNo == 2 ? 'ture' : 'false'}" id="2" value="2" />
+                    <label for="2"><span></span>글램핑</label>
+                    <input type="radio" name="campTypeNo" th:attr="checked=${camp.campTypeNo == 3 ? 'ture' : 'false'}" id="3" value="3" />
+                    <label for="3"><span></span>카라반</label>
+                    <input type="radio" name="campTypeNo" th:attr="checked=${camp.campTypeNo == 4 ? 'ture' : 'false'}" id="4" value="4" />
+                    <label for="4"><span></span>펜션</label>
+                    <input type="radio" name="campTypeNo" th:attr="checked=${camp.campTypeNo == 5 ? 'ture' : 'false'}" id="5" value="5" />
+                    <label for="5"><span></span>피크닉</label>
+                </div>
+            </div>
+            <div class="form-floating py-3">
+                <div>
+                    <p>캠핑상품 소개</p>
+                </div>
+                <div>
+                    <textarea name="cpdtIntroduction" cols="40" rows="5" th:text="${camp.cpdtIntroduction}" placeholder="상품 소개" class="form-control"></textarea>
+                </div>
+            </div>
+            <div class="w-100 d-flex justify-content-between">
+                <div>
+                    <button class="btn btn-info px-4" type="button" onclick="history.back(-1)">목록</button>
+                </div>
+                <div class="d-flex my-2">
+                    <div>
+                        <button class="btn btn-warning px-4" type="button" onclick="actionUpdate()">수정</button>
+                    </div>
+                    <div>
+                        <button class="btn btn-danger px-4 ms-1" type="button" onclick="actionDelete()">삭제</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        let form = document.getElementById('form')
+        
+        function actionUpdate(){ form.submit() }
+        function actionDelete(){ 
+            let check = confirm('캠핑상품을 삭제하시겠습니까?')
+            if(check){
+                form.action = '/admin/campdetaildelete'
+                form.submit()
+            }
+        }
+
+    </script>
+</body>
+</html>

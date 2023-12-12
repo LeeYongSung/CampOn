@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/UI/user/layout/main_layout}"
+      >
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CampOn(캠프온)</title>
+</head>
+<body layout:fragment="content">
+    <h1>대여상품 리뷰 수정</h1>
+    <h4>대여상품 리뷰을 수정하기 위한 페이지입니다.</h4>
+    <form action="/board/prupdate" method="POST" id="form" enctype="multipart/form-data">
+        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+        <input type="hidden" th:name="prNo" th:value="${pr.prNo}" />
+        <hr>
+        <div>
+            <p th:text="${pr.productName}"></p>
+            <p th:text="${pr.productCategory}"></p>
+        </div>
+        <hr>
+        <table>
+            <tr>
+                <td>제목</td>
+                <td>
+                    <input type="text" name="prTitle" th:value="${pr.prTitle}">
+                </td>
+            </tr>
+            <tr>
+                <td>파일</td>
+                <td>
+                    <input type="file" name="prImgfile">
+                </td>
+            </tr>
+            <tr>
+                <td>내용</td>
+                <td>
+                    <textarea name="prCon" cols="40" rows="5" placeholder="내용" th:text="${pr.prCon}"></textarea>
+                </td>
+            </tr>
+        </table>
+        
+        <div>
+            <button type="button" onclick="history.back(-1)">목록</button>
+            <button type="button" onclick="actionUpdate()">수정</button>
+            <button type="button" onclick="actionDelete()">삭제</button>
+        </div>
+    </form>
+    <script>
+        let form = document.getElementById('form')
+        
+        function actionUpdate(){ form.submit() }
+        function actionDelete(){
+            let check = confirm('리뷰를 삭제하시겠습니까?')
+            if(check){
+                form.action='/board/prdelete'
+                form.submit()
+            }
+        }
+    </script>
+</body>
+</html>
