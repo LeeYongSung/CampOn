@@ -103,7 +103,7 @@
             <th:block th:each="camp : ${campHotList}">
                 <div class="col-4">
                     <a th:href="|/camp/campproduct?campNo=${camp.campNo}|">
-                        <li class="mx-1"><img th:src="${camp.cpiUrl}"></li>
+                        <li class="mx-1"><img th:src="|/img?file=${camp.cpiUrl}|"></li>
                         <li class="w-100 text-center"><span th:text="${camp.campName}"></span></li>
                     </a>
                 </div>

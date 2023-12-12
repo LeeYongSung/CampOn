@@ -3,7 +3,7 @@
             <div class="camp_box pb-3"> 
                 <a th:href="|/camp/campproduct?campNo=${camp.campNo}|">
                     <div>
-                        <img th:src="${camp.cpiUrl}" class="w-100">
+                        <img th:src="|/img?file=${camp.cpiUrl}|" class="w-100">
                     </div>
                     <div class="py-2">
                         <h3 th:text="${camp.campName}" class="ps-2"></h3>
