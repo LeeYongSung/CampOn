@@ -18,7 +18,7 @@
     <th:block th:each="open : ${campschedule}">
         <div class="w-100 py-2 my-2">
             <div class="openscheduleImg">
-                <img th:src="${open.cpiUrl}" alt="오픈일정">
+                <img th:src="|/img?file=${open.cpiUrl}|" alt="오픈일정">
             </div>
             <div class="w-100 d-flex justify-content-between openscheduleCon">
                 <div class="ps-3">
