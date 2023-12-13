@@ -294,8 +294,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         JOIN camptype ct ON cd.camptype_no = ct.camptype_no
         JOIN campimg img ON c.camp_no = img.camp_no 
         JOIN (SELECT min(cpi_no) no FROM campimg GROUP BY camp_no) imgno ON img.cpi_no = imgno.no
-        WHERE c.camp_name LIKE CONCAT('%', #{keyword}, '%') AND c.camp_open >= STR_TO_DATE(#{searchDate}, '%Y-%m-%d')
-        AND c.camp_close >= STR_TO_DATE(#{searchDate}, '%Y-%m-%d') 
+        WHERE c.camp_name LIKE CONCAT('%', #{keyword}, '%') 
+        <!-- AND c.camp_open <= STR_TO_DATE(#{searchDate}, '%Y-%m-%d')
+        AND c.camp_close >= STR_TO_DATE(#{searchDate}, '%Y-%m-%d')  -->
         <if test="regionNo != 0">
             AND region_no = #{regionNo}
         </if>
