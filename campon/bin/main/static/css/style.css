@@ -132,6 +132,8 @@ footer{ width: 100%; height: 550px; background-color: rgba(243, 243, 243, 0.9);}
 .camp_ads {width: 100%;}
 .camp_ads ul {padding-left: 0!important;}
 .camp_ads ul>li {border-radius: 10px; overflow: hidden;}
+.adSellerListImg {width: 100px; height: 100px; overflow: hidden;}
+.adSellerListImg>img {width: 100px; height: 100px; object-fit: cover;}
 
 /* 안내 */
 .info_btn>a {font-size: 0.8em; border-radius: 0!important;}
@@ -451,9 +453,9 @@ input[type="radio"]:checked + label span {
 
 
 /* Board Page */
-.boardd {border-top : 1px solid #444444; border-bottom : 1px solid #444444; }
-.tdd {border-bottom : 1px solid #444444; padding: 8px 6px;}
-.theadd {font-weight: bold; border-bottom : 1px solid #444444;}
+.boardd {border-top : 1px solid #f2f2f2; border-bottom : 1px solid #f2f2f2; margin-top: 30px; }
+.tdd {border-bottom : 1px solid #f2f2f2; padding: 8px 6px;}
+.theadd {font-weight: bold; border-bottom : 1px solid #f2f2f2;}
 .hoverr:hover { background-color: #FFDF6C;}
 
 
